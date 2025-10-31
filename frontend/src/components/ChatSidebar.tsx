@@ -20,6 +20,20 @@ const ChatSidebar = ({ isOpen, onToggle }: ChatSidebarProps) => {
     refetchInterval: 30000, // Refresh every 30s
   });
 
+  // Normalize stats shape: some query functions return AxiosResponse (with `.data`) and
+  // others may return the raw data object. Handle both safely and provide fallbacks.
+  const totalDocuments =
+    // AxiosResponse shape
+    (stats as any)?.data?.total_documents ??
+    // raw data shape
+    (stats as any)?.total_documents ??
+    0;
+
+  const collectionName =
+    (stats as any)?.data?.collection_name ??
+    (stats as any)?.collection_name ??
+    'N/A';
+
   const presets = [
     { name: 'fast', label: 'Fast', emoji: '⚡', color: theme === 'claude' ? 'bg-green-100 text-green-800' : 'bg-neo-lime' },
     { name: 'balanced', label: 'Balanced', emoji: '⚖️', color: theme === 'claude' ? 'bg-blue-100 text-blue-800' : 'bg-neo-cyan' },
@@ -78,13 +92,13 @@ const ChatSidebar = ({ isOpen, onToggle }: ChatSidebarProps) => {
                 <div className="flex justify-between text-sm">
                   <span className="text-claude-text-secondary">Indexed Chunks:</span>
                   <span className="font-medium text-claude-text animate-pulse">
-                    {stats?.data.total_documents || 0}
+                    {totalDocuments}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-claude-text-secondary">Collection:</span>
                   <span className="font-medium text-claude-text text-xs">
-                    {stats?.data.collection_name || 'N/A'}
+                    {collectionName}
                   </span>
                 </div>
               </div>
@@ -213,13 +227,13 @@ const ChatSidebar = ({ isOpen, onToggle }: ChatSidebarProps) => {
               <div className="flex justify-between text-sm font-bold">
                 <span className="text-neo-black">CHUNKS:</span>
                 <span className="font-black text-neo-black">
-                  {stats?.data.total_documents || 0}
+                  {totalDocuments}
                 </span>
               </div>
               <div className="flex justify-between text-xs font-bold">
                 <span className="text-neo-black">COLLECTION:</span>
                 <span className="font-black text-neo-black truncate ml-2">
-                  {stats?.data.collection_name || 'N/A'}
+                  {collectionName}
                 </span>
               </div>
             </div>
