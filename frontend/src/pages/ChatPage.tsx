@@ -7,10 +7,12 @@ import UserMessage from '../components/UserMessage';
 import AssistantMessage from '../components/AssistantMessage';
 import TypingIndicator from '../components/TypingIndicator';
 import ChatInput from '../components/ChatInput';
+import ChatSidebar from '../components/ChatSidebar';
 
 const ChatPage = () => {
   const { theme } = useTheme();
   const [input, setInput] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -38,7 +40,7 @@ const ChatPage = () => {
   const queryMutation = useMutation({
     mutationFn: (question: string) =>
       queryApi.query({ question, config: currentConfig || undefined }),
-    onSuccess: (response, question) => {
+    onSuccess: (response) => {
       // Add assistant message
       const conversationId = currentConversationId || createConversation();
       addMessage(conversationId, {
@@ -82,10 +84,13 @@ const ChatPage = () => {
   const containerHeight = theme === 'claude' ? 'h-[calc(100vh-64px)]' : 'h-[calc(100vh-80px)]';
 
   return (
-    <div className={`flex flex-col ${containerHeight}`}>
+    <div className={`flex flex-col ${containerHeight} relative`}>
+      {/* Chat Sidebar */}
+      <ChatSidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
+
       {/* Messages Container */}
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-3xl mx-auto px-4 py-8">
+        <div className={`mx-auto px-4 py-8 transition-all ${sidebarOpen ? 'max-w-3xl mr-80' : 'max-w-3xl'}`}>
           {isEmpty ? (
             <div className="flex flex-col items-center justify-center h-full text-center px-4">
               {theme === 'claude' ? (
