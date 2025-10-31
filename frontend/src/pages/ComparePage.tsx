@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { Send, Loader2, Clock, Zap } from 'lucide-react';
+import { Send, Loader2, Clock } from 'lucide-react';
 import { queryApi } from '../api/client';
 
 const ComparePage = () => {

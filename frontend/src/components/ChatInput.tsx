@@ -1,4 +1,4 @@
-import { useRef, useEffect, KeyboardEvent } from 'react';
+import { useRef, useEffect, type KeyboardEvent } from 'react';
 import { ArrowUp, Zap } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 

@@ -38,8 +38,9 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
                     // eslint-disable-next-line jsx-a11y/anchor-has-content
                     <a {...props} target="_blank" rel="noopener noreferrer" className="text-claude-primary hover:underline" />
                   ),
-                  code: ({ node, inline, className, children, ...props }) => {
-                    if (inline) {
+                  code: ({ node, className, children, ...props }) => {
+                    const isInline = !className;
+                    if (isInline) {
                       return <code className="bg-claude-bg-accent px-1 rounded text-sm" {...props}>{children}</code>;
                     }
                     // block code
@@ -63,41 +64,41 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
                 {copied ? <Check size={16} /> : <Copy size={16} />}
               </button>
 
-              {hasMetadata && (
+              {hasMetadata && message.metadata && (
                 <button
                   onClick={() => setShowMetadata(!showMetadata)}
                   className="text-claude-text-secondary hover:text-claude-text text-xs px-2 py-1 rounded hover:bg-gray-100 flex items-center gap-1"
                 >
                   <Clock size={14} />
-                  {message.metadata.latency_ms}ms
+                  {message.metadata?.latency_ms}ms
                   {showMetadata ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                 </button>
               )}
 
-              {hasSources && (
+              {hasSources && message.sources && (
                 <button
                   onClick={() => setShowSources(!showSources)}
                   className="text-claude-text-secondary hover:text-claude-text text-xs px-2 py-1 rounded hover:bg-gray-100 flex items-center gap-1"
                 >
-                  {message.sources.length} {message.sources.length === 1 ? 'source' : 'sources'}
+                  {message.sources?.length} {message.sources && message.sources.length === 1 ? 'source' : 'sources'}
                   {showSources ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                 </button>
               )}
             </div>
 
             {/* Expanded Metadata */}
-            {showMetadata && hasMetadata && (
+            {showMetadata && hasMetadata && message.metadata && (
               <div className="mt-3 pt-3 border-t border-gray-100 space-y-2">
                 <div className="flex flex-wrap gap-2 text-xs">
                   <span className="text-claude-text-secondary">
-                    Model: <span className="font-medium">{message.metadata.model_name}</span>
+                    Model: <span className="font-medium">{message.metadata?.model_name}</span>
                   </span>
                   <span className="text-gray-400">•</span>
                   <span className="text-claude-text-secondary">
-                    Retrieved: <span className="font-medium">{message.metadata.retrieval_k} docs</span>
+                    Retrieved: <span className="font-medium">{message.metadata?.retrieval_k} docs</span>
                   </span>
                 </div>
-                {message.metadata.techniques_used.length > 0 && (
+                {message.metadata?.techniques_used && message.metadata.techniques_used.length > 0 && (
                   <div className="flex flex-wrap gap-1.5">
                     {message.metadata.techniques_used.map((technique) => (
                       <span
@@ -114,9 +115,9 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
           </div>
 
           {/* Sources Section */}
-          {showSources && hasSources && (
+          {showSources && hasSources && message.sources && (
             <div className="mt-3 space-y-2">
-              {message.sources.map((source, idx) => (
+              {message.sources?.map((source, idx) => (
                 <div
                   key={idx}
                   className="bg-claude-bg rounded-xl p-3 border border-claude-border hover:border-gray-300"
@@ -175,8 +176,9 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
                 a: ({ node, ...props }) => (
                   <a {...props} target="_blank" rel="noopener noreferrer" className="text-neo-black underline" />
                 ),
-                code: ({ node, inline, className, children, ...props }) => {
-                  if (inline) {
+                code: ({ node, className, children, ...props }) => {
+                  const isInline = !className;
+                  if (isInline) {
                     return <code className="bg-gray-100 px-1 rounded text-sm" {...props}>{children}</code>;
                   }
                   return (
@@ -199,40 +201,40 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
               {copied ? <Check size={18} strokeWidth={3} /> : <Copy size={18} strokeWidth={3} />}
             </button>
 
-            {hasMetadata && (
+            {hasMetadata && message.metadata && (
               <button
                 onClick={() => setShowMetadata(!showMetadata)}
                 className="text-neo-black bg-neo-cyan hover:bg-neo-lime text-xs px-3 py-2 border-3 border-neo-black shadow-brutal-sm hover:shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center gap-1.5 font-black uppercase"
               >
                 <Clock size={16} strokeWidth={3} />
-                {message.metadata.latency_ms}ms
+                {message.metadata?.latency_ms}ms
                 {showMetadata ? <ChevronUp size={16} strokeWidth={3} /> : <ChevronDown size={16} strokeWidth={3} />}
               </button>
             )}
 
-            {hasSources && (
+            {hasSources && message.sources && (
               <button
                 onClick={() => setShowSources(!showSources)}
                 className="text-neo-black bg-neo-orange hover:bg-neo-pink text-xs px-3 py-2 border-3 border-neo-black shadow-brutal-sm hover:shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center gap-1.5 font-black uppercase"
               >
-                {message.sources.length} SOURCE{message.sources.length !== 1 ? 'S' : ''}
+                {message.sources?.length} SOURCE{message.sources && message.sources.length !== 1 ? 'S' : ''}
                 {showSources ? <ChevronUp size={16} strokeWidth={3} /> : <ChevronDown size={16} strokeWidth={3} />}
               </button>
             )}
           </div>
 
           {/* Expanded Metadata */}
-          {showMetadata && hasMetadata && (
+          {showMetadata && hasMetadata && message.metadata && (
             <div className="mt-4 pt-4 border-t-4 border-neo-black space-y-3">
               <div className="flex flex-wrap gap-3 text-sm font-bold">
                 <span className="text-neo-black bg-neo-yellow px-2 py-1 border-2 border-neo-black">
-                  MODEL: {message.metadata.model_name.toUpperCase()}
+                  MODEL: {message.metadata?.model_name.toUpperCase()}
                 </span>
                 <span className="text-neo-black bg-neo-cyan px-2 py-1 border-2 border-neo-black">
-                  DOCS: {message.metadata.retrieval_k}
+                  DOCS: {message.metadata?.retrieval_k}
                 </span>
               </div>
-              {message.metadata.techniques_used.length > 0 && (
+              {message.metadata?.techniques_used && message.metadata.techniques_used.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {message.metadata.techniques_used.map((technique) => (
                     <span
@@ -249,9 +251,9 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
         </div>
 
         {/* Sources Section */}
-        {showSources && hasSources && (
+        {showSources && hasSources && message.sources && (
           <div className="mt-4 space-y-3">
-            {message.sources.map((source, idx) => (
+            {message.sources?.map((source, idx) => (
               <div
                 key={idx}
                 className="bg-neo-lime border-4 border-neo-black shadow-brutal p-4"
