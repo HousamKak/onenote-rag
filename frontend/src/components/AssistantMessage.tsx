@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { ExternalLink, Clock, ChevronDown, ChevronUp, Copy, Check } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useTheme } from '../context/ThemeContext';
 import type { Message } from '../types/index';
 
@@ -28,9 +30,27 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
         <div className="flex-1 min-w-0">
           <div className="bg-claude-surface rounded-2xl px-4 py-3 shadow-claude">
             <div className="prose max-w-none">
-              <p className="whitespace-pre-wrap break-words text-claude-text leading-relaxed m-0">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  a: ({ node, ...props }) => (
+                    // open links in new tab
+                    // eslint-disable-next-line jsx-a11y/anchor-has-content
+                    <a {...props} target="_blank" rel="noopener noreferrer" className="text-claude-primary hover:underline" />
+                  ),
+                  code: ({ node, inline, className, children, ...props }) => {
+                    if (inline) {
+                      return <code className="bg-claude-bg-accent px-1 rounded text-sm" {...props}>{children}</code>;
+                    }
+                    // block code
+                    return (
+                      <pre className="rounded bg-claude-bg-accent p-3 overflow-auto text-sm"><code className={className} {...props}>{children}</code></pre>
+                    );
+                  }
+                }}
+              >
                 {message.content}
-              </p>
+              </ReactMarkdown>
             </div>
 
             {/* Action buttons */}
@@ -149,9 +169,24 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
       <div className="flex-1 min-w-0">
         <div className="bg-white border-4 border-neo-black shadow-brutal px-5 py-4">
           <div className="prose max-w-none">
-            <p className="whitespace-pre-wrap break-words text-neo-black leading-snug font-semibold m-0">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                a: ({ node, ...props }) => (
+                  <a {...props} target="_blank" rel="noopener noreferrer" className="text-neo-black underline" />
+                ),
+                code: ({ node, inline, className, children, ...props }) => {
+                  if (inline) {
+                    return <code className="bg-gray-100 px-1 rounded text-sm" {...props}>{children}</code>;
+                  }
+                  return (
+                    <pre className="rounded bg-gray-100 p-3 overflow-auto text-sm"><code className={className} {...props}>{children}</code></pre>
+                  );
+                }
+              }}
+            >
               {message.content}
-            </p>
+            </ReactMarkdown>
           </div>
 
           {/* Action buttons */}

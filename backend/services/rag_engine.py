@@ -161,18 +161,41 @@ class RAGEngine:
         if not documents:
             return "I couldn't find any relevant information to answer your question."
 
-        # Format context
-        context = "\n\n".join([doc.page_content for doc in documents])
+        # Format context with source attribution
+        context_parts = []
+        for i, doc in enumerate(documents, 1):
+            page_title = doc.metadata.get("page_title", "Unknown")
+            notebook = doc.metadata.get("notebook_name", "Unknown")
+            section = doc.metadata.get("section_name", "Unknown")
+            
+            context_parts.append(
+                f"[Source {i}: {page_title} - {notebook}/{section}]\n{doc.page_content}"
+            )
+        
+        context = "\n\n---\n\n".join(context_parts)
 
-        # Create prompt
-        template = """Answer the following question based on the provided context from OneNote documents.
+        # Create prompt with detailed instructions
+        template = """You are a helpful AI assistant answering questions based on OneNote documents. Your responses should be well-formatted, clear, and comprehensive.
 
-Context:
+**Context from OneNote Documents:**
 {context}
 
-Question: {question}
+**Question:** {question}
 
-Answer: Provide a comprehensive answer based on the context above. If the context doesn't contain enough information, say so."""
+**Instructions:**
+- Provide a comprehensive, well-structured answer based on the context above
+- Use proper markdown formatting in your response:
+  * Use **bold** for emphasis
+  * Use bullet points or numbered lists where appropriate
+  * Use code blocks with ``` for any code snippets
+  * Use headers (##, ###) to organize longer responses
+  * Use > blockquotes for important notes or quotes
+- Reference specific sources when citing information (e.g., "According to [Source 1]...")
+- If the context doesn't contain enough information, clearly state what's missing
+- Be concise but thorough
+- Maintain a professional yet friendly tone
+
+**Answer:**"""
 
         prompt = ChatPromptTemplate.from_template(template)
 
