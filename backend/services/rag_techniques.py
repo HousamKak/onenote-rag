@@ -54,11 +54,27 @@ class RAGTechniques:
         logger.info(f"Applying multi-query retrieval with {config.num_queries} queries")
 
         # Prompt for generating multiple queries
-        template = f"""You are an AI language model assistant. Your task is to generate {config.num_queries}
-different versions of the given user question to retrieve relevant documents from a vector
-database. By generating multiple perspectives on the user question, your goal is to help
-the user overcome some of the limitations of the distance-based similarity search.
-Provide these alternative questions separated by newlines. Original question: {{question}}"""
+        template = f"""You are an expert search query optimization assistant specializing in information retrieval from document databases.
+
+**TASK:** Generate exactly {config.num_queries} diverse reformulations of the user's question to maximize retrieval coverage.
+
+**STRATEGY:** Create variations that:
+1. Use different vocabulary and synonyms (e.g., "fix" → "resolve", "repair", "troubleshoot")
+2. Vary specificity levels (broader context vs. specific details)
+3. Rephrase from different angles (technical, practical, conceptual)
+4. Address implicit sub-questions within the main question
+5. Use different question formats (what, how, why, when, where)
+
+**CONSTRAINTS:**
+- Each query must be self-contained and grammatically complete
+- Maintain the core intent of the original question
+- Output exactly {config.num_queries} queries, one per line
+- Do NOT include numbering, bullets, or explanations
+- Each query should be 5-20 words
+
+**ORIGINAL QUESTION:** {{question}}
+
+**OUTPUT (one query per line):**"""
 
         prompt = ChatPromptTemplate.from_template(template)
 
@@ -106,9 +122,28 @@ Provide these alternative questions separated by newlines. Original question: {{
         logger.info(f"Applying RAG-Fusion with {config.num_queries} queries")
 
         # Prompt for generating related queries
-        template = f"""You are a helpful assistant that generates multiple search queries based on a single input query.
-Generate multiple search queries related to: {{question}}
-Output ({config.num_queries} queries):"""
+        template = f"""You are an advanced search query generation specialist optimizing retrieval through query diversification.
+
+**TASK:** Generate exactly {config.num_queries} complementary search queries that explore different facets of the user's information need.
+
+**STRATEGY:** Create queries that:
+1. Target different aspects or components of the topic
+2. Explore related concepts and prerequisites
+3. Address potential follow-up questions
+4. Use domain-specific terminology variations
+5. Cover both overview and specific details
+
+**GUIDELINES:**
+- Queries can overlap but should emphasize different angles
+- Maintain semantic relevance to the original question
+- Use natural, search-friendly phrasing
+- Each query: 5-15 words
+- Output exactly {config.num_queries} queries, one per line
+- NO numbering, bullets, or explanations
+
+**USER QUESTION:** {{question}}
+
+**GENERATED QUERIES (one per line):**"""
 
         prompt = ChatPromptTemplate.from_template(template)
 
@@ -156,10 +191,28 @@ Output ({config.num_queries} queries):"""
         logger.info(f"Applying recursive decomposition")
 
         # Generate sub-questions
-        decomposition_template = f"""You are a helpful assistant that generates multiple sub-questions related to an input question.
-The goal is to break down the input into a set of sub-problems / sub-questions that can be answered in isolation.
-Generate multiple search queries related to: {{question}}
-Output ({config.max_sub_questions} queries):"""
+        decomposition_template = f"""You are an expert question decomposition specialist skilled in breaking complex queries into atomic sub-questions.
+
+**TASK:** Decompose the complex question into exactly {config.max_sub_questions} independent, answerable sub-questions.
+
+**DECOMPOSITION PRINCIPLES:**
+1. **Atomic:** Each sub-question should address ONE specific aspect
+2. **Independent:** Sub-questions can be answered without referencing others
+3. **Sequential:** Order sub-questions logically (foundational → specific)
+4. **Complete:** Together, sub-questions should cover all aspects needed to answer the main question
+5. **Answerable:** Each should be directly answerable from document content
+
+**EXAMPLE:**
+Main Question: "How do I optimize React performance in large applications?"
+Sub-questions:
+- What are the main causes of performance issues in React applications?
+- Which React performance optimization techniques are most effective?
+- How do you implement code splitting and lazy loading in React?
+
+**YOUR TURN:**
+Main Question: {{question}}
+
+**OUTPUT (exactly {config.max_sub_questions} sub-questions, one per line, no numbering):**"""
 
         decomposition_prompt = ChatPromptTemplate.from_template(decomposition_template)
 
@@ -175,20 +228,29 @@ Output ({config.max_sub_questions} queries):"""
         logger.debug(f"Generated sub-questions: {sub_questions}")
 
         # Answer sub-questions recursively
-        answer_template = """Here is the question you need to answer:
+        answer_template = """You are a precise question-answering assistant working within a recursive decomposition framework.
 
-\n --- \n {question} \n --- \n
+**YOUR TASK:** Answer the current sub-question using:
+1. Document context provided below
+2. Previously answered sub-questions (if any)
 
-Here is any available background question + answer pairs:
+**CURRENT SUB-QUESTION:**
+{question}
 
-\n --- \n {q_a_pairs} \n --- \n
+**PREVIOUS Q&A PAIRS (context from earlier sub-questions):**
+{q_a_pairs}
 
-Here is additional context relevant to the question:
+**DOCUMENT CONTEXT (retrieved information):**
+{context}
 
-\n --- \n {context} \n --- \n
+**INSTRUCTIONS:**
+- Provide a concise, factual answer (2-4 sentences)
+- Reference specific details from the document context
+- Build upon previous answers when relevant
+- If information is insufficient, state what's missing
+- Use clear, declarative statements
 
-Use the above context and any background question + answer pairs to answer the question: \n {question}
-"""
+**YOUR ANSWER:**"""
 
         answer_prompt = ChatPromptTemplate.from_template(answer_template)
 
@@ -267,7 +329,15 @@ Use the above context and any background question + answer pairs to answer the q
         prompt = ChatPromptTemplate.from_messages([
             (
                 "system",
-                """You are an expert at world knowledge. Your task is to step back and paraphrase a question to a more generic step-back question, which is easier to answer. Here are a few examples:""",
+                """You are an expert question abstraction specialist. Your task is to generate a broader, more general "step-back" question that provides foundational context for answering the specific original question.
+
+**PRINCIPLES:**
+1. **Generalize:** Remove specific details while keeping the core domain
+2. **Broaden Scope:** Ask about concepts, principles, or categories rather than instances
+3. **Foundation First:** Target background knowledge needed to understand the specific question
+4. **Maintain Relevance:** Stay within the same domain/topic area
+
+**EXAMPLES:**""",
             ),
             few_shot_prompt,
             ("user", "{question}"),
@@ -307,9 +377,20 @@ Use the above context and any background question + answer pairs to answer the q
         logger.info("Applying HyDE")
 
         # Generate hypothetical document
-        template = """Please write a scientific paper passage to answer the question
-Question: {question}
-Passage:"""
+        template = """You are an expert technical writer generating a hypothetical document excerpt that would perfectly answer the user's question.
+
+**TASK:** Write a detailed, well-structured document passage (150-250 words) that would ideally contain the answer to the question below.
+
+**WRITING STYLE:**
+- Professional and informative tone
+- Use domain-specific terminology naturally
+- Include concrete examples and specific details
+- Structure with clear topic sentences
+- Write as if extracted from comprehensive documentation
+
+**QUESTION:** {question}
+
+**HYPOTHETICAL DOCUMENT PASSAGE:**"""
 
         prompt = ChatPromptTemplate.from_template(template)
 
