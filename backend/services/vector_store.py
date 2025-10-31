@@ -59,6 +59,13 @@ class VectorStoreService:
             self.vectorstore.add_documents(documents)
             logger.info(f"Added {len(documents)} documents to vector store")
 
+            # Log sample for verification
+            if documents:
+                sample = documents[0]
+                logger.info(f"Sample document - Length: {len(sample.page_content)} chars, "
+                           f"Metadata: {sample.metadata.get('page_title', 'N/A')} "
+                           f"[chunk {sample.metadata.get('chunk_index', 'N/A')}/{sample.metadata.get('total_chunks', 'N/A')}]")
+
         except Exception as e:
             logger.error(f"Error adding documents: {str(e)}")
             raise
@@ -87,6 +94,9 @@ class VectorStoreService:
                 filter=filter
             )
             logger.debug(f"Found {len(results)} results for query: {query[:50]}...")
+            if results:
+                logger.debug(f"First result metadata: {results[0].metadata}")
+                logger.debug(f"First result content length: {len(results[0].page_content)} chars")
             return results
 
         except Exception as e:

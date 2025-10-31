@@ -124,6 +124,16 @@ class RAGEngine:
         # Limit documents to retrieval_k
         retrieved_docs = retrieved_docs[:config.retrieval_k]
 
+        # Limit context size to prevent token overflow
+        retrieved_docs = self._limit_context_size(retrieved_docs, max_tokens=20000)
+
+        # Log retrieved documents for verification
+        logger.info(f"Retrieved {len(retrieved_docs)} documents for answer generation")
+        for i, doc in enumerate(retrieved_docs[:3], 1):  # Log first 3
+            logger.info(f"  Doc {i}: {doc.metadata.get('page_title', 'N/A')} "
+                       f"[chunk {doc.metadata.get('chunk_index', 'N/A')}/{doc.metadata.get('total_chunks', 'N/A')}] "
+                       f"- {len(doc.page_content)} chars")
+
         # Generate answer
         answer = self._generate_answer(question, retrieved_docs, llm, config)
 
@@ -138,6 +148,68 @@ class RAGEngine:
 
         logger.info(f"Query processed in {response.metadata.latency_ms}ms")
         return response
+
+    def _limit_context_size(
+        self,
+        documents: List[Document],
+        max_tokens: int = 20000
+    ) -> List[Document]:
+        """
+        Limit documents to prevent token overflow.
+        Uses approximate token count (1 token ≈ 4 characters).
+
+        Also filters out abnormally large documents that shouldn't have been retrieved.
+
+        Args:
+            documents: List of documents
+            max_tokens: Maximum tokens to allow
+
+        Returns:
+            Filtered list of documents
+        """
+        if not documents:
+            return documents
+
+        # First, filter out suspiciously large documents (likely un-chunked)
+        # Normal chunks should be under 2000 chars (chunk_size=1000 + overlap=200 + margin)
+        MAX_CHUNK_SIZE = 3000
+        filtered_docs = []
+
+        for doc in documents:
+            doc_chars = len(doc.page_content)
+            if doc_chars > MAX_CHUNK_SIZE:
+                logger.warning(
+                    f"Skipping abnormally large document: {doc_chars} chars, "
+                    f"chunk_index={doc.metadata.get('chunk_index', 'N/A')}, "
+                    f"title={doc.metadata.get('page_title', 'N/A')}"
+                )
+                continue
+            filtered_docs.append(doc)
+
+        documents = filtered_docs
+
+        # Now apply token limit
+        total_chars = 0
+        max_chars = max_tokens * 4
+        limited_docs = []
+
+        for doc in documents:
+            doc_chars = len(doc.page_content)
+            if total_chars + doc_chars <= max_chars:
+                limited_docs.append(doc)
+                total_chars += doc_chars
+            else:
+                # Stop adding documents - don't truncate
+                logger.debug(f"Reached token limit, stopping at {len(limited_docs)} documents")
+                break
+
+        if len(limited_docs) < len(documents):
+            logger.info(
+                f"Limited context from {len(documents)} to {len(limited_docs)} documents "
+                f"to stay within {max_tokens} token limit"
+            )
+
+        return limited_docs
 
     def _generate_answer(
         self,
@@ -174,6 +246,9 @@ class RAGEngine:
         
         context = "\n\n---\n\n".join(context_parts)
 
+        # Log context being sent (first 500 chars)
+        logger.debug(f"Context being sent to LLM ({len(context)} chars): {context[:500]}...")
+
         # Create prompt with detailed instructions
         template = """You are an expert OneNote knowledge assistant delivering precise, well-structured answers grounded in provided document context.
 
@@ -186,10 +261,12 @@ class RAGEngine:
 **RESPONSE REQUIREMENTS:**
 
 **1. CONTENT GUIDELINES:**
-- Answer directly and comprehensively using ONLY information from the context above
+- Answer directly and comprehensively using the information from the context above
+- If the context contains relevant information, provide it even if incomplete
 - Synthesize information across multiple sources when relevant
 - Cite sources explicitly (e.g., "According to [Source 2], ..." or "As mentioned in [Source 1] and [Source 3], ...")
-- If context is insufficient, clearly state: "Based on the available documents, I can only provide partial information. Missing: [specific gaps]"
+- If the context is partial, provide what's available and note what's missing (e.g., "Based on the available documents, [answer]. Additional details about [specific topic] were not found in the documents.")
+- Only say you can't answer if the context is completely unrelated to the question
 - Distinguish between facts from documents vs. logical inferences you make
 
 **2. STRUCTURE & FORMATTING:**

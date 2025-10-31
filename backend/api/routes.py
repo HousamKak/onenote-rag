@@ -316,8 +316,8 @@ async def add_demo_documents(
     try:
         from langchain_core.documents import Document as LangChainDocument
 
-        # Create simple documents
-        docs = []
+        # Create documents with metadata
+        all_chunks = []
         for i, text in enumerate(request.texts):
             doc = LangChainDocument(
                 page_content=text,
@@ -329,15 +329,34 @@ async def add_demo_documents(
                     "url": "",
                 }
             )
-            docs.append(doc)
+
+            # Chunk the document if it's large
+            if len(text) > processor.chunk_size:
+                chunks = processor.text_splitter.create_documents(
+                    texts=[text],
+                    metadatas=[doc.metadata]
+                )
+                # Add chunk metadata
+                for j, chunk in enumerate(chunks):
+                    chunk.metadata["chunk_index"] = j
+                    chunk.metadata["total_chunks"] = len(chunks)
+                all_chunks.extend(chunks)
+            else:
+                # Add as-is if smaller than chunk size
+                doc.metadata["chunk_index"] = 0
+                doc.metadata["total_chunks"] = 1
+                all_chunks.append(doc)
 
         # Add to vector store
-        store.add_documents(docs)
+        store.add_documents(all_chunks)
+
+        logger.info(f"Added {len(request.texts)} demo documents as {len(all_chunks)} chunks to vector store")
 
         return {
             "status": "success",
-            "documents_added": len(docs),
-            "message": f"Added {len(docs)} demo documents"
+            "documents_added": len(request.texts),
+            "chunks_created": len(all_chunks),
+            "message": f"Added {len(request.texts)} demo documents ({len(all_chunks)} chunks)"
         }
 
     except Exception as e:
