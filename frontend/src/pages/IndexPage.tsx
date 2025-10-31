@@ -5,6 +5,7 @@ import { indexApi, demoApi } from '../api/client';
 import { useStore } from '../store/useStore';
 import { useTheme } from '../context/ThemeContext';
 import ConfirmModal from '../components/ConfirmModal';
+import NotificationModal from '../components/NotificationModal';
 
 const IndexPage = () => {
   const { theme } = useTheme();
@@ -12,6 +13,17 @@ const IndexPage = () => {
   const setIndexStats = useStore((state) => state.setIndexStats);
   const [demoTexts, setDemoTexts] = useState(['', '', '']);
   const [showClearModal, setShowClearModal] = useState(false);
+  const [notification, setNotification] = useState<{
+    show: boolean;
+    title: string;
+    message: string;
+    variant: 'success' | 'error';
+  }>({
+    show: false,
+    title: '',
+    message: '',
+    variant: 'success',
+  });
 
   const { data: stats, refetch: refetchStats } = useQuery({
     queryKey: ['indexStats'],
@@ -24,13 +36,23 @@ const IndexPage = () => {
 
   const syncMutation = useMutation({
     mutationFn: () => indexApi.sync(undefined, true),
-    onSuccess: () => {
+    onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ['indexStats'] });
       refetchStats();
-      alert('Sync completed successfully!');
+      setNotification({
+        show: true,
+        title: 'Sync Completed',
+        message: response.data?.message || 'Documents synced successfully!',
+        variant: 'success',
+      });
     },
     onError: (error: any) => {
-      alert(`Sync failed: ${error.response?.data?.detail || error.message}`);
+      setNotification({
+        show: true,
+        title: 'Sync Failed',
+        message: error.response?.data?.detail || error.message,
+        variant: 'error',
+      });
     },
   });
 
@@ -39,7 +61,22 @@ const IndexPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['indexStats'] });
       refetchStats();
-      alert('Index cleared successfully!');
+      setShowClearModal(false);
+      setNotification({
+        show: true,
+        title: 'Index Cleared',
+        message: 'All documents have been removed from the vector database.',
+        variant: 'success',
+      });
+    },
+    onError: (error: any) => {
+      setShowClearModal(false);
+      setNotification({
+        show: true,
+        title: 'Clear Failed',
+        message: error.response?.data?.detail || error.message,
+        variant: 'error',
+      });
     },
   });
 
@@ -48,11 +85,25 @@ const IndexPage = () => {
       const texts = demoTexts.filter((t) => t.trim());
       return demoApi.addDocuments(texts);
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ['indexStats'] });
       refetchStats();
       setDemoTexts(['', '', '']);
-      alert('Demo documents added successfully!');
+      const data = response.data;
+      setNotification({
+        show: true,
+        title: 'Documents Added',
+        message: data?.message || `Added ${data?.documents_added || 0} documents (${data?.chunks_created || 0} chunks)`,
+        variant: 'success',
+      });
+    },
+    onError: (error: any) => {
+      setNotification({
+        show: true,
+        title: 'Add Failed',
+        message: error.response?.data?.detail || error.message,
+        variant: 'error',
+      });
     },
   });
 
@@ -206,6 +257,15 @@ const IndexPage = () => {
         confirmText="Clear All"
         cancelText="Cancel"
         variant="danger"
+      />
+
+      {/* Notification Modal */}
+      <NotificationModal
+        isOpen={notification.show}
+        onClose={() => setNotification({ ...notification, show: false })}
+        title={notification.title}
+        message={notification.message}
+        variant={notification.variant}
       />
     </>
   );
