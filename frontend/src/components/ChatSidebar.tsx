@@ -74,10 +74,10 @@ const ChatSidebar = ({ isOpen, onToggle }: ChatSidebarProps) => {
                 <Database size={16} />
                 <span>Document Stats</span>
               </div>
-              <div className="bg-claude-bg rounded-lg p-3 space-y-2">
+              <div className="bg-claude-bg rounded-lg p-3 space-y-2 hover-lift transition-all">
                 <div className="flex justify-between text-sm">
                   <span className="text-claude-text-secondary">Indexed Chunks:</span>
-                  <span className="font-medium text-claude-text">
+                  <span className="font-medium text-claude-text animate-pulse">
                     {stats?.data.total_documents || 0}
                   </span>
                 </div>
@@ -158,7 +158,7 @@ const ChatSidebar = ({ isOpen, onToggle }: ChatSidebarProps) => {
                       // TODO: Load preset config
                       console.log('Load preset:', preset.name);
                     }}
-                    className={`p-3 rounded-lg border border-claude-border hover:border-claude-accent transition-colors text-left ${preset.color}`}
+                    className={`p-3 rounded-lg border border-claude-border hover:border-claude-accent transition-all hover-lift text-left ${preset.color}`}
                   >
                     <div className="text-lg mb-1">{preset.emoji}</div>
                     <div className="text-xs font-medium">{preset.label}</div>
@@ -192,11 +192,11 @@ const ChatSidebar = ({ isOpen, onToggle }: ChatSidebarProps) => {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-20 right-0 h-[calc(100vh-80px)] w-80 bg-white border-l-8 border-neo-black shadow-brutal-lg overflow-y-auto transition-transform z-40 ${
+        className={`fixed top-16 right-0 h-[calc(100vh-64px)] w-80 bg-white border-l border-claude-border shadow-lg overflow-y-auto transition-all duration-300 ease-in-out z-40 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="p-4 space-y-6">
+        <div className="p-4 space-y-6 animate-fadeIn">
           {/* Header */}
           <div className="flex items-center gap-2 pb-4 border-b-4 border-neo-black">
             <Settings size={24} strokeWidth={3} className="text-neo-black" />

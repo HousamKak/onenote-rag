@@ -10,8 +10,8 @@ const UserMessage = ({ message }: UserMessageProps) => {
 
   if (theme === 'claude') {
     return (
-      <div className="flex items-start gap-3 max-w-3xl ml-auto justify-end">
-        <div className="bg-claude-user-msg text-claude-text rounded-2xl px-4 py-3 shadow-claude max-w-[80%]">
+      <div className="flex items-start gap-3 max-w-3xl ml-auto justify-end animate-fadeInUp">
+        <div className="bg-claude-user-msg text-claude-text rounded-2xl px-4 py-3 shadow-claude max-w-[80%] hover-lift">
           <p className="whitespace-pre-wrap break-words">{message.content}</p>
         </div>
         <div className="w-8 h-8 rounded-full bg-claude-primary flex items-center justify-center flex-shrink-0">
@@ -22,7 +22,7 @@ const UserMessage = ({ message }: UserMessageProps) => {
   }
 
   return (
-    <div className="flex items-start gap-4 max-w-3xl ml-auto justify-end">
+    <div className="flex items-start gap-4 max-w-3xl ml-auto justify-end animate-fadeInUp">
       <div className="bg-neo-blue text-neo-black border-4 border-neo-black shadow-brutal px-5 py-4 max-w-[80%] font-bold">
         <p className="whitespace-pre-wrap break-words leading-snug">{message.content}</p>
       </div>

@@ -26,9 +26,9 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
 
   if (theme === 'claude') {
     return (
-      <div className="flex items-start max-w-3xl">
+      <div className="flex items-start max-w-3xl animate-fadeInUp">
         <div className="flex-1 min-w-0">
-          <div className="bg-claude-surface rounded-2xl px-4 py-3 shadow-claude">
+          <div className="bg-claude-surface rounded-2xl px-4 py-3 shadow-claude hover-lift">
             <div className="prose max-w-none">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
@@ -161,8 +161,8 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
 
   // Brutalist theme
   return (
-    <div className="flex items-start gap-4 max-w-3xl">
-      <div className="w-12 h-12 bg-neo-pink border-4 border-neo-black shadow-brutal-sm flex items-center justify-center flex-shrink-0">
+    <div className="flex items-start gap-4 max-w-3xl animate-fadeInUp">
+      <div className="w-12 h-12 bg-neo-pink border-4 border-neo-black shadow-brutal-sm flex items-center justify-center flex-shrink-0 animate-bounce">
         <span className="text-neo-black text-lg font-black">AI</span>
       </div>
 

@@ -89,26 +89,26 @@ const ChatPage = () => {
       <ChatSidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto">
-        <div className={`mx-auto px-4 py-8 transition-all ${sidebarOpen ? 'max-w-3xl mr-80' : 'max-w-3xl'}`}>
+      <div className={`flex-1 overflow-y-auto transition-all duration-300 ${sidebarOpen ? 'pr-80' : 'pr-0'}`}>
+        <div className="mx-auto px-4 py-8 max-w-3xl">
           {isEmpty ? (
             <div className="flex flex-col items-center justify-center h-full text-center px-4">
               {theme === 'claude' ? (
                 <>
-                  <div className="w-16 h-16 rounded-full bg-claude-accent flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 rounded-full bg-claude-accent flex items-center justify-center mb-4 animate-scaleIn">
                     <span className="text-white text-2xl font-semibold">AI</span>
                   </div>
-                  <h2 className="text-2xl font-semibold text-claude-text mb-2">
+                  <h2 className="text-2xl font-semibold text-claude-text mb-2 animate-fadeInUp">
                     What can I help with?
                   </h2>
-                  <p className="text-claude-text-secondary mb-8">
+                  <p className="text-claude-text-secondary mb-8 animate-fadeIn">
                     Ask about your OneNote documents
                   </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-2xl">
                     <button
                       onClick={() => setInput('Summarize the key points from my recent notes')}
-                      className="p-4 text-left border border-claude-border rounded-xl hover:bg-gray-50 transition-colors"
+                      className="p-4 text-left border border-claude-border rounded-xl hover:bg-gray-50 transition-all animate-fadeIn hover:-translate-y-1 hover:shadow-lg"
                     >
                       <p className="text-sm font-medium text-claude-text mb-1">Summarize notes</p>
                       <p className="text-xs text-claude-text-secondary">
@@ -117,7 +117,7 @@ const ChatPage = () => {
                     </button>
                     <button
                       onClick={() => setInput('Find information about project deadlines')}
-                      className="p-4 text-left border border-claude-border rounded-xl hover:bg-gray-50 transition-colors"
+                      className="p-4 text-left border border-claude-border rounded-xl hover:bg-gray-50 transition-all animate-fadeIn hover:-translate-y-1 hover:shadow-lg"
                     >
                       <p className="text-sm font-medium text-claude-text mb-1">Find deadlines</p>
                       <p className="text-xs text-claude-text-secondary">
@@ -126,7 +126,7 @@ const ChatPage = () => {
                     </button>
                     <button
                       onClick={() => setInput('What are the main topics in my study notes?')}
-                      className="p-4 text-left border border-claude-border rounded-xl hover:bg-gray-50 transition-colors"
+                      className="p-4 text-left border border-claude-border rounded-xl hover:bg-gray-50 transition-all animate-fadeIn hover:-translate-y-1 hover:shadow-lg"
                     >
                       <p className="text-sm font-medium text-claude-text mb-1">Analyze topics</p>
                       <p className="text-xs text-claude-text-secondary">
@@ -135,7 +135,7 @@ const ChatPage = () => {
                     </button>
                     <button
                       onClick={() => setInput('Compare different approaches mentioned in my notes')}
-                      className="p-4 text-left border border-claude-border rounded-xl hover:bg-gray-50 transition-colors"
+                      className="p-4 text-left border border-claude-border rounded-xl hover:bg-gray-50 transition-all animate-fadeIn hover:-translate-y-1 hover:shadow-lg"
                     >
                       <p className="text-sm font-medium text-claude-text mb-1">Compare approaches</p>
                       <p className="text-xs text-claude-text-secondary">
@@ -146,20 +146,20 @@ const ChatPage = () => {
                 </>
               ) : (
                 <>
-                  <div className="w-24 h-24 bg-neo-pink border-8 border-neo-black shadow-brutal-lg flex items-center justify-center mb-6">
+                  <div className="w-24 h-24 bg-neo-pink border-8 border-neo-black shadow-brutal-lg flex items-center justify-center mb-6 animate-pulse">
                     <span className="text-neo-black text-4xl font-black">AI</span>
                   </div>
-                  <h2 className="text-4xl font-black text-neo-black mb-3 uppercase tracking-tight">
+                  <h2 className="text-4xl font-black text-neo-black mb-3 uppercase tracking-tight animate-fadeInUp">
                     WHAT CAN I HELP WITH?
                   </h2>
-                  <p className="text-xl font-bold text-neo-black mb-10 uppercase">
+                  <p className="text-xl font-bold text-neo-black mb-10 uppercase animate-fadeIn">
                     ASK ABOUT YOUR ONENOTE DOCS
                   </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
                     <button
                       onClick={() => setInput('Summarize the key points from my recent notes')}
-                      className="p-5 text-left border-4 border-neo-black bg-neo-yellow hover:bg-neo-lime shadow-brutal hover:shadow-brutal-hover hover:translate-x-1 hover:translate-y-1 active:shadow-none active:translate-x-2 active:translate-y-2"
+                      className="p-5 text-left border-4 border-neo-black bg-neo-yellow hover:bg-neo-lime shadow-brutal hover:shadow-brutal-hover transition-all hover:translate-x-1 hover:translate-y-1 active:shadow-none active:translate-x-2 active:translate-y-2 animate-fadeIn"
                     >
                       <p className="text-base font-black text-neo-black uppercase mb-1">📝 SUMMARIZE</p>
                       <p className="text-sm font-bold text-neo-black">
@@ -168,7 +168,7 @@ const ChatPage = () => {
                     </button>
                     <button
                       onClick={() => setInput('Find information about project deadlines')}
-                      className="p-5 text-left border-4 border-neo-black bg-neo-cyan hover:bg-neo-lime shadow-brutal hover:shadow-brutal-hover hover:translate-x-1 hover:translate-y-1 active:shadow-none active:translate-x-2 active:translate-y-2"
+                      className="p-5 text-left border-4 border-neo-black bg-neo-cyan hover:bg-neo-lime shadow-brutal hover:shadow-brutal-hover transition-all hover:translate-x-1 hover:translate-y-1 active:shadow-none active:translate-x-2 active:translate-y-2 animate-fadeIn"
                     >
                       <p className="text-base font-black text-neo-black uppercase mb-1">⏰ DEADLINES</p>
                       <p className="text-sm font-bold text-neo-black">
@@ -177,7 +177,7 @@ const ChatPage = () => {
                     </button>
                     <button
                       onClick={() => setInput('What are the main topics in my study notes?')}
-                      className="p-5 text-left border-4 border-neo-black bg-neo-orange hover:bg-neo-pink shadow-brutal hover:shadow-brutal-hover hover:translate-x-1 hover:translate-y-1 active:shadow-none active:translate-x-2 active:translate-y-2"
+                      className="p-5 text-left border-4 border-neo-black bg-neo-orange hover:bg-neo-pink shadow-brutal hover:shadow-brutal-hover transition-all hover:translate-x-1 hover:translate-y-1 active:shadow-none active:translate-x-2 active:translate-y-2 animate-fadeIn"
                     >
                       <p className="text-base font-black text-neo-black uppercase mb-1">🔍 ANALYZE</p>
                       <p className="text-sm font-bold text-neo-black">
@@ -186,7 +186,7 @@ const ChatPage = () => {
                     </button>
                     <button
                       onClick={() => setInput('Compare different approaches mentioned in my notes')}
-                      className="p-5 text-left border-4 border-neo-black bg-neo-lime hover:bg-neo-yellow shadow-brutal hover:shadow-brutal-hover hover:translate-x-1 hover:translate-y-1 active:shadow-none active:translate-x-2 active:translate-y-2"
+                      className="p-5 text-left border-4 border-neo-black bg-neo-lime hover:bg-neo-yellow shadow-brutal hover:shadow-brutal-hover transition-all hover:translate-x-1 hover:translate-y-1 active:shadow-none active:translate-x-2 active:translate-y-2 animate-fadeIn"
                     >
                       <p className="text-base font-black text-neo-black uppercase mb-1">⚖️ COMPARE</p>
                       <p className="text-sm font-bold text-neo-black">
