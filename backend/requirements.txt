@@ -1,0 +1,31 @@
+# Core Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# LangChain & RAG
+langchain==0.1.6
+langchain-openai==0.0.5
+langchain-community==0.0.19
+langchain-core>=0.1.22,<0.2
+
+# Vector Database
+chromadb==0.4.22
+
+# OneNote/Microsoft Graph
+msal==1.26.0
+requests==2.31.0
+
+# Utilities
+python-dotenv==1.0.0
+python-multipart==0.0.6
+tiktoken==0.5.2
+beautifulsoup4==4.12.3
+lxml==5.1.0
+
+# CORS
+fastapi-cors==0.0.6
+
+# Optional: Re-ranking
+cohere==4.47
