@@ -53,6 +53,7 @@ async def lifespan(app: FastAPI):
             client_id=settings.microsoft_client_id,
             client_secret=settings.microsoft_client_secret,
             tenant_id=settings.microsoft_tenant_id,
+            manual_token=settings.microsoft_graph_token,
         )
         logger.info("OneNote service initialized")
     except Exception as e:

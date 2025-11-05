@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     microsoft_client_id: str = ""
     microsoft_client_secret: str = ""
     microsoft_tenant_id: str = ""
+    microsoft_graph_token: str = ""  # Manual Bearer token from Graph Explorer
 
     # Cohere (optional)
     cohere_api_key: str = ""

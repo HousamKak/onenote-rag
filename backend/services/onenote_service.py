@@ -16,24 +16,29 @@ class OneNoteService:
 
     GRAPH_API_ENDPOINT = "https://graph.microsoft.com/v1.0"
 
-    def __init__(self, client_id: str, client_secret: str, tenant_id: str):
+    def __init__(self, client_id: str = "", client_secret: str = "", tenant_id: str = "", manual_token: str = ""):
         """
         Initialize OneNote service.
 
         Args:
-            client_id: Microsoft application client ID
-            client_secret: Microsoft application client secret
-            tenant_id: Microsoft tenant ID
+            client_id: Microsoft application client ID (optional if using manual_token)
+            client_secret: Microsoft application client secret (optional if using manual_token)
+            tenant_id: Microsoft tenant ID (optional if using manual_token)
+            manual_token: Manual Bearer token from Graph Explorer (bypasses OAuth)
         """
         self.client_id = client_id
         self.client_secret = client_secret
         self.tenant_id = tenant_id
         self.access_token: Optional[str] = None
 
-        # For now, we'll use a simple token-based approach
-        # In production, you'd implement proper OAuth flow
-        if client_id and client_secret and tenant_id:
+        # Use manual token if provided, otherwise authenticate via OAuth
+        if manual_token:
+            self.access_token = manual_token
+            logger.info("Using manual Bearer token from Graph Explorer")
+        elif client_id and client_secret and tenant_id:
             self._authenticate()
+        else:
+            logger.warning("No authentication method provided. Service will not work.")
 
     def _authenticate(self) -> None:
         """Authenticate with Microsoft Graph API using client credentials."""
