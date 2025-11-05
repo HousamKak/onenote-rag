@@ -86,6 +86,16 @@ export interface IndexStats {
   persist_directory: string;
 }
 
+export interface SyncResponse {
+  status: string;
+  documents_processed: number;
+  documents_added: number;
+  documents_updated: number;
+  documents_skipped: number;
+  chunks_created: number;
+  message: string;
+}
+
 // Conversation types for chat interface
 export interface Message {
   id: string;
@@ -103,4 +113,38 @@ export interface Conversation {
   createdAt: Date;
   updatedAt: Date;
   config?: RAGConfig;
+}
+
+// Data Source types
+export interface Notebook {
+  id: string;
+  displayName: string;
+  createdDateTime?: string;
+  lastModifiedDateTime?: string;
+}
+
+export interface Section {
+  id: string;
+  displayName: string;
+  parentNotebook?: {
+    id: string;
+    displayName: string;
+  };
+}
+
+export interface Page {
+  id: string;
+  title: string;
+  lastModifiedDateTime?: string;
+  contentUrl?: string;
+}
+
+export interface SyncHistory {
+  timestamp: Date;
+  status: 'success' | 'error';
+  documentsAdded: number;
+  documentsUpdated: number;
+  documentsSkipped: number;
+  chunksCreated: number;
+  message: string;
 }

@@ -150,6 +150,54 @@ class VectorStoreService:
 
         return self.vectorstore.as_retriever(search_kwargs=search_kwargs)
 
+    def delete_by_page_id(self, page_id: str) -> None:
+        """
+        Delete all chunks for a specific page.
+
+        Args:
+            page_id: OneNote page ID to delete
+        """
+        try:
+            collection = self.vectorstore._collection
+            # Query for documents with this page_id
+            results = collection.get(where={"page_id": page_id})
+            
+            if results and results['ids']:
+                collection.delete(ids=results['ids'])
+                logger.info(f"Deleted {len(results['ids'])} chunks for page {page_id}")
+            else:
+                logger.debug(f"No chunks found for page {page_id}")
+
+        except Exception as e:
+            logger.error(f"Error deleting page {page_id}: {str(e)}")
+            raise
+
+    def get_page_modified_date(self, page_id: str) -> Optional[str]:
+        """
+        Get the modified date of a page from the vector store.
+
+        Args:
+            page_id: OneNote page ID
+
+        Returns:
+            Modified date string or None if not found
+        """
+        try:
+            collection = self.vectorstore._collection
+            results = collection.get(
+                where={"page_id": page_id},
+                limit=1,
+                include=["metadatas"]
+            )
+            
+            if results and results['metadatas'] and len(results['metadatas']) > 0:
+                return results['metadatas'][0].get('modified_date')
+            return None
+
+        except Exception as e:
+            logger.error(f"Error getting modified date for page {page_id}: {str(e)}")
+            return None
+
     def clear_collection(self) -> None:
         """Clear all documents from the collection."""
         try:

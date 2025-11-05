@@ -162,12 +162,16 @@ async def list_pages(
 # Indexing routes
 class SyncRequest(BaseModel):
     notebook_ids: Optional[List[str]] = None
-    full_sync: bool = True
+    full_sync: bool = False  # Changed default to False for incremental sync
+    force_reindex: bool = False  # Force reindexing even if not modified
 
 
 class SyncResponse(BaseModel):
     status: str
     documents_processed: int
+    documents_added: int
+    documents_updated: int
+    documents_skipped: int
     chunks_created: int
     message: str
 
@@ -179,7 +183,14 @@ async def sync_documents(
     processor: DocumentProcessor = Depends(get_document_processor),
     store: VectorStoreService = Depends(get_vector_store)
 ):
-    """Sync OneNote documents to vector database."""
+    """
+    Sync OneNote documents to vector database.
+    
+    Supports three modes:
+    - Incremental sync (default): Only updates modified/new documents
+    - Full sync: Clears DB and reindexes everything
+    - Force reindex: Reindexes all documents without checking modification dates
+    """
     try:
         # Get documents from OneNote
         logger.info(f"Fetching documents from OneNote (notebooks: {request.notebook_ids})")
@@ -189,28 +200,77 @@ async def sync_documents(
             return SyncResponse(
                 status="success",
                 documents_processed=0,
+                documents_added=0,
+                documents_updated=0,
+                documents_skipped=0,
                 chunks_created=0,
                 message="No documents found to sync"
             )
-
-        # Process and chunk documents
-        logger.info(f"Processing {len(documents)} documents")
-        chunks = processor.chunk_documents(documents)
 
         # Clear existing data if full sync
         if request.full_sync:
             logger.info("Performing full sync - clearing existing data")
             store.clear_collection()
 
-        # Add to vector store
-        logger.info(f"Adding {len(chunks)} chunks to vector store")
-        store.add_documents(chunks)
+        # Process documents based on sync mode
+        documents_added = 0
+        documents_updated = 0
+        documents_skipped = 0
+        total_chunks = 0
+
+        for doc in documents:
+            page_id = doc.metadata.page_id
+            modified_date = doc.metadata.modified_date
+            
+            # Check if document needs updating (incremental sync)
+            if not request.full_sync and not request.force_reindex:
+                existing_modified = store.get_page_modified_date(page_id)
+                
+                if existing_modified and modified_date:
+                    # Convert to comparable format
+                    existing_dt = existing_modified if isinstance(existing_modified, str) else str(existing_modified)
+                    new_dt = str(modified_date)
+                    
+                    if existing_dt == new_dt:
+                        logger.debug(f"Skipping unchanged page: {doc.metadata.page_title}")
+                        documents_skipped += 1
+                        continue
+                
+                # Document is new or modified - delete old version and add new
+                if existing_modified:
+                    logger.info(f"Updating modified page: {doc.metadata.page_title}")
+                    store.delete_by_page_id(page_id)
+                    documents_updated += 1
+                else:
+                    logger.info(f"Adding new page: {doc.metadata.page_title}")
+                    documents_added += 1
+            else:
+                # Full sync or force reindex - just count as added
+                documents_added += 1
+
+            # Process and chunk the document
+            chunks = processor.chunk_documents([doc])
+            store.add_documents(chunks)
+            total_chunks += len(chunks)
+
+        message_parts = []
+        if documents_added > 0:
+            message_parts.append(f"{documents_added} added")
+        if documents_updated > 0:
+            message_parts.append(f"{documents_updated} updated")
+        if documents_skipped > 0:
+            message_parts.append(f"{documents_skipped} skipped")
+        
+        message = f"Successfully synced: {', '.join(message_parts)} ({total_chunks} chunks)"
 
         return SyncResponse(
             status="success",
             documents_processed=len(documents),
-            chunks_created=len(chunks),
-            message=f"Successfully synced {len(documents)} documents ({len(chunks)} chunks)"
+            documents_added=documents_added,
+            documents_updated=documents_updated,
+            documents_skipped=documents_skipped,
+            chunks_created=total_chunks,
+            message=message
         )
 
     except Exception as e:

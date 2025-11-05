@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { RAGConfig, QueryRequest, QueryResponse, IndexStats } from '../types/index';
+import type { RAGConfig, QueryRequest, QueryResponse, IndexStats, Notebook, Section, Page } from '../types/index';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
@@ -38,6 +38,13 @@ export const indexApi = {
 export const demoApi = {
   addDocuments: (texts: string[], notebookName: string = 'Demo Notebook') =>
     api.post('/demo/add-documents', { texts, notebook_name: notebookName }),
+};
+
+// OneNote endpoints
+export const oneNoteApi = {
+  listNotebooks: () => api.get<{ notebooks: Notebook[] }>('/onenote/notebooks'),
+  listSections: (notebookId: string) => api.get<{ sections: Section[] }>(`/onenote/sections/${notebookId}`),
+  listPages: (sectionId: string) => api.get<{ pages: Page[] }>(`/onenote/pages/${sectionId}`),
 };
 
 // Health check
