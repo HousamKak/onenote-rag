@@ -153,7 +153,18 @@ const Sidebar = ({ onNewChat }: SidebarProps) => {
               }`}
             >
               <Settings size={18} />
-              <span>Settings</span>
+              <span>RAG Config</span>
+            </Link>
+            <Link
+              to="/settings"
+              className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium ${
+                location.pathname === '/settings'
+                  ? 'bg-claude-user-msg text-claude-text'
+                  : 'text-claude-text-secondary hover:bg-gray-100 hover:text-claude-text'
+              }`}
+            >
+              <Settings size={18} />
+              <span>API Keys</span>
             </Link>
             <Link
               to="/index"
