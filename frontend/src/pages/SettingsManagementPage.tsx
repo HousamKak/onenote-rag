@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Save, AlertCircle, CheckCircle2, Eye, EyeOff, TestTube } from 'lucide-react';
+import { Save, AlertCircle, CheckCircle2, Eye, EyeOff, TestTube, ChevronDown, ChevronUp } from 'lucide-react';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
 
@@ -18,6 +18,7 @@ export default function SettingsManagementPage() {
   const [settings, setSettings] = useState<Setting[]>([]);
   const [editedValues, setEditedValues] = useState<Record<string, string>>({});
   const [showSensitive, setShowSensitive] = useState<Record<string, boolean>>({});
+  const [showOptionalSettings, setShowOptionalSettings] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [testingConnection, setTestingConnection] = useState(false);
@@ -354,10 +355,39 @@ export default function SettingsManagementPage() {
           )}
         </div>
 
-        {/* Settings List - Grid Layout */}
-        <div className="mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {settings.map((setting) => renderInput(setting))}
+        {/* Settings List - Separated by Sensitive and Optional */}
+        <div className="mb-6 space-y-6">
+          {/* Sensitive Settings Section */}
+          <div>
+            <h2 className={theme === 'claude' 
+              ? 'text-xl font-semibold text-claude-text mb-4'
+              : 'text-2xl font-black mb-4'
+            }>
+              🔐 API Keys & Credentials
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {settings.filter(s => s.is_sensitive).map((setting) => renderInput(setting))}
+            </div>
+          </div>
+
+          {/* Optional Settings Section - Collapsible */}
+          <div>
+            <button
+              onClick={() => setShowOptionalSettings(!showOptionalSettings)}
+              className={theme === 'claude'
+                ? 'flex items-center gap-2 text-lg font-semibold text-claude-text hover:text-claude-primary transition-colors mb-4 w-full'
+                : 'flex items-center gap-2 text-xl font-black hover:translate-x-1 transition-transform mb-4 w-full'
+              }
+            >
+              {showOptionalSettings ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+              <span>⚙️ Application Settings ({settings.filter(s => !s.is_sensitive).length})</span>
+            </button>
+            
+            {showOptionalSettings && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {settings.filter(s => !s.is_sensitive).map((setting) => renderInput(setting))}
+              </div>
+            )}
           </div>
         </div>
 
