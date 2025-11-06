@@ -89,6 +89,10 @@ logs/
 *.sqlite3
 backend/data/chroma_db/
 
+# Security - Encryption keys
+backend/data/.encryption_key
+backend/data/settings.db
+
 # OS specific
 Thumbs.db
 .DS_Store

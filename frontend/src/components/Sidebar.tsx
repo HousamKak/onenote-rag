@@ -60,9 +60,9 @@ const Sidebar = ({ onNewChat }: SidebarProps) => {
         />
 
         {/* Claude Sidebar */}
-        <aside className="fixed lg:static inset-y-0 left-0 z-50 w-64 bg-claude-sidebar border-r border-claude-border flex flex-col">
+        <aside className="fixed lg:static inset-y-0 left-0 z-50 w-64 bg-claude-sidebar border-r border-claude-border flex flex-col h-screen">
           {/* Header */}
-          <div className="p-4 border-b border-claude-border">
+          <div className="p-4 border-b border-claude-border flex-shrink-0">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-lg font-semibold text-claude-text">OneNote RAG</h2>
               <button
@@ -84,7 +84,7 @@ const Sidebar = ({ onNewChat }: SidebarProps) => {
 
           {/* Conversations */}
           {isQueryPage && conversations.length > 0 && (
-            <div className="flex-1 overflow-y-auto p-3 space-y-3">
+            <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
               {groupOrder.map((groupKey) => {
                 const group = groupedConversations[groupKey];
                 if (!group || group.length === 0) return null;
@@ -132,7 +132,7 @@ const Sidebar = ({ onNewChat }: SidebarProps) => {
           )}
 
           {/* Navigation */}
-          <div className="border-t border-claude-border p-3 space-y-1">
+          <div className="border-t border-claude-border p-3 space-y-1 flex-shrink-0">
             <Link
               to="/query"
               className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium ${
@@ -181,7 +181,7 @@ const Sidebar = ({ onNewChat }: SidebarProps) => {
 
           {/* Stats */}
           {indexStats && (
-            <div className="border-t border-claude-border p-4">
+            <div className="border-t border-claude-border p-4 flex-shrink-0">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-claude-text-secondary">Indexed Documents</span>
                 <span className="font-semibold text-claude-primary">{indexStats.total_documents}</span>
@@ -222,9 +222,9 @@ const Sidebar = ({ onNewChat }: SidebarProps) => {
       />
 
       {/* Sidebar */}
-      <aside className="fixed lg:static inset-y-0 left-0 z-50 w-72 bg-neo-pink border-r-8 border-neo-black flex flex-col">
+      <aside className="fixed lg:static inset-y-0 left-0 z-50 w-72 bg-neo-pink border-r-8 border-neo-black flex flex-col h-screen">
         {/* Header */}
-        <div className="p-4 border-b-4 border-neo-black bg-neo-yellow">
+        <div className="p-4 border-b-4 border-neo-black bg-neo-yellow flex-shrink-0">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-black text-neo-black uppercase tracking-tight">RAG CHAT</h2>
             <button
@@ -246,7 +246,7 @@ const Sidebar = ({ onNewChat }: SidebarProps) => {
 
         {/* Conversations */}
         {isQueryPage && conversations.length > 0 && (
-          <div className="flex-1 overflow-y-auto p-3 space-y-4 bg-neo-pink">
+          <div className="flex-1 overflow-y-auto p-3 space-y-4 bg-neo-pink min-h-0">
             {groupOrder.map((groupKey) => {
               const group = groupedConversations[groupKey];
               if (!group || group.length === 0) return null;
@@ -294,7 +294,7 @@ const Sidebar = ({ onNewChat }: SidebarProps) => {
         )}
 
         {/* Navigation */}
-        <div className="border-t-4 border-neo-black p-3 space-y-2 bg-neo-pink">
+        <div className="border-t-4 border-neo-black p-3 space-y-2 bg-neo-pink flex-shrink-0">
           <Link
             to="/query"
             className={`flex items-center gap-3 px-3 py-2.5 border-4 border-neo-black font-black uppercase text-sm ${
@@ -343,7 +343,7 @@ const Sidebar = ({ onNewChat }: SidebarProps) => {
 
         {/* Stats */}
         {indexStats && (
-          <div className="border-t-4 border-neo-black p-4 bg-neo-cyan">
+          <div className="border-t-4 border-neo-black p-4 bg-neo-cyan flex-shrink-0">
             <div className="flex items-center justify-between">
               <span className="text-xs font-black text-neo-black uppercase">DOCS</span>
               <span className="text-2xl font-black text-neo-black">{indexStats.total_documents}</span>

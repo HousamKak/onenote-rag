@@ -154,34 +154,64 @@ class SettingsService:
             mask_sensitive: Whether to mask sensitive values
 
         Returns:
-            List of settings with values
+            List of settings with values (includes all defaults even if not in DB)
         """
-        settings = self.db.get_all_settings()
+        # Define all expected settings with descriptions
+        all_defaults = {
+            "openai_api_key": {"description": "OpenAI API key for embeddings and LLM", "is_sensitive": True},
+            "langchain_api_key": {"description": "LangChain/LangSmith API key for tracing", "is_sensitive": True},
+            "langchain_project": {"description": "LangSmith project name", "is_sensitive": False},
+            "langchain_tracing_v2": {"description": "Enable LangSmith tracing (true/false)", "is_sensitive": False},
+            "microsoft_client_id": {"description": "Microsoft Azure AD Client ID", "is_sensitive": False},
+            "microsoft_client_secret": {"description": "Microsoft Azure AD Client Secret", "is_sensitive": True},
+            "microsoft_tenant_id": {"description": "Microsoft Azure AD Tenant ID", "is_sensitive": False},
+            "microsoft_graph_token": {"description": "Microsoft Graph API Bearer Token (optional)", "is_sensitive": True},
+            "chunk_size": {"description": "Document chunk size for processing", "is_sensitive": False},
+            "chunk_overlap": {"description": "Overlap between document chunks", "is_sensitive": False},
+            "enable_startup_sync": {"description": "Auto-sync OneNote on startup (true/false)", "is_sensitive": False},
+            "embedding_provider": {"description": "Embedding provider (openai)", "is_sensitive": False}
+        }
+        
+        # Get existing settings from database
+        db_settings = {s["key"]: s for s in self.db.get_all_settings()}
         result = []
 
-        for setting in settings:
-            key = setting["key"]
-            value = setting["value"]
+        # Process all default settings
+        for key, default_info in all_defaults.items():
             is_sensitive = key in SENSITIVE_KEYS
-
-            # Mask sensitive values if requested
-            if mask_sensitive and is_sensitive:
+            
+            # Check if setting exists in database
+            if key in db_settings:
+                db_setting = db_settings[key]
+                value = db_setting["value"]
+                description = db_setting.get("description") or default_info["description"]
                 has_value = bool(value)
-                value = "********" if has_value else ""
-            else:
-                # Decrypt if sensitive
-                if is_sensitive and value:
+                
+                # Mask or decrypt sensitive values
+                if mask_sensitive and is_sensitive:
+                    value = "********" if has_value else ""
+                elif is_sensitive and value:
                     try:
                         value = self.encryption.decrypt(value)
                     except Exception:
                         value = ""
+            else:
+                # Setting not in DB, check environment variable
+                env_value = os.getenv(key.upper())
+                value = env_value or ""
+                description = default_info["description"]
+                has_value = bool(env_value)
+                
+                # Mask sensitive env values
+                if mask_sensitive and is_sensitive and has_value:
+                    value = "********"
 
             result.append({
                 "key": key,
                 "value": value,
                 "is_sensitive": is_sensitive,
-                "description": setting.get("description"),
-                "has_value": bool(setting["value"])
+                "description": description,
+                "has_value": has_value
             })
 
         return result
