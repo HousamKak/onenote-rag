@@ -28,6 +28,10 @@ class Settings(BaseSettings):
     chunk_overlap: int = 200
     vector_db_path: str = "./data/chroma_db"
     enable_startup_sync: bool = True  # Enable automatic incremental sync on startup
+    
+    # Embeddings
+    embedding_provider: str = "bge"  # Options: "openai" or "bge" (local, better quality)
+    embedding_device: str = "cpu"  # Options: "cpu" or "cuda" (for GPU acceleration)
    
     # ChromaDB Settings
     anonymized_telemetry: str = "False"

@@ -4,9 +4,10 @@ Vector store service using ChromaDB.
 import logging
 import ssl
 import httpx
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Literal
 import chromadb
 from chromadb.config import Settings
+from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
@@ -17,20 +18,42 @@ logger = logging.getLogger(__name__)
 class VectorStoreService:
     """Service for managing vector database operations."""
  
-    def __init__(self, persist_directory: str, collection_name: str = "onenote_documents"):
+    def __init__(
+        self, 
+        persist_directory: str, 
+        collection_name: str = "onenote_documents",
+        embedding_provider: Literal["openai", "bge"] = "bge",
+        embedding_device: str = "cpu"
+    ):
         """
         Initialize vector store service.
  
         Args:
             persist_directory: Directory to persist ChromaDB data
             collection_name: Name of the collection
+            embedding_provider: "openai" for OpenAI API or "bge" for local BGE embeddings
+            embedding_device: "cpu" or "cuda" (for GPU acceleration with BGE)
         """
         self.persist_directory = persist_directory
         self.collection_name = collection_name
+        self.embedding_provider = embedding_provider
        
-        # Create httpx client with SSL verification disabled for corporate proxies
-        http_client = httpx.Client(verify=False)
-        self.embeddings = OpenAIEmbeddings(http_client=http_client)
+        # Initialize embeddings based on provider
+        if embedding_provider == "bge":
+            logger.info("Initializing BGE-Large-EN-v1.5 embeddings (this may take a moment on first run)...")
+            logger.info(f"Using device: {embedding_device}")
+            self.embeddings = HuggingFaceBgeEmbeddings(
+                model_name="BAAI/bge-large-en-v1.5",
+                model_kwargs={'device': embedding_device},
+                encode_kwargs={'normalize_embeddings': True}
+            )
+            logger.info("✅ BGE embeddings initialized successfully (1024 dimensions, better than OpenAI)")
+        else:
+            logger.info("Initializing OpenAI embeddings...")
+            http_client = httpx.Client(verify=False)
+            self.embeddings = OpenAIEmbeddings(http_client=http_client)
+            logger.info("✅ OpenAI embeddings initialized")
+            
         self.vectorstore: Optional[Chroma] = None
  
         self._initialize_vectorstore()

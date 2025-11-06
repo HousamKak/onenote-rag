@@ -101,6 +101,8 @@ async def lifespan(app: FastAPI):
     os.makedirs(settings.vector_db_path, exist_ok=True)
     routes.vector_store = VectorStoreService(
         persist_directory=settings.vector_db_path,
+        embedding_provider=settings.embedding_provider,
+        embedding_device=settings.embedding_device,
     )
     logger.info("Vector store initialized")
  
