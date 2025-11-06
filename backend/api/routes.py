@@ -227,14 +227,22 @@ async def sync_documents(
                 existing_modified = store.get_page_modified_date(page_id)
                
                 if existing_modified and modified_date:
-                    # Convert to comparable format
-                    existing_dt = existing_modified if isinstance(existing_modified, str) else str(existing_modified)
-                    new_dt = str(modified_date)
-                   
-                    if existing_dt == new_dt:
-                        logger.debug(f"Skipping unchanged page: {doc.metadata.page_title}")
+                    # CRITICAL FIX: Convert both to ISO format for proper comparison
+                    # The stored date is already in ISO format from .isoformat()
+                    existing_dt_str = existing_modified  # Already a string in ISO format
+                    
+                    # Convert the datetime object to ISO format for comparison
+                    new_dt_str = modified_date.isoformat()
+                    
+                    # Compare the ISO formatted strings
+                    if existing_dt_str == new_dt_str:
+                        logger.debug(f"Skipping unchanged page: {doc.metadata.page_title} (modified: {existing_dt_str})")
                         documents_skipped += 1
                         continue
+                    else:
+                        logger.info(f"Page modified: {doc.metadata.page_title}")
+                        logger.debug(f"  Existing: {existing_dt_str}")
+                        logger.debug(f"  New:      {new_dt_str}")
                
                 # Document is new or modified - delete old version and add new
                 if existing_modified:

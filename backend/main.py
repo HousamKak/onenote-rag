@@ -108,27 +108,55 @@ async def lifespan(app: FastAPI):
     routes.rag_engine = RAGEngine(vector_store=routes.vector_store)
     logger.info("RAG engine initialized")
  
-    # Auto-sync OneNote documents on startup
-    if routes.onenote_service:
-        logger.info("Starting automatic OneNote sync on startup...")
+    # Auto-sync OneNote documents on startup (INCREMENTAL ONLY)
+    # This performs an incremental sync to catch any changes since last run
+    if routes.onenote_service and settings.enable_startup_sync:
+        logger.info("Starting automatic incremental sync on startup...")
         try:
             # Fetch all documents from OneNote
             documents = routes.onenote_service.get_all_documents()
             logger.info(f"Retrieved {len(documents)} documents from OneNote")
            
-            # Process and index documents
             if documents:
-                # Use chunk_documents method to process all documents at once
-                all_chunks = routes.document_processor.chunk_documents(documents)
-               
-                logger.info(f"Processed {len(documents)} documents into {len(all_chunks)} chunks")
-               
-                # Add to vector store
-                if all_chunks:
-                    routes.vector_store.add_documents(all_chunks)
-                    logger.info(f"✅ Auto-sync complete: Indexed {len(all_chunks)} chunks from {len(documents)} documents")
-                else:
-                    logger.info("No chunks to index")
+                documents_added = 0
+                documents_updated = 0
+                documents_skipped = 0
+                total_chunks = 0
+                
+                # Perform incremental sync - only process changed/new documents
+                for doc in documents:
+                    page_id = doc.metadata.page_id
+                    modified_date = doc.metadata.modified_date
+                    
+                    # Check if document exists and compare modification dates
+                    existing_modified = routes.vector_store.get_page_modified_date(page_id)
+                    
+                    if existing_modified and modified_date:
+                        # Convert to ISO format for comparison
+                        existing_dt_str = existing_modified
+                        new_dt_str = modified_date.isoformat()
+                        
+                        if existing_dt_str == new_dt_str:
+                            # Document unchanged, skip it
+                            logger.debug(f"Skipping unchanged page: {doc.metadata.page_title}")
+                            documents_skipped += 1
+                            continue
+                        else:
+                            # Document modified, update it
+                            logger.info(f"Updating modified page: {doc.metadata.page_title}")
+                            routes.vector_store.delete_by_page_id(page_id)
+                            documents_updated += 1
+                    else:
+                        # New document
+                        logger.info(f"Adding new page: {doc.metadata.page_title}")
+                        documents_added += 1
+                    
+                    # Process and add the document
+                    chunks = routes.document_processor.chunk_documents([doc])
+                    routes.vector_store.add_documents(chunks)
+                    total_chunks += len(chunks)
+                
+                logger.info(f"✅ Startup sync complete: {documents_added} added, {documents_updated} updated, {documents_skipped} skipped ({total_chunks} chunks)")
             else:
                 logger.info("No documents found in OneNote")
                
@@ -136,7 +164,10 @@ async def lifespan(app: FastAPI):
             logger.error(f"Auto-sync failed: {str(e)}")
             logger.warning("Application will continue without auto-sync")
     else:
-        logger.info("OneNote service not available, skipping auto-sync")
+        if not routes.onenote_service:
+            logger.info("OneNote service not available, skipping auto-sync")
+        else:
+            logger.info("Startup sync disabled in settings")
  
     logger.info("Application startup complete!")
  

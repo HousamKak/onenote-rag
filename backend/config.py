@@ -30,6 +30,7 @@ class Settings(BaseSettings):
     chunk_size: int = 1000
     chunk_overlap: int = 200
     vector_db_path: str = "./data/chroma_db"
+    enable_startup_sync: bool = True  # Enable automatic incremental sync on startup
    
     # ChromaDB Settings
     anonymized_telemetry: str = "False"
