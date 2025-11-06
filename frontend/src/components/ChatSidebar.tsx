@@ -34,13 +34,6 @@ const ChatSidebar = ({ isOpen, onToggle }: ChatSidebarProps) => {
     (stats as any)?.collection_name ??
     'N/A';
 
-  const presets = [
-    { name: 'fast', label: 'Fast', emoji: '⚡', color: theme === 'claude' ? 'bg-green-100 text-green-800' : 'bg-neo-lime' },
-    { name: 'balanced', label: 'Balanced', emoji: '⚖️', color: theme === 'claude' ? 'bg-blue-100 text-blue-800' : 'bg-neo-cyan' },
-    { name: 'quality', label: 'Quality', emoji: '✨', color: theme === 'claude' ? 'bg-purple-100 text-purple-800' : 'bg-neo-pink' },
-    { name: 'research', label: 'Research', emoji: '🔬', color: theme === 'claude' ? 'bg-orange-100 text-orange-800' : 'bg-neo-orange' },
-  ];
-
   const activeTechniques = currentConfig
     ? [
         currentConfig.multi_query?.enabled && 'Multi-Query',
@@ -158,28 +151,6 @@ const ChatSidebar = ({ isOpen, onToggle }: ChatSidebarProps) => {
                 </div>
               </div>
             )}
-
-            {/* Quick Presets */}
-            <div className="space-y-2">
-              <div className="text-sm font-medium text-claude-text-secondary">
-                Quick Presets
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                {presets.map((preset) => (
-                  <button
-                    key={preset.name}
-                    onClick={() => {
-                      // TODO: Load preset config
-                      console.log('Load preset:', preset.name);
-                    }}
-                    className={`p-3 rounded-lg border border-claude-border hover:border-claude-accent transition-all hover-lift text-left ${preset.color}`}
-                  >
-                    <div className="text-lg mb-1">{preset.emoji}</div>
-                    <div className="text-xs font-medium">{preset.label}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </>
@@ -293,28 +264,6 @@ const ChatSidebar = ({ isOpen, onToggle }: ChatSidebarProps) => {
               </div>
             </div>
           )}
-
-          {/* Quick Presets */}
-          <div className="space-y-2">
-            <div className="text-sm font-black text-neo-black uppercase">
-              Quick Presets
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              {presets.map((preset) => (
-                <button
-                  key={preset.name}
-                  onClick={() => {
-                    // TODO: Load preset config
-                    console.log('Load preset:', preset.name);
-                  }}
-                  className={`p-3 border-4 border-neo-black shadow-brutal hover:shadow-brutal-hover hover:translate-x-1 hover:translate-y-1 active:shadow-none active:translate-x-2 active:translate-y-2 text-left ${preset.color}`}
-                >
-                  <div className="text-2xl mb-1">{preset.emoji}</div>
-                  <div className="text-xs font-black text-neo-black uppercase">{preset.label}</div>
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </>

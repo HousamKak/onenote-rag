@@ -28,7 +28,7 @@ export const queryApi = {
  
 // Index endpoints
 export const indexApi = {
-  sync: (notebookIds?: string[], fullSync: boolean = true) =>
+  sync: (notebookIds?: string[], fullSync: boolean = false) =>
     api.post('/index/sync', { notebook_ids: notebookIds, full_sync: fullSync }),
   getStats: () => api.get<IndexStats>('/index/stats'),
   getPages: () => api.get<{ pages: IndexedPage[] }>('/index/pages'),

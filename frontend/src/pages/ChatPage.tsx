@@ -216,13 +216,15 @@ const ChatPage = () => {
       </div>
 
       {/* Input Area */}
-      <ChatInput
-        value={input}
-        onChange={setInput}
-        onSubmit={handleSubmit}
-        disabled={queryMutation.isPending}
-        showConfigBadge={!!currentConfig}
-      />
+      <div className={`transition-all duration-300 ${sidebarOpen ? 'pr-80' : 'pr-0'}`}>
+        <ChatInput
+          value={input}
+          onChange={setInput}
+          onSubmit={handleSubmit}
+          disabled={queryMutation.isPending}
+          showConfigBadge={!!currentConfig}
+        />
+      </div>
     </div>
   );
 };
