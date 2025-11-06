@@ -695,7 +695,7 @@ User asks: "Show me the document titled 'Q1 Planning'"
      ↓
 ┌─────────────────────┐
 │ MCP Server (Node.js)│ Azure OneNote MCP Server
-│ Running as Process  │ (https://github.com/zubeidhendricks/...)
+│ Running as Process  │ (MCP Server Component)
 └────┬────────────────┘
      │ 5. Call Microsoft Graph API
      ↓

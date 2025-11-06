@@ -30,7 +30,7 @@ The production version simplifies the current Python RAG system by:
 ```
 
 ### MCP Integration
-- **MCP Client Library** - Connect to the [azure-onenote MCP server](https://github.com/zubeidhendricks/azure-onenote-mcp-server)
+- **MCP Client Library** - Connect to the azure-onenote MCP server
 - The MCP server handles all OneNote operations (no need for Microsoft Graph SDK directly)
 - MCP Server URL: https://mcpmarket.com/server/azure-onenote
 
@@ -800,7 +800,7 @@ public class NotebooksApiTests : IClassFixture<WebApplicationFactory<Program>>
 2. **Set up Azure resources** (App Service, Key Vault, etc.)
 3. **Create MCP server account** and test connectivity
 4. **Initialize .NET project** with recommended structure
-5. **Set up GitHub repository** and CI/CD pipeline
+5. **Set up version control** and CI/CD pipeline
 
 ### First Sprint Goals
 - Basic API with health check
@@ -821,7 +821,7 @@ public class NotebooksApiTests : IClassFixture<WebApplicationFactory<Program>>
 
 ### MCP Server
 - **MCP Market:** https://mcpmarket.com/server/azure-onenote
-- **GitHub Repository:** https://github.com/zubeidhendricks/azure-onenote-mcp-server
+- **Azure OneNote MCP Server** - Available as separate component
 - **MCP Documentation:** https://modelcontextprotocol.io/docs/getting-started/intro
 
 ### .NET Resources

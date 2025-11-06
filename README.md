@@ -313,11 +313,7 @@ This is a professional demonstration project. For production use:
 6. Implement caching layer
 7. Add monitoring and alerting
 
-## 📄 License
-
-MIT License - feel free to use this project as inspiration for your own RAG systems.
-
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - LangChain for RAG framework
 - OpenAI for LLM and embeddings
