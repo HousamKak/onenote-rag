@@ -102,7 +102,6 @@ async def lifespan(app: FastAPI):
     routes.vector_store = VectorStoreService(
         persist_directory=settings.vector_db_path,
         embedding_provider=settings.embedding_provider,
-        embedding_device=settings.embedding_device,
     )
     logger.info("Vector store initialized")
  

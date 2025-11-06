@@ -30,8 +30,7 @@ class Settings(BaseSettings):
     enable_startup_sync: bool = True  # Enable automatic incremental sync on startup
     
     # Embeddings
-    embedding_provider: str = "bge"  # Options: "openai" or "bge" (local, better quality)
-    embedding_device: str = "cpu"  # Options: "cpu" or "cuda" (for GPU acceleration)
+    embedding_provider: str = "openai"  # Options: "openai"
    
     # ChromaDB Settings
     anonymized_telemetry: str = "False"

@@ -2,12 +2,10 @@
 Vector store service using ChromaDB.
 """
 import logging
-import ssl
 import httpx
-from typing import List, Optional, Dict, Any, Literal
+from typing import List, Optional, Dict, Any
 import chromadb
 from chromadb.config import Settings
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
@@ -22,8 +20,7 @@ class VectorStoreService:
         self, 
         persist_directory: str, 
         collection_name: str = "onenote_documents",
-        embedding_provider: Literal["openai", "bge"] = "bge",
-        embedding_device: str = "cpu"
+        embedding_provider: str = "openai"
     ):
         """
         Initialize vector store service.
@@ -31,28 +28,17 @@ class VectorStoreService:
         Args:
             persist_directory: Directory to persist ChromaDB data
             collection_name: Name of the collection
-            embedding_provider: "openai" for OpenAI API or "bge" for local BGE embeddings
-            embedding_device: "cpu" or "cuda" (for GPU acceleration with BGE)
+            embedding_provider: "openai" for OpenAI API embeddings
         """
         self.persist_directory = persist_directory
         self.collection_name = collection_name
         self.embedding_provider = embedding_provider
        
-        # Initialize embeddings based on provider
-        if embedding_provider == "bge":
-            logger.info("Initializing BGE-Large-EN-v1.5 embeddings (this may take a moment on first run)...")
-            logger.info(f"Using device: {embedding_device}")
-            self.embeddings = HuggingFaceBgeEmbeddings(
-                model_name="BAAI/bge-large-en-v1.5",
-                model_kwargs={'device': embedding_device},
-                encode_kwargs={'normalize_embeddings': True}
-            )
-            logger.info("✅ BGE embeddings initialized successfully (1024 dimensions, better than OpenAI)")
-        else:
-            logger.info("Initializing OpenAI embeddings...")
-            http_client = httpx.Client(verify=False)
-            self.embeddings = OpenAIEmbeddings(http_client=http_client)
-            logger.info("✅ OpenAI embeddings initialized")
+        # Initialize OpenAI embeddings with SSL verification disabled for corporate proxies
+        logger.info("Initializing OpenAI embeddings...")
+        http_client = httpx.Client(verify=False)
+        self.embeddings = OpenAIEmbeddings(http_client=http_client)
+        logger.info("✅ OpenAI embeddings initialized")
             
         self.vectorstore: Optional[Chroma] = None
  
