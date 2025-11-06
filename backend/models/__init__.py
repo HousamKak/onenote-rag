@@ -10,6 +10,12 @@ from .rag_config import (
     HyDEConfig,
     RerankingConfig
 )
+from .settings import (
+    Setting,
+    SettingCreate,
+    SettingUpdate,
+    SettingResponse,
+)
 
 __all__ = [
     "Document",
@@ -27,4 +33,8 @@ __all__ = [
     "StepBackConfig",
     "HyDEConfig",
     "RerankingConfig",
+    "Setting",
+    "SettingCreate",
+    "SettingUpdate",
+    "SettingResponse",
 ]

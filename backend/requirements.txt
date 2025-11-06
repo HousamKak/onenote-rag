@@ -41,6 +41,9 @@ tiktoken==0.12.0
 beautifulsoup4==4.14.2
 lxml==6.0.2
 typer==0.20.0
+
+# Encryption & Database
+cryptography==42.0.5
  
 # CORS
 fastapi_cors==0.0.6

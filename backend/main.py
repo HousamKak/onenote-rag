@@ -7,13 +7,16 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
  
-from config import get_settings
+from config import get_settings, set_settings_service, get_dynamic_settings
 from services import (
     OneNoteService,
     DocumentProcessor,
     VectorStoreService,
     RAGEngine,
 )
+from services.database import DatabaseService
+from services.encryption import EncryptionService
+from services.settings_service import SettingsService
 import api.routes as routes
  
 # Configure logging
@@ -74,16 +77,35 @@ async def lifespan(app: FastAPI):
     logger.info(f"LangSmith tracing enabled: {settings.langchain_tracing_v2}")
     logger.info(f"LangSmith project: {settings.langchain_project}")
  
+    # Initialize settings service with database and encryption
+    logger.info("Initializing settings service...")
+    db_service = DatabaseService(db_path="./data/settings.db")
+    encryption_service = EncryptionService(key_file="./data/.encryption_key")
+    routes.settings_service = SettingsService(db_service, encryption_service)
+    set_settings_service(routes.settings_service)
+    logger.info("Settings service initialized")
+    
+    # Get dynamic settings (from database or .env)
+    dynamic_settings = get_dynamic_settings()
+    
+    # Update environment variables with database settings if available
+    if dynamic_settings.get("openai_api_key"):
+        os.environ['OPENAI_API_KEY'] = dynamic_settings["openai_api_key"]
+    if dynamic_settings.get("langchain_api_key"):
+        os.environ['LANGCHAIN_API_KEY'] = dynamic_settings["langchain_api_key"]
+    
+    logger.info("Configuration loaded from database (with .env fallback)")
+ 
     # Initialize services
     logger.info("Initializing services...")
  
     # OneNote service
     try:
         routes.onenote_service = OneNoteService(
-            client_id=settings.microsoft_client_id,
-            client_secret=settings.microsoft_client_secret,
-            tenant_id=settings.microsoft_tenant_id,
-            manual_token=settings.microsoft_graph_token,
+            client_id=dynamic_settings.get("microsoft_client_id", settings.microsoft_client_id),
+            client_secret=dynamic_settings.get("microsoft_client_secret", settings.microsoft_client_secret),
+            tenant_id=dynamic_settings.get("microsoft_tenant_id", settings.microsoft_tenant_id),
+            manual_token=dynamic_settings.get("microsoft_graph_token", settings.microsoft_graph_token),
         )
         logger.info("OneNote service initialized")
     except Exception as e:
@@ -91,9 +113,11 @@ async def lifespan(app: FastAPI):
         logger.warning("OneNote features will not be available")
  
     # Document processor
+    chunk_size = int(dynamic_settings.get("chunk_size", settings.chunk_size))
+    chunk_overlap = int(dynamic_settings.get("chunk_overlap", settings.chunk_overlap))
     routes.document_processor = DocumentProcessor(
-        chunk_size=settings.chunk_size,
-        chunk_overlap=settings.chunk_overlap,
+        chunk_size=chunk_size,
+        chunk_overlap=chunk_overlap,
     )
     logger.info("Document processor initialized")
  
@@ -101,7 +125,7 @@ async def lifespan(app: FastAPI):
     os.makedirs(settings.vector_db_path, exist_ok=True)
     routes.vector_store = VectorStoreService(
         persist_directory=settings.vector_db_path,
-        embedding_provider=settings.embedding_provider,
+        embedding_provider=dynamic_settings.get("embedding_provider", settings.embedding_provider),
     )
     logger.info("Vector store initialized")
  
@@ -111,7 +135,8 @@ async def lifespan(app: FastAPI):
  
     # Auto-sync OneNote documents on startup (INCREMENTAL ONLY)
     # This performs an incremental sync to catch any changes since last run
-    if routes.onenote_service and settings.enable_startup_sync:
+    enable_sync = dynamic_settings.get("enable_startup_sync", str(settings.enable_startup_sync)).lower() == "true"
+    if routes.onenote_service and enable_sync:
         logger.info("Starting automatic incremental sync on startup...")
         try:
             # Fetch all documents from OneNote

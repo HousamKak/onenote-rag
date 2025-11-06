@@ -317,6 +317,17 @@ const Sidebar = ({ onNewChat }: SidebarProps) => {
             <Database size={18} strokeWidth={3} />
             <span>DATA</span>
           </Link>
+          <Link
+            to="/settings"
+            className={`flex items-center gap-3 px-3 py-2.5 border-4 border-neo-black font-black uppercase text-sm ${
+              location.pathname === '/settings'
+                ? 'bg-neo-purple text-neo-black shadow-brutal-sm'
+                : 'bg-white text-neo-black hover:shadow-brutal-sm hover:translate-x-1 hover:translate-y-1'
+            }`}
+          >
+            <Settings size={18} strokeWidth={3} />
+            <span>KEYS</span>
+          </Link>
         </div>
 
         {/* Stats */}

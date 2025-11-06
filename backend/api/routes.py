@@ -14,12 +14,14 @@ from models import (
     RAGConfig,
 )
 from models.rag_config import PRESET_CONFIGS, AVAILABLE_MODELS
+from models.settings import SettingCreate, SettingUpdate, SettingResponse
 from services import (
     OneNoteService,
     DocumentProcessor,
     VectorStoreService,
     RAGEngine,
 )
+from services.settings_service import SettingsService
 from config import get_settings
  
 logger = logging.getLogger(__name__)
@@ -31,6 +33,7 @@ onenote_service: Optional[OneNoteService] = None
 document_processor: Optional[DocumentProcessor] = None
 vector_store: Optional[VectorStoreService] = None
 rag_engine: Optional[RAGEngine] = None
+settings_service: Optional[SettingsService] = None
  
  
 def get_rag_engine() -> RAGEngine:
@@ -59,15 +62,169 @@ def get_document_processor() -> DocumentProcessor:
     if document_processor is None:
         raise HTTPException(status_code=500, detail="Document processor not initialized")
     return document_processor
- 
- 
+
+
+def get_settings_service() -> SettingsService:
+    """Dependency to get settings service."""
+    if settings_service is None:
+        raise HTTPException(status_code=500, detail="Settings service not initialized")
+    return settings_service
+
+
 # Health check
 @router.get("/health")
 async def health_check():
     """Health check endpoint."""
     return {"status": "healthy"}
- 
- 
+
+
+# Settings routes
+@router.get("/settings", response_model=List[SettingResponse])
+async def get_all_settings(
+    service: SettingsService = Depends(get_settings_service)
+) -> List[SettingResponse]:
+    """Get all settings (sensitive values are masked)."""
+    try:
+        settings = service.get_all_settings(mask_sensitive=True)
+        return [SettingResponse(**s) for s in settings]
+    except Exception as e:
+        logger.error(f"Error getting settings: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/settings/{key}")
+async def get_setting(
+    key: str,
+    service: SettingsService = Depends(get_settings_service)
+) -> SettingResponse:
+    """Get a specific setting (sensitive values are masked)."""
+    try:
+        value = service.get_setting(key, decrypt=False)
+        setting_info = service.db.get_setting(key)
+        
+        if not setting_info:
+            raise HTTPException(status_code=404, detail=f"Setting '{key}' not found")
+        
+        from services.settings_service import SENSITIVE_KEYS
+        is_sensitive = key in SENSITIVE_KEYS
+        has_value = bool(value)
+        masked_value = "********" if (is_sensitive and has_value) else (value or "")
+        
+        return SettingResponse(
+            key=key,
+            value=masked_value,
+            is_sensitive=is_sensitive,
+            description=setting_info.get("description"),
+            has_value=has_value
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error getting setting {key}: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.put("/settings/{key}")
+async def update_setting(
+    key: str,
+    update: SettingUpdate,
+    service: SettingsService = Depends(get_settings_service)
+) -> Dict[str, Any]:
+    """Update a setting value."""
+    try:
+        service.set_setting(key=key, value=update.value)
+        return {
+            "status": "success",
+            "message": f"Setting '{key}' updated successfully"
+        }
+    except Exception as e:
+        logger.error(f"Error updating setting {key}: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/settings")
+async def create_setting(
+    setting: SettingCreate,
+    service: SettingsService = Depends(get_settings_service)
+) -> Dict[str, Any]:
+    """Create a new setting."""
+    try:
+        service.set_setting(
+            key=setting.key,
+            value=setting.value,
+            description=setting.description
+        )
+        return {
+            "status": "success",
+            "message": f"Setting '{setting.key}' created successfully"
+        }
+    except Exception as e:
+        logger.error(f"Error creating setting: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.delete("/settings/{key}")
+async def delete_setting(
+    key: str,
+    service: SettingsService = Depends(get_settings_service)
+) -> Dict[str, Any]:
+    """Delete a setting."""
+    try:
+        deleted = service.delete_setting(key)
+        if not deleted:
+            raise HTTPException(status_code=404, detail=f"Setting '{key}' not found")
+        
+        return {
+            "status": "success",
+            "message": f"Setting '{key}' deleted successfully"
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error deleting setting {key}: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/settings/test-connection")
+async def test_api_connection(
+    service: SettingsService = Depends(get_settings_service)
+) -> Dict[str, Any]:
+    """Test if API keys are valid by making a simple API call."""
+    try:
+        import httpx
+        from langchain_openai import ChatOpenAI
+        
+        openai_key = service.get_setting("openai_api_key")
+        if not openai_key:
+            return {
+                "status": "error",
+                "service": "openai",
+                "message": "OpenAI API key not configured"
+            }
+        
+        # Test OpenAI connection
+        http_client = httpx.Client(verify=False)
+        llm = ChatOpenAI(
+            api_key=openai_key,
+            model_name="gpt-3.5-turbo",
+            http_client=http_client
+        )
+        
+        # Try a simple completion
+        response = llm.invoke("Say 'OK' if you can read this.")
+        
+        return {
+            "status": "success",
+            "service": "openai",
+            "message": "Connection successful"
+        }
+    except Exception as e:
+        logger.error(f"API connection test failed: {str(e)}")
+        return {
+            "status": "error",
+            "service": "openai",
+            "message": str(e)
+        } 
 # Configuration routes
 @router.get("/config/presets")
 async def get_presets() -> Dict[str, RAGConfig]:

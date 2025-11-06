@@ -6,6 +6,7 @@ import ChatPage from './pages/ChatPage';
 import ConfigPage from './pages/ConfigPage';
 import IndexPage from './pages/IndexPage';
 import ComparePage from './pages/ComparePage';
+import SettingsManagementPage from './pages/SettingsManagementPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,6 +29,7 @@ function App() {
               <Route path="config" element={<ConfigPage />} />
               <Route path="index" element={<IndexPage />} />
               <Route path="compare" element={<ComparePage />} />
+              <Route path="settings" element={<SettingsManagementPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
