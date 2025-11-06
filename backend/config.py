@@ -23,9 +23,6 @@ class Settings(BaseSettings):
     microsoft_tenant_id: str = ""
     microsoft_graph_token: str = ""  # Manual Bearer token from Graph Explorer
  
-    # Cohere (optional)
-    cohere_api_key: str = ""
- 
     # Application
     chunk_size: int = 1000
     chunk_overlap: int = 200

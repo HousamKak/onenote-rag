@@ -324,69 +324,8 @@ class RAGEngine:
         Returns:
             Re-ranked documents
         """
-        if config.reranking.provider == "cohere":
-            return self._cohere_rerank(question, documents, config)
-        else:
-            # Custom re-ranking (simple scoring based on query relevance)
-            return documents[:config.reranking.top_n]
- 
-    def _cohere_rerank(
-        self,
-        question: str,
-        documents: List[Document],
-        config: RAGConfig
-    ) -> List[Document]:
-        """
-        Re-rank documents using Cohere API.
- 
-        Args:
-            question: User question
-            documents: Documents to re-rank
-            config: RAG configuration
- 
-        Returns:
-            Re-ranked documents
-        """
-        try:
-            import cohere
-            from config import get_settings
- 
-            settings = get_settings()
- 
-            if not settings.cohere_api_key:
-                logger.warning("Cohere API key not found, skipping re-ranking")
-                return documents[:config.reranking.top_n]
- 
-            # Create SSL-disabled httpx client for Cohere
-            http_client = httpx.Client(verify=False)
-            co = cohere.Client(
-                api_key=settings.cohere_api_key,
-                httpx_client=http_client
-            )
- 
-            # Prepare documents for reranking
-            docs_text = [doc.page_content for doc in documents]
- 
-            # Rerank
-            results = co.rerank(
-                query=question,
-                documents=docs_text,
-                top_n=config.reranking.top_n,
-                model="rerank-english-v2.0"
-            )
- 
-            # Reorder documents based on reranking
-            reranked_docs = [documents[result.index] for result in results.results]
- 
-            logger.info(f"Reranked {len(documents)} docs to top {len(reranked_docs)}")
-            return reranked_docs
- 
-        except ImportError:
-            logger.warning("Cohere package not installed, skipping re-ranking")
-            return documents[:config.reranking.top_n]
-        except Exception as e:
-            logger.error(f"Error during Cohere re-ranking: {str(e)}")
-            return documents[:config.reranking.top_n]
+        # Simple re-ranking: return top N documents based on initial retrieval scores
+        return documents[:config.reranking.top_n]
  
     def _build_response(
         self,

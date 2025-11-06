@@ -45,9 +45,6 @@ typer==0.20.0
 # CORS
 fastapi_cors==0.0.6
  
-# Optional: Re-ranking
-cohere==5.20.0
- 
 # Dependencies (auto-installed but listed for completeness)
 annotated-types==0.7.0
 anyio==4.11.0

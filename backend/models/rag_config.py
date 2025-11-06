@@ -46,7 +46,6 @@ class HyDEConfig(BaseModel):
 class RerankingConfig(BaseModel):
     """Configuration for Re-ranking technique."""
     enabled: bool = Field(default=False, description="Enable re-ranking")
-    provider: Literal["cohere", "custom"] = Field(default="cohere", description="Re-ranking provider")
     top_k: int = Field(default=10, ge=5, le=20, description="Number of documents to retrieve before re-ranking")
     top_n: int = Field(default=3, ge=1, le=10, description="Number of documents to keep after re-ranking")
 

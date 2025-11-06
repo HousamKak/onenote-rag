@@ -18,7 +18,7 @@ A production-ready Retrieval-Augmented Generation (RAG) system for querying OneN
 3. **Query Decomposition** - Break complex questions into manageable sub-questions
 4. **Step-Back Prompting** - Generate broader questions for better context
 5. **HyDE** - Hypothetical Document Embeddings for improved retrieval
-6. **Re-ranking** - Cohere-powered result re-ranking
+6. **Re-ranking** - Score-based result re-ranking
 
 ### Configuration Presets
 - **Fast**: Basic RAG for quick responses
@@ -55,7 +55,6 @@ A production-ready Retrieval-Augmented Generation (RAG) system for querying OneN
 - OpenAI API key
 - LangSmith API key
 - (Optional) Microsoft Azure App Registration for OneNote access
-- (Optional) Cohere API key for re-ranking
 
 ### Backend Setup
 

@@ -13,7 +13,7 @@ A sophisticated RAG (Retrieval-Augmented Generation) system for querying OneNote
   - Query Decomposition (Recursive/Individual)
   - Step-Back Prompting
   - HyDE (Hypothetical Document Embeddings)
-  - Re-ranking with Cohere
+  - Document Re-ranking
 - **LangSmith Integration**: Track and monitor all RAG operations
 - **Preset Configurations**: Fast, Balanced, Quality, and Research modes
 
@@ -40,7 +40,6 @@ Required environment variables:
 - `OPENAI_API_KEY`: Your OpenAI API key
 - `LANGCHAIN_API_KEY`: Your LangSmith API key
 - `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET`, `MICROSOFT_TENANT_ID`: For OneNote access (optional)
-- `COHERE_API_KEY`: For re-ranking feature (optional)
 
 ### 3. Run the Server
 
