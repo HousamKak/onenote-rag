@@ -6,7 +6,7 @@ import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+ 
 from config import get_settings
 from services import (
     OneNoteService,
@@ -15,15 +15,15 @@ from services import (
     RAGEngine,
 )
 import api.routes as routes
-
+ 
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
-
-
+ 
+ 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
@@ -31,22 +31,52 @@ async def lifespan(app: FastAPI):
     """
     # Startup
     logger.info("Starting OneNote RAG application...")
-
+ 
     settings = get_settings()
-
+ 
     # Set environment variables for LangSmith
     os.environ['LANGCHAIN_TRACING_V2'] = settings.langchain_tracing_v2
     os.environ['LANGCHAIN_ENDPOINT'] = settings.langchain_endpoint
     os.environ['LANGCHAIN_API_KEY'] = settings.langchain_api_key
     os.environ['LANGCHAIN_PROJECT'] = settings.langchain_project
     os.environ['OPENAI_API_KEY'] = settings.openai_api_key
-
+   
+    # Disable ChromaDB telemetry to avoid SSL certificate issues
+    os.environ['ANONYMIZED_TELEMETRY'] = 'False'
+    os.environ['CHROMA_TELEMETRY_ENABLED'] = 'False'
+   
+    # Disable SSL verification for corporate proxy environments
+    # This fixes "certificate verify failed: self-signed certificate in certificate chain" errors
+    # when downloading tiktoken files from openaipublic.blob.core.windows.net
+    import ssl
+    import urllib3
+    import warnings
+    ssl._create_default_https_context = ssl._create_unverified_context
+    os.environ['CURL_CA_BUNDLE'] = ''
+    os.environ['SSL_CERT_FILE'] = ''
+    os.environ['REQUESTS_CA_BUNDLE'] = ''
+    os.environ['PYTHONHTTPSVERIFY'] = '0'
+   
+    # Disable SSL warnings
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    warnings.filterwarnings('ignore', message='Unverified HTTPS request')
+   
+    # Monkey-patch requests to disable SSL verification globally for tiktoken downloads
+    import requests
+    original_request = requests.Session.request
+    def patched_request(self, method, url, **kwargs):
+        kwargs.setdefault('verify', False)
+        return original_request(self, method, url, **kwargs)
+    requests.Session.request = patched_request
+   
+    logger.info("SSL verification disabled for corporate proxy compatibility")
+ 
     logger.info(f"LangSmith tracing enabled: {settings.langchain_tracing_v2}")
     logger.info(f"LangSmith project: {settings.langchain_project}")
-
+ 
     # Initialize services
     logger.info("Initializing services...")
-
+ 
     # OneNote service
     try:
         routes.onenote_service = OneNoteService(
@@ -59,33 +89,63 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning(f"OneNote service initialization failed: {str(e)}")
         logger.warning("OneNote features will not be available")
-
+ 
     # Document processor
     routes.document_processor = DocumentProcessor(
         chunk_size=settings.chunk_size,
         chunk_overlap=settings.chunk_overlap,
     )
     logger.info("Document processor initialized")
-
+ 
     # Vector store
     os.makedirs(settings.vector_db_path, exist_ok=True)
     routes.vector_store = VectorStoreService(
         persist_directory=settings.vector_db_path,
     )
     logger.info("Vector store initialized")
-
+ 
     # RAG engine
     routes.rag_engine = RAGEngine(vector_store=routes.vector_store)
     logger.info("RAG engine initialized")
-
+ 
+    # Auto-sync OneNote documents on startup
+    if routes.onenote_service:
+        logger.info("Starting automatic OneNote sync on startup...")
+        try:
+            # Fetch all documents from OneNote
+            documents = routes.onenote_service.get_all_documents()
+            logger.info(f"Retrieved {len(documents)} documents from OneNote")
+           
+            # Process and index documents
+            if documents:
+                # Use chunk_documents method to process all documents at once
+                all_chunks = routes.document_processor.chunk_documents(documents)
+               
+                logger.info(f"Processed {len(documents)} documents into {len(all_chunks)} chunks")
+               
+                # Add to vector store
+                if all_chunks:
+                    routes.vector_store.add_documents(all_chunks)
+                    logger.info(f"✅ Auto-sync complete: Indexed {len(all_chunks)} chunks from {len(documents)} documents")
+                else:
+                    logger.info("No chunks to index")
+            else:
+                logger.info("No documents found in OneNote")
+               
+        except Exception as e:
+            logger.error(f"Auto-sync failed: {str(e)}")
+            logger.warning("Application will continue without auto-sync")
+    else:
+        logger.info("OneNote service not available, skipping auto-sync")
+ 
     logger.info("Application startup complete!")
-
+ 
     yield
-
+ 
     # Shutdown
     logger.info("Shutting down application...")
-
-
+ 
+ 
 # Create FastAPI app
 app = FastAPI(
     title="OneNote RAG API",
@@ -93,7 +153,7 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
-
+ 
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
@@ -102,11 +162,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+ 
 # Include routes
 app.include_router(routes.router, prefix="/api")
-
-
+ 
+ 
 @app.get("/")
 async def root():
     """Root endpoint."""
@@ -116,11 +176,11 @@ async def root():
         "docs": "/docs",
         "health": "/api/health"
     }
-
-
+ 
+ 
 if __name__ == "__main__":
     import uvicorn
-
+ 
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
@@ -128,3 +188,4 @@ if __name__ == "__main__":
         reload=True,
         log_level="info"
     )
+ 
