@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Database,
@@ -608,7 +608,7 @@ const AnalyticsDashboard = ({ notebooks }: { notebooks: Notebook[] }) => {
   );
 
   // Update section stats when queries complete
-  useState(() => {
+  useEffect(() => {
     const allSections = sectionQueries.filter((q) => q.data).map((q) => q.data!);
     const total = allSections.reduce((sum, { sections }) => sum + sections.length, 0);
     const byNotebook: Record<string, number> = {};
@@ -616,7 +616,7 @@ const AnalyticsDashboard = ({ notebooks }: { notebooks: Notebook[] }) => {
       byNotebook[notebookId] = sections.length;
     });
     setSectionStats({ total, byNotebook });
-  });
+  }, [sectionQueries]);
 
   const totalIndexedPages = indexedPages?.length || 0;
   const totalChunks = indexedPages?.reduce((sum, page) => sum + (page.chunk_count || 0), 0) || 0;
