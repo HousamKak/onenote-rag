@@ -40,7 +40,7 @@ pipelines: Sync Pipelines {
   incremental: "Incremental Sync" {
     style.fill: "#E8F5E9"
     
-    steps: {
+    stages: {
       load_state: "Load last synced timestamps\n(settings DB)"
       fetch_meta: "Fetch notebooks/sections/pages metadata"
       compare: "Compare OneNote modifiedDateTime"
@@ -57,7 +57,7 @@ pipelines: Sync Pipelines {
     style.fill: "#FCE4EC"
     
     trigger: "User confirms action in Settings UI"
-    steps: {
+    stages: {
       fetch_all: "Fetch ALL notebooks/sections/pages"
       purge: "Optional: clear Chroma + metadata cache"
       chunk_embed: "Chunk all pages → Embed"
@@ -101,14 +101,14 @@ vector_alt: "Prod Alt: Azure AI Search Ingestion Pipelines" {
 triggers.api_route -> pipelines.incremental: "Default (incremental=true)"
 triggers.api_route -> pipelines.full: "If payload.full_sync=true"
 
-pipelines.incremental.steps.upsert -> destinations.vector_store
-pipelines.full.steps.rebuild -> destinations.vector_store
+pipelines.incremental.stages.upsert -> destinations.vector_store
+pipelines.full.stages.rebuild -> destinations.vector_store
 
-pipelines.incremental.steps.load_state -> destinations.settings_db: "Read metadata"
-pipelines.incremental.steps.stats -> destinations.settings_db: "Update timestamps"
+pipelines.incremental.stages.load_state -> destinations.settings_db: "Read metadata"
+pipelines.incremental.stages.stats -> destinations.settings_db: "Update timestamps"
 
-destinations.settings_db -> pipelines.incremental.steps.load_state: "Next run"
-pipelines.full.steps.rebuild -> destinations.settings_db: "Reset stats"
+destinations.settings_db -> pipelines.incremental.stages.load_state: "Next run"
+pipelines.full.stages.rebuild -> destinations.settings_db: "Reset stats"
 
 destinations.settings_db -> destinations.frontend_feedback: "Expose sync stats"
 destinations.vector_store -> destinations.frontend_feedback: "Show chunk counts"
