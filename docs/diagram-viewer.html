@@ -294,6 +294,47 @@
         .svg-item .icon {
             margin-right: 8px;
         }
+
+        .notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            pointer-events: none;
+            z-index: 1200;
+            max-width: 320px;
+            line-height: 1.4;
+        }
+
+        .notification.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .notification.info {
+            background: rgba(59, 130, 246, 0.95);
+        }
+
+        .notification.success {
+            background: rgba(16, 185, 129, 0.95);
+        }
+
+        .notification.warning {
+            background: rgba(245, 158, 11, 0.95);
+        }
+
+        .notification.error {
+            background: rgba(239, 68, 68, 0.95);
+        }
     </style>
 </head>
 <body>
@@ -329,6 +370,8 @@
     <div class="dock-trigger right" id="dockTriggerRight"></div>
     <div class="dock-trigger left" id="dockTriggerLeft"></div>
 
+    <div class="notification" id="notification" role="status" aria-live="polite"></div>
+
     <script>
         // State
         let scale = 1;
@@ -356,6 +399,7 @@
             right: document.getElementById('dockTriggerRight'),
             left: document.getElementById('dockTriggerLeft')
         };
+        const notification = document.getElementById('notification');
 
         // Store folder files
         let folderFiles = [];
@@ -368,6 +412,19 @@
         let sidebarStartY = 0;
         let sidebarDockState = 'docked-right'; // 'floating', 'docked-left', 'docked-right', 'docked-top', 'docked-bottom'
         let hoverTimeout = null;
+        let notificationTimeout = null;
+
+        function showNotification(message, type = 'info') {
+            notification.textContent = message;
+            notification.className = 'notification';
+            notification.classList.add(type);
+            notification.classList.add('visible');
+
+            clearTimeout(notificationTimeout);
+            notificationTimeout = setTimeout(() => {
+                notification.classList.remove('visible');
+            }, 3200);
+        }
 
         // Open file dialog
         openFileBtn.addEventListener('click', () => {
@@ -426,6 +483,8 @@
 
             const distToRight = window.innerWidth - rect.right;
             const distToLeft = rect.left;
+            const distToTop = rect.top;
+            const distToBottom = window.innerHeight - rect.bottom;
 
             // Find closest horizontal edge
             const minDist = Math.min(distToRight, distToLeft);
@@ -437,6 +496,15 @@
                 } else {
                     dockSidebar('docked-left');
                 }
+            } else if (
+                distToTop < dockZone ||
+                distToBottom < dockZone ||
+                rect.top < 0 ||
+                rect.bottom > window.innerHeight
+            ) {
+                // If near the top/bottom edge (or partially off-screen), dock right for accessibility
+                dockSidebar('docked-right');
+                sidebar.classList.add('visible');
             } else {
                 // Stay floating
                 sidebarDockState = 'floating';
@@ -533,7 +601,7 @@
             const svgFiles = files.filter(file => file.name.toLowerCase().endsWith('.svg'));
 
             if (svgFiles.length === 0) {
-                alert('No SVG files found in the selected folder');
+                showNotification('No SVG files found in the selected folder.', 'warning');
                 return;
             }
 
@@ -544,6 +612,7 @@
             dockSidebar('docked-right');
             sidebar.classList.add('visible');
             loadSVGFromFile(svgFiles[0]);
+            showNotification(`Loaded ${svgFiles.length} SVG file${svgFiles.length > 1 ? 's' : ''}.`, 'success');
         });
 
         // Display folder contents in sidebar
