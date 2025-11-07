@@ -123,12 +123,134 @@
         .error h3 {
             margin-bottom: 12px;
         }
+
+        /* Sidebar for folder contents */
+        .sidebar {
+            position: fixed;
+            top: 50%;
+            right: -280px;
+            width: 280px;
+            height: 33.33vh;
+            background: rgba(255, 255, 255, 0.98);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+            transition: right 0.3s ease;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            left: -36px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 8px 0 0 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s;
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(102, 126, 234, 0.95);
+            color: white;
+        }
+
+        .sidebar-header {
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px 0 0 0;
+        }
+
+        .sidebar-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .sidebar-header p {
+            font-size: 11px;
+            opacity: 0.9;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .svg-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .svg-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .svg-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .svg-list::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 3px;
+        }
+
+        .svg-list::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        .svg-item {
+            padding: 8px 10px;
+            margin-bottom: 6px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+            word-break: break-word;
+        }
+
+        .svg-item:hover {
+            border-color: #667eea;
+            background: #f9fafb;
+            transform: translateX(-4px);
+        }
+
+        .svg-item.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        }
+
+        .svg-item .icon {
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
     <div class="controls">
         <input type="file" id="fileInput" accept=".svg">
-        <button type="button" class="btn" id="openFile" title="Open SVG">📂</button>
+        <input type="file" id="folderInput" webkitdirectory directory multiple style="display: none;">
+        <button type="button" class="btn" id="openFile" title="Open SVG File">📂</button>
+        <button type="button" class="btn" id="openFolder" title="Open Folder">📁</button>
         <button type="button" class="btn" id="zoomOut" title="Zoom Out">−</button>
         <div class="zoom-level" id="zoomLevel">100%</div>
         <button type="button" class="btn" id="zoomIn" title="Zoom In">+</button>
@@ -136,7 +258,21 @@
     </div>
 
     <div class="viewer-container" id="viewer">
-        <div class="loading">Click 📂 to open an SVG file</div>
+        <div class="loading">Click 📂 to open an SVG file or 📁 to open a folder</div>
+    </div>
+
+    <!-- Sidebar for folder contents -->
+    <div class="sidebar" id="sidebar">
+        <button type="button" class="sidebar-toggle" id="sidebarToggle">◀</button>
+        <div class="sidebar-header">
+            <h3>📁 SVG Files</h3>
+            <p id="folderName">No folder selected</p>
+        </div>
+        <div class="svg-list" id="svgList">
+            <p style="padding: 20px; text-align: center; color: #6b7280; font-size: 13px;">
+                Open a folder to see SVG files
+            </p>
+        </div>
     </div>
 
     <script>
@@ -155,11 +291,31 @@
         const viewer = document.getElementById('viewer');
         const zoomLevel = document.getElementById('zoomLevel');
         const fileInput = document.getElementById('fileInput');
+        const folderInput = document.getElementById('folderInput');
         const openFileBtn = document.getElementById('openFile');
+        const openFolderBtn = document.getElementById('openFolder');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const svgList = document.getElementById('svgList');
+        const folderName = document.getElementById('folderName');
+
+        // Store folder files
+        let folderFiles = [];
 
         // Open file dialog
         openFileBtn.addEventListener('click', () => {
             fileInput.click();
+        });
+
+        // Open folder dialog
+        openFolderBtn.addEventListener('click', () => {
+            folderInput.click();
+        });
+
+        // Toggle sidebar
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            sidebarToggle.textContent = sidebar.classList.contains('open') ? '▶' : '◀';
         });
 
         // Handle file selection
@@ -169,6 +325,56 @@
                 loadSVGFromFile(file);
             }
         });
+
+        // Handle folder selection
+        folderInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            const svgFiles = files.filter(file => file.name.toLowerCase().endsWith('.svg'));
+
+            if (svgFiles.length === 0) {
+                alert('No SVG files found in the selected folder');
+                return;
+            }
+
+            folderFiles = svgFiles;
+            displayFolderContents(svgFiles);
+
+            // Open sidebar and load first SVG
+            sidebar.classList.add('open');
+            sidebarToggle.textContent = '▶';
+            loadSVGFromFile(svgFiles[0]);
+        });
+
+        // Display folder contents in sidebar
+        function displayFolderContents(files) {
+            // Get folder name from first file's path
+            const firstFile = files[0];
+            const pathParts = firstFile.webkitRelativePath.split('/');
+            const folder = pathParts.length > 1 ? pathParts[0] : 'Selected Folder';
+            folderName.textContent = folder;
+
+            // Create list of SVG files
+            svgList.innerHTML = '';
+            files.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'svg-item';
+                if (index === 0) item.classList.add('active');
+
+                const fileName = file.name;
+                item.innerHTML = `<span class="icon">📄</span>${fileName}`;
+
+                item.addEventListener('click', () => {
+                    // Update active state
+                    document.querySelectorAll('.svg-item').forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+
+                    // Load the selected SVG
+                    loadSVGFromFile(file);
+                });
+
+                svgList.appendChild(item);
+            });
+        }
 
         // Load SVG from file
         function loadSVGFromFile(file) {
