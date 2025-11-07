@@ -15,6 +15,8 @@ DIAGRAM_FILES = [
     "tech-stack-summary.d2",
     "document-indexing-flow.d2",
     "document-indexing-flow-summary.d2",
+    "data-sync-flow.d2",
+    "data-sync-flow-summary.d2",
     "frontend-architecture.d2",
     "frontend-architecture-summary.d2",
     "backend-architecture.d2",

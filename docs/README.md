@@ -69,6 +69,13 @@ FastAPI backend architecture:
 - External API integrations
 - Lite view summarizes “Gateway → Services → Storage/AI/Monitoring” with Azure Functions, Azure SQL, Azure AI Search, Databricks, and App Insights options.
 
+### 7. **data-sync-flow.d2** / **data-sync-flow-summary.d2**
+Sync orchestration between automatic incremental jobs and manual full re-index:
+- Startup-triggered incremental sync (lifespan startup) and UI-triggered full sync from Settings
+- Pipeline stages from metadata comparison through chunk/embed/upsert
+- Feedback loop to Settings page with stats
+- Lite view spotlights the two trigger paths plus Azure-native scheduler/ingestion alternatives
+
 ## 🎨 Viewing the Diagrams
 
 ### Option 1: Interactive HTML Viewer (⭐ Recommended - No Installation Required!)
@@ -136,6 +143,8 @@ docs/
 ├── tech-stack-summary.d2          # Tech stack current vs prod
 ├── document-indexing-flow.d2      # OneNote indexing process (full)
 ├── document-indexing-flow-summary.d2 # Indexing lite view
+├── data-sync-flow.d2              # Incremental vs full sync (full)
+├── data-sync-flow-summary.d2      # Sync lite view
 ├── frontend-architecture.d2       # React frontend structure (full)
 ├── frontend-architecture-summary.d2  # Frontend lite view
 ├── backend-architecture.d2        # FastAPI backend structure (full)

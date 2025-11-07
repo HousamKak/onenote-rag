@@ -1,0 +1,118 @@
+# Data Sync Flow
+
+direction: right
+
+title: {
+  label: "OneNote Data Sync - Incremental vs Full"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 24
+    bold: true
+  }
+}
+
+triggers: Sync Triggers {
+  style.fill: "#E3F2FD"
+  
+  startup: "App Startup\n(FastAPI lifespan.startup)" {
+    shape: hexagon
+    note: "auto_sync=True"
+  }
+  
+  settings_ui: "Settings UI\nFrontend → SettingsManagementPage" {
+    shape: hexagon
+    note: "User clicks \"Full Sync\""
+  }
+  
+  api_route: "Backend API\nPOST /api/onenote/sync" {
+    shape: rectangle
+    style.fill: "#E8F5E9"
+  }
+  
+  startup -> api_route: "Initiate incremental sync"
+  settings_ui -> api_route: "Manual sync request"
+}
+
+pipelines: Sync Pipelines {
+  style.fill: "#FFF3E0"
+  
+  incremental: "Incremental Sync" {
+    style.fill: "#E8F5E9"
+    
+    steps: {
+      load_state: "Load last synced timestamps\n(settings DB)"
+      fetch_meta: "Fetch notebooks/sections/pages metadata"
+      compare: "Compare OneNote modifiedDateTime"
+      selective_fetch: "Fetch + parse only changed pages"
+      chunk_embed: "Chunk → Embed (OpenAI)"
+      upsert: "ChromaDB upsert (replace changed IDs)"
+      stats: "Update sync stats & logs"
+    }
+    
+    cadence: "Runs at startup or scheduled cron"
+  }
+  
+  full: "Full Sync / Re-index" {
+    style.fill: "#FCE4EC"
+    
+    trigger: "User confirms action in Settings UI"
+    steps: {
+      fetch_all: "Fetch ALL notebooks/sections/pages"
+      purge: "Optional: clear Chroma + metadata cache"
+      chunk_embed: "Chunk all pages → Embed"
+      rebuild: "Rebuild vector store + stats"
+    }
+    
+    impact: "Longer runtime, ensures clean slate"
+  }
+}
+
+destinations: Storage & Status {
+  style.fill: "#F3E5F5"
+  
+  vector_store: "ChromaDB Collection\nonenote_documents"
+  settings_db: "SQLite Settings\n(last sync timestamps)"
+  frontend_feedback: "Settings UI Toast + Stats"
+}
+
+# Alternatives / Production
+automation_alt: "Prod Alt: Azure Data Factory / Databricks Jobs" {
+  shape: rectangle
+  style.stroke-dash: 3
+  style.fill: "#FFFDE7"
+  note: "Schedule incremental + nightly full sync"
+}
+
+trigger_alt: "Prod Alt: Azure Logic Apps / Power Automate" {
+  shape: rectangle
+  style.stroke-dash: 3
+  style.fill: "#E1F5FE"
+  note: "Trigger sync via admin portal"
+}
+
+vector_alt: "Prod Alt: Azure AI Search Ingestion Pipelines" {
+  shape: rectangle
+  style.stroke-dash: 3
+  style.fill: "#DFF7F5"
+}
+
+# Connections
+triggers.api_route -> pipelines.incremental: "Default (incremental=true)"
+triggers.api_route -> pipelines.full: "If payload.full_sync=true"
+
+pipelines.incremental.steps.upsert -> destinations.vector_store
+pipelines.full.steps.rebuild -> destinations.vector_store
+
+pipelines.incremental.steps.load_state -> destinations.settings_db: "Read metadata"
+pipelines.incremental.steps.stats -> destinations.settings_db: "Update timestamps"
+
+destinations.settings_db -> pipelines.incremental.steps.load_state: "Next run"
+pipelines.full.steps.rebuild -> destinations.settings_db: "Reset stats"
+
+destinations.settings_db -> destinations.frontend_feedback: "Expose sync stats"
+destinations.vector_store -> destinations.frontend_feedback: "Show chunk counts"
+
+pipelines.incremental -> automation_alt: "Schedule in prod"
+triggers.settings_ui -> trigger_alt: "Enterprise trigger option"
+destinations.vector_store -> vector_alt: "Managed search tier"

@@ -1,0 +1,45 @@
+# Data Sync Flow (Lite)
+
+direction: down
+
+title: {
+  label: "Startup Incremental vs Manual Full Sync"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 22
+    bold: true
+  }
+}
+
+startup: "Startup Trigger\nFastAPI lifespan"
+ui_trigger: "Settings UI Trigger\nUser clicks Sync"
+api: "Backend Endpoint\nPOST /api/onenote/sync"
+
+incremental: "Incremental Sync\n• Fetch changed pages\n• Re-embed + upsert\n• Update timestamps"
+full: "Full Sync\n• Fetch everything\n• Purge / rebuild store\n• Longer runtime"
+
+vector_store: "Vector Store\nChromaDB (dev)"
+stats: "Sync Stats\nSQLite settings"
+
+startup -> api: "auto_sync=True"
+ui_trigger -> api: "full_sync flag?"
+api -> incremental: "default"
+api -> full: "if full_sync"
+incremental -> vector_store
+full -> vector_store
+incremental -> stats
+full -> stats
+stats -> ui_trigger: "Show completion status"
+
+incremental_alt: "Alt: Azure Data Factory job"
+full_alt: "Alt: Databricks nightly rebuild"
+vector_alt: "Alt: Azure AI Search index"
+
+incremental_alt.style.stroke-dash: 3
+full_alt.style.stroke-dash: 3
+vector_alt.style.stroke-dash: 3
+
+incremental -> incremental_alt
+full -> full_alt
+vector_store -> vector_alt
