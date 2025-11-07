@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Viewer - Zoom & Pan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #1a1a1a;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            background: #f3f4f6;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.2s;
+            min-width: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .zoom-level {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            min-width: 55px;
+            text-align: center;
+        }
+
+        .viewer-container {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            cursor: grab;
+            position: relative;
+        }
+
+        .viewer-container.grabbing {
+            cursor: grabbing;
+        }
+
+        .svg-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: 0 0;
+            will-change: transform;
+        }
+
+        .svg-content svg {
+            display: block;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .error {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            color: #991b1b;
+            padding: 24px;
+            border-radius: 8px;
+            max-width: 500px;
+        }
+
+        .error h3 {
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <input type="file" id="fileInput" accept=".svg">
+        <button type="button" class="btn" id="openFile" title="Open SVG">📂</button>
+        <button type="button" class="btn" id="zoomOut" title="Zoom Out">−</button>
+        <div class="zoom-level" id="zoomLevel">100%</div>
+        <button type="button" class="btn" id="zoomIn" title="Zoom In">+</button>
+        <button type="button" class="btn" id="resetView" title="Reset View">⟲</button>
+    </div>
+
+    <div class="viewer-container" id="viewer">
+        <div class="loading">Click 📂 to open an SVG file</div>
+    </div>
+
+    <script>
+        // State
+        let scale = 1;
+        let translateX = 0;
+        let translateY = 0;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let svgElement = null;
+        let svgWidth = 0;
+        let svgHeight = 0;
+
+        // Elements
+        const viewer = document.getElementById('viewer');
+        const zoomLevel = document.getElementById('zoomLevel');
+        const fileInput = document.getElementById('fileInput');
+        const openFileBtn = document.getElementById('openFile');
+
+        // Open file dialog
+        openFileBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Handle file selection
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                loadSVGFromFile(file);
+            }
+        });
+
+        // Load SVG from file
+        function loadSVGFromFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const svgContent = e.target.result;
+                displaySVG(svgContent);
+            };
+            reader.onerror = () => {
+                viewer.innerHTML = `
+                    <div class="error">
+                        <h3>Failed to Load SVG</h3>
+                        <p>Could not read the file</p>
+                    </div>
+                `;
+            };
+            reader.readAsText(file);
+        }
+
+        // Display SVG content
+        function displaySVG(svgContent) {
+            // Create container for SVG
+            const container = document.createElement('div');
+            container.className = 'svg-content';
+            container.innerHTML = svgContent;
+
+            viewer.innerHTML = '';
+            viewer.appendChild(container);
+
+            svgElement = container;
+            const svg = container.querySelector('svg');
+
+            if (svg) {
+                // Get SVG dimensions
+                const bbox = svg.getBBox();
+                svgWidth = bbox.width || svg.width.baseVal.value || 800;
+                svgHeight = bbox.height || svg.height.baseVal.value || 600;
+
+                // Set explicit dimensions if not set
+                if (!svg.hasAttribute('width')) {
+                    svg.setAttribute('width', svgWidth);
+                }
+                if (!svg.hasAttribute('height')) {
+                    svg.setAttribute('height', svgHeight);
+                }
+
+                // Center the SVG initially
+                resetView();
+            } else {
+                viewer.innerHTML = `
+                    <div class="error">
+                        <h3>Invalid SVG</h3>
+                        <p>The file does not contain valid SVG content</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Update transform
+        function updateTransform() {
+            if (!svgElement) return;
+
+            svgElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            zoomLevel.textContent = `${Math.round(scale * 100)}%`;
+        }
+
+        // Reset view - center and fit SVG
+        function resetView() {
+            if (!svgElement) return;
+
+            const viewerRect = viewer.getBoundingClientRect();
+
+            // Calculate scale to fit SVG in viewport (with 10% padding)
+            const scaleX = (viewerRect.width * 0.9) / svgWidth;
+            const scaleY = (viewerRect.height * 0.9) / svgHeight;
+            scale = Math.min(scaleX, scaleY, 1); // Don't scale up initially
+
+            // Center the SVG
+            translateX = (viewerRect.width - svgWidth * scale) / 2;
+            translateY = (viewerRect.height - svgHeight * scale) / 2;
+
+            updateTransform();
+        }
+
+        // Zoom
+        function zoom(delta, centerX = null, centerY = null) {
+            if (!svgElement) return;
+
+            const oldScale = scale;
+            scale = Math.max(0.1, Math.min(10, scale * delta));
+
+            // Zoom towards cursor position if provided
+            if (centerX !== null && centerY !== null) {
+                const rect = viewer.getBoundingClientRect();
+                const mouseX = centerX - rect.left;
+                const mouseY = centerY - rect.top;
+
+                // Adjust translation to zoom towards mouse position
+                translateX = mouseX - (mouseX - translateX) * (scale / oldScale);
+                translateY = mouseY - (mouseY - translateY) * (scale / oldScale);
+            }
+
+            updateTransform();
+        }
+
+        // Event handlers
+        document.getElementById('zoomIn').addEventListener('click', () => zoom(1.2));
+        document.getElementById('zoomOut').addEventListener('click', () => zoom(0.8));
+        document.getElementById('resetView').addEventListener('click', resetView);
+
+        // Mouse wheel zoom
+        viewer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? 0.9 : 1.1;
+            zoom(delta, e.clientX, e.clientY);
+        }, { passive: false });
+
+        // Mouse drag to pan
+        viewer.addEventListener('mousedown', (e) => {
+            if (!svgElement) return;
+            isDragging = true;
+            dragStartX = e.clientX - translateX;
+            dragStartY = e.clientY - translateY;
+            viewer.classList.add('grabbing');
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            translateX = e.clientX - dragStartX;
+            translateY = e.clientY - dragStartY;
+            updateTransform();
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            viewer.classList.remove('grabbing');
+        });
+
+        // Touch support
+        let lastTouchDistance = 0;
+        let touchStartTranslateX = 0;
+        let touchStartTranslateY = 0;
+
+        viewer.addEventListener('touchstart', (e) => {
+            if (!svgElement) return;
+
+            if (e.touches.length === 1) {
+                isDragging = true;
+                dragStartX = e.touches[0].clientX - translateX;
+                dragStartY = e.touches[0].clientY - translateY;
+            } else if (e.touches.length === 2) {
+                isDragging = false;
+                lastTouchDistance = getDistance(e.touches[0], e.touches[1]);
+                touchStartTranslateX = translateX;
+                touchStartTranslateY = translateY;
+            }
+        });
+
+        viewer.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if (!svgElement) return;
+
+            if (e.touches.length === 1 && isDragging) {
+                translateX = e.touches[0].clientX - dragStartX;
+                translateY = e.touches[0].clientY - dragStartY;
+                updateTransform();
+            } else if (e.touches.length === 2) {
+                const distance = getDistance(e.touches[0], e.touches[1]);
+                const delta = distance / lastTouchDistance;
+
+                // Get center point of pinch
+                const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+                zoom(delta, centerX, centerY);
+                lastTouchDistance = distance;
+            }
+        }, { passive: false });
+
+        viewer.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        function getDistance(touch1, touch2) {
+            const dx = touch1.clientX - touch2.clientX;
+            const dy = touch1.clientY - touch2.clientY;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (svgElement) resetView();
+        });
+
+        // Drag and drop support
+        viewer.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        viewer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const file = e.dataTransfer.files[0];
+            if (file && file.type === 'image/svg+xml') {
+                loadSVGFromFile(file);
+            }
+        });
+    </script>
+</body>
+</html>
