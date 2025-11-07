@@ -127,57 +127,108 @@
         /* Sidebar for folder contents */
         .sidebar {
             position: fixed;
-            top: 50%;
-            right: -280px;
             width: 280px;
             height: 33.33vh;
             background: rgba(255, 255, 255, 0.98);
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
-            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
-            transition: right 0.3s ease;
-            transform: translateY(-50%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             z-index: 999;
             display: flex;
             flex-direction: column;
-            border-radius: 8px 0 0 8px;
+            transition: none;
         }
 
-        .sidebar.open {
+        /* Floating state */
+        .sidebar.floating {
+            border-radius: 8px;
+            cursor: move;
+        }
+
+        .sidebar.floating .sidebar-header {
+            cursor: move;
+            border-radius: 8px 8px 0 0;
+        }
+
+        /* Docked states - show a small peek */
+        .sidebar.docked-right {
+            top: 50%;
+            right: -250px;
+            transform: translateY(-50%);
+            border-radius: 8px 0 0 8px;
+            transition: right 0.3s ease;
+        }
+
+        .sidebar.docked-right.visible {
             right: 0;
         }
 
-        .sidebar-toggle {
-            position: absolute;
-            left: -36px;
+        .sidebar.docked-left {
             top: 50%;
+            left: -250px;
             transform: translateY(-50%);
-            width: 36px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.95);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            border: none;
-            border-radius: 8px 0 0 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-            transition: all 0.2s;
+            border-radius: 0 8px 8px 0;
+            transition: left 0.3s ease;
         }
 
-        .sidebar-toggle:hover {
-            background: rgba(102, 126, 234, 0.95);
-            color: white;
+        .sidebar.docked-left.visible {
+            left: 0;
+        }
+
+        /* Hover trigger areas for docked sidebars */
+        .dock-trigger {
+            position: fixed;
+            z-index: 998;
+            display: none;
+        }
+
+        .dock-trigger.active {
+            display: block;
+        }
+
+        .dock-trigger.right {
+            top: 0;
+            right: 0;
+            width: 10px;
+            height: 100vh;
+        }
+
+        .dock-trigger.left {
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 100vh;
+        }
+
+        .dock-trigger.top {
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 10px;
+        }
+
+        .dock-trigger.bottom {
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            height: 10px;
         }
 
         .sidebar-header {
             padding: 12px 16px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border-radius: 8px 0 0 0;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .sidebar.floating.dragging {
+            opacity: 0.9;
+            cursor: grabbing !important;
+        }
+
+        .sidebar.floating.dragging .sidebar-header {
+            cursor: grabbing !important;
         }
 
         .sidebar-header h3 {
@@ -262,9 +313,8 @@
     </div>
 
     <!-- Sidebar for folder contents -->
-    <div class="sidebar" id="sidebar">
-        <button type="button" class="sidebar-toggle" id="sidebarToggle">◀</button>
-        <div class="sidebar-header">
+    <div class="sidebar docked-right" id="sidebar">
+        <div class="sidebar-header" id="sidebarHeader">
             <h3>📁 SVG Files</h3>
             <p id="folderName">No folder selected</p>
         </div>
@@ -274,6 +324,10 @@
             </p>
         </div>
     </div>
+
+    <!-- Hover trigger areas for docked sidebars -->
+    <div class="dock-trigger right" id="dockTriggerRight"></div>
+    <div class="dock-trigger left" id="dockTriggerLeft"></div>
 
     <script>
         // State
@@ -295,12 +349,25 @@
         const openFileBtn = document.getElementById('openFile');
         const openFolderBtn = document.getElementById('openFolder');
         const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarHeader = document.getElementById('sidebarHeader');
         const svgList = document.getElementById('svgList');
         const folderName = document.getElementById('folderName');
+        const dockTriggers = {
+            right: document.getElementById('dockTriggerRight'),
+            left: document.getElementById('dockTriggerLeft')
+        };
 
         // Store folder files
         let folderFiles = [];
+
+        // Sidebar dragging state
+        let sidebarDragging = false;
+        let sidebarDragStartX = 0;
+        let sidebarDragStartY = 0;
+        let sidebarStartX = 0;
+        let sidebarStartY = 0;
+        let sidebarDockState = 'docked-right'; // 'floating', 'docked-left', 'docked-right', 'docked-top', 'docked-bottom'
+        let hoverTimeout = null;
 
         // Open file dialog
         openFileBtn.addEventListener('click', () => {
@@ -312,11 +379,145 @@
             folderInput.click();
         });
 
-        // Toggle sidebar
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-            sidebarToggle.textContent = sidebar.classList.contains('open') ? '▶' : '◀';
-        });
+        // Sidebar dragging functionality
+        sidebarHeader.addEventListener('mousedown', startSidebarDrag);
+        document.addEventListener('mousemove', dragSidebar);
+        document.addEventListener('mouseup', endSidebarDrag);
+
+        function startSidebarDrag(e) {
+            // Only drag if floating or start dragging from docked
+            const rect = sidebar.getBoundingClientRect();
+            sidebarDragStartX = e.clientX;
+            sidebarDragStartY = e.clientY;
+            sidebarStartX = rect.left;
+            sidebarStartY = rect.top;
+            sidebarDragging = true;
+
+            // If docked, convert to floating
+            if (sidebarDockState !== 'floating') {
+                undockSidebar();
+                sidebar.style.left = sidebarStartX + 'px';
+                sidebar.style.top = sidebarStartY + 'px';
+            }
+
+            sidebar.classList.add('dragging');
+            e.preventDefault();
+        }
+
+        function dragSidebar(e) {
+            if (!sidebarDragging) return;
+
+            const deltaX = e.clientX - sidebarDragStartX;
+            const deltaY = e.clientY - sidebarDragStartY;
+
+            sidebar.style.left = (sidebarStartX + deltaX) + 'px';
+            sidebar.style.top = (sidebarStartY + deltaY) + 'px';
+        }
+
+        function endSidebarDrag(e) {
+            if (!sidebarDragging) return;
+
+            sidebarDragging = false;
+            sidebar.classList.remove('dragging');
+
+            // Check if near left or right edge for docking
+            const dockZone = 80; // pixels from edge
+            const rect = sidebar.getBoundingClientRect();
+
+            const distToRight = window.innerWidth - rect.right;
+            const distToLeft = rect.left;
+
+            // Find closest horizontal edge
+            const minDist = Math.min(distToRight, distToLeft);
+
+            if (minDist < dockZone) {
+                // Dock to nearest horizontal edge
+                if (distToRight < distToLeft) {
+                    dockSidebar('docked-right');
+                } else {
+                    dockSidebar('docked-left');
+                }
+            } else {
+                // Stay floating
+                sidebarDockState = 'floating';
+            }
+        }
+
+        function dockSidebar(position) {
+            // Remove all dock states
+            sidebar.className = 'sidebar ' + position;
+            sidebarDockState = position;
+            sidebar.style.left = '';
+            sidebar.style.top = '';
+            sidebar.style.right = '';
+            sidebar.style.bottom = '';
+
+            // Activate appropriate dock trigger
+            Object.values(dockTriggers).forEach(trigger => trigger.classList.remove('active'));
+            const triggerName = position.replace('docked-', '');
+            dockTriggers[triggerName].classList.add('active');
+        }
+
+        function undockSidebar() {
+            sidebar.classList.remove('docked-right', 'docked-left', 'visible');
+            sidebar.classList.add('floating');
+            sidebarDockState = 'floating';
+
+            // Deactivate all triggers
+            Object.values(dockTriggers).forEach(trigger => trigger.classList.remove('active'));
+        }
+
+        // Hover behavior for docked sidebars
+        function setupHoverBehavior() {
+            // Hover on dock triggers
+            Object.entries(dockTriggers).forEach(([position, trigger]) => {
+                trigger.addEventListener('mouseenter', () => {
+                    if (sidebarDockState === `docked-${position}`) {
+                        clearTimeout(hoverTimeout);
+                        sidebar.classList.add('visible');
+                    }
+                });
+            });
+
+            // Hover on sidebar itself
+            sidebar.addEventListener('mouseenter', () => {
+                clearTimeout(hoverTimeout);
+                if (sidebarDockState !== 'floating') {
+                    sidebar.classList.add('visible');
+                }
+            });
+
+            // Mouse leave sidebar
+            sidebar.addEventListener('mouseleave', () => {
+                if (sidebarDockState !== 'floating') {
+                    hoverTimeout = setTimeout(() => {
+                        sidebar.classList.remove('visible');
+                    }, 300);
+                }
+            });
+
+            // Mouse leave triggers
+            Object.values(dockTriggers).forEach(trigger => {
+                trigger.addEventListener('mouseleave', (e) => {
+                    // Check if mouse is moving towards sidebar
+                    const rect = sidebar.getBoundingClientRect();
+                    const isNearSidebar = (
+                        e.clientX >= rect.left - 10 &&
+                        e.clientX <= rect.right + 10 &&
+                        e.clientY >= rect.top - 10 &&
+                        e.clientY <= rect.bottom + 10
+                    );
+
+                    if (!isNearSidebar && sidebarDockState !== 'floating') {
+                        hoverTimeout = setTimeout(() => {
+                            sidebar.classList.remove('visible');
+                        }, 300);
+                    }
+                });
+            });
+        }
+
+        setupHoverBehavior();
 
         // Handle file selection
         fileInput.addEventListener('change', (e) => {
@@ -339,9 +540,9 @@
             folderFiles = svgFiles;
             displayFolderContents(svgFiles);
 
-            // Open sidebar and load first SVG
-            sidebar.classList.add('open');
-            sidebarToggle.textContent = '▶';
+            // Show sidebar (docked right by default) and load first SVG
+            dockSidebar('docked-right');
+            sidebar.classList.add('visible');
             loadSVGFromFile(svgFiles[0]);
         });
 
