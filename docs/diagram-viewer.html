@@ -249,7 +249,7 @@
     <div class="controls">
         <input type="file" id="fileInput" accept=".svg">
         <input type="file" id="folderInput" webkitdirectory directory multiple style="display: none;">
-        <button type="button" class="btn" id="openFile" title="Open SVG File">📂</button>
+        <button type="button" class="btn" id="openFile" title="Open SVG File">📄</button>
         <button type="button" class="btn" id="openFolder" title="Open Folder">📁</button>
         <button type="button" class="btn" id="zoomOut" title="Zoom Out">−</button>
         <div class="zoom-level" id="zoomLevel">100%</div>
@@ -258,7 +258,7 @@
     </div>
 
     <div class="viewer-container" id="viewer">
-        <div class="loading">Click 📂 to open an SVG file or 📁 to open a folder</div>
+        <div class="loading">Click 📄 to open an SVG file or 📁 to open a folder</div>
     </div>
 
     <!-- Sidebar for folder contents -->
@@ -353,9 +353,21 @@
             const folder = pathParts.length > 1 ? pathParts[0] : 'Selected Folder';
             folderName.textContent = folder;
 
+            // Sort files: summary files first, then everything else
+            const sortedFiles = files.sort((a, b) => {
+                const aHasSummary = a.name.toLowerCase().includes('summary');
+                const bHasSummary = b.name.toLowerCase().includes('summary');
+
+                // If both have summary or both don't have summary, maintain original order
+                if (aHasSummary === bHasSummary) return 0;
+
+                // Put summary files first
+                return aHasSummary ? -1 : 1;
+            });
+
             // Create list of SVG files
             svgList.innerHTML = '';
-            files.forEach((file, index) => {
+            sortedFiles.forEach((file, index) => {
                 const item = document.createElement('div');
                 item.className = 'svg-item';
                 if (index === 0) item.classList.add('active');
