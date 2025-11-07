@@ -1,0 +1,303 @@
+# Document Indexing Process
+
+direction: down
+
+title: {
+  label: "OneNote Document Indexing Flow"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 24
+    bold: true
+  }
+}
+
+trigger: Indexing Trigger {
+  shape: hexagon
+  style.fill: "#E3F2FD"
+  
+  sources: {
+    manual: "Manual: User clicks 'Index'"
+    startup: "Auto: Startup sync (incremental)"
+    api: "API: POST /api/documents/index"
+  }
+}
+
+step1: 1. Authenticate & Connect {
+  style.fill: "#FFF3E0"
+  
+  auth_check: Check Authentication
+  
+  oauth_flow: OAuth 2.0 Flow {
+    client_creds: {
+      client_id: "MICROSOFT_CLIENT_ID"
+      client_secret: "MICROSOFT_CLIENT_SECRET"
+      tenant_id: "MICROSOFT_TENANT_ID"
+    }
+    
+    token_req: "Request Access Token"
+    scope: "Notes.Read scope"
+  }
+  
+  manual_token: Manual Token Option {
+    style.stroke-dash: 3
+    graph_token: "MICROSOFT_GRAPH_TOKEN (from Graph Explorer)"
+    override: "Overrides OAuth if set"
+  }
+  
+  msgraph: Microsoft Graph API {
+    shape: cloud
+    style.fill: "#0078D4"
+  }
+  
+  prod_source: "Prod Alt Source:\nDatabricks / SharePoint Export" {
+    shape: cloud
+    style.stroke-dash: 3
+    style.fill: "#F3E5F5"
+    pipeline: "Use ADF → Delta tables → Databricks jobs"
+  }
+  
+  auth_check -> oauth_flow: "No manual token"
+  auth_check -> manual_token: "Manual token set"
+  oauth_flow -> msgraph: "Authenticate"
+  manual_token -> msgraph: "Use bearer token"
+  msgraph -> prod_source: "Enterprise ingestion"
+}
+
+step2: 2. Fetch OneNote Structure {
+  style.fill: "#E8F5E9"
+  
+  notebooks: Get All Notebooks
+  sections: Get Sections per Notebook
+  pages: Get Pages per Section
+  
+  api_calls: {
+    notebooks_api: "GET /me/onenote/notebooks"
+    sections_api: "GET /notebooks/{id}/sections"
+    pages_api: "GET /sections/{id}/pages"
+  }
+  
+  notebooks -> sections: "For each notebook"
+  sections -> pages: "For each section"
+}
+
+step3: 3. Download Page Content {
+  style.fill: "#F3E5F5"
+  
+  page_loop: For Each Page {
+    get_metadata: {
+      page_id: "Unique ID"
+      title: "Page title"
+      created: "Created date"
+      modified: "Last modified date"
+      web_url: "OneNote web URL"
+    }
+    
+    get_content: "GET /pages/{id}/content"
+    parse_html: "Parse HTML content"
+    extract_text: "Extract plain text"
+    clean_text: "Remove formatting/scripts"
+  }
+  
+  incremental_check: Incremental Sync Check {
+    style.stroke-dash: 3
+    
+    check_db: "Check page_id in vector DB"
+    compare_dates: "Compare modified dates"
+    skip_unchanged: "Skip if unchanged"
+    update_changed: "Delete old + Re-index if changed"
+  }
+  
+  page_loop.get_content -> page_loop.parse_html
+  page_loop.parse_html -> page_loop.extract_text
+  page_loop.extract_text -> page_loop.clean_text
+  page_loop.get_metadata -> incremental_check.check_db
+}
+
+step4: 4. Document Processing {
+  style.fill: "#FCE4EC"
+  
+  chunking: Text Chunking {
+    strategy: "Recursive Character Splitter"
+    chunk_size: "CHUNK_SIZE (default: 1000)"
+    overlap: "CHUNK_OVERLAP (default: 200)"
+    
+    rationale: "Maintains context, Optimizes embedding quality, Balances retrieval precision"
+  }
+  
+  metadata_attach: Attach Metadata {
+    per_chunk: {
+      page_id: "Source page ID"
+      page_title: "Page title"
+      chunk_index: "Chunk number"
+      section_name: "Section name"
+      notebook_name: "Notebook name"
+      created_date: "Creation timestamp"
+      modified_date: "Last modified timestamp"
+      source_url: "OneNote web URL"
+    }
+  }
+  
+  chunking -> metadata_attach: "Each chunk"
+}
+
+step5: 5. Embedding Generation {
+  style.fill: "#FFF9C4"
+  
+  batch_prep: Prepare Batches {
+    batch_size: "Batch size: 100 chunks"
+    reason: "API rate limits"
+  }
+  
+  embed_call: Call Embeddings API {
+    model: "text-embedding-3-small"
+    dimensions: "1536 dimensions"
+    cost: "0.02 per 1M tokens"
+  }
+  
+  openai: OpenAI Embeddings API {
+    shape: cloud
+    style.fill: "#10A37F"
+  }
+  
+  batch_prep -> embed_call
+  embed_call -> openai: "Embed text chunks"
+  
+  prod_embedding: "Prod Alt: Azure OpenAI Embeddings" {
+    shape: cloud
+    style.stroke-dash: 3
+    style.fill: "#DFF7F5"
+    benefits: "Private networking, regional data"
+  }
+  
+  openai -> prod_embedding: "Enterprise alternative"
+}
+
+step6: 6. Vector Storage {
+  style.fill: "#E0F2F1"
+  
+  upsert: Upsert to ChromaDB {
+    operation: {
+      vectors: "Store 1536-dim vectors"
+      documents: "Store original text"
+      metadata: "Store metadata dict"
+      ids: "Generate unique IDs"
+    }
+    
+    collection: "Collection: 'onenote_documents'"
+  }
+  
+  chromadb: ChromaDB Vector Store {
+    shape: cylinder
+    style.fill: "#FF6F00"
+  }
+  
+  indexing: Create Indexes {
+    index_type: "HNSW (default)"
+    distance: "Cosine similarity"
+  }
+  
+  upsert -> chromadb
+  chromadb -> indexing: "Auto-index on insert"
+  
+  prod_vector_store: "Prod Alt: Azure AI Search / Pinecone" {
+    shape: cylinder
+    style.stroke-dash: 3
+    style.fill: "#FFFDE7"
+    benefits: "SLA-backed, RBAC, geo replication"
+  }
+  
+  chromadb -> prod_vector_store: "Enterprise alternative"
+}
+
+step7: 7. Post-Processing {
+  style.fill: "#C8E6C9"
+  
+  update_stats: Update Statistics {
+    total_pages: "Total pages indexed"
+    total_chunks: "Total chunks created"
+    new_pages: "New pages added"
+    updated_pages: "Updated pages"
+    skipped_pages: "Unchanged pages skipped"
+  }
+  
+  log_completion: Log Completion {
+    timestamp: "Completion timestamp"
+    duration: "Total duration"
+    errors: "Any errors encountered"
+  }
+  
+  notify_user: Notify User {
+    success_msg: "✅ Indexing complete"
+    stats_display: "Display statistics"
+  }
+}
+
+result: Indexing Complete {
+  shape: hexagon
+  style.fill: "#A5D6A7"
+  
+  status: "Ready for RAG queries"
+}
+
+# Flow connections
+trigger -> step1: "Start"
+step1 -> step2: "Authenticated"
+step2 -> step3: "Fetch pages"
+step3 -> step4: "Process each page"
+step4 -> step5: "Chunk documents"
+step5 -> step6: "Embed vectors"
+step6 -> step7: "Store complete"
+step7 -> result: "Done"
+
+# Error handling
+errors: Error Handling {
+  shape: rectangle
+  style.fill: "#FFCDD2"
+  style.stroke-dash: 3
+  
+  auth_errors: {
+    invalid_token: "Invalid/expired token → Re-auth"
+    permissions: "Insufficient permissions → Check scopes"
+  }
+  
+  api_errors: {
+    rate_limit: "Rate limited → Retry with backoff"
+    timeout: "Timeout → Retry page"
+    not_found: "Page deleted → Skip"
+  }
+  
+  processing_errors: {
+    parse_fail: "HTML parse error → Log & skip"
+    embed_fail: "Embedding error → Retry batch"
+    db_fail: "DB error → Rollback transaction"
+  }
+}
+
+step1 -> errors.auth_errors: "If auth fails"
+step2 -> errors.api_errors: "If API fails"
+step5 -> errors.processing_errors.embed_fail: "If embedding fails"
+step6 -> errors.processing_errors.db_fail: "If storage fails"
+
+# Performance notes
+perf: Performance Notes {
+  shape: rectangle
+  style.fill: "#E1F5FE"
+  style.stroke-dash: 3
+  
+  timing: {
+    auth: "Auth: ~1-2s (first time)"
+    fetch: "Fetch 100 pages: ~5-10s"
+    chunk: "Chunking: ~1s (100 pages)"
+    embed: "Embeddings: ~2-5s (100 chunks)"
+    store: "Storage: ~1-2s (100 chunks)"
+    total: "Total: ~2-5 min (1000 pages)"
+  }
+  
+  optimization: {
+    batch_api: "Batch API calls where possible"
+    parallel: "Parallel processing of pages"
+    cache: "Cache unchanged pages"
+    incremental: "Use incremental sync"
+  }
+}

@@ -1,0 +1,930 @@
+<?xml version="1.0" encoding="utf-8"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" d2Version="v0.6.8" preserveAspectRatio="xMinYMin meet" viewBox="0 0 5869 2424"><svg id="d2-svg" class="d2-1125615832" width="5869" height="2424" viewBox="-89 -140 5869 2424"><rect x="-89.000000" y="-140.000000" width="5869.000000" height="2424.000000" rx="0.000000" fill="#FFFFFF" class=" fill-N7" stroke-width="0" /><style type="text/css"><![CDATA[
+.d2-1125615832 .text {
+	font-family: "d2-1125615832-font-regular";
+}
+@font-face {
+	font-family: d2-1125615832-font-regular;
+	src: url("data:application/font-woff;base64,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");
+}
+.d2-1125615832 .text-bold {
+	font-family: "d2-1125615832-font-bold";
+}
+@font-face {
+	font-family: d2-1125615832-font-bold;
+	src: url("data:application/font-woff;base64,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");
+}
+.d2-1125615832 .text-italic {
+	font-family: "d2-1125615832-font-italic";
+}
+@font-face {
+	font-family: d2-1125615832-font-italic;
+	src: url("data:application/font-woff;base64,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");
+}]]></style><style type="text/css"><![CDATA[.shape {
+  shape-rendering: geometricPrecision;
+  stroke-linejoin: round;
+}
+.connection {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.blend {
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+		.d2-1125615832 .fill-N1{fill:#0A0F25;}
+		.d2-1125615832 .fill-N2{fill:#676C7E;}
+		.d2-1125615832 .fill-N3{fill:#9499AB;}
+		.d2-1125615832 .fill-N4{fill:#CFD2DD;}
+		.d2-1125615832 .fill-N5{fill:#DEE1EB;}
+		.d2-1125615832 .fill-N6{fill:#EEF1F8;}
+		.d2-1125615832 .fill-N7{fill:#FFFFFF;}
+		.d2-1125615832 .fill-B1{fill:#0D32B2;}
+		.d2-1125615832 .fill-B2{fill:#0D32B2;}
+		.d2-1125615832 .fill-B3{fill:#E3E9FD;}
+		.d2-1125615832 .fill-B4{fill:#E3E9FD;}
+		.d2-1125615832 .fill-B5{fill:#EDF0FD;}
+		.d2-1125615832 .fill-B6{fill:#F7F8FE;}
+		.d2-1125615832 .fill-AA2{fill:#4A6FF3;}
+		.d2-1125615832 .fill-AA4{fill:#EDF0FD;}
+		.d2-1125615832 .fill-AA5{fill:#F7F8FE;}
+		.d2-1125615832 .fill-AB4{fill:#EDF0FD;}
+		.d2-1125615832 .fill-AB5{fill:#F7F8FE;}
+		.d2-1125615832 .stroke-N1{stroke:#0A0F25;}
+		.d2-1125615832 .stroke-N2{stroke:#676C7E;}
+		.d2-1125615832 .stroke-N3{stroke:#9499AB;}
+		.d2-1125615832 .stroke-N4{stroke:#CFD2DD;}
+		.d2-1125615832 .stroke-N5{stroke:#DEE1EB;}
+		.d2-1125615832 .stroke-N6{stroke:#EEF1F8;}
+		.d2-1125615832 .stroke-N7{stroke:#FFFFFF;}
+		.d2-1125615832 .stroke-B1{stroke:#0D32B2;}
+		.d2-1125615832 .stroke-B2{stroke:#0D32B2;}
+		.d2-1125615832 .stroke-B3{stroke:#E3E9FD;}
+		.d2-1125615832 .stroke-B4{stroke:#E3E9FD;}
+		.d2-1125615832 .stroke-B5{stroke:#EDF0FD;}
+		.d2-1125615832 .stroke-B6{stroke:#F7F8FE;}
+		.d2-1125615832 .stroke-AA2{stroke:#4A6FF3;}
+		.d2-1125615832 .stroke-AA4{stroke:#EDF0FD;}
+		.d2-1125615832 .stroke-AA5{stroke:#F7F8FE;}
+		.d2-1125615832 .stroke-AB4{stroke:#EDF0FD;}
+		.d2-1125615832 .stroke-AB5{stroke:#F7F8FE;}
+		.d2-1125615832 .background-color-N1{background-color:#0A0F25;}
+		.d2-1125615832 .background-color-N2{background-color:#676C7E;}
+		.d2-1125615832 .background-color-N3{background-color:#9499AB;}
+		.d2-1125615832 .background-color-N4{background-color:#CFD2DD;}
+		.d2-1125615832 .background-color-N5{background-color:#DEE1EB;}
+		.d2-1125615832 .background-color-N6{background-color:#EEF1F8;}
+		.d2-1125615832 .background-color-N7{background-color:#FFFFFF;}
+		.d2-1125615832 .background-color-B1{background-color:#0D32B2;}
+		.d2-1125615832 .background-color-B2{background-color:#0D32B2;}
+		.d2-1125615832 .background-color-B3{background-color:#E3E9FD;}
+		.d2-1125615832 .background-color-B4{background-color:#E3E9FD;}
+		.d2-1125615832 .background-color-B5{background-color:#EDF0FD;}
+		.d2-1125615832 .background-color-B6{background-color:#F7F8FE;}
+		.d2-1125615832 .background-color-AA2{background-color:#4A6FF3;}
+		.d2-1125615832 .background-color-AA4{background-color:#EDF0FD;}
+		.d2-1125615832 .background-color-AA5{background-color:#F7F8FE;}
+		.d2-1125615832 .background-color-AB4{background-color:#EDF0FD;}
+		.d2-1125615832 .background-color-AB5{background-color:#F7F8FE;}
+		.d2-1125615832 .color-N1{color:#0A0F25;}
+		.d2-1125615832 .color-N2{color:#676C7E;}
+		.d2-1125615832 .color-N3{color:#9499AB;}
+		.d2-1125615832 .color-N4{color:#CFD2DD;}
+		.d2-1125615832 .color-N5{color:#DEE1EB;}
+		.d2-1125615832 .color-N6{color:#EEF1F8;}
+		.d2-1125615832 .color-N7{color:#FFFFFF;}
+		.d2-1125615832 .color-B1{color:#0D32B2;}
+		.d2-1125615832 .color-B2{color:#0D32B2;}
+		.d2-1125615832 .color-B3{color:#E3E9FD;}
+		.d2-1125615832 .color-B4{color:#E3E9FD;}
+		.d2-1125615832 .color-B5{color:#EDF0FD;}
+		.d2-1125615832 .color-B6{color:#F7F8FE;}
+		.d2-1125615832 .color-AA2{color:#4A6FF3;}
+		.d2-1125615832 .color-AA4{color:#EDF0FD;}
+		.d2-1125615832 .color-AA5{color:#F7F8FE;}
+		.d2-1125615832 .color-AB4{color:#EDF0FD;}
+		.d2-1125615832 .color-AB5{color:#F7F8FE;}.appendix text.text{fill:#0A0F25}.md{--color-fg-default:#0A0F25;--color-fg-muted:#676C7E;--color-fg-subtle:#9499AB;--color-canvas-default:#FFFFFF;--color-canvas-subtle:#EEF1F8;--color-border-default:#0D32B2;--color-border-muted:#0D32B2;--color-neutral-muted:#EEF1F8;--color-accent-fg:#0D32B2;--color-accent-emphasis:#0D32B2;--color-attention-subtle:#676C7E;--color-danger-fg:red;}.sketch-overlay-B1{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B2{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B3{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B4{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B6{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AA2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-AA4{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AA5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AB4{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AB5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N1{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-N2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-N3{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N6{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N7{fill:url(#streaks-bright);mix-blend-mode:darken}.light-code{display: block}.dark-code{display: none}]]></style><style type="text/css">.d2-1125615832 .md em,
+.d2-1125615832 .md dfn {
+  font-family: "d2-1125615832-font-italic";
+}
+
+.d2-1125615832 .md b,
+.d2-1125615832 .md strong {
+  font-family: "d2-1125615832-font-bold";
+}
+
+.d2-1125615832 .md code,
+.d2-1125615832 .md kbd,
+.d2-1125615832 .md pre,
+.d2-1125615832 .md samp {
+  font-family: "d2-1125615832-font-mono";
+  font-size: 1em;
+}
+
+.d2-1125615832 .md {
+  tab-size: 4;
+}
+
+/* variables are provided in d2renderers/d2svg/d2svg.go */
+
+.d2-1125615832 .md {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  color: var(--color-fg-default);
+  background-color: transparent; /* we don't want to define the background color */
+  font-family: "d2-1125615832-font-regular";
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.d2-1125615832 .md details,
+.d2-1125615832 .md figcaption,
+.d2-1125615832 .md figure {
+  display: block;
+}
+
+.d2-1125615832 .md summary {
+  display: list-item;
+}
+
+.d2-1125615832 .md [hidden] {
+  display: none !important;
+}
+
+.d2-1125615832 .md a {
+  background-color: transparent;
+  color: var(--color-accent-fg);
+  text-decoration: none;
+}
+
+.d2-1125615832 .md a:active,
+.d2-1125615832 .md a:hover {
+  outline-width: 0;
+}
+
+.d2-1125615832 .md abbr[title] {
+  border-bottom: none;
+  text-decoration: underline dotted;
+}
+
+.d2-1125615832 .md dfn {
+  font-style: italic;
+}
+
+.d2-1125615832 .md h1 {
+  margin: 0.67em 0;
+  padding-bottom: 0.3em;
+  font-size: 2em;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+.d2-1125615832 .md mark {
+  background-color: var(--color-attention-subtle);
+  color: var(--color-text-primary);
+}
+
+.d2-1125615832 .md small {
+  font-size: 90%;
+}
+
+.d2-1125615832 .md sub,
+.d2-1125615832 .md sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.d2-1125615832 .md sub {
+  bottom: -0.25em;
+}
+
+.d2-1125615832 .md sup {
+  top: -0.5em;
+}
+
+.d2-1125615832 .md img {
+  border-style: none;
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: var(--color-canvas-default);
+}
+
+.d2-1125615832 .md figure {
+  margin: 1em 40px;
+}
+
+.d2-1125615832 .md hr {
+  box-sizing: content-box;
+  overflow: hidden;
+  background: transparent;
+  border-bottom: 1px solid var(--color-border-muted);
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: var(--color-border-default);
+  border: 0;
+}
+
+.d2-1125615832 .md input {
+  font: inherit;
+  margin: 0;
+  overflow: visible;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.d2-1125615832 .md [type="button"],
+.d2-1125615832 .md [type="reset"],
+.d2-1125615832 .md [type="submit"] {
+  -webkit-appearance: button;
+}
+
+.d2-1125615832 .md [type="button"]::-moz-focus-inner,
+.d2-1125615832 .md [type="reset"]::-moz-focus-inner,
+.d2-1125615832 .md [type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+.d2-1125615832 .md [type="button"]:-moz-focusring,
+.d2-1125615832 .md [type="reset"]:-moz-focusring,
+.d2-1125615832 .md [type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+.d2-1125615832 .md [type="checkbox"],
+.d2-1125615832 .md [type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.d2-1125615832 .md [type="number"]::-webkit-inner-spin-button,
+.d2-1125615832 .md [type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+.d2-1125615832 .md [type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+.d2-1125615832 .md [type="search"]::-webkit-search-cancel-button,
+.d2-1125615832 .md [type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+.d2-1125615832 .md ::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.54;
+}
+
+.d2-1125615832 .md ::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+.d2-1125615832 .md a:hover {
+  text-decoration: underline;
+}
+
+.d2-1125615832 .md hr::before {
+  display: table;
+  content: "";
+}
+
+.d2-1125615832 .md hr::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.d2-1125615832 .md table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.d2-1125615832 .md td,
+.d2-1125615832 .md th {
+  padding: 0;
+}
+
+.d2-1125615832 .md details summary {
+  cursor: pointer;
+}
+
+.d2-1125615832 .md details:not([open]) > *:not(summary) {
+  display: none !important;
+}
+
+.d2-1125615832 .md kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  color: var(--color-fg-default);
+  vertical-align: middle;
+  background-color: var(--color-canvas-subtle);
+  border: solid 1px var(--color-neutral-muted);
+  border-bottom-color: var(--color-neutral-muted);
+  border-radius: 6px;
+  box-shadow: inset 0 -1px 0 var(--color-neutral-muted);
+}
+
+.d2-1125615832 .md h1,
+.d2-1125615832 .md h2,
+.d2-1125615832 .md h3,
+.d2-1125615832 .md h4,
+.d2-1125615832 .md h5,
+.d2-1125615832 .md h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  font-family: "d2-1125615832-font-semibold";
+}
+
+.d2-1125615832 .md h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+.d2-1125615832 .md h3 {
+  font-size: 1.25em;
+}
+
+.d2-1125615832 .md h4 {
+  font-size: 1em;
+}
+
+.d2-1125615832 .md h5 {
+  font-size: 0.875em;
+}
+
+.d2-1125615832 .md h6 {
+  font-size: 0.85em;
+  color: var(--color-fg-muted);
+}
+
+.d2-1125615832 .md p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.d2-1125615832 .md blockquote {
+  margin: 0;
+  padding: 0 1em;
+  color: var(--color-fg-muted);
+  border-left: 0.25em solid var(--color-border-default);
+}
+
+.d2-1125615832 .md ul,
+.d2-1125615832 .md ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 2em;
+}
+
+.d2-1125615832 .md ol ol,
+.d2-1125615832 .md ul ol {
+  list-style-type: lower-roman;
+}
+
+.d2-1125615832 .md ul ul ol,
+.d2-1125615832 .md ul ol ol,
+.d2-1125615832 .md ol ul ol,
+.d2-1125615832 .md ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.d2-1125615832 .md dd {
+  margin-left: 0;
+}
+
+.d2-1125615832 .md pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  word-wrap: normal;
+}
+
+.d2-1125615832 .md ::placeholder {
+  color: var(--color-fg-subtle);
+  opacity: 1;
+}
+
+.d2-1125615832 .md input::-webkit-outer-spin-button,
+.d2-1125615832 .md input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.d2-1125615832 .md::before {
+  display: table;
+  content: "";
+}
+
+.d2-1125615832 .md::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.d2-1125615832 .md > *:first-child {
+  margin-top: 0 !important;
+}
+
+.d2-1125615832 .md > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+.d2-1125615832 .md a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.d2-1125615832 .md .absent {
+  color: var(--color-danger-fg);
+}
+
+.d2-1125615832 .md .anchor {
+  float: left;
+  padding-right: 4px;
+  margin-left: -20px;
+  line-height: 1;
+}
+
+.d2-1125615832 .md .anchor:focus {
+  outline: none;
+}
+
+.d2-1125615832 .md p,
+.d2-1125615832 .md blockquote,
+.d2-1125615832 .md ul,
+.d2-1125615832 .md ol,
+.d2-1125615832 .md dl,
+.d2-1125615832 .md table,
+.d2-1125615832 .md pre,
+.d2-1125615832 .md details {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.d2-1125615832 .md blockquote > :first-child {
+  margin-top: 0;
+}
+
+.d2-1125615832 .md blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.d2-1125615832 .md sup > a::before {
+  content: "[";
+}
+
+.d2-1125615832 .md sup > a::after {
+  content: "]";
+}
+
+.d2-1125615832 .md h1:hover .anchor,
+.d2-1125615832 .md h2:hover .anchor,
+.d2-1125615832 .md h3:hover .anchor,
+.d2-1125615832 .md h4:hover .anchor,
+.d2-1125615832 .md h5:hover .anchor,
+.d2-1125615832 .md h6:hover .anchor {
+  text-decoration: none;
+}
+
+.d2-1125615832 .md h1 tt,
+.d2-1125615832 .md h1 code,
+.d2-1125615832 .md h2 tt,
+.d2-1125615832 .md h2 code,
+.d2-1125615832 .md h3 tt,
+.d2-1125615832 .md h3 code,
+.d2-1125615832 .md h4 tt,
+.d2-1125615832 .md h4 code,
+.d2-1125615832 .md h5 tt,
+.d2-1125615832 .md h5 code,
+.d2-1125615832 .md h6 tt,
+.d2-1125615832 .md h6 code {
+  padding: 0 0.2em;
+  font-size: inherit;
+}
+
+.d2-1125615832 .md ul.no-list,
+.d2-1125615832 .md ol.no-list {
+  padding: 0;
+  list-style-type: none;
+}
+
+.d2-1125615832 .md ol[type="1"] {
+  list-style-type: decimal;
+}
+
+.d2-1125615832 .md ol[type="a"] {
+  list-style-type: lower-alpha;
+}
+
+.d2-1125615832 .md ol[type="i"] {
+  list-style-type: lower-roman;
+}
+
+.d2-1125615832 .md div > ol:not([type]) {
+  list-style-type: decimal;
+}
+
+.d2-1125615832 .md ul ul,
+.d2-1125615832 .md ul ol,
+.d2-1125615832 .md ol ol,
+.d2-1125615832 .md ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.d2-1125615832 .md li > p {
+  margin-top: 16px;
+}
+
+.d2-1125615832 .md li + li {
+  margin-top: 0.25em;
+}
+
+.d2-1125615832 .md dl {
+  padding: 0;
+}
+
+.d2-1125615832 .md dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-family: "d2-1125615832-font-semibold";
+}
+
+.d2-1125615832 .md dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.d2-1125615832 .md table th {
+  font-family: "d2-1125615832-font-semibold";
+}
+
+.d2-1125615832 .md table th,
+.d2-1125615832 .md table td {
+  padding: 6px 13px;
+  border: 1px solid var(--color-border-default);
+}
+
+.d2-1125615832 .md table tr {
+  background-color: var(--color-canvas-default);
+  border-top: 1px solid var(--color-border-muted);
+}
+
+.d2-1125615832 .md table tr:nth-child(2n) {
+  background-color: var(--color-canvas-subtle);
+}
+
+.d2-1125615832 .md table img {
+  background-color: transparent;
+}
+
+.d2-1125615832 .md img[align="right"] {
+  padding-left: 20px;
+}
+
+.d2-1125615832 .md img[align="left"] {
+  padding-right: 20px;
+}
+
+.d2-1125615832 .md span.frame {
+  display: block;
+  overflow: hidden;
+}
+
+.d2-1125615832 .md span.frame > span {
+  display: block;
+  float: left;
+  width: auto;
+  padding: 7px;
+  margin: 13px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+}
+
+.d2-1125615832 .md span.frame span img {
+  display: block;
+  float: left;
+}
+
+.d2-1125615832 .md span.frame span span {
+  display: block;
+  padding: 5px 0 0;
+  clear: both;
+  color: var(--color-fg-default);
+}
+
+.d2-1125615832 .md span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.d2-1125615832 .md span.align-center > span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.d2-1125615832 .md span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.d2-1125615832 .md span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.d2-1125615832 .md span.align-right > span {
+  display: block;
+  margin: 13px 0 0;
+  overflow: hidden;
+  text-align: right;
+}
+
+.d2-1125615832 .md span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+
+.d2-1125615832 .md span.float-left {
+  display: block;
+  float: left;
+  margin-right: 13px;
+  overflow: hidden;
+}
+
+.d2-1125615832 .md span.float-left span {
+  margin: 13px 0 0;
+}
+
+.d2-1125615832 .md span.float-right {
+  display: block;
+  float: right;
+  margin-left: 13px;
+  overflow: hidden;
+}
+
+.d2-1125615832 .md span.float-right > span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: right;
+}
+
+.d2-1125615832 .md code,
+.d2-1125615832 .md tt {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: var(--color-neutral-muted);
+  border-radius: 6px;
+}
+
+.d2-1125615832 .md code br,
+.d2-1125615832 .md tt br {
+  display: none;
+}
+
+.d2-1125615832 .md del code {
+  text-decoration: inherit;
+}
+
+.d2-1125615832 .md pre code {
+  font-size: 100%;
+}
+
+.d2-1125615832 .md pre > code {
+  padding: 0;
+  margin: 0;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.d2-1125615832 .md .highlight {
+  margin-bottom: 16px;
+}
+
+.d2-1125615832 .md .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.d2-1125615832 .md .highlight pre,
+.d2-1125615832 .md pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: var(--color-canvas-subtle);
+  border-radius: 6px;
+}
+
+.d2-1125615832 .md pre code,
+.d2-1125615832 .md pre tt {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.d2-1125615832 .md .csv-data td,
+.d2-1125615832 .md .csv-data th {
+  padding: 5px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.d2-1125615832 .md .csv-data .blob-num {
+  padding: 10px 8px 9px;
+  text-align: right;
+  background: var(--color-canvas-default);
+  border: 0;
+}
+
+.d2-1125615832 .md .csv-data tr {
+  border-top: 0;
+}
+
+.d2-1125615832 .md .csv-data th {
+  font-family: "d2-1125615832-font-semibold";
+  background: var(--color-canvas-subtle);
+  border-top: 0;
+}
+
+.d2-1125615832 .md .footnotes {
+  font-size: 12px;
+  color: var(--color-fg-muted);
+  border-top: 1px solid var(--color-border-default);
+}
+
+.d2-1125615832 .md .footnotes ol {
+  padding-left: 16px;
+}
+
+.d2-1125615832 .md .footnotes li {
+  position: relative;
+}
+
+.d2-1125615832 .md .footnotes li:target::before {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  left: -24px;
+  pointer-events: none;
+  content: "";
+  border: 2px solid var(--color-accent-emphasis);
+  border-radius: 6px;
+}
+
+.d2-1125615832 .md .footnotes li:target {
+  color: var(--color-fg-default);
+}
+
+.d2-1125615832 .md .task-list-item {
+  list-style-type: none;
+}
+
+.d2-1125615832 .md .task-list-item label {
+  font-weight: 400;
+}
+
+.d2-1125615832 .md .task-list-item.enabled label {
+  cursor: pointer;
+}
+
+.d2-1125615832 .md .task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.d2-1125615832 .md .task-list-item .handle {
+  display: none;
+}
+
+.d2-1125615832 .md .task-list-item-checkbox {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+
+.d2-1125615832 .md .contains-task-list:dir(rtl) .task-list-item-checkbox {
+  margin: 0 -1.6em 0.25em 0.2em;
+}
+</style><g id="title"><g class="shape" ></g><text x="2845.500000" y="-15.000000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:24px">OneNote RAG System - High-Level Architecture</text></g><g id="user"><g class="shape" ><path d="M 332 1521 H 284 V 1520 C 284 1509 289 1499 298 1494 C 293 1490 290 1483 290 1476 C 290 1465 298 1455 308 1455 C 318 1455 326 1465 326 1476 C 326 1483 323 1489 319 1493 C 327 1498 333 1508 333 1519 V 1520 H 332 Z" stroke="#0D32B2" fill="#E3F2FD" class=" stroke-B1" style="stroke-width:2;" /></g><text x="308.000000" y="1542.000000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">User</text></g><g id="frontend"><g class="shape" ><rect x="616.000000" y="880.000000" width="1077.000000" height="1148.000000" stroke="#0D32B2" fill="#FFF3E0" class=" stroke-B1" style="stroke-width:2;" /></g><text x="1154.500000" y="913.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Frontend Layer</text></g><g id="backend"><g class="shape" ><rect x="2048.000000" y="707.000000" width="1779.000000" height="832.000000" stroke="#0D32B2" fill="#E8F5E9" class=" stroke-B1" style="stroke-width:2;" /></g><text x="2937.500000" y="740.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Backend Layer</text></g><g id="data"><g class="shape" ><rect x="4395.000000" y="1159.000000" width="1017.000000" height="802.000000" stroke="#0D32B2" fill="#F3E5F5" class=" stroke-B1" style="stroke-width:2;" /></g><text x="4903.500000" y="1192.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Data Layer</text></g><g id="external"><g class="shape" ><rect x="4395.000000" y="12.000000" width="1284.000000" height="1127.000000" stroke="#0D32B2" fill="#FCE4EC" class=" stroke-B1" style="stroke-width:2;" /></g><text x="5037.000000" y="45.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">External Services</text></g><g id="notes"><g class="shape" ><rect x="12.000000" y="1567.000000" width="320.000000" height="616.000000" stroke="#0D32B2" fill="#FFF9C4" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="172.000000" y="1600.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Production Alternatives</text></g><g id="frontend.react"><g class="shape" ><rect x="704.000000" y="1468.000000" width="176.000000" height="66.000000" stroke="#0D32B2" fill="#61DAFB" class=" stroke-B1" style="stroke-width:2;" /></g><text x="792.000000" y="1506.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">React + TypeScript</text></g><g id="frontend.vite"><g class="shape" ><rect x="718.000000" y="1554.000000" width="149.000000" height="66.000000" stroke="#0D32B2" fill="#646CFF" class=" stroke-B1" style="stroke-width:2;" /></g><text x="792.500000" y="1592.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Vite Build Tool</text></g><g id="frontend.components"><g class="shape" ><rect x="1200.000000" y="930.000000" width="438.000000" height="510.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="1419.000000" y="959.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">UI Components</text></g><g id="frontend.state"><g class="shape" ><rect x="666.000000" y="1640.000000" width="253.000000" height="252.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="792.500000" y="1669.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">State Management</text></g><g id="frontend.routing"><g class="shape" ><rect x="724.000000" y="1912.000000" width="137.000000" height="66.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="792.500000" y="1950.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">React Router</text></g><g id="frontend.frontend_alt"><g class="shape" ><rect x="1200.000000" y="1460.000000" width="202.000000" height="82.000000" stroke="#0D32B2" fill="#FFFBEA" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="1301.000000" y="1498.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="1301.000000" dy="0.000000">Prod-ready Alt:</tspan><tspan x="1301.000000" dy="18.500000">Next.js + Azure AD B2C</tspan></text></g><g id="backend.fastapi"><g class="shape" ><rect x="2342.000000" y="770.000000" width="148.000000" height="80.000000" stroke="#0D32B2" fill="#009688" class=" stroke-B1" style="stroke-width:2;" /></g><text x="2416.000000" y="815.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">FastAPI Server</text></g><g id="backend.api"><g class="shape" ><rect x="2103.000000" y="964.000000" width="387.000000" height="524.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="2296.500000" y="993.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">API Routes</text></g><g id="backend.services"><g class="shape" ><rect x="2921.000000" y="816.000000" width="621.000000" height="552.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="3231.500000" y="845.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Core Services</text></g><g id="backend.backend_alt"><g class="shape" ><rect x="2921.000000" y="1388.000000" width="209.000000" height="82.000000" stroke="#0D32B2" fill="#E0F7FA" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="3025.500000" y="1426.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="3025.500000" dy="0.000000">Prod-ready Alt:</tspan><tspan x="3025.500000" dy="18.500000">Azure Functions + APIM</tspan></text></g><g id="data.sqlite"><g class="shape" ><path d="M 4445 1233 C 4445 1209 4595 1209 4612 1209 C 4628 1209 4778 1209 4778 1233 V 1390 C 4778 1414 4628 1414 4612 1414 C 4595 1414 4445 1414 4445 1390 V 1233 Z" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-AA5" style="stroke-width:2;" /><path d="M 4445 1233 C 4445 1257 4595 1257 4612 1257 C 4628 1257 4778 1257 4778 1233" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-AA5" style="stroke-width:2;" /></g><text x="4611.500000" y="1286.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">SQLite Database</text></g><g id="data.sqlite_alt"><g class="shape" ><path d="M 5070 1268 C 5070 1244 5201 1244 5216 1244 C 5231 1244 5362 1244 5362 1268 V 1354 C 5362 1378 5231 1378 5216 1378 C 5201 1378 5070 1378 5070 1354 V 1268 Z" stroke="#0D32B2" fill="#FFFDE7" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /><path d="M 5070 1268 C 5070 1292 5201 1292 5216 1292 C 5231 1292 5362 1292 5362 1268" stroke="#0D32B2" fill="#FFFDE7" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="5216.000000" y="1320.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="5216.000000" dy="0.000000">Prod Alt:</tspan><tspan x="5216.000000" dy="18.500000">Azure SQL / PostgreSQL + pgvector</tspan></text></g><g id="data.chromadb"><g class="shape" ><path d="M 4456 1458 C 4456 1434 4585 1434 4600 1434 C 4614 1434 4743 1434 4743 1458 V 1701 C 4743 1725 4614 1725 4600 1725 C 4585 1725 4456 1725 4456 1701 V 1458 Z" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-AA5" style="stroke-width:2;" /><path d="M 4456 1458 C 4456 1482 4585 1482 4600 1482 C 4614 1482 4743 1482 4743 1458" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-AA5" style="stroke-width:2;" /></g><text x="4599.500000" y="1511.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">ChromaDB</text></g><g id="data.chromadb_alt"><g class="shape" ><path d="M 5070 1536 C 5070 1512 5174 1512 5186 1512 C 5198 1512 5302 1512 5302 1536 V 1622 C 5302 1646 5198 1646 5186 1646 C 5174 1646 5070 1646 5070 1622 V 1536 Z" stroke="#0D32B2" fill="#FFFDE7" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /><path d="M 5070 1536 C 5070 1560 5174 1560 5186 1560 C 5198 1560 5302 1560 5302 1536" stroke="#0D32B2" fill="#FFFDE7" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="5186.000000" y="1588.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="5186.000000" dy="0.000000">Prod Alt:</tspan><tspan x="5186.000000" dy="18.500000">Azure AI Search / Pinecone</tspan></text></g><g id="data.encryption"><g class="shape" ><rect x="4445.000000" y="1745.000000" width="262.000000" height="166.000000" stroke="#0D32B2" fill="#FF5722" class=" stroke-B1" style="stroke-width:2;" /></g><text x="4576.000000" y="1774.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Encryption Key</text></g><g id="external.openai"><g class="shape" ><path d="M 4502 177 C 4502 180 4500 184 4498 184 C 4471 188 4450 233 4450 287 C 4450 345 4474 391 4504 391 H 4708 C 4740 391 4767 341 4767 281 C 4767 223 4743 175 4712 172 C 4710 172 4708 169 4707 165 C 4700 106 4668 63 4632 63 C 4608 63 4586 81 4572 110 C 4570 113 4568 114 4566 113 C 4561 110 4555 108 4549 108 C 4525 107 4505 138 4502 177 Z" stroke="#0D32B2" fill="#10A37F" class=" stroke-B1" style="stroke-width:2;" /></g><text x="4606.811500" y="226.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">OpenAI API</text></g><g id="external.azure_openai"><g class="shape" ><path d="M 5136 195 C 5136 198 5133 200 5130 200 C 5094 203 5066 236 5066 276 C 5066 319 5098 353 5138 353 H 5409 C 5452 353 5487 316 5487 272 C 5487 229 5455 194 5414 191 C 5411 191 5408 189 5408 186 C 5399 143 5357 110 5308 110 C 5276 110 5247 124 5229 145 C 5227 148 5223 148 5221 148 C 5214 145 5206 144 5198 144 C 5165 143 5138 166 5136 195 Z" stroke="#0D32B2" fill="#DFF7F5" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="5274.399500" y="239.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Azure OpenAI Service</text></g><g id="external.msgraph"><g class="shape" ><path d="M 4508 526 C 4508 529 4506 533 4504 533 C 4479 537 4459 582 4459 636 C 4459 694 4481 740 4509 740 H 4698 C 4728 740 4752 690 4752 630 C 4752 572 4729 524 4701 521 C 4699 521 4697 518 4697 514 C 4691 455 4661 412 4627 412 C 4604 412 4584 430 4572 459 C 4571 462 4568 463 4567 462 C 4562 459 4557 457 4551 457 C 4528 456 4510 487 4508 526 Z" stroke="#0D32B2" fill="#0078D4" class=" stroke-B1" style="stroke-width:2;" /></g><text x="4604.393000" y="575.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Microsoft Graph API</text></g><g id="external.databricks"><g class="shape" ><path d="M 5159 544 C 5159 547 5155 549 5151 549 C 5103 552 5066 585 5066 625 C 5066 668 5108 702 5162 702 H 5525 C 5582 702 5629 665 5629 621 C 5629 578 5586 543 5531 540 C 5527 540 5523 538 5523 535 C 5511 492 5455 459 5389 459 C 5346 459 5307 473 5283 494 C 5280 497 5275 497 5273 497 C 5264 494 5253 493 5242 493 C 5198 492 5163 515 5159 544 Z" stroke="#0D32B2" fill="#F3E5F5" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="5344.548500" y="588.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Databricks Lakehouse (Enterprise Source)</text></g><g id="external.langsmith"><g class="shape" ><path d="M 4519 875 C 4519 878 4517 882 4516 882 C 4494 886 4477 931 4477 985 C 4477 1043 4496 1089 4521 1089 H 4688 C 4714 1089 4736 1039 4736 979 C 4736 921 4716 873 4691 870 C 4689 870 4688 867 4687 863 C 4681 804 4656 761 4625 761 C 4605 761 4587 779 4576 808 C 4575 811 4573 812 4571 811 C 4567 808 4562 806 4557 806 C 4537 805 4521 836 4519 875 Z" stroke="#0D32B2" fill="#1C3C3C" class=" stroke-B1" style="stroke-width:2;" /></g><text x="4605.060500" y="924.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">LangSmith</text></g><g id="external.app_insights"><g class="shape" ><path d="M 5128 888 C 5128 891 5126 893 5123 893 C 5091 896 5066 929 5066 969 C 5066 1012 5094 1046 5129 1046 H 5369 C 5407 1046 5438 1009 5438 965 C 5438 922 5409 887 5373 884 C 5371 884 5368 882 5367 879 C 5359 836 5322 803 5278 803 C 5249 803 5224 817 5208 838 C 5206 841 5203 841 5201 841 C 5195 838 5188 837 5181 837 C 5154 836 5130 859 5128 888 Z" stroke="#0D32B2" fill="#E1F5FE" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="5250.743500" y="932.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Azure Application Insights</text></g><g id="notes.db_options"><g class="shape" ><rect x="62.000000" y="1617.000000" width="220.000000" height="130.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="172.000000" y="1655.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="172.000000" dy="0.000000">Database:</tspan><tspan x="172.000000" dy="17.000000">• PostgreSQL + pgvector</tspan><tspan x="172.000000" dy="17.000000">• Pinecone</tspan><tspan x="172.000000" dy="17.000000">• Weaviate</tspan><tspan x="172.000000" dy="17.000000">• Qdrant</tspan></text></g><g id="notes.cache_options"><g class="shape" ><rect x="100.000000" y="1767.000000" width="144.000000" height="98.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="172.000000" y="1805.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="172.000000" dy="0.000000">Caching:</tspan><tspan x="172.000000" dy="17.666667">• Redis</tspan><tspan x="172.000000" dy="17.666667">• Memcached</tspan></text></g><g id="notes.auth_options"><g class="shape" ><rect x="95.000000" y="1885.000000" width="154.000000" height="114.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="172.000000" y="1923.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="172.000000" dy="0.000000">Auth:</tspan><tspan x="172.000000" dy="17.250000">• Auth0</tspan><tspan x="172.000000" dy="17.250000">• Azure AD B2C</tspan><tspan x="172.000000" dy="17.250000">• Clerk</tspan></text></g><g id="notes.deployment"><g class="shape" ><rect x="67.000000" y="2019.000000" width="210.000000" height="114.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="172.000000" y="2057.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="172.000000" dy="0.000000">Deployment:</tspan><tspan x="172.000000" dy="17.250000">• Docker + K8s</tspan><tspan x="172.000000" dy="17.250000">• Azure Container Apps</tspan><tspan x="172.000000" dy="17.250000">• AWS ECS/Fargate</tspan></text></g><g id="frontend.components.chat"><g class="shape" ><rect x="1312.000000" y="980.000000" width="146.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1385.000000" y="1018.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Chat Interface</text></g><g id="frontend.components.settings"><g class="shape" ><rect x="1258.000000" y="1066.000000" width="200.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1358.000000" y="1104.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Settings Management</text></g><g id="frontend.components.config"><g class="shape" ><rect x="1283.000000" y="1152.000000" width="175.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1370.500000" y="1190.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">RAG Configuration</text></g><g id="frontend.components.compare"><g class="shape" ><rect x="1250.000000" y="1238.000000" width="208.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1354.000000" y="1276.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Technique Comparison</text></g><g id="frontend.components.index"><g class="shape" ><rect x="1275.000000" y="1324.000000" width="183.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1366.500000" y="1362.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Document Indexing</text></g><g id="frontend.state.zustand"><g class="shape" ><rect x="720.000000" y="1690.000000" width="145.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="792.500000" y="1728.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Zustand Store</text></g><g id="frontend.state.theme"><g class="shape" ><rect x="716.000000" y="1776.000000" width="153.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="792.500000" y="1814.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Theme Context</text></g><g id="backend.api.query"><g class="shape" ><rect x="2165.000000" y="1014.000000" width="120.000000" height="80.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="2225.000000" y="1059.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">/api/query</text></g><g id="backend.api.settings"><g class="shape" ><rect x="2164.000000" y="1114.000000" width="135.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="2231.500000" y="1152.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">/api/settings</text></g><g id="backend.api.documents"><g class="shape" ><rect x="2153.000000" y="1200.000000" width="157.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="2231.500000" y="1238.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">/api/documents</text></g><g id="backend.api.onenote"><g class="shape" ><rect x="2163.000000" y="1286.000000" width="137.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="2231.500000" y="1324.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">/api/onenote</text></g><g id="backend.api.health"><g class="shape" ><rect x="2169.000000" y="1372.000000" width="124.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="2231.000000" y="1410.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">/api/health</text></g><g id="backend.services.rag"><g class="shape" ><rect x="3015.000000" y="866.000000" width="125.000000" height="80.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="3077.500000" y="911.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">RAG Engine</text></g><g id="backend.services.vector"><g class="shape" ><rect x="2973.000000" y="966.000000" width="189.000000" height="80.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="3067.500000" y="1011.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Vector Store Service</text></g><g id="backend.services.processor"><g class="shape" ><rect x="2971.000000" y="1066.000000" width="191.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="3066.500000" y="1104.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Document Processor</text></g><g id="backend.services.onenote_svc"><g class="shape" ><rect x="2985.000000" y="1152.000000" width="163.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="3066.500000" y="1190.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">OneNote Service</text></g><g id="backend.services.settings_svc"><g class="shape" ><rect x="2992.000000" y="1238.000000" width="159.000000" height="80.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="3071.500000" y="1283.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Settings Service</text></g><g id="data.sqlite.settings_tbl"><g class="shape" ><rect x="4495.000000" y="1298.000000" width="233.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4611.500000" y="1336.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Settings Table (encrypted)</text></g><g id="data.chromadb.embeddings"><g class="shape" ><rect x="4508.000000" y="1523.000000" width="183.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4599.500000" y="1561.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Vector Embeddings</text></g><g id="data.chromadb.metadata"><g class="shape" ><rect x="4506.000000" y="1609.000000" width="187.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4599.500000" y="1647.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Document Metadata</text></g><g id="data.encryption.key_file"><g class="shape" ><rect x="4495.000000" y="1795.000000" width="162.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4576.000000" y="1833.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">.encryption_key</text></g><g id="external.openai.embeddings_api"><g class="shape" ><rect x="4500.000000" y="189.000000" width="217.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4608.500000" y="227.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">text-embedding-3-small</text></g><g id="external.openai.llm_api"><g class="shape" ><rect x="4500.000000" y="275.000000" width="148.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4574.000000" y="313.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">GPT-4/GPT-3.5</text></g><g id="external.azure_openai.note"><g class="shape" ><rect x="5119.000000" y="237.000000" width="308.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="5273.000000" y="275.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Regional compliance + managed keys</text></g><g id="external.msgraph.onenote_api"><g class="shape" ><rect x="4539.000000" y="538.000000" width="134.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4606.000000" y="576.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">OneNote API</text></g><g id="external.msgraph.auth"><g class="shape" ><rect x="4549.000000" y="624.000000" width="114.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4606.000000" y="662.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">OAuth 2.0</text></g><g id="external.databricks.ingest"><g class="shape" ><rect x="5224.000000" y="586.000000" width="237.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="5342.500000" y="624.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Delta tables / Unity Catalog</text></g><g id="external.langsmith.tracing"><g class="shape" ><rect x="4526.000000" y="887.000000" width="159.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4605.500000" y="925.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Request Tracing</text></g><g id="external.langsmith.analytics"><g class="shape" ><rect x="4550.000000" y="973.000000" width="111.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4605.500000" y="1011.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Analytics</text></g><g id="external.app_insights.features"><g class="shape" ><rect x="5168.000000" y="930.000000" width="167.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="5251.500000" y="968.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Tracing + metrics</text></g><g id="(user -&gt; frontend.react)[0]"><marker id="mk-3488378134" markerWidth="10.000000" markerHeight="12.000000" refX="7.000000" refY="6.000000" viewBox="0.000000 0.000000 10.000000 12.000000" orient="auto" markerUnits="userSpaceOnUse"> <polygon points="0.000000,0.000000 10.000000,6.000000 0.000000,12.000000" fill="#0D32B2" class="connection fill-B1" stroke-width="2" /> </marker><path d="M 329.000000 1502.000000 L 701.000000 1502.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="516.500000" y="1508.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Interacts via browser</text></g><g id="(frontend.components.chat -&gt; backend.api.query)[0]"><path d="M 1460.000000 1016.416016 L 1993.000000 1016.416016 S 2003.000000 1016.416016 2003.000000 1026.416016 L 2003.000000 1031.416016 S 2003.000000 1041.416016 2013.000000 1041.416016 L 2161.000000 1041.416016" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="1824.500000" y="1014.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px"><tspan x="1824.500000" dy="0.000000">POST /api/query</tspan><tspan x="1824.500000" dy="18.500000">(RAG queries)</tspan></text></g><g id="(frontend.components.settings -&gt; backend.api.settings)[0]"><path d="M 1460.000000 1099.750000 L 1538.000000 1099.750000 S 1548.000000 1099.750000 1548.000000 1109.750000 L 1548.000000 1137.750000 S 1548.000000 1147.750000 1558.000000 1147.750000 L 2160.000000 1147.750000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="1787.000000" y="1145.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px"><tspan x="1787.000000" dy="0.000000">GET/PUT /api/settings</tspan><tspan x="1787.000000" dy="18.500000">(Manage API keys)</tspan></text></g><g id="(frontend.components.index -&gt; backend.api.documents)[0]"><path d="M 1460.000000 1357.750000 L 1993.000000 1357.750000 S 2003.000000 1357.750000 2003.000000 1347.750000 L 2003.000000 1243.750000 S 2003.000000 1233.750000 2013.000000 1233.750000 L 2149.000000 1233.750000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="1867.500000" y="1355.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px"><tspan x="1867.500000" dy="0.000000">POST /api/documents/index</tspan><tspan x="1867.500000" dy="18.500000">(Index OneNote)</tspan></text></g><g id="(frontend.components.config -&gt; backend.api.query)[0]"><path d="M 1460.000000 1185.750000 L 1728.000000 1185.750000 S 1738.000000 1185.750000 1738.000000 1175.750000 L 1738.000000 1093.416016 S 1738.000000 1083.416016 1748.000000 1083.416016 L 1995.333496 1083.416016 C 2010.666504 1083.416016 1995.333496 1068.083008 2010.666504 1068.083008 L 2161.000000 1068.083008" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="1768.000000" y="1081.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px"><tspan x="1768.000000" dy="0.000000">POST /api/query</tspan><tspan x="1768.000000" dy="18.500000">(with technique config)</tspan></text></g><g id="backend.(api.query -&gt; services.rag)[0]"><path d="M 2287.000000 1054.750000 L 2525.000000 1054.750000 S 2535.000000 1054.750000 2535.000000 1044.750000 L 2535.000000 928.416016 S 2535.000000 918.416016 2545.000000 918.416016 L 3011.000000 918.416016" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="2582.000000" y="924.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Process query</text></g><g id="backend.(api.settings -&gt; services.settings_svc)[0]"><path d="M 2301.000000 1147.750000 L 2525.000000 1147.750000 S 2535.000000 1147.750000 2535.000000 1157.750000 L 2535.000000 1238.750000 S 2535.000000 1248.750000 2545.000000 1248.750000 L 2866.000000 1248.750000 S 2876.000000 1248.750000 2876.000000 1258.750000 L 2876.000000 1268.750000 S 2876.000000 1278.750000 2886.000000 1278.750000 L 2988.000000 1278.750000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="2610.500000" y="1254.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Manage settings</text></g><g id="backend.(api.documents -&gt; services.onenote_svc)[0]"><path d="M 2312.000000 1233.750000 L 2340.000000 1233.750000 S 2350.000000 1233.750000 2350.000000 1223.750000 L 2350.000000 1195.750000 S 2350.000000 1185.750000 2360.000000 1185.750000 L 2981.000000 1185.750000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="2623.500000" y="1191.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Fetch documents</text></g><g id="(backend.services.rag -&gt; data.chromadb)[0]"><path d="M 3142.000000 920.083008 L 3342.000000 920.083008 S 3352.000000 920.083008 3352.000000 930.083008 L 3352.000000 1088.750000 S 3352.000000 1098.750000 3362.000000 1098.750000 L 4012.000000 1098.750000 S 4022.000000 1098.750000 4022.000000 1108.750000 L 4022.000000 1181.375000 S 4022.000000 1191.375000 4032.000000 1191.375000 L 4290.000000 1191.375000 S 4300.000000 1191.375000 4300.000000 1201.375000 L 4300.000000 1496.750000 S 4300.000000 1506.750000 4309.999987 1506.765924 L 4453.000005 1506.993631" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="3913.500000" y="1096.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px"><tspan x="3913.500000" dy="0.000000">Retrieve embeddings</tspan><tspan x="3913.500000" dy="18.500000">&amp; search vectors</tspan></text></g><g id="(backend.services.vector -&gt; data.chromadb)[0]"><path d="M 3164.000000 1020.083008 L 3242.000000 1020.083008 S 3252.000000 1020.083008 3252.000000 1030.083008 L 3252.000000 1136.083008 S 3252.000000 1146.083008 3262.000000 1146.083008 L 3962.000000 1146.083008 S 3972.000000 1146.083008 3972.000000 1156.083008 L 3972.000000 1569.500000 S 3972.000000 1579.500000 3981.999995 1579.489691 L 4453.000002 1579.004124" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="3963.000000" y="1152.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Store/Query vectors</text></g><g id="(backend.services.processor -&gt; data.chromadb)[0]"><path d="M 3164.000000 1099.750000 L 3192.000000 1099.750000 S 3202.000000 1099.750000 3202.000000 1109.750000 L 3202.000000 1180.916016 S 3202.000000 1190.916016 3212.000000 1190.916016 L 3912.000000 1190.916016 S 3922.000000 1190.916016 3922.000000 1200.916016 L 3922.000000 1642.250000 S 3922.000000 1652.250000 3931.999999 1652.245327 L 4453.000000 1652.001869" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="3922.000000" y="1269.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Add document chunks</text></g><g id="(backend.services.settings_svc -&gt; data.sqlite)[0]"><path d="M 3153.000000 1265.416016 L 3392.000000 1265.416016 S 3402.000000 1265.416016 3402.000000 1255.416016 L 3402.000000 1092.750000 S 3402.000000 1082.750000 3412.000000 1082.750000 L 3634.000000 1082.750000 C 3640.000000 1082.750000 3634.000000 1088.750000 3640.000000 1088.750000 L 3864.250000 1088.750000 C 3879.750000 1088.750000 3864.250000 1073.250000 3879.750000 1073.250000 L 4340.000000 1073.250000 S 4350.000000 1073.250000 4350.000000 1083.250000 L 4350.000000 1301.500000 S 4350.000000 1311.500000 4359.999861 1311.447369 L 4441.000055 1311.021052" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="3831.000000" y="1094.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Read/Write encrypted settings</text></g><g id="(backend.services.settings_svc -&gt; data.encryption)[0]"><path d="M 3153.000000 1292.083008 L 3862.000000 1292.083008 S 3872.000000 1292.083008 3872.000000 1302.083008 L 3872.000000 1818.000000 S 3872.000000 1828.000000 3882.000000 1828.000000 L 4441.000000 1828.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="3872.500000" y="1492.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Encrypt/Decrypt API keys</text></g><g id="(backend.services.rag -&gt; external.openai.llm_api)[0]"><path d="M 3142.000000 893.416016 L 3442.000000 893.416016 S 3452.000000 893.416016 3452.000000 903.416016 L 3452.000000 938.416016 S 3452.000000 948.416016 3462.000000 948.416016 L 3677.000000 948.416016 S 3687.000000 948.416016 3687.000000 938.416016 L 3687.000000 777.416016 S 3687.000000 767.416016 3697.000000 767.416016 L 3912.000000 767.416016 S 3922.000000 767.416016 3922.000000 757.416016 L 3922.000000 327.665985 S 3922.000000 317.665985 3932.000000 317.665985 L 4496.000000 317.665985" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="3922.500000" y="768.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Generate answers</text></g><g id="(backend.services.vector -&gt; external.openai.embeddings_api)[0]"><path d="M 3164.000000 993.416016 L 3627.000000 993.416016 S 3637.000000 993.416016 3637.000000 983.416016 L 3637.000000 767.416016 S 3637.000000 757.416016 3647.000000 757.416016 L 3862.000000 757.416016 S 3872.000000 757.416016 3872.000000 747.416016 L 3872.000000 268.165985 S 3872.000000 258.165985 3882.000000 258.165985 L 4290.000000 258.165985 S 4300.000000 258.165985 4300.000000 248.165985 L 4300.000000 232.000000 S 4300.000000 222.000000 4310.000000 222.000000 L 4496.000000 222.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="3872.500000" y="654.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Create embeddings</text></g><g id="(backend.services.onenote_svc -&gt; external.msgraph.onenote_api)[0]"><path d="M 3150.000000 1185.750000 L 3292.000000 1185.750000 S 3302.000000 1185.750000 3302.000000 1175.750000 L 3302.000000 1054.583008 S 3302.000000 1044.583008 3312.000000 1044.583008 L 3962.000000 1044.583008 S 3972.000000 1044.583008 3972.000000 1034.583008 L 3972.000000 466.000000 S 3972.000000 456.000000 3982.000000 456.000000 L 4290.000000 456.000000 S 4300.000000 456.000000 4300.000000 466.000000 L 4300.000000 561.000000 S 4300.000000 571.000000 4310.000000 571.000000 L 4535.000000 571.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="3972.000000" y="897.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Fetch OneNote pages</text></g><g id="(backend.fastapi -&gt; external.langsmith)[0]"><path d="M 2492.000000 785.750000 L 3586.166992 785.750000 C 3587.833008 785.750000 3586.166992 787.416016 3587.833008 787.416016 L 4012.000000 787.416016 S 4022.000000 787.416016 4022.000000 777.416016 L 4022.000000 754.583008 S 4022.000000 744.583008 4032.000000 744.583008 L 4290.000000 744.583008 S 4300.000000 744.583008 4300.000000 754.583008 L 4300.000000 914.500000 S 4300.000000 924.500000 4309.999963 924.527027 L 4481.000015 924.989189" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="3598.000000" y="785.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px"><tspan x="3598.000000" dy="0.000000">Trace requests</tspan><tspan x="3598.000000" dy="18.500000">(if enabled)</tspan></text></g><g id="data.(sqlite -&gt; sqlite_alt)[0]"><path d="M 4779.999988 1311.993151 L 5066.000023 1311.013699" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="4924.000000" y="1317.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Scale prod DB</text></g><g id="data.(chromadb -&gt; chromadb_alt)[0]"><path d="M 4745.999991 1579.993865 L 5066.000019 1579.012270" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="4907.000000" y="1585.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Managed vector search</text></g><g id="external.(msgraph -&gt; databricks)[0]"><path d="M 4748.000000 581.000000 L 5079.000000 581.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="4914.500000" y="587.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Enterprise ingestion</text></g><g id="external.(openai -&gt; azure_openai)[0]"><path d="M 4763.000000 232.000000 L 5075.000000 232.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="4920.500000" y="238.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Enterprise compliance</text></g><g id="external.(langsmith -&gt; app_insights)[0]"><path d="M 4731.999992 924.994253 L 5074.000017 924.011494" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="4904.500000" y="930.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Azure-native monitoring</text></g><g id="frontend.(react -&gt; frontend_alt)[0]"><path d="M 882.000000 1501.750000 L 1196.000000 1501.750000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="1040.500000" y="1507.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Enterprise SPA option</text></g><g id="backend.(fastapi -&gt; backend_alt)[0]"><path d="M 2492.000000 824.083008 L 2575.000000 824.083008 S 2585.000000 824.083008 2585.000000 834.083008 L 2585.000000 1419.750000 S 2585.000000 1429.750000 2595.000000 1429.750000 L 2917.000000 1429.750000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-1125615832)" /><text x="2585.500000" y="1253.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Serverless / managed API option</text></g><mask id="d2-1125615832" maskUnits="userSpaceOnUse" x="-89" y="-140" width="5869" height="2424">
+<rect x="-89" y="-140" width="5869" height="2424" fill="white"></rect>
+<rect x="2599.000000" y="-39.000000" width="493" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="291.500000" y="1526.000000" width="33" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1066.000000" y="885.000000" width="177" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2852.000000" y="712.000000" width="171" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4841.500000" y="1164.000000" width="124" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4938.500000" y="17.000000" width="197" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="35.000000" y="1572.000000" width="274" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="726.500000" y="1490.500000" width="131" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="740.500000" y="1576.500000" width="104" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1342.000000" y="935.000000" width="154" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="698.000000" y="1645.000000" width="189" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="746.500000" y="1934.500000" width="92" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1222.500000" y="1482.500000" width="157" height="37" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2364.500000" y="799.500000" width="103" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2242.500000" y="969.000000" width="108" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3164.500000" y="821.000000" width="134" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2943.500000" y="1410.500000" width="164" height="37" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4529.500000" y="1262.000000" width="164" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5092.500000" y="1304.500000" width="247" height="37" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4545.500000" y="1487.000000" width="108" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5092.500000" y="1572.500000" width="187" height="37" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4501.000000" y="1750.000000" width="150" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4551.811500" y="202.000000" width="110" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5168.399500" y="215.000000" width="212" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4506.893000" y="551.000000" width="195" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5136.548500" y="564.000000" width="416" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4552.060500" y="900.000000" width="106" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5120.743500" y="908.000000" width="260" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="84.500000" y="1639.500000" width="175" height="85" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="122.500000" y="1789.500000" width="99" height="53" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="117.500000" y="1907.500000" width="109" height="69" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="89.500000" y="2041.500000" width="165" height="69" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1334.500000" y="1002.500000" width="101" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1280.500000" y="1088.500000" width="155" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1305.500000" y="1174.500000" width="130" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1272.500000" y="1260.500000" width="163" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1297.500000" y="1346.500000" width="138" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="742.500000" y="1712.500000" width="100" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="738.500000" y="1798.500000" width="108" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2187.500000" y="1043.500000" width="75" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2186.500000" y="1136.500000" width="90" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2175.500000" y="1222.500000" width="112" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2185.500000" y="1308.500000" width="92" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2191.500000" y="1394.500000" width="79" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3037.500000" y="895.500000" width="80" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2995.500000" y="995.500000" width="144" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2993.500000" y="1088.500000" width="146" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3007.500000" y="1174.500000" width="118" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3014.500000" y="1267.500000" width="114" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4517.500000" y="1320.500000" width="188" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4530.500000" y="1545.500000" width="138" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4528.500000" y="1631.500000" width="142" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4517.500000" y="1817.500000" width="117" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4522.500000" y="211.500000" width="172" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4522.500000" y="297.500000" width="103" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5141.500000" y="259.500000" width="263" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4561.500000" y="560.500000" width="89" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4571.500000" y="646.500000" width="69" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5246.500000" y="608.500000" width="192" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4548.500000" y="909.500000" width="114" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4572.500000" y="995.500000" width="66" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5190.500000" y="952.500000" width="122" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="447.000000" y="1492.000000" width="139" height="21" fill="black"></rect>
+<rect x="1770.000000" y="998.000000" width="109" height="37" fill="black"></rect>
+<rect x="1714.000000" y="1129.000000" width="146" height="37" fill="black"></rect>
+<rect x="1775.000000" y="1339.000000" width="185" height="37" fill="black"></rect>
+<rect x="1693.000000" y="1065.000000" width="150" height="37" fill="black"></rect>
+<rect x="2536.000000" y="908.000000" width="92" height="21" fill="black"></rect>
+<rect x="2556.000000" y="1238.000000" width="109" height="21" fill="black"></rect>
+<rect x="2567.000000" y="1175.000000" width="113" height="21" fill="black"></rect>
+<rect x="3844.000000" y="1080.000000" width="139" height="37" fill="black"></rect>
+<rect x="3898.000000" y="1136.000000" width="130" height="21" fill="black"></rect>
+<rect x="3849.000000" y="1253.000000" width="146" height="21" fill="black"></rect>
+<rect x="3732.000000" y="1078.000000" width="198" height="21" fill="black"></rect>
+<rect x="3791.000000" y="1476.000000" width="163" height="21" fill="black"></rect>
+<rect x="3863.000000" y="752.000000" width="119" height="21" fill="black"></rect>
+<rect x="3808.000000" y="638.000000" width="129" height="21" fill="black"></rect>
+<rect x="3902.000000" y="881.000000" width="140" height="21" fill="black"></rect>
+<rect x="3550.000000" y="769.000000" width="96" height="37" fill="black"></rect>
+<rect x="4878.000000" y="1301.000000" width="92" height="21" fill="black"></rect>
+<rect x="4831.000000" y="1569.000000" width="152" height="21" fill="black"></rect>
+<rect x="4849.000000" y="571.000000" width="131" height="21" fill="black"></rect>
+<rect x="4847.000000" y="222.000000" width="147" height="21" fill="black"></rect>
+<rect x="4825.000000" y="914.000000" width="159" height="21" fill="black"></rect>
+<rect x="970.000000" y="1491.000000" width="141" height="21" fill="black"></rect>
+<rect x="2480.000000" y="1237.000000" width="211" height="21" fill="black"></rect>
+</mask></svg></svg>

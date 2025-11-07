@@ -86,9 +86,7 @@
 
         .svg-content {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform-origin: 0 0;
+            transform-origin: top left;
             will-change: transform;
         }
 
@@ -248,9 +246,10 @@
             const scaleY = (viewerRect.height * 0.9) / svgHeight;
             scale = Math.min(scaleX, scaleY, 1); // Don't scale up initially
 
-            // Center the SVG
-            translateX = (viewerRect.width - svgWidth * scale) / 2;
-            translateY = (viewerRect.height - svgHeight * scale) / 2;
+            // Center the SVG by calculating the offset needed
+            // Since transform-origin is top-left, we need to translate to center
+            translateX = (viewerRect.width - (svgWidth * scale)) / 2;
+            translateY = (viewerRect.height - (svgHeight * scale)) / 2;
 
             updateTransform();
         }

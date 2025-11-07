@@ -1,0 +1,42 @@
+# Tech Stack (Summary)
+
+direction: right
+
+title: {
+  label: "Dev vs Production-ready Stack"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 22
+    bold: true
+  }
+}
+
+current: "Current (Dev / PoC)" {
+  shape: rectangle
+  style.fill: "#E3F2FD"
+  
+  frontend: "React + Vite + Tailwind"
+  backend: "FastAPI + LangChain"
+  vector: "ChromaDB (local)"
+  data: "SQLite (file-based)"
+  source: "Microsoft Graph → OneNote"
+  llm: "OpenAI GPT-3.5/4"
+  observability: "LangSmith traces"
+}
+
+production: "Production-ready Alternatives" {
+  shape: rectangle
+  style.stroke-dash: 3
+  style.fill: "#FFFDE7"
+  
+  frontend_prod: "Next.js + Azure AD B2C + Chakra UI"
+  backend_prod: "Azure Functions / Container Apps + API Management"
+  vector_prod: "Azure AI Search / Pinecone"
+  data_prod: "Azure SQL / PostgreSQL + pgvector"
+  source_prod: "Databricks Lakehouse / SharePoint Export"
+  llm_prod: "Azure OpenAI / Claude"
+  observability_prod: "Azure Monitor + App Insights"
+}
+
+current -> production: "Upgrade path"

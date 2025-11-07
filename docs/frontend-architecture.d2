@@ -1,0 +1,380 @@
+# Frontend Architecture Diagram
+
+direction: right
+
+title: {
+  label: "Frontend Architecture - React Application"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 24
+    bold: true
+  }
+}
+
+browser: Browser {
+  shape: rectangle
+  style.fill: "#E3F2FD"
+  
+  user: User Interface
+  dom: DOM
+  localstorage: LocalStorage
+}
+
+app_layer: Application Layer {
+  style.fill: "#FFF3E0"
+  
+  main: main.tsx {
+    style.fill: "#61DAFB"
+    
+    responsibilities: {
+      render: "ReactDOM.render()"
+      providers: "Wrap with providers"
+      router: "Initialize routing"
+    }
+  }
+  
+  app: App.tsx {
+    style.fill: "#61DAFB"
+    
+    routing: {
+      query_route: "/ → QueryPage"
+      chat_route: "/query → ChatPage"
+      index_route: "/index → IndexPage"
+      config_route: "/config → ConfigPage"
+      compare_route: "/compare → ComparePage"
+      settings_route: "/settings → SettingsManagementPage"
+    }
+  }
+  
+  app_prod: "Prod Alt:\nNext.js App Router" {
+    style.stroke-dash: 3
+    style.fill: "#FFFBEA"
+    features: {
+      ssr: "SSR/SSG"
+      edge: "Edge runtimes"
+      routing: "File-based routing"
+    }
+  }
+}
+
+context_layer: Context & State {
+  style.fill: "#E8F5E9"
+  
+  theme_context: ThemeContext {
+    state: {
+      theme: "claude | brutalist"
+    }
+    
+    methods: {
+      toggleTheme: "Switch themes"
+      useTheme: "Hook for components"
+    }
+  }
+  
+  zustand_store: Zustand Store {
+    state: {
+      conversations: "Chat history"
+      currentConversationId: "Active chat"
+      sidebarOpen: "Sidebar state"
+      ragConfig: "RAG configuration"
+    }
+    
+    actions: {
+      createConversation: "New chat"
+      deleteConversation: "Delete chat"
+      addMessage: "Add message to chat"
+      updateConfig: "Update RAG settings"
+    }
+    
+    persistence: "Persist to localStorage"
+  }
+  
+  state_prod: "Prod Alt:\nRedux Toolkit + RTK Query" {
+    style.stroke-dash: 3
+    style.fill: "#E0F7FA"
+    benefits: "Time travel devtools, enterprise patterns"
+  }
+}
+
+pages: Page Components {
+  style.fill: "#F3E5F5"
+  
+  chat_page: ChatPage {
+    purpose: "Main Q&A interface"
+    
+    features: {
+      input: "ChatInput component"
+      messages: "Message history"
+      streaming: "Streaming responses"
+      sources: "Source documents"
+    }
+  }
+  
+  settings_page: SettingsManagementPage {
+    purpose: "API key management"
+    
+    features: {
+      sensitive: "API keys (encrypted)"
+      optional: "App settings (collapsible)"
+      test: "Connection testing"
+      save: "Save to database"
+    }
+  }
+  
+  index_page: IndexPage {
+    purpose: "Document indexing"
+    
+    features: {
+      trigger: "Start indexing"
+      progress: "Indexing progress"
+      stats: "Document statistics"
+    }
+  }
+  
+  config_page: ConfigPage {
+    purpose: "RAG configuration"
+    
+    features: {
+      technique: "Select RAG technique"
+      params: "Adjust parameters"
+      preview: "Preview settings"
+    }
+  }
+  
+  compare_page: ComparePage {
+    purpose: "Compare techniques"
+    
+    features: {
+      side_by_side: "Side-by-side results"
+      metrics: "Performance metrics"
+      analysis: "Technique analysis"
+    }
+  }
+}
+
+components: Shared Components {
+  style.fill: "#FCE4EC"
+  
+  layout: Layout {
+    structure: {
+      sidebar: "Sidebar component"
+      header: "Header with title"
+      main: "Main content area"
+      theme_switcher: "Theme toggle"
+    }
+  }
+  
+  sidebar: Sidebar {
+    features: {
+      conversations: "Chat history list"
+      new_chat: "New chat button"
+      nav_links: "Navigation menu"
+      scrolling: "Scrollable content"
+    }
+  }
+  
+  chat_components: Chat Components {
+    user_msg: "UserMessage"
+    assistant_msg: "AssistantMessage"
+    chat_input: "ChatInput"
+    typing: "TypingIndicator"
+  }
+  
+  modals: Modals {
+    confirm: "ConfirmModal"
+    notification: "NotificationModal"
+  }
+  
+  theme_switcher: ThemeSwitcher {
+    toggle: "Switch between themes"
+    display: "Sun and Moon icons"
+  }
+}
+
+api_client: API Client Layer {
+  style.fill: "#FFF9C4"
+  
+  client_ts: api/client.ts {
+    axios_instance: "Axios instance"
+    base_url: "http://localhost:8000/api"
+    
+    methods: {
+      query: "POST /query"
+      getSettings: "GET /settings"
+      updateSetting: "PUT /settings/{key}"
+      testConnection: "POST /settings/test-connection"
+      indexDocuments: "POST /documents/index"
+      getDocuments: "GET /documents"
+      syncOneNote: "POST /onenote/sync"
+    }
+    
+    interceptors: {
+      request: "Add headers"
+      response: "Handle errors"
+    }
+  }
+  
+  api_prod: "Prod Alt:\nAPIM + OAuth2 Client" {
+    style.stroke-dash: 3
+    style.fill: "#FFFDE7"
+    description: "Azure API Management protected endpoints + MSAL"
+  }
+}
+
+styling: Styling System {
+  style.fill: "#E0F2F1"
+  
+  tailwind: Tailwind CSS {
+    config: "tailwind.config.js"
+    
+    themes: {
+      claude: {
+        colors: "claude-* colors"
+        description: "Clean, minimal"
+      }
+      
+      brutalist: {
+        colors: "neo-* colors"
+        description: "Bold, borders, shadows"
+      }
+    }
+    
+    utilities: {
+      responsive: "md:, lg: breakpoints"
+      animations: "Custom animations"
+      shadows: "shadow-brutal, shadow-claude"
+    }
+  }
+  
+  custom_css: Custom CSS {
+    animations_css: "animations.css"
+    app_css: "App.css"
+    index_css: "index.css"
+  }
+  
+  styling_prod: "Prod Alt:\nChakra UI + Design Tokens" {
+    style.stroke-dash: 3
+    style.fill: "#E1F5FE"
+    benefits: "Accessible components, theming API"
+  }
+}
+
+hooks: Custom Hooks {
+  style.fill: "#C8E6C9"
+  style.stroke-dash: 3
+  
+  use_themed_styles: "useThemedStyles" {
+    purpose: "Get theme-specific styles"
+    returns: "Style objects based on theme"
+  }
+}
+
+types: TypeScript Types {
+  style.fill: "#B39DDB"
+  style.stroke-dash: 3
+  
+  types_index: "types/index.ts" {
+    message_type: "Message interface"
+    conversation_type: "Conversation interface"
+    rag_config: "RAGConfig interface"
+    setting_type: "Setting interface"
+  }
+}
+
+# Data flow connections
+browser.user -> app_layer.app: "User interactions"
+app_layer.main -> context_layer.theme_context: "Provide theme"
+app_layer.main -> context_layer.zustand_store: "Provide state"
+app_layer.app -> pages: "Route to pages"
+
+pages.chat_page -> components.chat_components: "Render chat UI"
+pages.chat_page -> api_client.client_ts: "Send queries"
+pages.settings_page -> api_client.client_ts: "Manage settings"
+pages.index_page -> api_client.client_ts: "Trigger indexing"
+
+components.layout -> components.sidebar: "Include sidebar"
+components.layout -> components.theme_switcher: "Include theme toggle"
+
+context_layer.zustand_store -> browser.localstorage: "Persist state"
+context_layer.theme_context -> styling.tailwind: "Apply theme classes"
+
+api_client.client_ts -> backend_api: "HTTP requests"
+api_client.client_ts -> api_client.api_prod: "Enterprise alt"
+context_layer.zustand_store -> context_layer.state_prod: "Enterprise alt"
+app_layer.app -> app_layer.app_prod: "Platform alt"
+styling.tailwind -> styling.styling_prod: "Design system alt"
+
+backend_api: Backend API {
+  shape: cloud
+  style.fill: "#009688"
+  
+  endpoints: "FastAPI REST endpoints"
+}
+
+# Build process
+build: Build Process {
+  shape: rectangle
+  style.fill: "#FFE0B2"
+  style.stroke-dash: 3
+  
+  vite_config: "vite.config.ts" {
+    dev_server: "Dev server: 5173"
+    hmr: "Hot Module Replacement"
+    build_cmd: "vite build"
+    output: "dist/ folder"
+  }
+  
+  typescript_config: "tsconfig.json" {
+    target: "ES2020"
+    jsx: "react-jsx"
+    strict: "true"
+  }
+  
+  package_json: "package.json" {
+    scripts: {
+      dev: "vite"
+      build: "tsc && vite build"
+      preview: "vite preview"
+      lint: "eslint"
+    }
+    
+    dependencies: {
+      react: "^18.3.1"
+      react_router: "^6.x"
+      zustand: "^4.x"
+      axios: "^1.x"
+      lucide_react: "latest"
+    }
+  }
+}
+
+# Theme flow
+theme_flow: Theme System Flow {
+  shape: rectangle
+  style.fill: "#F3E5F5"
+  style.stroke-dash: 3
+  
+  user_toggle: "1. User clicks theme toggle"
+  update_context: "2. Update ThemeContext"
+  apply_classes: "3. Apply Tailwind classes"
+  render_ui: "4. Re-render with new theme"
+  
+  user_toggle -> update_context -> apply_classes -> render_ui
+}
+
+# Responsive design
+responsive: Responsive Design {
+  shape: rectangle
+  style.fill: "#E1BEE7"
+  style.stroke-dash: 3
+  
+  breakpoints: {
+    mobile: "< 640px: 1 column"
+    tablet: "640-1024px: 2 columns"
+    desktop: "1024px+: 3 columns"
+  }
+  
+  mobile_sidebar: "Mobile: Collapsible sidebar"
+  desktop_sidebar: "Desktop: Always visible"
+}

@@ -1,0 +1,37 @@
+# Frontend Architecture (Summary)
+
+direction: right
+
+title: {
+  label: "Client Flow (Lite View)"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 22
+    bold: true
+  }
+}
+
+user: "User"
+spa: "React SPA\nVite + Tailwind"
+state: "State Mgmt\nZustand + Context"
+api: "API Client\nAxios → FastAPI"
+
+user -> spa -> state -> api
+
+# Alternatives
+spa_alt: "Alt: Next.js + Azure AD B2C"
+state_alt: "Alt: Redux Toolkit"
+api_alt: "Alt: APIM + MSAL"
+
+spa_alt.style.stroke-dash: 3
+state_alt.style.stroke-dash: 3
+api_alt.style.stroke-dash: 3
+
+spa_alt.style.fill: "#FFFBEA"
+state_alt.style.fill: "#E0F7FA"
+api_alt.style.fill: "#FFFDE7"
+
+spa -> spa_alt: "Enterprise UI"
+state -> state_alt: "Enterprise state"
+api -> api_alt: "Managed auth"

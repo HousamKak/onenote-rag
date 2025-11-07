@@ -1,0 +1,201 @@
+# RAG Process Flow Diagram
+
+direction: down
+
+title: {
+  label: "RAG Query Processing Flow"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 24
+    bold: true
+  }
+}
+
+user_query: User Query {
+  shape: hexagon
+  style.fill: "#E3F2FD"
+  query: "How do I configure SSO?"
+}
+
+step1: 1. Query Reception {
+  style.fill: "#FFF3E0"
+  
+  api_endpoint: POST /api/query
+  request_body: {
+    query: string
+    technique: string
+    top_k: number
+    config: object
+  }
+}
+
+step2: 2. Query Embedding {
+  style.fill: "#E8F5E9"
+  
+  process: Create Query Embedding
+  model: text-embedding-3-small
+  dimensions: 1536 dimensions
+  
+  openai: OpenAI Embeddings API {
+    shape: cloud
+    style.fill: "#10A37F"
+  }
+  
+  process -> openai: "Embed query text"
+}
+
+step3: 3. Vector Search {
+  style.fill: "#F3E5F5"
+  
+  chromadb: ChromaDB Vector Store {
+    shape: cylinder
+  }
+  
+  search_types: Search Methods {
+    similarity: Similarity Search
+    mmr: Max Marginal Relevance
+    threshold: Similarity Threshold
+  }
+  
+  retrieval: Retrieve top_k chunks
+  reranking: Optional Reranking
+  
+  chromadb -> search_types: "Query vectors"
+  search_types -> retrieval
+  retrieval -> reranking
+  
+  prod_vector: "Prod Alt: Azure AI Search / Pinecone" {
+    shape: cylinder
+    style.stroke-dash: 3
+    style.fill: "#FFFDE7"
+    notes: "Managed scaling + SLAs"
+  }
+  
+  chromadb -> prod_vector: "Enterprise alternative"
+}
+
+step4: 4. Technique Application {
+  style.fill: "#FCE4EC"
+  
+  techniques: RAG Techniques {
+    basic: "Basic RAG\n(Simple Q&A)"
+    hyde: "HyDE\n(Hypothetical answers)"
+    cot: "Chain of Thought\n(Step-by-step reasoning)"
+    selfask: "Self-Ask\n(Sub-questions)"
+    react: "ReAct\n(Reasoning + Acting)"
+  }
+  
+  context_prep: Context Preparation
+  prompt_template: Prompt Template Selection
+  
+  techniques -> context_prep
+  context_prep -> prompt_template
+}
+
+step5: 5. LLM Generation {
+  style.fill: "#FFF9C4"
+  
+  llm_call: LLM API Call
+  model_choice: {
+    gpt4: "GPT-4 (high quality)"
+    gpt35: "GPT-3.5 Turbo (fast)"
+  }
+  
+  streaming: Streaming Response
+  
+  openai_llm: OpenAI Chat API {
+    shape: cloud
+    style.fill: "#10A37F"
+  }
+  
+  llm_call -> openai_llm: "Generate answer"
+  openai_llm -> streaming
+  
+  prod_llm: "Prod Alt: Azure OpenAI / Claude" {
+    shape: cloud
+    style.stroke-dash: 3
+    style.fill: "#E0F7FA"
+    benefits: "Regional compliance, enterprise SLAs"
+  }
+  
+  openai_llm -> prod_llm: "Enterprise alternative"
+}
+
+step6: 6. Response Assembly {
+  style.fill: "#E0F2F1"
+  
+  answer: Generated Answer
+  sources: Source Documents
+  metadata: {
+    technique: "Technique used"
+    chunks: "Retrieved chunks"
+    tokens: "Token usage"
+    latency: "Response time"
+  }
+  
+  final_response: Final JSON Response
+  
+  answer -> final_response
+  sources -> final_response
+  metadata -> final_response
+}
+
+result: Response to User {
+  shape: hexagon
+  style.fill: "#C8E6C9"
+  
+  json_structure: {
+    answer: string
+    sources: array
+    technique: string
+    metadata: object
+  }
+}
+
+# Flow connections
+user_query -> step1: "Submit query"
+step1 -> step2: "Process"
+step2 -> step3: "Query vector"
+step3 -> step4: "Retrieved chunks"
+step4 -> step5: "Prepared prompt"
+step5 -> step6: "LLM response"
+step6 -> result: "Return JSON"
+
+# Parallel processes
+tracing: LangSmith Tracing {
+  shape: rectangle
+  style.fill: "#B0BEC5"
+  style.stroke-dash: 3
+  
+  log_request: Log Request
+  log_retrieval: Log Retrieval
+  log_llm: Log LLM Call
+  log_response: Log Response
+}
+
+step1 -> tracing.log_request: "Track (if enabled)"
+step3 -> tracing.log_retrieval: "Track"
+step5 -> tracing.log_llm: "Track"
+step6 -> tracing.log_response: "Track"
+
+observability_alt: "Prod Alt: Azure App Insights / OpenTelemetry" {
+  shape: rectangle
+  style.stroke-dash: 3
+  style.fill: "#E1F5FE"
+  metrics: "Logs, traces, alerts"
+}
+
+tracing -> observability_alt: "Enterprise alternative"
+
+# Performance metrics
+metrics: Performance Metrics {
+  shape: rectangle
+  style.fill: "#FFECB3"
+  style.stroke-dash: 3
+  
+  embedding_time: "Embedding: ~100-200ms"
+  vector_search: "Vector Search: ~50-100ms"
+  llm_generation: "LLM Generation: 1-5s"
+  total: "Total: 1.5-6s (avg)"
+}

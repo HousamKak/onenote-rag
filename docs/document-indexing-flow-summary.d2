@@ -1,0 +1,38 @@
+# Document Indexing Flow (Summary)
+
+direction: right
+
+title: {
+  label: "Ingest → Embed → Store (Lite View)"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 22
+    bold: true
+  }
+}
+
+source: "Source\nOneNote via Microsoft Graph"
+extract: "Extract\nDownload + clean HTML"
+chunk: "Chunk\nRecursive splitter (1k/200 overlap)"
+embed: "Embed\nOpenAI text-embedding-3-small"
+store: "Store\nChromaDB collection"
+ready: "Ready for RAG\nStats updated"
+
+source_alt: "Alt Source:\nDatabricks / SharePoint Export"
+embed_alt: "Alt Embed:\nAzure OpenAI"
+store_alt: "Alt Store:\nAzure AI Search / Pinecone"
+
+source_alt.style.stroke-dash: 3
+embed_alt.style.stroke-dash: 3
+store_alt.style.stroke-dash: 3
+
+source_alt.style.fill: "#FCE4EC"
+embed_alt.style.fill: "#DFF7F5"
+store_alt.style.fill: "#FFFDE7"
+
+source -> extract -> chunk -> embed -> store -> ready
+
+source -> source_alt: "Enterprise ingestion"
+embed -> embed_alt: "Private embeddings"
+store -> store_alt: "Managed vector index"

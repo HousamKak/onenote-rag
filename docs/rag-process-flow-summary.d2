@@ -1,0 +1,44 @@
+# RAG Process Flow (Summary)
+
+direction: down
+
+title: {
+  label: "Query → Answer (Lite View)"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 22
+    bold: true
+  }
+}
+
+query: "User Query"
+embed: "Embed Query\nOpenAI text-embedding-3-small"
+retrieve: "Retrieve Context\nChromaDB similarity search"
+reason: "Apply Technique\nBasic / HyDE / CoT / ReAct"
+llm: "Generate Answer\nGPT-4 / GPT-3.5"
+respond: "Send Response\nAnswer + Sources"
+
+# Alternatives (dashed)
+embed_alt: "Alt: Azure OpenAI Embeddings"
+retrieve_alt: "Alt: Azure AI Search / Pinecone"
+llm_alt: "Alt: Azure OpenAI / Claude"
+observability_alt: "Alt: Azure App Insights / OpenTelemetry"
+
+embed_alt.style.stroke-dash: 3
+retrieve_alt.style.stroke-dash: 3
+llm_alt.style.stroke-dash: 3
+observability_alt.style.stroke-dash: 3
+
+embed_alt.style.fill: "#DFF7F5"
+retrieve_alt.style.fill: "#FFFDE7"
+llm_alt.style.fill: "#E0F7FA"
+observability_alt.style.fill: "#E1F5FE"
+
+# Flow
+query -> embed -> retrieve -> reason -> llm -> respond
+
+embed -> embed_alt: "Enterprise embeddings"
+retrieve -> retrieve_alt: "Managed vector search"
+llm -> llm_alt: "Enterprise LLM"
+reason -> observability_alt: "Tracing + metrics"

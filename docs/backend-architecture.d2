@@ -1,0 +1,506 @@
+# Backend Architecture Diagram
+
+direction: down
+
+title: {
+  label: "Backend Architecture - FastAPI Application"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 24
+    bold: true
+  }
+}
+
+entry_point: Application Entry {
+  style.fill: "#E3F2FD"
+  
+  main_py: "main.py" {
+    uvicorn: "Uvicorn ASGI Server"
+    host: "0.0.0.0:8000"
+    reload: "Auto-reload in dev"
+  }
+  
+  lifespan: "Lifespan Events" {
+    startup: {
+      load_config: "Load .env configuration"
+      init_services: "Initialize services"
+      setup_ssl: "Disable SSL verification"
+      auto_sync: "Auto-sync OneNote (incremental)"
+    }
+    
+    shutdown: {
+      cleanup: "Cleanup resources"
+      close_connections: "Close DB connections"
+    }
+  }
+}
+
+app_layer: FastAPI Application {
+  style.fill: "#E8F5E9"
+  
+  fastapi_app: "FastAPI App Instance" {
+    title: "OneNote RAG API"
+    version: "1.0.0"
+    docs: "/docs (Swagger UI)"
+    redoc: "/redoc (ReDoc)"
+  }
+  
+  middleware: Middleware {
+    cors: "CORS Middleware" {
+      origins: "localhost:5173, :5174, :3000"
+      methods: "ALL"
+      headers: "ALL"
+      credentials: "true"
+    }
+  }
+  
+  router: "API Router" {
+    prefix: "/api"
+  }
+}
+
+routes: API Routes (routes.py) {
+  style.fill: "#F3E5F5"
+  
+  health: "Health Check" {
+    endpoint: "GET /api/health"
+    purpose: "Service health status"
+  }
+  
+  query_routes: "Query Routes" {
+    query: "POST /api/query" {
+      input: {
+        query: "string"
+        technique: "basic|hyde|cot|selfask|react"
+        top_k: "int (default: 3)"
+        config: "RAGConfig object"
+      }
+      
+      output: {
+        answer: "string"
+        sources: "Document[]"
+        technique: "string"
+        metadata: "object"
+      }
+    }
+  }
+  
+  settings_routes: "Settings Routes" {
+    get_all: "GET /api/settings"
+    get_one: "GET /api/settings/{key}"
+    update: "PUT /api/settings/{key}"
+    create: "POST /api/settings"
+    delete: "DELETE /api/settings/{key}"
+    test: "POST /api/settings/test-connection"
+  }
+  
+  document_routes: "Document Routes" {
+    list: "GET /api/documents"
+    get: "GET /api/documents/{id}"
+    index: "POST /api/documents/index"
+    delete: "DELETE /api/documents/{id}"
+    search: "POST /api/documents/search"
+  }
+  
+  onenote_routes: "OneNote Routes" {
+    notebooks: "GET /api/onenote/notebooks"
+    sections: "GET /api/onenote/sections"
+    pages: "GET /api/onenote/pages"
+    sync: "POST /api/onenote/sync"
+    incremental: "POST /api/onenote/sync/incremental"
+  }
+}
+
+services: Service Layer {
+  style.fill: "#FCE4EC"
+  
+  rag_engine: "RAGEngine" {
+    file: "services/rag_engine.py"
+    
+    responsibilities: {
+      orchestrate: "Orchestrate RAG pipeline"
+      technique_dispatch: "Route to technique handler"
+      response_format: "Format final response"
+    }
+    
+    dependencies: {
+      vector_store: "VectorStoreService"
+      llm: "OpenAI LLM"
+    }
+  }
+  
+  rag_techniques: "RAG Techniques" {
+    file: "services/rag_techniques.py"
+    
+    techniques: {
+      basic: "BasicRAG" {
+        process: "Retrieve → Prompt → Generate"
+      }
+      
+      hyde: "HyDERAG" {
+        process: "Generate hypothetical answer → Embed → Retrieve → Generate"
+      }
+      
+      cot: "ChainOfThoughtRAG" {
+        process: "Think step-by-step → Retrieve → Reason → Generate"
+      }
+      
+      selfask: "SelfAskRAG" {
+        process: "Break into sub-questions → Answer each → Synthesize"
+      }
+      
+      react: "ReActRAG" {
+        process: "Reason → Act (retrieve) → Observe → Answer"
+      }
+    }
+  }
+  
+  vector_store: "VectorStoreService" {
+    file: "services/vector_store.py"
+    
+    responsibilities: {
+      embed: "Create embeddings"
+      store: "Store vectors + metadata"
+      search: "Similarity search"
+      manage: "CRUD operations"
+    }
+    
+    methods: {
+      add_documents: "Add document chunks"
+      similarity_search: "Find similar vectors"
+      delete_by_page_id: "Delete page chunks"
+      get_page_modified_date: "Check for updates"
+    }
+    
+    prod_alt: "Prod Alt:\nAzure AI Search SDK" {
+      style.stroke-dash: 3
+      benefits: "Managed scaling, RBAC, geo redundancy"
+    }
+  }
+  
+  document_processor: "DocumentProcessor" {
+    file: "services/document_processor.py"
+    
+    responsibilities: {
+      chunk: "Split documents"
+      tokenize: "Count tokens"
+      optimize: "Optimize chunk size"
+    }
+    
+    config: {
+      chunk_size: "CHUNK_SIZE (1000)"
+      overlap: "CHUNK_OVERLAP (200)"
+      splitter: "RecursiveCharacterTextSplitter"
+    }
+  }
+  
+  onenote_service: "OneNoteService" {
+    file: "services/onenote_service.py"
+    
+    responsibilities: {
+      authenticate: "OAuth 2.0 / Manual token"
+      fetch: "Fetch notebooks/sections/pages"
+      parse: "Parse HTML content"
+      sync: "Incremental sync logic"
+    }
+    
+    auth_methods: {
+      oauth: "MSAL (client credentials)"
+      manual: "Bearer token (MICROSOFT_GRAPH_TOKEN)"
+    }
+    
+    prod_ingest: "Prod Alt:\nDatabricks ingestion jobs" {
+      style.stroke-dash: 3
+      pipeline: "ADF → Delta Lake → Unity Catalog"
+    }
+  }
+  
+  settings_service: "SettingsService" {
+    file: "services/settings_service.py"
+    
+    responsibilities: {
+      crud: "Settings CRUD"
+      encryption: "Encrypt/decrypt sensitive values"
+      defaults: "Initialize defaults from .env"
+      fallback: "DB-first, .env fallback"
+    }
+    
+    sensitive_keys: {
+      list: "openai_api_key, langchain_api_key, microsoft_client_secret, microsoft_graph_token"
+    }
+  }
+  
+  database_service: "DatabaseService" {
+    file: "services/database.py"
+    
+    responsibilities: {
+      schema: "Initialize SQLite schema"
+      crud: "Settings CRUD operations"
+      transactions: "Transaction management"
+    }
+    
+    tables: {
+      settings: "key, value, is_sensitive, description, timestamps"
+    }
+  }
+  
+  encryption_service: "EncryptionService" {
+    file: "services/encryption.py"
+    
+    responsibilities: {
+      encrypt: "Fernet encryption"
+      decrypt: "Fernet decryption"
+      key_management: "Load/create encryption key"
+    }
+    
+    key_file: ".encryption_key" {
+      location: "backend/data/"
+      security: "NOT in git (gitignored)"
+    }
+  }
+}
+
+models: Data Models {
+  style.fill: "#FFF9C4"
+  
+  pydantic: "Pydantic Models" {
+    file: "models/*.py"
+    
+    document_model: "Document" {
+      fields: {
+        page_id: "str"
+        content: "str"
+        metadata: "DocumentMetadata"
+      }
+    }
+    
+    metadata_model: "DocumentMetadata" {
+      fields: {
+        page_title: "str"
+        section_name: "str"
+        notebook_name: "str"
+        created_date: "datetime"
+        modified_date: "datetime"
+        source_url: "str"
+      }
+    }
+    
+    query_model: "QueryRequest" {
+      fields: {
+        query: "str"
+        technique: "str"
+        top_k: "int"
+        config: "RAGConfig"
+      }
+    }
+    
+    settings_model: "SettingResponse" {
+      fields: {
+        key: "str"
+        value: "str"
+        is_sensitive: "bool"
+        description: "str | None"
+        has_value: "bool"
+      }
+    }
+    
+    rag_config: "RAGConfig" {
+      fields: {
+        temperature: "float"
+        model: "str"
+        max_tokens: "int"
+        stream: "bool"
+      }
+    }
+  }
+}
+
+config: Configuration {
+  style.fill: "#E0F2F1"
+  
+  config_py: "config.py" {
+    settings_class: "Settings (Pydantic BaseSettings)" {
+      sources: {
+        env_file: ".env file"
+        env_vars: "Environment variables"
+        db_settings: "Database (via SettingsService)"
+      }
+      
+      fields: {
+        openai_api_key: "OpenAI API key"
+        langchain_api_key: "LangChain API key"
+        microsoft_credentials: "Microsoft Graph credentials"
+        chunk_settings: "Chunk size/overlap"
+        vector_db_path: "ChromaDB path"
+        embedding_provider: "openai"
+      }
+    }
+    
+    dynamic_settings: "get_dynamic_settings()" {
+      priority: "1. Database (SettingsService), 2. .env fallback"
+    }
+  }
+  
+  env_file: ".env" {
+    style.stroke-dash: 3
+    
+    sections: {
+      openai: "OPENAI_API_KEY"
+      langchain: "LANGCHAIN_* settings"
+      microsoft: "MICROSOFT_* credentials"
+      app: "CHUNK_SIZE, VECTOR_DB_PATH, etc."
+    }
+    
+    security: "⚠️ NOT in git (gitignored)"
+  }
+}
+
+data_layer: Data Storage {
+  style.fill: "#C8E6C9"
+  
+  sqlite_db: "SQLite Database" {
+    shape: cylinder
+    path: "backend/data/settings.db"
+    
+    settings_table: "settings" {
+      columns: "id, key, value, is_sensitive, description, created_at, updated_at"
+      indexes: "idx_settings_key (key)"
+    }
+  }
+  
+  chromadb: "ChromaDB" {
+    shape: cylinder
+    path: "backend/data/chroma_db/"
+    
+    collection: "onenote_documents" {
+      vectors: "1536-dimensional embeddings"
+      documents: "Original text chunks"
+      metadata: "Page metadata per chunk"
+      distance: "Cosine similarity"
+    }
+  }
+  
+  managed_vector: "Prod Alt:\nAzure AI Search / Pinecone" {
+    shape: cylinder
+    style.stroke-dash: 3
+    style.fill: "#FFFDE7"
+  }
+  
+  managed_db: "Prod Alt:\nAzure SQL / PostgreSQL" {
+    shape: cylinder
+    style.stroke-dash: 3
+    style.fill: "#FFFDE7"
+  }
+  
+  encryption_key: ".encryption_key" {
+    shape: rectangle
+    path: "backend/data/.encryption_key"
+    format: "Fernet key (base64)"
+    security: "⚠️ NOT in git"
+  }
+}
+
+external_integrations: External Integrations {
+  style.fill: "#FFECB3"
+  
+  openai_integration: "OpenAI SDK" {
+    embeddings: "text-embedding-3-small" {
+      dimensions: "1536"
+      cost: "0.02 per 1M tokens"
+    }
+    
+    llm: "Chat Completions" {
+      models: "gpt-4, gpt-3.5-turbo"
+      streaming: "Supported"
+    }
+    
+    azure_openai: "Prod Alt:\nAzure OpenAI Service" {
+      style.stroke-dash: 3
+      compliance: "Regional data residency"
+    }
+  }
+  
+  msgraph_integration: "Microsoft Graph" {
+    auth: "MSAL (OAuth 2.0)"
+    endpoints: {
+      notebooks: "/me/onenote/notebooks"
+      pages: "/pages/{id}/content"
+    }
+  }
+  
+  langsmith_integration: "LangSmith" {
+    tracing: "Request/response tracing"
+    analytics: "Usage analytics"
+    optional: "Enabled via LANGCHAIN_TRACING_V2"
+  }
+  
+  app_insights: "Azure Application Insights (Alt)" {
+    style.stroke-dash: 3
+    telemetry: "Logs, traces, alerts"
+  }
+}
+
+# Flow connections
+entry_point.main_py -> app_layer.fastapi_app: "Initialize"
+app_layer.router -> routes: "Include routes"
+
+routes.query_routes -> services.rag_engine: "Process queries"
+routes.settings_routes -> services.settings_service: "Manage settings"
+routes.document_routes -> services.document_processor: "Process documents"
+routes.onenote_routes -> services.onenote_service: "Fetch OneNote"
+
+services.rag_engine -> services.rag_techniques: "Dispatch to technique"
+services.rag_engine -> services.vector_store: "Retrieve context"
+services.vector_store -> data_layer.chromadb: "Query vectors"
+services.settings_service -> services.database_service: "CRUD operations"
+services.settings_service -> services.encryption_service: "Encrypt/decrypt"
+services.database_service -> data_layer.sqlite_db: "SQL operations"
+services.encryption_service -> data_layer.encryption_key: "Load key"
+
+services.vector_store -> external_integrations.openai_integration.embeddings: "Create embeddings"
+services.rag_techniques -> external_integrations.openai_integration.llm: "Generate answers"
+services.onenote_service -> external_integrations.msgraph_integration: "Fetch pages"
+app_layer.fastapi_app -> external_integrations.langsmith_integration: "Trace (optional)"
+services.vector_store -> services.vector_store.prod_alt: "Managed vector alt"
+services.onenote_service -> services.onenote_service.prod_ingest: "Enterprise ingestion"
+data_layer.chromadb -> data_layer.managed_vector: "Prod vector store"
+data_layer.sqlite_db -> data_layer.managed_db: "Prod relational store"
+external_integrations.openai_integration -> external_integrations.openai_integration.azure_openai: "Enterprise LLM"
+external_integrations.langsmith_integration -> external_integrations.app_insights: "Azure-native telemetry"
+
+config.config_py -> services: "Provide configuration"
+config.env_file -> config.config_py: "Load settings"
+
+# Dependencies
+dependencies: Python Dependencies {
+  shape: rectangle
+  style.fill: "#D1C4E9"
+  style.stroke-dash: 3
+  
+  requirements: "requirements.txt" {
+    web: "fastapi, uvicorn, pydantic"
+    ai: "langchain, openai, chromadb"
+    security: "cryptography, msal, python-jose"
+    data: "tiktoken, requests"
+    utils: "python-dotenv, logging"
+  }
+}
+
+# Logging
+logging: Logging & Monitoring {
+  shape: rectangle
+  style.fill: "#F8BBD0"
+  style.stroke-dash: 3
+  
+  python_logging: "Python logging module" {
+    level: "INFO (default)"
+    format: "timestamp - name - level - message"
+    handlers: "Console (stdout)"
+  }
+  
+  langsmith_tracing: "LangSmith Tracing (Optional)" {
+    captures: "Requests, LLM calls, retrievals"
+    env_var: "LANGCHAIN_TRACING_V2=true"
+  }
+}

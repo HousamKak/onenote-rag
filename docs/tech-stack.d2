@@ -1,0 +1,331 @@
+# Tech Stack Diagram
+
+direction: right
+
+title: {
+  label: "OneNote RAG - Complete Tech Stack"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 24
+    bold: true
+  }
+}
+
+frontend_stack: Frontend Stack {
+  style.fill: "#E3F2FD"
+  
+  core: Core Technologies {
+    react: "React 18.3" {
+      style.fill: "#61DAFB"
+    }
+    typescript: "TypeScript 5.x" {
+      style.fill: "#3178C6"
+    }
+    vite: "Vite 5.x" {
+      style.fill: "#646CFF"
+    }
+  }
+  
+  ui: UI Libraries {
+    tailwind: "Tailwind CSS 3.x" {
+      style.fill: "#06B6D4"
+    }
+    lucide: "Lucide React Icons"
+    animations: "Custom CSS Animations"
+  }
+  
+  state_routing: State & Routing {
+    zustand: "Zustand (State)" {
+      style.fill: "#000000"
+    }
+    router: "React Router DOM 6.x"
+    context: "React Context (Theme)"
+  }
+  
+  http: HTTP Client {
+    axios: "Axios 1.x"
+  }
+  
+  build: Build & Dev {
+    eslint: "ESLint"
+    postcss: "PostCSS"
+    prettier: "Prettier (optional)"
+  }
+  
+  frontend_prod: "Prod-ready Alternatives" {
+    style.stroke-dash: 3
+    style.fill: "#FFFBEA"
+    
+    nextjs: "Next.js (SSR/Edge)"
+    auth: "Azure AD B2C / Auth0"
+    design_system: "Chakra UI / MUI"
+  }
+}
+
+backend_stack: Backend Stack {
+  style.fill: "#E8F5E9"
+  
+  framework: Web Framework {
+    fastapi: "FastAPI 0.104+" {
+      style.fill: "#009688"
+    }
+    uvicorn: "Uvicorn (ASGI server)"
+    pydantic: "Pydantic (validation)"
+  }
+  
+  ai_ml: AI/ML Libraries {
+    langchain: "LangChain 0.1.x" {
+      style.fill: "#1C3C3C"
+    }
+    openai: "OpenAI SDK 1.x" {
+      style.fill: "#10A37F"
+    }
+    chromadb: "ChromaDB 0.4.x" {
+      style.fill: "#FF6F00"
+    }
+  }
+  
+  security: Security & Auth {
+    cryptography: "Cryptography (Fernet)"
+    msal: "MSAL (Microsoft Auth)"
+    python_jose: "Python-JOSE (JWT)"
+  }
+  
+  data_processing: Data Processing {
+    tiktoken: "Tiktoken (tokenization)"
+    requests: "Requests (HTTP)"
+    python_dotenv: "Python-dotenv (.env)"
+  }
+  
+  utils: Utilities {
+    logging: "Python Logging"
+    sqlite3: "SQLite3 (built-in)"
+    datetime: "Datetime (built-in)"
+  }
+  
+  backend_prod: "Prod-ready Alternatives" {
+    style.stroke-dash: 3
+    style.fill: "#E0F7FA"
+    
+    azure_functions: "Azure Functions / Container Apps"
+    apim: "Azure API Management"
+    orchestration: "Prefect / Airflow for scheduled jobs"
+  }
+}
+
+data_storage: Data Storage {
+  style.fill: "#F3E5F5"
+  
+  vector_db: Vector Database {
+    current: "ChromaDB (Local)" {
+      shape: cylinder
+      style.fill: "#FF6F00"
+      
+      features: {
+        storage: "Local SQLite backend"
+        embeddings: "1536-dim vectors"
+        metadata: "Page ID, title, dates"
+        search: "Cosine similarity"
+      }
+    }
+    
+    alternatives: Production Alternatives {
+      style.stroke-dash: 3
+      
+      pinecone: "Pinecone (Managed)" {
+        pros: "Fully managed, Auto-scaling, Built-in monitoring"
+        cons: "Cost, Vendor lock-in"
+      }
+      
+      weaviate: "Weaviate (OSS)" {
+        pros: "Self-hosted/Cloud, GraphQL API, Multi-modal support"
+        cons: "Complex setup, Resource intensive"
+      }
+      
+      pgvector: "PostgreSQL + pgvector" {
+        pros: "Use existing PG, ACID guarantees, Familiar SQL"
+        cons: "Lower performance, Limited scale"
+      }
+      
+      qdrant: "Qdrant (OSS)" {
+        pros: "Fast Rust-based, Good filtering, Docker-friendly"
+        cons: "Newer ecosystem, Less mature"
+      }
+      
+      azure_ai_search: "Azure AI Search" {
+        pros: "Native Azure integration, RBAC, scaling"
+        cons: "Higher cost at large scale"
+      }
+    }
+  }
+  
+  relational_db: Relational Database {
+    current: "SQLite (Local)" {
+      shape: cylinder
+      style.fill: "#003B57"
+      
+      tables: {
+        settings: "Settings table (encrypted values)"
+      }
+    }
+    
+    alternatives: Production Alternatives {
+      style.stroke-dash: 3
+      
+      postgresql: "PostgreSQL" {
+        pros: "ACID compliant, Robust, Extensions (pgvector)"
+        recommended: "Recommended"
+        style.fill: "#336791"
+      }
+      
+      mysql: "MySQL/MariaDB" {
+        pros: "Mature, Wide support, Good performance"
+      }
+      
+      azure_sql: "Azure SQL Database" {
+        pros: "Managed service, Auto-scaling, Built-in backup"
+      }
+    }
+  }
+  
+  cache_layer: Caching (Future) {
+    style.stroke-dash: 3
+    
+    redis: "Redis" {
+      use_cases: {
+        embeddings: "Cache embeddings"
+        sessions: "User sessions"
+        rate_limit: "Rate limiting"
+      }
+      style.fill: "#DC382D"
+    }
+    
+    memcached: "Memcached" {
+      use_cases: "Simple key-value cache"
+    }
+  }
+}
+
+external_apis: External APIs {
+  style.fill: "#FCE4EC"
+  
+  openai_api: OpenAI API {
+    shape: cloud
+    style.fill: "#10A37F"
+    
+    services: {
+      embeddings: "text-embedding-3-small (0.02 per 1M tokens)"
+      llm: "GPT-4 / GPT-3.5-turbo (chat completions)"
+    }
+    
+    azure_openai: "Azure OpenAI (Prod Alt)" {
+      style.stroke-dash: 3
+      region: "Regional data residency"
+      auth: "Azure AD integration"
+    }
+  }
+  
+  microsoft_api: Microsoft Graph API {
+    shape: cloud
+    style.fill: "#0078D4"
+    
+    services: {
+      onenote: "OneNote API (pages, sections, notebooks)"
+      auth: "OAuth 2.0 (client credentials)"
+    }
+    
+    databricks: "Databricks + Graph Data Connect (Alt Source)" {
+      style.stroke-dash: 3
+      ingest: "Delta tables + jobs"
+    }
+  }
+  
+  langsmith_api: LangSmith (Optional) {
+    shape: cloud
+    style.fill: "#1C3C3C"
+    
+    services: {
+      tracing: "Request tracing"
+      analytics: "Usage analytics"
+      debugging: "LLM debugging"
+    }
+  }
+}
+
+deployment: Deployment Options {
+  style.fill: "#FFF9C4"
+  
+  current: Development {
+    frontend_dev: "npm run dev\n(Vite dev server :5173)"
+    backend_dev: "uvicorn main:app\n(FastAPI :8000)"
+  }
+  
+  production: Production Options {
+    docker: "Docker + Docker Compose" {
+      style.fill: "#2496ED"
+      components: {
+        frontend_container: "Nginx + React build"
+        backend_container: "Python + Uvicorn"
+        db_container: "PostgreSQL"
+        vector_container: "ChromaDB/Qdrant"
+      }
+    }
+    
+    kubernetes: "Kubernetes / AKS" {
+      style.fill: "#326CE5"
+      components: {
+        pods: "Frontend & Backend pods"
+        services: "Load balancers"
+        ingress: "Nginx Ingress"
+        storage: "Persistent volumes"
+      }
+    }
+    
+    cloud_native: "Cloud Services" {
+      azure: {
+        frontend_svc: "Azure Static Web Apps"
+        backend_svc: "Azure Container Apps"
+        db_svc: "Azure SQL Database"
+        vector_svc: "Azure Cosmos DB (vector)"
+      }
+      
+      aws: {
+        frontend_svc: "AWS Amplify / S3+CloudFront"
+        backend_svc: "AWS ECS / Fargate"
+        db_svc: "AWS RDS (PostgreSQL)"
+        vector_svc: "AWS OpenSearch / Pinecone"
+      }
+    }
+  }
+}
+
+monitoring: Monitoring & Observability {
+  style.fill: "#E0F2F1"
+  style.stroke-dash: 3
+  
+  logging: Logging {
+    current: "Python logging module"
+    production: "• ELK Stack\n• Azure Log Analytics\n• CloudWatch"
+  }
+  
+  metrics: Metrics {
+    options: "• Prometheus + Grafana\n• Azure Monitor\n• Datadog"
+  }
+  
+  tracing: Distributed Tracing {
+    options: "• LangSmith\n• Jaeger\n• OpenTelemetry"
+  }
+  
+  error_tracking: Error Tracking {
+    options: "• Sentry\n• Rollbar\n• Azure App Insights"
+  }
+}
+
+# Connections showing data flow
+frontend_stack.http.axios -> backend_stack.framework.fastapi: "REST API calls"
+backend_stack.ai_ml.chromadb -> data_storage.vector_db.current: "Vector operations"
+backend_stack.utils.sqlite3 -> data_storage.relational_db.current: "Settings CRUD"
+backend_stack.ai_ml.openai -> external_apis.openai_api: "Embeddings & LLM"
+backend_stack.security.msal -> external_apis.microsoft_api: "OneNote access"
+backend_stack.ai_ml.langchain -> external_apis.langsmith_api: "Tracing (optional)"

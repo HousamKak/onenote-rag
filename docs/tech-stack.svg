@@ -1,0 +1,1000 @@
+<?xml version="1.0" encoding="utf-8"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" d2Version="v0.6.8" preserveAspectRatio="xMinYMin meet" viewBox="0 0 2806 6376"><svg id="d2-svg" class="d2-737528398" width="2806" height="6376" viewBox="-89 -140 2806 6376"><rect x="-89.000000" y="-140.000000" width="2806.000000" height="6376.000000" rx="0.000000" fill="#FFFFFF" class=" fill-N7" stroke-width="0" /><style type="text/css"><![CDATA[
+.d2-737528398 .text {
+	font-family: "d2-737528398-font-regular";
+}
+@font-face {
+	font-family: d2-737528398-font-regular;
+	src: url("data:application/font-woff;base64,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");
+}
+.d2-737528398 .text-bold {
+	font-family: "d2-737528398-font-bold";
+}
+@font-face {
+	font-family: d2-737528398-font-bold;
+	src: url("data:application/font-woff;base64,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");
+}
+.d2-737528398 .text-italic {
+	font-family: "d2-737528398-font-italic";
+}
+@font-face {
+	font-family: d2-737528398-font-italic;
+	src: url("data:application/font-woff;base64,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");
+}]]></style><style type="text/css"><![CDATA[.shape {
+  shape-rendering: geometricPrecision;
+  stroke-linejoin: round;
+}
+.connection {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.blend {
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+		.d2-737528398 .fill-N1{fill:#0A0F25;}
+		.d2-737528398 .fill-N2{fill:#676C7E;}
+		.d2-737528398 .fill-N3{fill:#9499AB;}
+		.d2-737528398 .fill-N4{fill:#CFD2DD;}
+		.d2-737528398 .fill-N5{fill:#DEE1EB;}
+		.d2-737528398 .fill-N6{fill:#EEF1F8;}
+		.d2-737528398 .fill-N7{fill:#FFFFFF;}
+		.d2-737528398 .fill-B1{fill:#0D32B2;}
+		.d2-737528398 .fill-B2{fill:#0D32B2;}
+		.d2-737528398 .fill-B3{fill:#E3E9FD;}
+		.d2-737528398 .fill-B4{fill:#E3E9FD;}
+		.d2-737528398 .fill-B5{fill:#EDF0FD;}
+		.d2-737528398 .fill-B6{fill:#F7F8FE;}
+		.d2-737528398 .fill-AA2{fill:#4A6FF3;}
+		.d2-737528398 .fill-AA4{fill:#EDF0FD;}
+		.d2-737528398 .fill-AA5{fill:#F7F8FE;}
+		.d2-737528398 .fill-AB4{fill:#EDF0FD;}
+		.d2-737528398 .fill-AB5{fill:#F7F8FE;}
+		.d2-737528398 .stroke-N1{stroke:#0A0F25;}
+		.d2-737528398 .stroke-N2{stroke:#676C7E;}
+		.d2-737528398 .stroke-N3{stroke:#9499AB;}
+		.d2-737528398 .stroke-N4{stroke:#CFD2DD;}
+		.d2-737528398 .stroke-N5{stroke:#DEE1EB;}
+		.d2-737528398 .stroke-N6{stroke:#EEF1F8;}
+		.d2-737528398 .stroke-N7{stroke:#FFFFFF;}
+		.d2-737528398 .stroke-B1{stroke:#0D32B2;}
+		.d2-737528398 .stroke-B2{stroke:#0D32B2;}
+		.d2-737528398 .stroke-B3{stroke:#E3E9FD;}
+		.d2-737528398 .stroke-B4{stroke:#E3E9FD;}
+		.d2-737528398 .stroke-B5{stroke:#EDF0FD;}
+		.d2-737528398 .stroke-B6{stroke:#F7F8FE;}
+		.d2-737528398 .stroke-AA2{stroke:#4A6FF3;}
+		.d2-737528398 .stroke-AA4{stroke:#EDF0FD;}
+		.d2-737528398 .stroke-AA5{stroke:#F7F8FE;}
+		.d2-737528398 .stroke-AB4{stroke:#EDF0FD;}
+		.d2-737528398 .stroke-AB5{stroke:#F7F8FE;}
+		.d2-737528398 .background-color-N1{background-color:#0A0F25;}
+		.d2-737528398 .background-color-N2{background-color:#676C7E;}
+		.d2-737528398 .background-color-N3{background-color:#9499AB;}
+		.d2-737528398 .background-color-N4{background-color:#CFD2DD;}
+		.d2-737528398 .background-color-N5{background-color:#DEE1EB;}
+		.d2-737528398 .background-color-N6{background-color:#EEF1F8;}
+		.d2-737528398 .background-color-N7{background-color:#FFFFFF;}
+		.d2-737528398 .background-color-B1{background-color:#0D32B2;}
+		.d2-737528398 .background-color-B2{background-color:#0D32B2;}
+		.d2-737528398 .background-color-B3{background-color:#E3E9FD;}
+		.d2-737528398 .background-color-B4{background-color:#E3E9FD;}
+		.d2-737528398 .background-color-B5{background-color:#EDF0FD;}
+		.d2-737528398 .background-color-B6{background-color:#F7F8FE;}
+		.d2-737528398 .background-color-AA2{background-color:#4A6FF3;}
+		.d2-737528398 .background-color-AA4{background-color:#EDF0FD;}
+		.d2-737528398 .background-color-AA5{background-color:#F7F8FE;}
+		.d2-737528398 .background-color-AB4{background-color:#EDF0FD;}
+		.d2-737528398 .background-color-AB5{background-color:#F7F8FE;}
+		.d2-737528398 .color-N1{color:#0A0F25;}
+		.d2-737528398 .color-N2{color:#676C7E;}
+		.d2-737528398 .color-N3{color:#9499AB;}
+		.d2-737528398 .color-N4{color:#CFD2DD;}
+		.d2-737528398 .color-N5{color:#DEE1EB;}
+		.d2-737528398 .color-N6{color:#EEF1F8;}
+		.d2-737528398 .color-N7{color:#FFFFFF;}
+		.d2-737528398 .color-B1{color:#0D32B2;}
+		.d2-737528398 .color-B2{color:#0D32B2;}
+		.d2-737528398 .color-B3{color:#E3E9FD;}
+		.d2-737528398 .color-B4{color:#E3E9FD;}
+		.d2-737528398 .color-B5{color:#EDF0FD;}
+		.d2-737528398 .color-B6{color:#F7F8FE;}
+		.d2-737528398 .color-AA2{color:#4A6FF3;}
+		.d2-737528398 .color-AA4{color:#EDF0FD;}
+		.d2-737528398 .color-AA5{color:#F7F8FE;}
+		.d2-737528398 .color-AB4{color:#EDF0FD;}
+		.d2-737528398 .color-AB5{color:#F7F8FE;}.appendix text.text{fill:#0A0F25}.md{--color-fg-default:#0A0F25;--color-fg-muted:#676C7E;--color-fg-subtle:#9499AB;--color-canvas-default:#FFFFFF;--color-canvas-subtle:#EEF1F8;--color-border-default:#0D32B2;--color-border-muted:#0D32B2;--color-neutral-muted:#EEF1F8;--color-accent-fg:#0D32B2;--color-accent-emphasis:#0D32B2;--color-attention-subtle:#676C7E;--color-danger-fg:red;}.sketch-overlay-B1{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B2{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B3{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B4{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B6{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AA2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-AA4{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AA5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AB4{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AB5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N1{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-N2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-N3{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N6{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N7{fill:url(#streaks-bright);mix-blend-mode:darken}.light-code{display: block}.dark-code{display: none}]]></style><style type="text/css">.d2-737528398 .md em,
+.d2-737528398 .md dfn {
+  font-family: "d2-737528398-font-italic";
+}
+
+.d2-737528398 .md b,
+.d2-737528398 .md strong {
+  font-family: "d2-737528398-font-bold";
+}
+
+.d2-737528398 .md code,
+.d2-737528398 .md kbd,
+.d2-737528398 .md pre,
+.d2-737528398 .md samp {
+  font-family: "d2-737528398-font-mono";
+  font-size: 1em;
+}
+
+.d2-737528398 .md {
+  tab-size: 4;
+}
+
+/* variables are provided in d2renderers/d2svg/d2svg.go */
+
+.d2-737528398 .md {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  color: var(--color-fg-default);
+  background-color: transparent; /* we don't want to define the background color */
+  font-family: "d2-737528398-font-regular";
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.d2-737528398 .md details,
+.d2-737528398 .md figcaption,
+.d2-737528398 .md figure {
+  display: block;
+}
+
+.d2-737528398 .md summary {
+  display: list-item;
+}
+
+.d2-737528398 .md [hidden] {
+  display: none !important;
+}
+
+.d2-737528398 .md a {
+  background-color: transparent;
+  color: var(--color-accent-fg);
+  text-decoration: none;
+}
+
+.d2-737528398 .md a:active,
+.d2-737528398 .md a:hover {
+  outline-width: 0;
+}
+
+.d2-737528398 .md abbr[title] {
+  border-bottom: none;
+  text-decoration: underline dotted;
+}
+
+.d2-737528398 .md dfn {
+  font-style: italic;
+}
+
+.d2-737528398 .md h1 {
+  margin: 0.67em 0;
+  padding-bottom: 0.3em;
+  font-size: 2em;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+.d2-737528398 .md mark {
+  background-color: var(--color-attention-subtle);
+  color: var(--color-text-primary);
+}
+
+.d2-737528398 .md small {
+  font-size: 90%;
+}
+
+.d2-737528398 .md sub,
+.d2-737528398 .md sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.d2-737528398 .md sub {
+  bottom: -0.25em;
+}
+
+.d2-737528398 .md sup {
+  top: -0.5em;
+}
+
+.d2-737528398 .md img {
+  border-style: none;
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: var(--color-canvas-default);
+}
+
+.d2-737528398 .md figure {
+  margin: 1em 40px;
+}
+
+.d2-737528398 .md hr {
+  box-sizing: content-box;
+  overflow: hidden;
+  background: transparent;
+  border-bottom: 1px solid var(--color-border-muted);
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: var(--color-border-default);
+  border: 0;
+}
+
+.d2-737528398 .md input {
+  font: inherit;
+  margin: 0;
+  overflow: visible;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.d2-737528398 .md [type="button"],
+.d2-737528398 .md [type="reset"],
+.d2-737528398 .md [type="submit"] {
+  -webkit-appearance: button;
+}
+
+.d2-737528398 .md [type="button"]::-moz-focus-inner,
+.d2-737528398 .md [type="reset"]::-moz-focus-inner,
+.d2-737528398 .md [type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+.d2-737528398 .md [type="button"]:-moz-focusring,
+.d2-737528398 .md [type="reset"]:-moz-focusring,
+.d2-737528398 .md [type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+.d2-737528398 .md [type="checkbox"],
+.d2-737528398 .md [type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.d2-737528398 .md [type="number"]::-webkit-inner-spin-button,
+.d2-737528398 .md [type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+.d2-737528398 .md [type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+.d2-737528398 .md [type="search"]::-webkit-search-cancel-button,
+.d2-737528398 .md [type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+.d2-737528398 .md ::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.54;
+}
+
+.d2-737528398 .md ::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+.d2-737528398 .md a:hover {
+  text-decoration: underline;
+}
+
+.d2-737528398 .md hr::before {
+  display: table;
+  content: "";
+}
+
+.d2-737528398 .md hr::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.d2-737528398 .md table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.d2-737528398 .md td,
+.d2-737528398 .md th {
+  padding: 0;
+}
+
+.d2-737528398 .md details summary {
+  cursor: pointer;
+}
+
+.d2-737528398 .md details:not([open]) > *:not(summary) {
+  display: none !important;
+}
+
+.d2-737528398 .md kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  color: var(--color-fg-default);
+  vertical-align: middle;
+  background-color: var(--color-canvas-subtle);
+  border: solid 1px var(--color-neutral-muted);
+  border-bottom-color: var(--color-neutral-muted);
+  border-radius: 6px;
+  box-shadow: inset 0 -1px 0 var(--color-neutral-muted);
+}
+
+.d2-737528398 .md h1,
+.d2-737528398 .md h2,
+.d2-737528398 .md h3,
+.d2-737528398 .md h4,
+.d2-737528398 .md h5,
+.d2-737528398 .md h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  font-family: "d2-737528398-font-semibold";
+}
+
+.d2-737528398 .md h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+.d2-737528398 .md h3 {
+  font-size: 1.25em;
+}
+
+.d2-737528398 .md h4 {
+  font-size: 1em;
+}
+
+.d2-737528398 .md h5 {
+  font-size: 0.875em;
+}
+
+.d2-737528398 .md h6 {
+  font-size: 0.85em;
+  color: var(--color-fg-muted);
+}
+
+.d2-737528398 .md p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.d2-737528398 .md blockquote {
+  margin: 0;
+  padding: 0 1em;
+  color: var(--color-fg-muted);
+  border-left: 0.25em solid var(--color-border-default);
+}
+
+.d2-737528398 .md ul,
+.d2-737528398 .md ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 2em;
+}
+
+.d2-737528398 .md ol ol,
+.d2-737528398 .md ul ol {
+  list-style-type: lower-roman;
+}
+
+.d2-737528398 .md ul ul ol,
+.d2-737528398 .md ul ol ol,
+.d2-737528398 .md ol ul ol,
+.d2-737528398 .md ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.d2-737528398 .md dd {
+  margin-left: 0;
+}
+
+.d2-737528398 .md pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  word-wrap: normal;
+}
+
+.d2-737528398 .md ::placeholder {
+  color: var(--color-fg-subtle);
+  opacity: 1;
+}
+
+.d2-737528398 .md input::-webkit-outer-spin-button,
+.d2-737528398 .md input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.d2-737528398 .md::before {
+  display: table;
+  content: "";
+}
+
+.d2-737528398 .md::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.d2-737528398 .md > *:first-child {
+  margin-top: 0 !important;
+}
+
+.d2-737528398 .md > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+.d2-737528398 .md a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.d2-737528398 .md .absent {
+  color: var(--color-danger-fg);
+}
+
+.d2-737528398 .md .anchor {
+  float: left;
+  padding-right: 4px;
+  margin-left: -20px;
+  line-height: 1;
+}
+
+.d2-737528398 .md .anchor:focus {
+  outline: none;
+}
+
+.d2-737528398 .md p,
+.d2-737528398 .md blockquote,
+.d2-737528398 .md ul,
+.d2-737528398 .md ol,
+.d2-737528398 .md dl,
+.d2-737528398 .md table,
+.d2-737528398 .md pre,
+.d2-737528398 .md details {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.d2-737528398 .md blockquote > :first-child {
+  margin-top: 0;
+}
+
+.d2-737528398 .md blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.d2-737528398 .md sup > a::before {
+  content: "[";
+}
+
+.d2-737528398 .md sup > a::after {
+  content: "]";
+}
+
+.d2-737528398 .md h1:hover .anchor,
+.d2-737528398 .md h2:hover .anchor,
+.d2-737528398 .md h3:hover .anchor,
+.d2-737528398 .md h4:hover .anchor,
+.d2-737528398 .md h5:hover .anchor,
+.d2-737528398 .md h6:hover .anchor {
+  text-decoration: none;
+}
+
+.d2-737528398 .md h1 tt,
+.d2-737528398 .md h1 code,
+.d2-737528398 .md h2 tt,
+.d2-737528398 .md h2 code,
+.d2-737528398 .md h3 tt,
+.d2-737528398 .md h3 code,
+.d2-737528398 .md h4 tt,
+.d2-737528398 .md h4 code,
+.d2-737528398 .md h5 tt,
+.d2-737528398 .md h5 code,
+.d2-737528398 .md h6 tt,
+.d2-737528398 .md h6 code {
+  padding: 0 0.2em;
+  font-size: inherit;
+}
+
+.d2-737528398 .md ul.no-list,
+.d2-737528398 .md ol.no-list {
+  padding: 0;
+  list-style-type: none;
+}
+
+.d2-737528398 .md ol[type="1"] {
+  list-style-type: decimal;
+}
+
+.d2-737528398 .md ol[type="a"] {
+  list-style-type: lower-alpha;
+}
+
+.d2-737528398 .md ol[type="i"] {
+  list-style-type: lower-roman;
+}
+
+.d2-737528398 .md div > ol:not([type]) {
+  list-style-type: decimal;
+}
+
+.d2-737528398 .md ul ul,
+.d2-737528398 .md ul ol,
+.d2-737528398 .md ol ol,
+.d2-737528398 .md ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.d2-737528398 .md li > p {
+  margin-top: 16px;
+}
+
+.d2-737528398 .md li + li {
+  margin-top: 0.25em;
+}
+
+.d2-737528398 .md dl {
+  padding: 0;
+}
+
+.d2-737528398 .md dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-family: "d2-737528398-font-semibold";
+}
+
+.d2-737528398 .md dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.d2-737528398 .md table th {
+  font-family: "d2-737528398-font-semibold";
+}
+
+.d2-737528398 .md table th,
+.d2-737528398 .md table td {
+  padding: 6px 13px;
+  border: 1px solid var(--color-border-default);
+}
+
+.d2-737528398 .md table tr {
+  background-color: var(--color-canvas-default);
+  border-top: 1px solid var(--color-border-muted);
+}
+
+.d2-737528398 .md table tr:nth-child(2n) {
+  background-color: var(--color-canvas-subtle);
+}
+
+.d2-737528398 .md table img {
+  background-color: transparent;
+}
+
+.d2-737528398 .md img[align="right"] {
+  padding-left: 20px;
+}
+
+.d2-737528398 .md img[align="left"] {
+  padding-right: 20px;
+}
+
+.d2-737528398 .md span.frame {
+  display: block;
+  overflow: hidden;
+}
+
+.d2-737528398 .md span.frame > span {
+  display: block;
+  float: left;
+  width: auto;
+  padding: 7px;
+  margin: 13px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+}
+
+.d2-737528398 .md span.frame span img {
+  display: block;
+  float: left;
+}
+
+.d2-737528398 .md span.frame span span {
+  display: block;
+  padding: 5px 0 0;
+  clear: both;
+  color: var(--color-fg-default);
+}
+
+.d2-737528398 .md span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.d2-737528398 .md span.align-center > span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.d2-737528398 .md span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.d2-737528398 .md span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.d2-737528398 .md span.align-right > span {
+  display: block;
+  margin: 13px 0 0;
+  overflow: hidden;
+  text-align: right;
+}
+
+.d2-737528398 .md span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+
+.d2-737528398 .md span.float-left {
+  display: block;
+  float: left;
+  margin-right: 13px;
+  overflow: hidden;
+}
+
+.d2-737528398 .md span.float-left span {
+  margin: 13px 0 0;
+}
+
+.d2-737528398 .md span.float-right {
+  display: block;
+  float: right;
+  margin-left: 13px;
+  overflow: hidden;
+}
+
+.d2-737528398 .md span.float-right > span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: right;
+}
+
+.d2-737528398 .md code,
+.d2-737528398 .md tt {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: var(--color-neutral-muted);
+  border-radius: 6px;
+}
+
+.d2-737528398 .md code br,
+.d2-737528398 .md tt br {
+  display: none;
+}
+
+.d2-737528398 .md del code {
+  text-decoration: inherit;
+}
+
+.d2-737528398 .md pre code {
+  font-size: 100%;
+}
+
+.d2-737528398 .md pre > code {
+  padding: 0;
+  margin: 0;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.d2-737528398 .md .highlight {
+  margin-bottom: 16px;
+}
+
+.d2-737528398 .md .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.d2-737528398 .md .highlight pre,
+.d2-737528398 .md pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: var(--color-canvas-subtle);
+  border-radius: 6px;
+}
+
+.d2-737528398 .md pre code,
+.d2-737528398 .md pre tt {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.d2-737528398 .md .csv-data td,
+.d2-737528398 .md .csv-data th {
+  padding: 5px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.d2-737528398 .md .csv-data .blob-num {
+  padding: 10px 8px 9px;
+  text-align: right;
+  background: var(--color-canvas-default);
+  border: 0;
+}
+
+.d2-737528398 .md .csv-data tr {
+  border-top: 0;
+}
+
+.d2-737528398 .md .csv-data th {
+  font-family: "d2-737528398-font-semibold";
+  background: var(--color-canvas-subtle);
+  border-top: 0;
+}
+
+.d2-737528398 .md .footnotes {
+  font-size: 12px;
+  color: var(--color-fg-muted);
+  border-top: 1px solid var(--color-border-default);
+}
+
+.d2-737528398 .md .footnotes ol {
+  padding-left: 16px;
+}
+
+.d2-737528398 .md .footnotes li {
+  position: relative;
+}
+
+.d2-737528398 .md .footnotes li:target::before {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  left: -24px;
+  pointer-events: none;
+  content: "";
+  border: 2px solid var(--color-accent-emphasis);
+  border-radius: 6px;
+}
+
+.d2-737528398 .md .footnotes li:target {
+  color: var(--color-fg-default);
+}
+
+.d2-737528398 .md .task-list-item {
+  list-style-type: none;
+}
+
+.d2-737528398 .md .task-list-item label {
+  font-weight: 400;
+}
+
+.d2-737528398 .md .task-list-item.enabled label {
+  cursor: pointer;
+}
+
+.d2-737528398 .md .task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.d2-737528398 .md .task-list-item .handle {
+  display: none;
+}
+
+.d2-737528398 .md .task-list-item-checkbox {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+
+.d2-737528398 .md .contains-task-list:dir(rtl) .task-list-item-checkbox {
+  margin: 0 -1.6em 0.25em 0.2em;
+}
+</style><g id="title"><g class="shape" ></g><text x="1314.000000" y="-15.000000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:24px">OneNote RAG - Complete Tech Stack</text></g><g id="frontend_stack"><g class="shape" ><rect x="246.000000" y="226.000000" width="414.000000" height="2056.000000" stroke="#0D32B2" fill="#E3F2FD" class=" stroke-B1" style="stroke-width:2;" /></g><text x="453.000000" y="259.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Frontend Stack</text></g><g id="backend_stack"><g class="shape" ><rect x="902.000000" y="1300.000000" width="491.000000" height="2228.000000" stroke="#0D32B2" fill="#E8F5E9" class=" stroke-B1" style="stroke-width:2;" /></g><text x="1147.500000" y="1333.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Backend Stack</text></g><g id="data_storage"><g class="shape" ><rect x="1787.000000" y="2009.000000" width="829.000000" height="4126.000000" stroke="#0D32B2" fill="#F3E5F5" class=" stroke-B1" style="stroke-width:2;" /></g><text x="2201.500000" y="2042.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Data Storage</text></g><g id="external_apis"><g class="shape" ><rect x="1787.000000" y="12.000000" width="799.000000" height="1977.000000" stroke="#0D32B2" fill="#FCE4EC" class=" stroke-B1" style="stroke-width:2;" /></g><text x="2186.500000" y="45.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">External APIs</text></g><g id="deployment"><g class="shape" ><rect x="12.000000" y="2302.000000" width="653.000000" height="2560.000000" stroke="#0D32B2" fill="#FFF9C4" class=" stroke-B1" style="stroke-width:2;" /></g><text x="338.500000" y="2335.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Deployment Options</text></g><g id="monitoring"><g class="shape" ><rect x="130.000000" y="4882.000000" width="416.000000" height="1038.000000" stroke="#0D32B2" fill="#E0F2F1" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="338.000000" y="4915.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Monitoring &amp; Observability</text></g><g id="frontend_stack.core"><g class="shape" ><rect x="329.000000" y="276.000000" width="247.000000" height="338.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="452.500000" y="305.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Core Technologies</text></g><g id="frontend_stack.ui"><g class="shape" ><rect x="296.000000" y="634.000000" width="314.000000" height="338.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="453.000000" y="663.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">UI Libraries</text></g><g id="frontend_stack.state_routing"><g class="shape" ><rect x="300.000000" y="992.000000" width="306.000000" height="338.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="453.000000" y="1021.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">State &amp; Routing</text></g><g id="frontend_stack.http"><g class="shape" ><rect x="396.000000" y="1350.000000" width="209.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="500.500000" y="1379.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">HTTP Client</text></g><g id="frontend_stack.build"><g class="shape" ><rect x="316.000000" y="1536.000000" width="273.000000" height="338.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="452.500000" y="1565.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Build &amp; Dev</text></g><g id="frontend_stack.frontend_prod"><g class="shape" ><rect x="306.000000" y="1894.000000" width="293.000000" height="338.000000" stroke="#0D32B2" fill="#FFFBEA" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="452.500000" y="1923.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Prod-ready Alternatives</text></g><g id="backend_stack.framework"><g class="shape" ><rect x="957.000000" y="1350.000000" width="295.000000" height="338.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="1104.500000" y="1379.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Web Framework</text></g><g id="backend_stack.ai_ml"><g class="shape" ><rect x="1079.000000" y="1708.000000" width="259.000000" height="338.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="1208.500000" y="1737.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">AI/ML Libraries</text></g><g id="backend_stack.security"><g class="shape" ><rect x="1034.000000" y="2066.000000" width="304.000000" height="338.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="1186.000000" y="2095.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Security &amp; Auth</text></g><g id="backend_stack.data_processing"><g class="shape" ><rect x="991.000000" y="2424.000000" width="312.000000" height="338.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="1147.000000" y="2453.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Data Processing</text></g><g id="backend_stack.utils"><g class="shape" ><rect x="1062.000000" y="2782.000000" width="276.000000" height="338.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="1200.000000" y="2811.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Utilities</text></g><g id="backend_stack.backend_prod"><g class="shape" ><rect x="952.000000" y="3140.000000" width="391.000000" height="338.000000" stroke="#0D32B2" fill="#E0F7FA" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="1147.500000" y="3169.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Prod-ready Alternatives</text></g><g id="data_storage.vector_db"><g class="shape" ><rect x="1842.000000" y="2059.000000" width="724.000000" height="2118.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="2204.000000" y="2088.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Vector Database</text></g><g id="data_storage.relational_db"><g class="shape" ><rect x="1842.000000" y="4197.000000" width="675.000000" height="1144.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="2179.500000" y="4226.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Relational Database</text></g><g id="data_storage.cache_layer"><g class="shape" ><rect x="1962.000000" y="5361.000000" width="478.000000" height="724.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B2 fill-B5" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="2201.000000" y="5390.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Caching (Future)</text></g><g id="external_apis.openai_api"><g class="shape" ><path d="M 2060 308 C 2060 315 2056 323 2052 323 C 2004 332 1967 428 1967 543 C 1967 666 2009 765 2063 765 H 2426 C 2483 765 2530 659 2530 530 C 2530 407 2487 304 2432 297 C 2428 297 2424 291 2424 282 C 2412 157 2356 64 2290 64 C 2247 64 2208 103 2184 165 C 2181 172 2176 174 2174 172 C 2165 165 2154 161 2143 161 C 2099 158 2064 224 2060 308 Z" stroke="#0D32B2" fill="#10A37F" class=" stroke-B1" style="stroke-width:2;" /></g><text x="2245.548500" y="379.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">OpenAI API</text></g><g id="external_apis.microsoft_api"><g class="shape" ><path d="M 2061 1001 C 2061 1008 2057 1014 2053 1014 C 2005 1022 1967 1106 1967 1207 C 1967 1315 2010 1402 2064 1402 H 2431 C 2489 1402 2536 1309 2536 1196 C 2536 1088 2492 998 2437 991 C 2433 991 2429 986 2428 978 C 2416 868 2359 786 2292 786 C 2248 786 2210 820 2185 874 C 2182 881 2177 882 2175 881 C 2166 874 2155 871 2144 871 C 2101 870 2065 927 2061 1001 Z" stroke="#0D32B2" fill="#0078D4" class=" stroke-B1" style="stroke-width:2;" /></g><text x="2249.005500" y="1067.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Microsoft Graph API</text></g><g id="external_apis.langsmith_api"><g class="shape" ><path d="M 2026 1603 C 2026 1608 2024 1614 2021 1614 C 1991 1621 1967 1691 1967 1776 C 1967 1867 1994 1939 2028 1939 H 2258 C 2294 1939 2324 1861 2324 1766 C 2324 1675 2297 1600 2262 1594 C 2260 1594 2257 1590 2257 1583 C 2249 1491 2214 1422 2172 1422 C 2145 1422 2120 1451 2105 1496 C 2103 1501 2100 1503 2098 1501 C 2092 1496 2086 1493 2078 1493 C 2051 1493 2028 1541 2026 1603 Z" stroke="#0D32B2" fill="#1C3C3C" class=" stroke-B1" style="stroke-width:2;" /></g><text x="2144.191500" y="1663.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">LangSmith (Optional)</text></g><g id="deployment.current"><g class="shape" ><rect x="187.000000" y="2352.000000" width="302.000000" height="284.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="338.000000" y="2381.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Development</text></g><g id="deployment.production"><g class="shape" ><rect x="62.000000" y="2656.000000" width="553.000000" height="2156.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="338.500000" y="2685.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Production Options</text></g><g id="monitoring.logging"><g class="shape" ><rect x="184.000000" y="4932.000000" width="308.000000" height="284.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="338.000000" y="4961.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Logging</text></g><g id="monitoring.metrics"><g class="shape" ><rect x="180.000000" y="5236.000000" width="316.000000" height="198.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="338.000000" y="5265.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Metrics</text></g><g id="monitoring.tracing"><g class="shape" ><rect x="203.000000" y="5454.000000" width="270.000000" height="198.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="338.000000" y="5483.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Distributed Tracing</text></g><g id="monitoring.error_tracking"><g class="shape" ><rect x="194.000000" y="5672.000000" width="289.000000" height="198.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="338.500000" y="5701.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Error Tracking</text></g><g id="frontend_stack.core.react"><g class="shape" ><rect x="394.000000" y="326.000000" width="118.000000" height="66.000000" stroke="#0D32B2" fill="#61DAFB" class=" stroke-B1" style="stroke-width:2;" /></g><text x="453.000000" y="364.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">React 18.3</text></g><g id="frontend_stack.core.typescript"><g class="shape" ><rect x="379.000000" y="412.000000" width="147.000000" height="66.000000" stroke="#0D32B2" fill="#3178C6" class=" stroke-B1" style="stroke-width:2;" /></g><text x="452.500000" y="450.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">TypeScript 5.x</text></g><g id="frontend_stack.core.vite"><g class="shape" ><rect x="403.000000" y="498.000000" width="99.000000" height="66.000000" stroke="#0D32B2" fill="#646CFF" class=" stroke-B1" style="stroke-width:2;" /></g><text x="452.500000" y="536.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Vite 5.x</text></g><g id="frontend_stack.ui.tailwind"><g class="shape" ><rect x="372.000000" y="684.000000" width="162.000000" height="66.000000" stroke="#0D32B2" fill="#06B6D4" class=" stroke-B1" style="stroke-width:2;" /></g><text x="453.000000" y="722.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Tailwind CSS 3.x</text></g><g id="frontend_stack.ui.lucide"><g class="shape" ><rect x="365.000000" y="770.000000" width="175.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="452.500000" y="808.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Lucide React Icons</text></g><g id="frontend_stack.ui.animations"><g class="shape" ><rect x="346.000000" y="856.000000" width="214.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="453.000000" y="894.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Custom CSS Animations</text></g><g id="frontend_stack.state_routing.zustand"><g class="shape" ><rect x="375.000000" y="1042.000000" width="155.000000" height="66.000000" stroke="#0D32B2" fill="#000000" class=" stroke-B1" style="stroke-width:2;" /></g><text x="452.500000" y="1080.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Zustand (State)</text></g><g id="frontend_stack.state_routing.router"><g class="shape" ><rect x="354.000000" y="1128.000000" width="197.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="452.500000" y="1166.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">React Router DOM 6.x</text></g><g id="frontend_stack.state_routing.context"><g class="shape" ><rect x="350.000000" y="1214.000000" width="206.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="453.000000" y="1252.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">React Context (Theme)</text></g><g id="frontend_stack.http.axios"><g class="shape" ><rect x="446.000000" y="1400.000000" width="109.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="500.500000" y="1438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Axios 1.x</text></g><g id="frontend_stack.build.eslint"><g class="shape" ><rect x="408.000000" y="1586.000000" width="90.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="453.000000" y="1624.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">ESLint</text></g><g id="frontend_stack.build.postcss"><g class="shape" ><rect x="401.000000" y="1672.000000" width="103.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="452.500000" y="1710.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">PostCSS</text></g><g id="frontend_stack.build.prettier"><g class="shape" ><rect x="366.000000" y="1758.000000" width="173.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="452.500000" y="1796.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Prettier (optional)</text></g><g id="frontend_stack.frontend_prod.nextjs"><g class="shape" ><rect x="365.000000" y="1944.000000" width="176.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="453.000000" y="1982.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Next.js (SSR/Edge)</text></g><g id="frontend_stack.frontend_prod.auth"><g class="shape" ><rect x="356.000000" y="2030.000000" width="193.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="452.500000" y="2068.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Azure AD B2C / Auth0</text></g><g id="frontend_stack.frontend_prod.design_system"><g class="shape" ><rect x="376.000000" y="2116.000000" width="153.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="452.500000" y="2154.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Chakra UI / MUI</text></g><g id="backend_stack.framework.fastapi"><g class="shape" ><rect x="1007.000000" y="1400.000000" width="148.000000" height="66.000000" stroke="#0D32B2" fill="#009688" class=" stroke-B1" style="stroke-width:2;" /></g><text x="1081.000000" y="1438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">FastAPI 0.104+</text></g><g id="backend_stack.framework.uvicorn"><g class="shape" ><rect x="1007.000000" y="1486.000000" width="195.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1104.500000" y="1524.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Uvicorn (ASGI server)</text></g><g id="backend_stack.framework.pydantic"><g class="shape" ><rect x="1008.000000" y="1572.000000" width="193.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1104.500000" y="1610.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Pydantic (validation)</text></g><g id="backend_stack.ai_ml.langchain"><g class="shape" ><rect x="1131.000000" y="1758.000000" width="157.000000" height="66.000000" stroke="#0D32B2" fill="#1C3C3C" class=" stroke-B1" style="stroke-width:2;" /></g><text x="1209.500000" y="1796.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">LangChain 0.1.x</text></g><g id="backend_stack.ai_ml.openai"><g class="shape" ><rect x="1134.000000" y="1844.000000" width="154.000000" height="66.000000" stroke="#0D32B2" fill="#10A37F" class=" stroke-B1" style="stroke-width:2;" /></g><text x="1211.000000" y="1882.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">OpenAI SDK 1.x</text></g><g id="backend_stack.ai_ml.chromadb"><g class="shape" ><rect x="1129.000000" y="1930.000000" width="159.000000" height="66.000000" stroke="#0D32B2" fill="#FF6F00" class=" stroke-B1" style="stroke-width:2;" /></g><text x="1208.500000" y="1968.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">ChromaDB 0.4.x</text></g><g id="backend_stack.security.cryptography"><g class="shape" ><rect x="1084.000000" y="2116.000000" width="204.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1186.000000" y="2154.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Cryptography (Fernet)</text></g><g id="backend_stack.security.msal"><g class="shape" ><rect x="1088.000000" y="2202.000000" width="200.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1188.000000" y="2240.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">MSAL (Microsoft Auth)</text></g><g id="backend_stack.security.python_jose"><g class="shape" ><rect x="1095.000000" y="2288.000000" width="181.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1185.500000" y="2326.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Python-JOSE (JWT)</text></g><g id="backend_stack.data_processing.tiktoken"><g class="shape" ><rect x="1041.000000" y="2474.000000" width="212.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1147.000000" y="2512.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Tiktoken (tokenization)</text></g><g id="backend_stack.data_processing.requests"><g class="shape" ><rect x="1067.000000" y="2560.000000" width="161.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1147.500000" y="2598.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Requests (HTTP)</text></g><g id="backend_stack.data_processing.python_dotenv"><g class="shape" ><rect x="1050.000000" y="2646.000000" width="195.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1147.500000" y="2684.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Python-dotenv (.env)</text></g><g id="backend_stack.utils.logging"><g class="shape" ><rect x="1122.000000" y="2832.000000" width="156.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1200.000000" y="2870.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Python Logging</text></g><g id="backend_stack.utils.sqlite3"><g class="shape" ><rect x="1121.000000" y="2918.000000" width="167.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1204.500000" y="2956.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">SQLite3 (built-in)</text></g><g id="backend_stack.utils.datetime"><g class="shape" ><rect x="1112.000000" y="3004.000000" width="176.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1200.000000" y="3042.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Datetime (built-in)</text></g><g id="backend_stack.backend_prod.azure_functions"><g class="shape" ><rect x="1008.000000" y="3190.000000" width="279.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1147.500000" y="3228.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Azure Functions / Container Apps</text></g><g id="backend_stack.backend_prod.apim"><g class="shape" ><rect x="1043.000000" y="3276.000000" width="209.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1147.500000" y="3314.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Azure API Management</text></g><g id="backend_stack.backend_prod.orchestration"><g class="shape" ><rect x="1002.000000" y="3362.000000" width="291.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1147.500000" y="3400.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Prefect / Airflow for scheduled jobs</text></g><g id="data_storage.vector_db.current"><g class="shape" ><path d="M 1892 2133 C 1892 2109 2070 2109 2090 2109 C 2110 2109 2288 2109 2288 2133 V 2643 C 2288 2667 2110 2667 2090 2667 C 2070 2667 1892 2667 1892 2643 V 2133 Z" stroke="#0D32B2" fill="#FF6F00" class=" stroke-B1" style="stroke-width:2;" /><path d="M 1892 2133 C 1892 2157 2070 2157 2090 2157 C 2110 2157 2288 2157 2288 2133" stroke="#0D32B2" fill="#FF6F00" class=" stroke-B1" style="stroke-width:2;" /></g><text x="2090.000000" y="2182.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">ChromaDB (Local)</text></g><g id="data_storage.vector_db.alternatives"><g class="shape" ><rect x="1892.000000" y="2687.000000" width="624.000000" height="1440.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B2 fill-B6" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="2204.000000" y="2712.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">Production Alternatives</text></g><g id="data_storage.relational_db.current"><g class="shape" ><path d="M 1892 4271 C 1892 4247 2108 4247 2132 4247 C 2155 4247 2371 4247 2371 4271 V 4523 C 2371 4547 2155 4547 2132 4547 C 2108 4547 1892 4547 1892 4523 V 4271 Z" stroke="#0D32B2" fill="#003B57" class=" stroke-B1" style="stroke-width:2;" /><path d="M 1892 4271 C 1892 4295 2108 4295 2132 4295 C 2155 4295 2371 4295 2371 4271" stroke="#0D32B2" fill="#003B57" class=" stroke-B1" style="stroke-width:2;" /></g><text x="2131.500000" y="4320.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">SQLite (Local)</text></g><g id="data_storage.relational_db.alternatives"><g class="shape" ><rect x="1892.000000" y="4567.000000" width="575.000000" height="724.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B2 fill-B6" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="2179.500000" y="4592.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">Production Alternatives</text></g><g id="data_storage.cache_layer.redis"><g class="shape" ><rect x="2012.000000" y="5411.000000" width="378.000000" height="438.000000" stroke="#0D32B2" fill="#DC382D" class=" stroke-B1" style="stroke-width:2;" /></g><text x="2201.000000" y="5436.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">Redis</text></g><g id="data_storage.cache_layer.memcached"><g class="shape" ><rect x="2046.000000" y="5869.000000" width="311.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="2201.500000" y="5894.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">Memcached</text></g><g id="external_apis.openai_api.services"><g class="shape" ><rect x="2017.000000" y="191.000000" width="463.000000" height="252.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="2248.500000" y="216.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">services</text></g><g id="external_apis.openai_api.azure_openai"><g class="shape" ><rect x="2091.000000" y="463.000000" width="314.000000" height="252.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B2 fill-B6" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="2248.000000" y="488.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">Azure OpenAI (Prod Alt)</text></g><g id="external_apis.microsoft_api.services"><g class="shape" ><rect x="2028.000000" y="914.000000" width="439.000000" height="252.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="2247.500000" y="939.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">services</text></g><g id="external_apis.microsoft_api.databricks"><g class="shape" ><rect x="2037.000000" y="1186.000000" width="421.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B2 fill-B6" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="2247.500000" y="1211.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">Databricks + Graph Data Connect (Alt Source)</text></g><g id="external_apis.langsmith_api.services"><g class="shape" ><rect x="2017.000000" y="1551.000000" width="257.000000" height="338.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="2145.500000" y="1576.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">services</text></g><g id="deployment.current.frontend_dev"><g class="shape" ><rect x="237.000000" y="2402.000000" width="202.000000" height="82.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="338.000000" y="2440.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="338.000000" dy="0.000000">npm run dev</tspan><tspan x="338.000000" dy="18.500000">(Vite dev server :5173)</tspan></text></g><g id="deployment.current.backend_dev"><g class="shape" ><rect x="253.000000" y="2504.000000" width="170.000000" height="82.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="338.000000" y="2542.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="338.000000" dy="0.000000">uvicorn main:app</tspan><tspan x="338.000000" dy="18.500000">(FastAPI :8000)</tspan></text></g><g id="deployment.production.docker"><g class="shape" ><rect x="148.000000" y="2706.000000" width="380.000000" height="524.000000" stroke="#0D32B2" fill="#2496ED" class=" stroke-B1" style="stroke-width:2;" /></g><text x="338.000000" y="2731.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">Docker + Docker Compose</text></g><g id="deployment.production.kubernetes"><g class="shape" ><rect x="126.000000" y="3250.000000" width="425.000000" height="524.000000" stroke="#0D32B2" fill="#326CE5" class=" stroke-B1" style="stroke-width:2;" /></g><text x="338.500000" y="3275.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">Kubernetes / AKS</text></g><g id="deployment.production.cloud_native"><g class="shape" ><rect x="112.000000" y="3794.000000" width="453.000000" height="968.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="338.500000" y="3819.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">Cloud Services</text></g><g id="monitoring.logging.current"><g class="shape" ><rect x="234.000000" y="4982.000000" width="208.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="338.000000" y="5020.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Python logging module</text></g><g id="monitoring.logging.production"><g class="shape" ><rect x="240.000000" y="5068.000000" width="196.000000" height="98.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="338.000000" y="5106.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="338.000000" dy="0.000000">• ELK Stack</tspan><tspan x="338.000000" dy="17.666667">• Azure Log Analytics</tspan><tspan x="338.000000" dy="17.666667">• CloudWatch</tspan></text></g><g id="monitoring.metrics.options"><g class="shape" ><rect x="230.000000" y="5286.000000" width="216.000000" height="98.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="338.000000" y="5324.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="338.000000" dy="0.000000">• Prometheus + Grafana</tspan><tspan x="338.000000" dy="17.666667">• Azure Monitor</tspan><tspan x="338.000000" dy="17.666667">• Datadog</tspan></text></g><g id="monitoring.tracing.options"><g class="shape" ><rect x="253.000000" y="5504.000000" width="170.000000" height="98.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="338.000000" y="5542.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="338.000000" dy="0.000000">• LangSmith</tspan><tspan x="338.000000" dy="17.666667">• Jaeger</tspan><tspan x="338.000000" dy="17.666667">• OpenTelemetry</tspan></text></g><g id="monitoring.error_tracking.options"><g class="shape" ><rect x="244.000000" y="5722.000000" width="189.000000" height="98.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="338.500000" y="5760.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="338.500000" dy="0.000000">• Sentry</tspan><tspan x="338.500000" dy="17.666667">• Rollbar</tspan><tspan x="338.500000" dy="17.666667">• Azure App Insights</tspan></text></g><g id="data_storage.vector_db.current.features"><g class="shape" ><rect x="1942.000000" y="2193.000000" width="296.000000" height="424.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2090.000000" y="2214.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">features</text></g><g id="data_storage.vector_db.alternatives.pinecone"><g class="shape" ><rect x="1959.000000" y="2737.000000" width="489.000000" height="252.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2203.500000" y="2758.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">Pinecone (Managed)</text></g><g id="data_storage.vector_db.alternatives.weaviate"><g class="shape" ><rect x="1942.000000" y="3009.000000" width="524.000000" height="252.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2204.000000" y="3030.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">Weaviate (OSS)</text></g><g id="data_storage.vector_db.alternatives.pgvector"><g class="shape" ><rect x="1966.000000" y="3281.000000" width="475.000000" height="252.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2203.500000" y="3302.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">PostgreSQL + pgvector</text></g><g id="data_storage.vector_db.alternatives.qdrant"><g class="shape" ><rect x="1962.000000" y="3553.000000" width="483.000000" height="252.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2203.500000" y="3574.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">Qdrant (OSS)</text></g><g id="data_storage.vector_db.alternatives.azure_ai_search"><g class="shape" ><rect x="1993.000000" y="3825.000000" width="422.000000" height="252.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2204.000000" y="3846.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">Azure AI Search</text></g><g id="data_storage.relational_db.current.tables"><g class="shape" ><rect x="1942.000000" y="4331.000000" width="379.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2131.500000" y="4352.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">tables</text></g><g id="data_storage.relational_db.alternatives.postgresql"><g class="shape" ><rect x="1942.000000" y="4617.000000" width="475.000000" height="252.000000" stroke="#0D32B2" fill="#336791" class=" stroke-B1" style="stroke-width:2;" /></g><text x="2179.500000" y="4638.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">PostgreSQL</text></g><g id="data_storage.relational_db.alternatives.mysql"><g class="shape" ><rect x="1961.000000" y="4889.000000" width="437.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2179.500000" y="4910.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">MySQL/MariaDB</text></g><g id="data_storage.relational_db.alternatives.azure_sql"><g class="shape" ><rect x="1942.000000" y="5075.000000" width="474.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2179.000000" y="5096.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">Azure SQL Database</text></g><g id="data_storage.cache_layer.redis.use_cases"><g class="shape" ><rect x="2062.000000" y="5461.000000" width="278.000000" height="338.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2201.000000" y="5482.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">use_cases</text></g><g id="data_storage.cache_layer.memcached.use_cases"><g class="shape" ><rect x="2096.000000" y="5919.000000" width="211.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2201.500000" y="5957.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Simple key-value cache</text></g><g id="external_apis.openai_api.services.embeddings"><g class="shape" ><rect x="2067.000000" y="241.000000" width="363.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2248.500000" y="279.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">text-embedding-3-small (0.02 per 1M tokens)</text></g><g id="external_apis.openai_api.services.llm"><g class="shape" ><rect x="2080.000000" y="327.000000" width="336.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2248.000000" y="365.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">GPT-4 / GPT-3.5-turbo (chat completions)</text></g><g id="external_apis.openai_api.azure_openai.region"><g class="shape" ><rect x="2141.000000" y="513.000000" width="214.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2248.000000" y="551.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Regional data residency</text></g><g id="external_apis.openai_api.azure_openai.auth"><g class="shape" ><rect x="2152.000000" y="599.000000" width="192.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2248.000000" y="637.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Azure AD integration</text></g><g id="external_apis.microsoft_api.services.onenote"><g class="shape" ><rect x="2078.000000" y="964.000000" width="339.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2247.500000" y="1002.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">OneNote API (pages, sections, notebooks)</text></g><g id="external_apis.microsoft_api.services.auth"><g class="shape" ><rect x="2122.000000" y="1050.000000" width="251.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2247.500000" y="1088.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">OAuth 2.0 (client credentials)</text></g><g id="external_apis.microsoft_api.databricks.ingest"><g class="shape" ><rect x="2161.000000" y="1236.000000" width="173.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2247.500000" y="1274.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Delta tables + jobs</text></g><g id="external_apis.langsmith_api.services.tracing"><g class="shape" ><rect x="2067.000000" y="1601.000000" width="157.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2145.500000" y="1639.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Request tracing</text></g><g id="external_apis.langsmith_api.services.analytics"><g class="shape" ><rect x="2068.000000" y="1687.000000" width="155.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2145.500000" y="1725.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Usage analytics</text></g><g id="external_apis.langsmith_api.services.debugging"><g class="shape" ><rect x="2069.000000" y="1773.000000" width="152.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2145.000000" y="1811.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">LLM debugging</text></g><g id="deployment.production.docker.components"><g class="shape" ><rect x="198.000000" y="2756.000000" width="280.000000" height="424.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.000000" y="2777.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">components</text></g><g id="deployment.production.kubernetes.components"><g class="shape" ><rect x="176.000000" y="3300.000000" width="325.000000" height="424.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.500000" y="3321.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">components</text></g><g id="deployment.production.cloud_native.azure"><g class="shape" ><rect x="175.000000" y="3844.000000" width="327.000000" height="424.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.500000" y="3865.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">azure</text></g><g id="deployment.production.cloud_native.aws"><g class="shape" ><rect x="162.000000" y="4288.000000" width="353.000000" height="424.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.500000" y="4309.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">aws</text></g><g id="data_storage.vector_db.current.features.storage"><g class="shape" ><rect x="1992.000000" y="2243.000000" width="196.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2090.000000" y="2281.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Local SQLite backend</text></g><g id="data_storage.vector_db.current.features.embeddings"><g class="shape" ><rect x="2006.000000" y="2329.000000" width="167.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2089.500000" y="2367.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">1536-dim vectors</text></g><g id="data_storage.vector_db.current.features.metadata"><g class="shape" ><rect x="1999.000000" y="2415.000000" width="182.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2090.000000" y="2453.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Page ID, title, dates</text></g><g id="data_storage.vector_db.current.features.search"><g class="shape" ><rect x="2008.000000" y="2501.000000" width="164.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2090.000000" y="2539.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Cosine similarity</text></g><g id="data_storage.vector_db.alternatives.pinecone.pros"><g class="shape" ><rect x="2009.000000" y="2787.000000" width="389.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2203.500000" y="2825.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Fully managed, Auto-scaling, Built-in monitoring</text></g><g id="data_storage.vector_db.alternatives.pinecone.cons"><g class="shape" ><rect x="2110.000000" y="2873.000000" width="187.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2203.500000" y="2911.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Cost, Vendor lock-in</text></g><g id="data_storage.vector_db.alternatives.weaviate.pros"><g class="shape" ><rect x="1992.000000" y="3059.000000" width="424.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2204.000000" y="3097.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Self-hosted/Cloud, GraphQL API, Multi-modal support</text></g><g id="data_storage.vector_db.alternatives.weaviate.cons"><g class="shape" ><rect x="2058.000000" y="3145.000000" width="292.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2204.000000" y="3183.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Complex setup, Resource intensive</text></g><g id="data_storage.vector_db.alternatives.pgvector.pros"><g class="shape" ><rect x="2016.000000" y="3331.000000" width="375.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2203.500000" y="3369.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Use existing PG, ACID guarantees, Familiar SQL</text></g><g id="data_storage.vector_db.alternatives.pgvector.cons"><g class="shape" ><rect x="2061.000000" y="3417.000000" width="285.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2203.500000" y="3455.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Lower performance, Limited scale</text></g><g id="data_storage.vector_db.alternatives.qdrant.pros"><g class="shape" ><rect x="2012.000000" y="3603.000000" width="383.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2203.500000" y="3641.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Fast Rust-based, Good filtering, Docker-friendly</text></g><g id="data_storage.vector_db.alternatives.qdrant.cons"><g class="shape" ><rect x="2072.000000" y="3689.000000" width="263.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2203.500000" y="3727.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Newer ecosystem, Less mature</text></g><g id="data_storage.vector_db.alternatives.azure_ai_search.pros"><g class="shape" ><rect x="2043.000000" y="3875.000000" width="322.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2204.000000" y="3913.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Native Azure integration, RBAC, scaling</text></g><g id="data_storage.vector_db.alternatives.azure_ai_search.cons"><g class="shape" ><rect x="2093.000000" y="3961.000000" width="221.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2203.500000" y="3999.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Higher cost at large scale</text></g><g id="data_storage.relational_db.current.tables.settings"><g class="shape" ><rect x="1992.000000" y="4381.000000" width="279.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2131.500000" y="4419.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Settings table (encrypted values)</text></g><g id="data_storage.relational_db.alternatives.postgresql.pros"><g class="shape" ><rect x="1992.000000" y="4667.000000" width="375.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2179.500000" y="4705.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">ACID compliant, Robust, Extensions (pgvector)</text></g><g id="data_storage.relational_db.alternatives.postgresql.recommended"><g class="shape" ><rect x="2104.000000" y="4753.000000" width="150.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2179.000000" y="4791.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Recommended</text></g><g id="data_storage.relational_db.alternatives.mysql.pros"><g class="shape" ><rect x="2011.000000" y="4939.000000" width="337.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2179.500000" y="4977.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Mature, Wide support, Good performance</text></g><g id="data_storage.relational_db.alternatives.azure_sql.pros"><g class="shape" ><rect x="1992.000000" y="5125.000000" width="374.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2179.000000" y="5163.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Managed service, Auto-scaling, Built-in backup</text></g><g id="data_storage.cache_layer.redis.use_cases.embeddings"><g class="shape" ><rect x="2112.000000" y="5511.000000" width="178.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2201.000000" y="5549.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Cache embeddings</text></g><g id="data_storage.cache_layer.redis.use_cases.sessions"><g class="shape" ><rect x="2132.000000" y="5597.000000" width="139.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2201.500000" y="5635.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">User sessions</text></g><g id="data_storage.cache_layer.redis.use_cases.rate_limit"><g class="shape" ><rect x="2133.000000" y="5683.000000" width="136.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2201.000000" y="5721.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Rate limiting</text></g><g id="deployment.production.docker.components.frontend_container"><g class="shape" ><rect x="248.000000" y="2806.000000" width="180.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.000000" y="2844.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Nginx + React build</text></g><g id="deployment.production.docker.components.backend_container"><g class="shape" ><rect x="255.000000" y="2892.000000" width="166.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.000000" y="2930.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Python + Uvicorn</text></g><g id="deployment.production.docker.components.db_container"><g class="shape" ><rect x="275.000000" y="2978.000000" width="127.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.500000" y="3016.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">PostgreSQL</text></g><g id="deployment.production.docker.components.vector_container"><g class="shape" ><rect x="250.000000" y="3064.000000" width="177.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.500000" y="3102.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">ChromaDB/Qdrant</text></g><g id="deployment.production.kubernetes.components.pods"><g class="shape" ><rect x="226.000000" y="3350.000000" width="225.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.500000" y="3388.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Frontend &amp; Backend pods</text></g><g id="deployment.production.kubernetes.components.services"><g class="shape" ><rect x="263.000000" y="3436.000000" width="151.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.500000" y="3474.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Load balancers</text></g><g id="deployment.production.kubernetes.components.ingress"><g class="shape" ><rect x="268.000000" y="3522.000000" width="140.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.000000" y="3560.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Nginx Ingress</text></g><g id="deployment.production.kubernetes.components.storage"><g class="shape" ><rect x="248.000000" y="3608.000000" width="180.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.000000" y="3646.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Persistent volumes</text></g><g id="deployment.production.cloud_native.azure.frontend_svc"><g class="shape" ><rect x="237.000000" y="3894.000000" width="203.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.500000" y="3932.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Azure Static Web Apps</text></g><g id="deployment.production.cloud_native.azure.backend_svc"><g class="shape" ><rect x="239.000000" y="3980.000000" width="198.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.000000" y="4018.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Azure Container Apps</text></g><g id="deployment.production.cloud_native.azure.db_svc"><g class="shape" ><rect x="245.000000" y="4066.000000" width="187.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.500000" y="4104.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Azure SQL Database</text></g><g id="deployment.production.cloud_native.azure.vector_svc"><g class="shape" ><rect x="225.000000" y="4152.000000" width="227.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.500000" y="4190.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Azure Cosmos DB (vector)</text></g><g id="deployment.production.cloud_native.aws.frontend_svc"><g class="shape" ><rect x="212.000000" y="4338.000000" width="253.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.500000" y="4376.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">AWS Amplify / S3+CloudFront</text></g><g id="deployment.production.cloud_native.aws.backend_svc"><g class="shape" ><rect x="251.000000" y="4424.000000" width="174.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.000000" y="4462.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">AWS ECS / Fargate</text></g><g id="deployment.production.cloud_native.aws.db_svc"><g class="shape" ><rect x="235.000000" y="4510.000000" width="206.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.000000" y="4548.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">AWS RDS (PostgreSQL)</text></g><g id="deployment.production.cloud_native.aws.vector_svc"><g class="shape" ><rect x="216.000000" y="4596.000000" width="244.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="338.000000" y="4634.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">AWS OpenSearch / Pinecone</text></g><g id="(frontend_stack.http.axios -&gt; backend_stack.framework.fastapi)[0]"><marker id="mk-3488378134" markerWidth="10.000000" markerHeight="12.000000" refX="7.000000" refY="6.000000" viewBox="0.000000 0.000000 10.000000 12.000000" orient="auto" markerUnits="userSpaceOnUse"> <polygon points="0.000000,0.000000 10.000000,6.000000 0.000000,12.000000" fill="#0D32B2" class="connection fill-B1" stroke-width="2" /> </marker><path d="M 557.000000 1433.500000 L 1003.000000 1433.500000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-737528398)" /><text x="781.000000" y="1439.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">REST API calls</text></g><g id="(backend_stack.ai_ml.chromadb -&gt; data_storage.vector_db.current)[0]"><path d="M 1290.000000 1963.500000 L 1478.000000 1963.500000 S 1488.000000 1963.500000 1488.000000 1973.500000 L 1488.000000 2273.000000 S 1488.000000 2283.000000 1498.000000 2283.000000 L 1888.000000 2283.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-737528398)" /><text x="1488.500000" y="2231.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Vector operations</text></g><g id="(backend_stack.utils.sqlite3 -&gt; data_storage.relational_db.current)[0]"><path d="M 1290.000000 2951.500000 L 1682.000000 2951.500000 S 1692.000000 2951.500000 1692.000000 2961.500000 L 1692.000000 4387.000000 S 1692.000000 4397.000000 1702.000000 4397.000000 L 1888.000000 4397.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-737528398)" /><text x="1692.500000" y="3578.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Settings CRUD</text></g><g id="(backend_stack.ai_ml.openai -&gt; external_apis.openai_api)[0]"><path d="M 1290.000000 1877.500000 L 1478.000000 1877.500000 S 1488.000000 1877.500000 1488.000000 1867.500000 L 1488.000000 1062.000000 S 1488.000000 1052.000000 1498.000000 1052.000000 L 1867.000000 1052.000000 S 1877.000000 1052.000000 1877.000000 1042.000000 L 1877.000000 423.500000 S 1877.000000 413.500000 1886.999893 413.546296 L 1981.000043 413.981482" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-737528398)" /><text x="1543.000000" y="1058.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Embeddings &amp; LLM</text></g><g id="(backend_stack.security.msal -&gt; external_apis.microsoft_api)[0]"><path d="M 1290.000000 2235.500000 L 1428.000000 2235.500000 S 1438.000000 2235.500000 1438.000000 2245.500000 L 1438.000000 2425.500000 S 1438.000000 2435.500000 1448.000000 2435.500000 L 1682.000000 2435.500000 S 1692.000000 2435.500000 1692.000000 2425.500000 L 1692.000000 1103.500000 S 1692.000000 1093.500000 1701.999985 1093.517065 L 1981.000006 1093.993174" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-737528398)" /><text x="1692.500000" y="1925.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">OneNote access</text></g><g id="(backend_stack.ai_ml.langchain -&gt; external_apis.langsmith_api)[0]"><path d="M 1290.000000 1791.500000 L 1428.000000 1791.500000 S 1438.000000 1791.500000 1438.000000 1781.500000 L 1438.000000 1040.500000 S 1438.000000 1030.500000 1448.000000 1030.500000 L 1917.000000 1030.500000 S 1927.000000 1030.500000 1927.000000 1040.500000 L 1927.000000 1670.500000 S 1927.000000 1680.500000 1936.999519 1680.598035 L 1974.000192 1680.960786" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-737528398)" /><text x="1578.000000" y="1036.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Tracing (optional)</text></g><mask id="d2-737528398" maskUnits="userSpaceOnUse" x="-89" y="-140" width="2806" height="6376">
+<rect x="-89" y="-140" width="2806" height="6376" fill="white"></rect>
+<rect x="1123.000000" y="-39.000000" width="382" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="364.000000" y="231.000000" width="178" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1062.000000" y="1305.000000" width="171" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2126.500000" y="2014.000000" width="150" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2111.500000" y="17.000000" width="150" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="218.500000" y="2307.000000" width="240" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="182.500000" y="4887.000000" width="311" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="360.000000" y="281.000000" width="185" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="397.000000" y="639.000000" width="112" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="375.000000" y="997.000000" width="156" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="442.000000" y="1355.000000" width="117" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="396.000000" y="1541.000000" width="113" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="334.500000" y="1899.000000" width="236" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1022.500000" y="1355.000000" width="164" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1133.500000" y="1713.000000" width="150" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1110.000000" y="2071.000000" width="152" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1067.500000" y="2429.000000" width="159" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1162.000000" y="2787.000000" width="76" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1029.500000" y="3145.000000" width="236" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2122.500000" y="2064.000000" width="163" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2080.000000" y="4202.000000" width="199" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2118.500000" y="5366.000000" width="165" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2190.548500" y="355.000000" width="110" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2151.505500" y="1043.000000" width="195" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2037.691500" y="1639.000000" width="213" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="271.000000" y="2357.000000" width="134" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="241.000000" y="2661.000000" width="195" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="299.000000" y="4937.000000" width="78" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="302.500000" y="5241.000000" width="71" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="242.500000" y="5459.000000" width="191" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="268.000000" y="5677.000000" width="141" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="416.500000" y="348.500000" width="73" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="401.500000" y="434.500000" width="102" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="425.500000" y="520.500000" width="54" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="394.500000" y="706.500000" width="117" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="387.500000" y="792.500000" width="130" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="368.500000" y="878.500000" width="169" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="397.500000" y="1064.500000" width="110" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="376.500000" y="1150.500000" width="152" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="372.500000" y="1236.500000" width="161" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="468.500000" y="1422.500000" width="64" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="430.500000" y="1608.500000" width="45" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="423.500000" y="1694.500000" width="58" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="388.500000" y="1780.500000" width="128" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="387.500000" y="1966.500000" width="131" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="378.500000" y="2052.500000" width="148" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="398.500000" y="2138.500000" width="108" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1029.500000" y="1422.500000" width="103" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1029.500000" y="1508.500000" width="150" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1030.500000" y="1594.500000" width="148" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1153.500000" y="1780.500000" width="112" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1156.500000" y="1866.500000" width="109" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1151.500000" y="1952.500000" width="114" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1106.500000" y="2138.500000" width="159" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1110.500000" y="2224.500000" width="155" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1117.500000" y="2310.500000" width="136" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1063.500000" y="2496.500000" width="167" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1089.500000" y="2582.500000" width="116" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1072.500000" y="2668.500000" width="150" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1144.500000" y="2854.500000" width="111" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1143.500000" y="2940.500000" width="122" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1134.500000" y="3026.500000" width="131" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1030.500000" y="3212.500000" width="234" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1065.500000" y="3298.500000" width="164" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1024.500000" y="3384.500000" width="246" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2015.000000" y="2162.000000" width="150" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2105.500000" y="2692.000000" width="197" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2073.500000" y="4300.000000" width="116" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2081.000000" y="4572.000000" width="197" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2178.500000" y="5416.000000" width="45" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2151.500000" y="5874.000000" width="100" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2215.000000" y="196.000000" width="67" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2150.500000" y="468.000000" width="195" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2214.000000" y="919.000000" width="67" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2059.500000" y="1191.000000" width="376" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2112.000000" y="1556.000000" width="67" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="259.500000" y="2424.500000" width="157" height="37" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="275.500000" y="2526.500000" width="125" height="37" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="228.500000" y="2711.000000" width="219" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="267.000000" y="3255.000000" width="143" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="277.500000" y="3799.000000" width="122" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="256.500000" y="5004.500000" width="163" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="262.500000" y="5090.500000" width="151" height="53" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="252.500000" y="5308.500000" width="171" height="53" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="275.500000" y="5526.500000" width="125" height="53" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="266.500000" y="5744.500000" width="144" height="53" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2062.000000" y="2198.000000" width="56" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2136.000000" y="2742.000000" width="135" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2153.000000" y="3014.000000" width="102" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2127.500000" y="3286.000000" width="152" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2159.500000" y="3558.000000" width="88" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2152.500000" y="3830.000000" width="103" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2110.500000" y="4336.000000" width="42" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2140.500000" y="4622.000000" width="78" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2126.000000" y="4894.000000" width="107" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2111.500000" y="5080.000000" width="135" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2167.000000" y="5466.000000" width="68" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2118.500000" y="5941.500000" width="166" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2089.500000" y="263.500000" width="318" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2102.500000" y="349.500000" width="291" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2163.500000" y="535.500000" width="169" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2174.500000" y="621.500000" width="147" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2100.500000" y="986.500000" width="294" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2144.500000" y="1072.500000" width="206" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2183.500000" y="1258.500000" width="128" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2089.500000" y="1623.500000" width="112" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2090.500000" y="1709.500000" width="110" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2091.500000" y="1795.500000" width="107" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="295.500000" y="2761.000000" width="85" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="296.000000" y="3305.000000" width="85" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="319.500000" y="3849.000000" width="38" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="325.000000" y="4293.000000" width="27" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2014.500000" y="2265.500000" width="151" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2028.500000" y="2351.500000" width="122" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2021.500000" y="2437.500000" width="137" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2030.500000" y="2523.500000" width="119" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2031.500000" y="2809.500000" width="344" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2132.500000" y="2895.500000" width="142" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2014.500000" y="3081.500000" width="379" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2080.500000" y="3167.500000" width="247" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2038.500000" y="3353.500000" width="330" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2083.500000" y="3439.500000" width="240" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2034.500000" y="3625.500000" width="338" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2094.500000" y="3711.500000" width="218" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2065.500000" y="3897.500000" width="277" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2115.500000" y="3983.500000" width="176" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2014.500000" y="4403.500000" width="234" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2014.500000" y="4689.500000" width="330" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2126.500000" y="4775.500000" width="105" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2033.500000" y="4961.500000" width="292" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2014.500000" y="5147.500000" width="329" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2134.500000" y="5533.500000" width="133" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2154.500000" y="5619.500000" width="94" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2155.500000" y="5705.500000" width="91" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="270.500000" y="2828.500000" width="135" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="277.500000" y="2914.500000" width="121" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="297.500000" y="3000.500000" width="82" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="272.500000" y="3086.500000" width="132" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="248.500000" y="3372.500000" width="180" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="285.500000" y="3458.500000" width="106" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="290.500000" y="3544.500000" width="95" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="270.500000" y="3630.500000" width="135" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="259.500000" y="3916.500000" width="158" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="261.500000" y="4002.500000" width="153" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="267.500000" y="4088.500000" width="142" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="247.500000" y="4174.500000" width="182" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="234.500000" y="4360.500000" width="208" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="273.500000" y="4446.500000" width="129" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="257.500000" y="4532.500000" width="161" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="238.500000" y="4618.500000" width="199" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="735.000000" y="1423.000000" width="92" height="21" fill="black"></rect>
+<rect x="1431.000000" y="2215.000000" width="115" height="21" fill="black"></rect>
+<rect x="1645.000000" y="3562.000000" width="95" height="21" fill="black"></rect>
+<rect x="1481.000000" y="1042.000000" width="124" height="21" fill="black"></rect>
+<rect x="1640.000000" y="1909.000000" width="105" height="21" fill="black"></rect>
+<rect x="1520.000000" y="1020.000000" width="116" height="21" fill="black"></rect>
+</mask></svg></svg>

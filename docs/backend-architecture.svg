@@ -1,0 +1,1131 @@
+<?xml version="1.0" encoding="utf-8"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" d2Version="v0.6.8" preserveAspectRatio="xMinYMin meet" viewBox="0 0 16436 5569"><svg id="d2-svg" class="d2-180374736" width="16436" height="5569" viewBox="-89 -140 16436 5569"><rect x="-89.000000" y="-140.000000" width="16436.000000" height="5569.000000" rx="0.000000" fill="#FFFFFF" class=" fill-N7" stroke-width="0" /><style type="text/css"><![CDATA[
+.d2-180374736 .text {
+	font-family: "d2-180374736-font-regular";
+}
+@font-face {
+	font-family: d2-180374736-font-regular;
+	src: url("data:application/font-woff;base64,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");
+}
+.d2-180374736 .text-bold {
+	font-family: "d2-180374736-font-bold";
+}
+@font-face {
+	font-family: d2-180374736-font-bold;
+	src: url("data:application/font-woff;base64,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");
+}
+.d2-180374736 .text-italic {
+	font-family: "d2-180374736-font-italic";
+}
+@font-face {
+	font-family: d2-180374736-font-italic;
+	src: url("data:application/font-woff;base64,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");
+}]]></style><style type="text/css"><![CDATA[.shape {
+  shape-rendering: geometricPrecision;
+  stroke-linejoin: round;
+}
+.connection {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.blend {
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+		.d2-180374736 .fill-N1{fill:#0A0F25;}
+		.d2-180374736 .fill-N2{fill:#676C7E;}
+		.d2-180374736 .fill-N3{fill:#9499AB;}
+		.d2-180374736 .fill-N4{fill:#CFD2DD;}
+		.d2-180374736 .fill-N5{fill:#DEE1EB;}
+		.d2-180374736 .fill-N6{fill:#EEF1F8;}
+		.d2-180374736 .fill-N7{fill:#FFFFFF;}
+		.d2-180374736 .fill-B1{fill:#0D32B2;}
+		.d2-180374736 .fill-B2{fill:#0D32B2;}
+		.d2-180374736 .fill-B3{fill:#E3E9FD;}
+		.d2-180374736 .fill-B4{fill:#E3E9FD;}
+		.d2-180374736 .fill-B5{fill:#EDF0FD;}
+		.d2-180374736 .fill-B6{fill:#F7F8FE;}
+		.d2-180374736 .fill-AA2{fill:#4A6FF3;}
+		.d2-180374736 .fill-AA4{fill:#EDF0FD;}
+		.d2-180374736 .fill-AA5{fill:#F7F8FE;}
+		.d2-180374736 .fill-AB4{fill:#EDF0FD;}
+		.d2-180374736 .fill-AB5{fill:#F7F8FE;}
+		.d2-180374736 .stroke-N1{stroke:#0A0F25;}
+		.d2-180374736 .stroke-N2{stroke:#676C7E;}
+		.d2-180374736 .stroke-N3{stroke:#9499AB;}
+		.d2-180374736 .stroke-N4{stroke:#CFD2DD;}
+		.d2-180374736 .stroke-N5{stroke:#DEE1EB;}
+		.d2-180374736 .stroke-N6{stroke:#EEF1F8;}
+		.d2-180374736 .stroke-N7{stroke:#FFFFFF;}
+		.d2-180374736 .stroke-B1{stroke:#0D32B2;}
+		.d2-180374736 .stroke-B2{stroke:#0D32B2;}
+		.d2-180374736 .stroke-B3{stroke:#E3E9FD;}
+		.d2-180374736 .stroke-B4{stroke:#E3E9FD;}
+		.d2-180374736 .stroke-B5{stroke:#EDF0FD;}
+		.d2-180374736 .stroke-B6{stroke:#F7F8FE;}
+		.d2-180374736 .stroke-AA2{stroke:#4A6FF3;}
+		.d2-180374736 .stroke-AA4{stroke:#EDF0FD;}
+		.d2-180374736 .stroke-AA5{stroke:#F7F8FE;}
+		.d2-180374736 .stroke-AB4{stroke:#EDF0FD;}
+		.d2-180374736 .stroke-AB5{stroke:#F7F8FE;}
+		.d2-180374736 .background-color-N1{background-color:#0A0F25;}
+		.d2-180374736 .background-color-N2{background-color:#676C7E;}
+		.d2-180374736 .background-color-N3{background-color:#9499AB;}
+		.d2-180374736 .background-color-N4{background-color:#CFD2DD;}
+		.d2-180374736 .background-color-N5{background-color:#DEE1EB;}
+		.d2-180374736 .background-color-N6{background-color:#EEF1F8;}
+		.d2-180374736 .background-color-N7{background-color:#FFFFFF;}
+		.d2-180374736 .background-color-B1{background-color:#0D32B2;}
+		.d2-180374736 .background-color-B2{background-color:#0D32B2;}
+		.d2-180374736 .background-color-B3{background-color:#E3E9FD;}
+		.d2-180374736 .background-color-B4{background-color:#E3E9FD;}
+		.d2-180374736 .background-color-B5{background-color:#EDF0FD;}
+		.d2-180374736 .background-color-B6{background-color:#F7F8FE;}
+		.d2-180374736 .background-color-AA2{background-color:#4A6FF3;}
+		.d2-180374736 .background-color-AA4{background-color:#EDF0FD;}
+		.d2-180374736 .background-color-AA5{background-color:#F7F8FE;}
+		.d2-180374736 .background-color-AB4{background-color:#EDF0FD;}
+		.d2-180374736 .background-color-AB5{background-color:#F7F8FE;}
+		.d2-180374736 .color-N1{color:#0A0F25;}
+		.d2-180374736 .color-N2{color:#676C7E;}
+		.d2-180374736 .color-N3{color:#9499AB;}
+		.d2-180374736 .color-N4{color:#CFD2DD;}
+		.d2-180374736 .color-N5{color:#DEE1EB;}
+		.d2-180374736 .color-N6{color:#EEF1F8;}
+		.d2-180374736 .color-N7{color:#FFFFFF;}
+		.d2-180374736 .color-B1{color:#0D32B2;}
+		.d2-180374736 .color-B2{color:#0D32B2;}
+		.d2-180374736 .color-B3{color:#E3E9FD;}
+		.d2-180374736 .color-B4{color:#E3E9FD;}
+		.d2-180374736 .color-B5{color:#EDF0FD;}
+		.d2-180374736 .color-B6{color:#F7F8FE;}
+		.d2-180374736 .color-AA2{color:#4A6FF3;}
+		.d2-180374736 .color-AA4{color:#EDF0FD;}
+		.d2-180374736 .color-AA5{color:#F7F8FE;}
+		.d2-180374736 .color-AB4{color:#EDF0FD;}
+		.d2-180374736 .color-AB5{color:#F7F8FE;}.appendix text.text{fill:#0A0F25}.md{--color-fg-default:#0A0F25;--color-fg-muted:#676C7E;--color-fg-subtle:#9499AB;--color-canvas-default:#FFFFFF;--color-canvas-subtle:#EEF1F8;--color-border-default:#0D32B2;--color-border-muted:#0D32B2;--color-neutral-muted:#EEF1F8;--color-accent-fg:#0D32B2;--color-accent-emphasis:#0D32B2;--color-attention-subtle:#676C7E;--color-danger-fg:red;}.sketch-overlay-B1{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B2{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B3{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B4{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B6{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AA2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-AA4{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AA5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AB4{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AB5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N1{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-N2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-N3{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N6{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N7{fill:url(#streaks-bright);mix-blend-mode:darken}.light-code{display: block}.dark-code{display: none}]]></style><style type="text/css">.d2-180374736 .md em,
+.d2-180374736 .md dfn {
+  font-family: "d2-180374736-font-italic";
+}
+
+.d2-180374736 .md b,
+.d2-180374736 .md strong {
+  font-family: "d2-180374736-font-bold";
+}
+
+.d2-180374736 .md code,
+.d2-180374736 .md kbd,
+.d2-180374736 .md pre,
+.d2-180374736 .md samp {
+  font-family: "d2-180374736-font-mono";
+  font-size: 1em;
+}
+
+.d2-180374736 .md {
+  tab-size: 4;
+}
+
+/* variables are provided in d2renderers/d2svg/d2svg.go */
+
+.d2-180374736 .md {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  color: var(--color-fg-default);
+  background-color: transparent; /* we don't want to define the background color */
+  font-family: "d2-180374736-font-regular";
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.d2-180374736 .md details,
+.d2-180374736 .md figcaption,
+.d2-180374736 .md figure {
+  display: block;
+}
+
+.d2-180374736 .md summary {
+  display: list-item;
+}
+
+.d2-180374736 .md [hidden] {
+  display: none !important;
+}
+
+.d2-180374736 .md a {
+  background-color: transparent;
+  color: var(--color-accent-fg);
+  text-decoration: none;
+}
+
+.d2-180374736 .md a:active,
+.d2-180374736 .md a:hover {
+  outline-width: 0;
+}
+
+.d2-180374736 .md abbr[title] {
+  border-bottom: none;
+  text-decoration: underline dotted;
+}
+
+.d2-180374736 .md dfn {
+  font-style: italic;
+}
+
+.d2-180374736 .md h1 {
+  margin: 0.67em 0;
+  padding-bottom: 0.3em;
+  font-size: 2em;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+.d2-180374736 .md mark {
+  background-color: var(--color-attention-subtle);
+  color: var(--color-text-primary);
+}
+
+.d2-180374736 .md small {
+  font-size: 90%;
+}
+
+.d2-180374736 .md sub,
+.d2-180374736 .md sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.d2-180374736 .md sub {
+  bottom: -0.25em;
+}
+
+.d2-180374736 .md sup {
+  top: -0.5em;
+}
+
+.d2-180374736 .md img {
+  border-style: none;
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: var(--color-canvas-default);
+}
+
+.d2-180374736 .md figure {
+  margin: 1em 40px;
+}
+
+.d2-180374736 .md hr {
+  box-sizing: content-box;
+  overflow: hidden;
+  background: transparent;
+  border-bottom: 1px solid var(--color-border-muted);
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: var(--color-border-default);
+  border: 0;
+}
+
+.d2-180374736 .md input {
+  font: inherit;
+  margin: 0;
+  overflow: visible;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.d2-180374736 .md [type="button"],
+.d2-180374736 .md [type="reset"],
+.d2-180374736 .md [type="submit"] {
+  -webkit-appearance: button;
+}
+
+.d2-180374736 .md [type="button"]::-moz-focus-inner,
+.d2-180374736 .md [type="reset"]::-moz-focus-inner,
+.d2-180374736 .md [type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+.d2-180374736 .md [type="button"]:-moz-focusring,
+.d2-180374736 .md [type="reset"]:-moz-focusring,
+.d2-180374736 .md [type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+.d2-180374736 .md [type="checkbox"],
+.d2-180374736 .md [type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.d2-180374736 .md [type="number"]::-webkit-inner-spin-button,
+.d2-180374736 .md [type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+.d2-180374736 .md [type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+.d2-180374736 .md [type="search"]::-webkit-search-cancel-button,
+.d2-180374736 .md [type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+.d2-180374736 .md ::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.54;
+}
+
+.d2-180374736 .md ::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+.d2-180374736 .md a:hover {
+  text-decoration: underline;
+}
+
+.d2-180374736 .md hr::before {
+  display: table;
+  content: "";
+}
+
+.d2-180374736 .md hr::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.d2-180374736 .md table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.d2-180374736 .md td,
+.d2-180374736 .md th {
+  padding: 0;
+}
+
+.d2-180374736 .md details summary {
+  cursor: pointer;
+}
+
+.d2-180374736 .md details:not([open]) > *:not(summary) {
+  display: none !important;
+}
+
+.d2-180374736 .md kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  color: var(--color-fg-default);
+  vertical-align: middle;
+  background-color: var(--color-canvas-subtle);
+  border: solid 1px var(--color-neutral-muted);
+  border-bottom-color: var(--color-neutral-muted);
+  border-radius: 6px;
+  box-shadow: inset 0 -1px 0 var(--color-neutral-muted);
+}
+
+.d2-180374736 .md h1,
+.d2-180374736 .md h2,
+.d2-180374736 .md h3,
+.d2-180374736 .md h4,
+.d2-180374736 .md h5,
+.d2-180374736 .md h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  font-family: "d2-180374736-font-semibold";
+}
+
+.d2-180374736 .md h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+.d2-180374736 .md h3 {
+  font-size: 1.25em;
+}
+
+.d2-180374736 .md h4 {
+  font-size: 1em;
+}
+
+.d2-180374736 .md h5 {
+  font-size: 0.875em;
+}
+
+.d2-180374736 .md h6 {
+  font-size: 0.85em;
+  color: var(--color-fg-muted);
+}
+
+.d2-180374736 .md p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.d2-180374736 .md blockquote {
+  margin: 0;
+  padding: 0 1em;
+  color: var(--color-fg-muted);
+  border-left: 0.25em solid var(--color-border-default);
+}
+
+.d2-180374736 .md ul,
+.d2-180374736 .md ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 2em;
+}
+
+.d2-180374736 .md ol ol,
+.d2-180374736 .md ul ol {
+  list-style-type: lower-roman;
+}
+
+.d2-180374736 .md ul ul ol,
+.d2-180374736 .md ul ol ol,
+.d2-180374736 .md ol ul ol,
+.d2-180374736 .md ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.d2-180374736 .md dd {
+  margin-left: 0;
+}
+
+.d2-180374736 .md pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  word-wrap: normal;
+}
+
+.d2-180374736 .md ::placeholder {
+  color: var(--color-fg-subtle);
+  opacity: 1;
+}
+
+.d2-180374736 .md input::-webkit-outer-spin-button,
+.d2-180374736 .md input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.d2-180374736 .md::before {
+  display: table;
+  content: "";
+}
+
+.d2-180374736 .md::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.d2-180374736 .md > *:first-child {
+  margin-top: 0 !important;
+}
+
+.d2-180374736 .md > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+.d2-180374736 .md a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.d2-180374736 .md .absent {
+  color: var(--color-danger-fg);
+}
+
+.d2-180374736 .md .anchor {
+  float: left;
+  padding-right: 4px;
+  margin-left: -20px;
+  line-height: 1;
+}
+
+.d2-180374736 .md .anchor:focus {
+  outline: none;
+}
+
+.d2-180374736 .md p,
+.d2-180374736 .md blockquote,
+.d2-180374736 .md ul,
+.d2-180374736 .md ol,
+.d2-180374736 .md dl,
+.d2-180374736 .md table,
+.d2-180374736 .md pre,
+.d2-180374736 .md details {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.d2-180374736 .md blockquote > :first-child {
+  margin-top: 0;
+}
+
+.d2-180374736 .md blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.d2-180374736 .md sup > a::before {
+  content: "[";
+}
+
+.d2-180374736 .md sup > a::after {
+  content: "]";
+}
+
+.d2-180374736 .md h1:hover .anchor,
+.d2-180374736 .md h2:hover .anchor,
+.d2-180374736 .md h3:hover .anchor,
+.d2-180374736 .md h4:hover .anchor,
+.d2-180374736 .md h5:hover .anchor,
+.d2-180374736 .md h6:hover .anchor {
+  text-decoration: none;
+}
+
+.d2-180374736 .md h1 tt,
+.d2-180374736 .md h1 code,
+.d2-180374736 .md h2 tt,
+.d2-180374736 .md h2 code,
+.d2-180374736 .md h3 tt,
+.d2-180374736 .md h3 code,
+.d2-180374736 .md h4 tt,
+.d2-180374736 .md h4 code,
+.d2-180374736 .md h5 tt,
+.d2-180374736 .md h5 code,
+.d2-180374736 .md h6 tt,
+.d2-180374736 .md h6 code {
+  padding: 0 0.2em;
+  font-size: inherit;
+}
+
+.d2-180374736 .md ul.no-list,
+.d2-180374736 .md ol.no-list {
+  padding: 0;
+  list-style-type: none;
+}
+
+.d2-180374736 .md ol[type="1"] {
+  list-style-type: decimal;
+}
+
+.d2-180374736 .md ol[type="a"] {
+  list-style-type: lower-alpha;
+}
+
+.d2-180374736 .md ol[type="i"] {
+  list-style-type: lower-roman;
+}
+
+.d2-180374736 .md div > ol:not([type]) {
+  list-style-type: decimal;
+}
+
+.d2-180374736 .md ul ul,
+.d2-180374736 .md ul ol,
+.d2-180374736 .md ol ol,
+.d2-180374736 .md ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.d2-180374736 .md li > p {
+  margin-top: 16px;
+}
+
+.d2-180374736 .md li + li {
+  margin-top: 0.25em;
+}
+
+.d2-180374736 .md dl {
+  padding: 0;
+}
+
+.d2-180374736 .md dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-family: "d2-180374736-font-semibold";
+}
+
+.d2-180374736 .md dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.d2-180374736 .md table th {
+  font-family: "d2-180374736-font-semibold";
+}
+
+.d2-180374736 .md table th,
+.d2-180374736 .md table td {
+  padding: 6px 13px;
+  border: 1px solid var(--color-border-default);
+}
+
+.d2-180374736 .md table tr {
+  background-color: var(--color-canvas-default);
+  border-top: 1px solid var(--color-border-muted);
+}
+
+.d2-180374736 .md table tr:nth-child(2n) {
+  background-color: var(--color-canvas-subtle);
+}
+
+.d2-180374736 .md table img {
+  background-color: transparent;
+}
+
+.d2-180374736 .md img[align="right"] {
+  padding-left: 20px;
+}
+
+.d2-180374736 .md img[align="left"] {
+  padding-right: 20px;
+}
+
+.d2-180374736 .md span.frame {
+  display: block;
+  overflow: hidden;
+}
+
+.d2-180374736 .md span.frame > span {
+  display: block;
+  float: left;
+  width: auto;
+  padding: 7px;
+  margin: 13px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+}
+
+.d2-180374736 .md span.frame span img {
+  display: block;
+  float: left;
+}
+
+.d2-180374736 .md span.frame span span {
+  display: block;
+  padding: 5px 0 0;
+  clear: both;
+  color: var(--color-fg-default);
+}
+
+.d2-180374736 .md span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.d2-180374736 .md span.align-center > span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.d2-180374736 .md span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.d2-180374736 .md span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.d2-180374736 .md span.align-right > span {
+  display: block;
+  margin: 13px 0 0;
+  overflow: hidden;
+  text-align: right;
+}
+
+.d2-180374736 .md span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+
+.d2-180374736 .md span.float-left {
+  display: block;
+  float: left;
+  margin-right: 13px;
+  overflow: hidden;
+}
+
+.d2-180374736 .md span.float-left span {
+  margin: 13px 0 0;
+}
+
+.d2-180374736 .md span.float-right {
+  display: block;
+  float: right;
+  margin-left: 13px;
+  overflow: hidden;
+}
+
+.d2-180374736 .md span.float-right > span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: right;
+}
+
+.d2-180374736 .md code,
+.d2-180374736 .md tt {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: var(--color-neutral-muted);
+  border-radius: 6px;
+}
+
+.d2-180374736 .md code br,
+.d2-180374736 .md tt br {
+  display: none;
+}
+
+.d2-180374736 .md del code {
+  text-decoration: inherit;
+}
+
+.d2-180374736 .md pre code {
+  font-size: 100%;
+}
+
+.d2-180374736 .md pre > code {
+  padding: 0;
+  margin: 0;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.d2-180374736 .md .highlight {
+  margin-bottom: 16px;
+}
+
+.d2-180374736 .md .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.d2-180374736 .md .highlight pre,
+.d2-180374736 .md pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: var(--color-canvas-subtle);
+  border-radius: 6px;
+}
+
+.d2-180374736 .md pre code,
+.d2-180374736 .md pre tt {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.d2-180374736 .md .csv-data td,
+.d2-180374736 .md .csv-data th {
+  padding: 5px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.d2-180374736 .md .csv-data .blob-num {
+  padding: 10px 8px 9px;
+  text-align: right;
+  background: var(--color-canvas-default);
+  border: 0;
+}
+
+.d2-180374736 .md .csv-data tr {
+  border-top: 0;
+}
+
+.d2-180374736 .md .csv-data th {
+  font-family: "d2-180374736-font-semibold";
+  background: var(--color-canvas-subtle);
+  border-top: 0;
+}
+
+.d2-180374736 .md .footnotes {
+  font-size: 12px;
+  color: var(--color-fg-muted);
+  border-top: 1px solid var(--color-border-default);
+}
+
+.d2-180374736 .md .footnotes ol {
+  padding-left: 16px;
+}
+
+.d2-180374736 .md .footnotes li {
+  position: relative;
+}
+
+.d2-180374736 .md .footnotes li:target::before {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  left: -24px;
+  pointer-events: none;
+  content: "";
+  border: 2px solid var(--color-accent-emphasis);
+  border-radius: 6px;
+}
+
+.d2-180374736 .md .footnotes li:target {
+  color: var(--color-fg-default);
+}
+
+.d2-180374736 .md .task-list-item {
+  list-style-type: none;
+}
+
+.d2-180374736 .md .task-list-item label {
+  font-weight: 400;
+}
+
+.d2-180374736 .md .task-list-item.enabled label {
+  cursor: pointer;
+}
+
+.d2-180374736 .md .task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.d2-180374736 .md .task-list-item .handle {
+  display: none;
+}
+
+.d2-180374736 .md .task-list-item-checkbox {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+
+.d2-180374736 .md .contains-task-list:dir(rtl) .task-list-item-checkbox {
+  margin: 0 -1.6em 0.25em 0.2em;
+}
+</style><g id="title"><g class="shape" ></g><text x="8129.000000" y="-15.000000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:24px">Backend Architecture - FastAPI Application</text></g><g id="entry_point"><g class="shape" ><rect x="6562.000000" y="107.000000" width="2400.000000" height="366.000000" stroke="#0D32B2" fill="#E3F2FD" class=" stroke-B1" style="stroke-width:2;" /></g><text x="7762.000000" y="140.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Application Entry</text></g><g id="app_layer"><g class="shape" ><rect x="6514.000000" y="644.000000" width="1764.000000" height="366.000000" stroke="#0D32B2" fill="#E8F5E9" class=" stroke-B1" style="stroke-width:2;" /></g><text x="7396.000000" y="677.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">FastAPI Application</text></g><g id="routes"><g class="shape" ><rect x="6297.000000" y="1528.000000" width="6434.000000" height="466.000000" stroke="#0D32B2" fill="#F3E5F5" class=" stroke-B1" style="stroke-width:2;" /></g><text x="9514.000000" y="1561.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">API Routes (routes.py)</text></g><g id="services"><g class="shape" ><rect x="4780.000000" y="2320.000000" width="11466.000000" height="1417.000000" stroke="#0D32B2" fill="#FCE4EC" class=" stroke-B1" style="stroke-width:2;" /></g><text x="10513.000000" y="2353.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Service Layer</text></g><g id="models"><g class="shape" ><rect x="12.000000" y="12.000000" width="3571.000000" height="466.000000" stroke="#0D32B2" fill="#FFF9C4" class=" stroke-B1" style="stroke-width:2;" /></g><text x="1797.500000" y="45.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Data Models</text></g><g id="config"><g class="shape" ><rect x="13297.000000" y="1186.000000" width="2713.000000" height="893.000000" stroke="#0D32B2" fill="#E0F2F1" class=" stroke-B1" style="stroke-width:2;" /></g><text x="14653.500000" y="1219.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Configuration</text></g><g id="data_layer"><g class="shape" ><rect x="11063.000000" y="4078.000000" width="3383.000000" height="890.000000" stroke="#0D32B2" fill="#C8E6C9" class=" stroke-B1" style="stroke-width:2;" /></g><text x="12754.500000" y="4111.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Data Storage</text></g><g id="external_integrations"><g class="shape" ><rect x="6507.000000" y="4078.000000" width="2925.000000" height="1250.000000" stroke="#0D32B2" fill="#FFECB3" class=" stroke-B1" style="stroke-width:2;" /></g><text x="7969.500000" y="4111.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">External Integrations</text></g><g id="dependencies"><g class="shape" ><rect x="5122.000000" y="112.000000" width="1420.000000" height="266.000000" stroke="#0D32B2" fill="#D1C4E9" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="5832.000000" y="145.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Python Dependencies</text></g><g id="logging"><g class="shape" ><rect x="3603.000000" y="112.000000" width="1499.000000" height="266.000000" stroke="#0D32B2" fill="#F8BBD0" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="4352.500000" y="145.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:28px">Logging &amp; Monitoring</text></g><g id="entry_point.main_py"><g class="shape" ><rect x="6612.000000" y="257.000000" width="635.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="6929.500000" y="286.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">main.py</text></g><g id="entry_point.lifespan"><g class="shape" ><rect x="7267.000000" y="157.000000" width="1645.000000" height="266.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="8089.500000" y="186.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Lifespan Events</text></g><g id="app_layer.fastapi_app"><g class="shape" ><rect x="6564.000000" y="744.000000" width="731.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="6929.500000" y="773.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">FastAPI App Instance</text></g><g id="app_layer.middleware"><g class="shape" ><rect x="7315.000000" y="694.000000" width="720.000000" height="266.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="7675.000000" y="723.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Middleware</text></g><g id="app_layer.router"><g class="shape" ><rect x="8055.000000" y="794.000000" width="173.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="8141.500000" y="823.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">API Router</text></g><g id="routes.health"><g class="shape" ><rect x="6347.000000" y="1678.000000" width="469.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="6581.500000" y="1707.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Health Check</text></g><g id="routes.query_routes"><g class="shape" ><rect x="6836.000000" y="1578.000000" width="1577.000000" height="366.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="7624.500000" y="1607.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Query Routes</text></g><g id="routes.settings_routes"><g class="shape" ><rect x="8433.000000" y="1778.000000" width="1486.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="9176.000000" y="1807.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Settings Routes</text></g><g id="routes.document_routes"><g class="shape" ><rect x="9939.000000" y="1778.000000" width="1323.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="10600.500000" y="1807.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Document Routes</text></g><g id="routes.onenote_routes"><g class="shape" ><rect x="11282.000000" y="1778.000000" width="1399.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="11981.500000" y="1807.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">OneNote Routes</text></g><g id="services.rag_engine"><g class="shape" ><rect x="7366.000000" y="2661.000000" width="1581.000000" height="266.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="8156.500000" y="2690.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">RAGEngine</text></g><g id="services.rag_techniques"><g class="shape" ><rect x="4830.000000" y="3250.000000" width="2967.000000" height="366.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="6313.500000" y="3279.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">RAG Techniques</text></g><g id="services.vector_store"><g class="shape" ><rect x="7817.000000" y="3179.000000" width="2458.000000" height="508.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="9046.000000" y="3208.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">VectorStoreService</text></g><g id="services.document_processor"><g class="shape" ><rect x="8967.000000" y="2500.000000" width="1850.000000" height="266.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="9892.000000" y="2529.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">DocumentProcessor</text></g><g id="services.onenote_service"><g class="shape" ><rect x="10837.000000" y="2500.000000" width="2398.000000" height="508.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="12036.000000" y="2529.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">OneNoteService</text></g><g id="services.settings_service"><g class="shape" ><rect x="13543.000000" y="2661.000000" width="2156.000000" height="266.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="14621.000000" y="2690.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">SettingsService</text></g><g id="services.database_service"><g class="shape" ><rect x="13001.000000" y="3300.000000" width="1632.000000" height="266.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="13817.000000" y="3329.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">DatabaseService</text></g><g id="services.encryption_service"><g class="shape" ><rect x="14653.000000" y="3300.000000" width="1542.000000" height="266.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="15424.000000" y="3329.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">EncryptionService</text></g><g id="models.pydantic"><g class="shape" ><rect x="62.000000" y="62.000000" width="3471.000000" height="366.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="1797.500000" y="91.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Pydantic Models</text></g><g id="config.config_py"><g class="shape" ><rect x="13347.000000" y="1663.000000" width="2613.000000" height="366.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="14653.500000" y="1692.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">config.py</text></g><g id="config.env_file"><g class="shape" ><rect x="13948.000000" y="1236.000000" width="1411.000000" height="266.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B2 fill-B5" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="14653.500000" y="1265.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">.env</text></g><g id="data_layer.sqlite_db"><g class="shape" ><path d="M 11113 4282 C 11113 4258 11638 4258 11696 4258 C 11754 4258 12279 4258 12279 4282 V 4539 C 12279 4563 11754 4563 11696 4563 C 11638 4563 11113 4563 11113 4539 V 4282 Z" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-AA5" style="stroke-width:2;" /><path d="M 11113 4282 C 11113 4306 11638 4306 11696 4306 C 11754 4306 12279 4306 12279 4282" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-AA5" style="stroke-width:2;" /></g><text x="11696.000000" y="4335.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">SQLite Database</text></g><g id="data_layer.chromadb"><g class="shape" ><path d="M 12299 4282 C 12299 4258 12907 4258 12975 4258 C 13042 4258 13650 4258 13650 4282 V 4539 C 13650 4563 13042 4563 12975 4563 C 12907 4563 12299 4563 12299 4539 V 4282 Z" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-AA5" style="stroke-width:2;" /><path d="M 12299 4282 C 12299 4306 12907 4306 12975 4306 C 13042 4306 13650 4306 13650 4282" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-AA5" style="stroke-width:2;" /></g><text x="12974.500000" y="4335.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">ChromaDB</text></g><g id="data_layer.managed_vector"><g class="shape" ><path d="M 12098 4808 C 12098 4784 12202 4784 12214 4784 C 12226 4784 12330 4784 12330 4808 V 4894 C 12330 4918 12226 4918 12214 4918 C 12202 4918 12098 4918 12098 4894 V 4808 Z" stroke="#0D32B2" fill="#FFFDE7" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /><path d="M 12098 4808 C 12098 4832 12202 4832 12214 4832 C 12226 4832 12330 4832 12330 4808" stroke="#0D32B2" fill="#FFFDE7" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="12214.000000" y="4860.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="12214.000000" dy="0.000000">Prod Alt:</tspan><tspan x="12214.000000" dy="18.500000">Azure AI Search / Pinecone</tspan></text></g><g id="data_layer.managed_db"><g class="shape" ><path d="M 12350 4808 C 12350 4784 12446 4784 12457 4784 C 12467 4784 12563 4784 12563 4808 V 4894 C 12563 4918 12467 4918 12457 4918 C 12446 4918 12350 4918 12350 4894 V 4808 Z" stroke="#0D32B2" fill="#FFFDE7" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /><path d="M 12350 4808 C 12350 4832 12446 4832 12457 4832 C 12467 4832 12563 4832 12563 4808" stroke="#0D32B2" fill="#FFFDE7" class=" stroke-B2" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="12456.500000" y="4860.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px"><tspan x="12456.500000" dy="0.000000">Prod Alt:</tspan><tspan x="12456.500000" dy="18.500000">Azure SQL / PostgreSQL</tspan></text></g><g id="data_layer.encryption_key"><g class="shape" ><rect x="13670.000000" y="4258.000000" width="726.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="14033.000000" y="4287.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">.encryption_key</text></g><g id="external_integrations.openai_integration"><g class="shape" ><rect x="6557.000000" y="4313.000000" width="1149.000000" height="638.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="7131.500000" y="4342.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">OpenAI SDK</text></g><g id="external_integrations.msgraph_integration"><g class="shape" ><rect x="7725.000000" y="4313.000000" width="807.000000" height="266.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="8128.500000" y="4342.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Microsoft Graph</text></g><g id="external_integrations.langsmith_integration"><g class="shape" ><rect x="8552.000000" y="4546.000000" width="829.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="8966.500000" y="4575.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">LangSmith</text></g><g id="external_integrations.app_insights"><g class="shape" ><rect x="8791.000000" y="5112.000000" width="351.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B2 fill-B5" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="8966.500000" y="5141.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Azure Application Insights (Alt)</text></g><g id="dependencies.requirements"><g class="shape" ><rect x="5172.000000" y="162.000000" width="1320.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="5832.000000" y="191.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">requirements.txt</text></g><g id="logging.python_logging"><g class="shape" ><rect x="3653.000000" y="162.000000" width="739.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="4022.500000" y="191.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">Python logging module</text></g><g id="logging.langsmith_tracing"><g class="shape" ><rect x="4412.000000" y="162.000000" width="640.000000" height="166.000000" stroke="#0D32B2" fill="#EDF0FD" class=" stroke-B1 fill-B5" style="stroke-width:2;" /></g><text x="4732.000000" y="191.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:24px">LangSmith Tracing (Optional)</text></g><g id="entry_point.main_py.uvicorn"><g class="shape" ><rect x="6662.000000" y="307.000000" width="186.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="6755.000000" y="345.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Uvicorn ASGI Server</text></g><g id="entry_point.main_py.host"><g class="shape" ><rect x="6868.000000" y="307.000000" width="132.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="6934.000000" y="345.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">0.0.0.0:8000</text></g><g id="entry_point.main_py.reload"><g class="shape" ><rect x="7020.000000" y="307.000000" width="177.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="7108.500000" y="345.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Auto-reload in dev</text></g><g id="entry_point.lifespan.startup"><g class="shape" ><rect x="7317.000000" y="207.000000" width="1033.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="7833.500000" y="232.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">startup</text></g><g id="entry_point.lifespan.shutdown"><g class="shape" ><rect x="8370.000000" y="207.000000" width="492.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="8616.000000" y="232.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">shutdown</text></g><g id="app_layer.fastapi_app.title"><g class="shape" ><rect x="6614.000000" y="794.000000" width="166.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="6697.000000" y="832.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">OneNote RAG API</text></g><g id="app_layer.fastapi_app.version"><g class="shape" ><rect x="6800.000000" y="794.000000" width="79.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="6839.500000" y="832.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">1.0.0</text></g><g id="app_layer.fastapi_app.docs"><g class="shape" ><rect x="6899.000000" y="794.000000" width="177.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="6987.500000" y="832.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">/docs (Swagger UI)</text></g><g id="app_layer.fastapi_app.redoc"><g class="shape" ><rect x="7096.000000" y="794.000000" width="149.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="7170.500000" y="832.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">/redoc (ReDoc)</text></g><g id="app_layer.middleware.cors"><g class="shape" ><rect x="7365.000000" y="744.000000" width="620.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="7675.000000" y="769.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">CORS Middleware</text></g><g id="app_layer.router.prefix"><g class="shape" ><rect x="8105.000000" y="844.000000" width="73.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="8141.500000" y="882.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">/api</text></g><g id="routes.health.endpoint"><g class="shape" ><rect x="6397.000000" y="1728.000000" width="155.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="6474.500000" y="1766.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">GET /api/health</text></g><g id="routes.health.purpose"><g class="shape" ><rect x="6572.000000" y="1728.000000" width="194.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="6669.000000" y="1766.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Service health status</text></g><g id="routes.query_routes.query"><g class="shape" ><rect x="6886.000000" y="1628.000000" width="1477.000000" height="266.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="7624.500000" y="1653.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">POST /api/query</text></g><g id="routes.settings_routes.get_all"><g class="shape" ><rect x="8483.000000" y="1828.000000" width="166.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="8566.000000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">GET /api/settings</text></g><g id="routes.settings_routes.get_one"><g class="shape" ><rect x="8669.000000" y="1828.000000" width="209.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="8773.500000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">GET /api/settings/{key}</text></g><g id="routes.settings_routes.update"><g class="shape" ><rect x="8898.000000" y="1828.000000" width="209.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="9002.500000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">PUT /api/settings/{key}</text></g><g id="routes.settings_routes.create"><g class="shape" ><rect x="9127.000000" y="1828.000000" width="176.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="9215.000000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">POST /api/settings</text></g><g id="routes.settings_routes.delete"><g class="shape" ><rect x="9323.000000" y="1828.000000" width="233.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="9439.500000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">DELETE /api/settings/{key}</text></g><g id="routes.settings_routes.test"><g class="shape" ><rect x="9576.000000" y="1828.000000" width="293.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="9722.500000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">POST /api/settings/test-connection</text></g><g id="routes.document_routes.list"><g class="shape" ><rect x="9989.000000" y="1828.000000" width="188.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="10083.000000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">GET /api/documents</text></g><g id="routes.document_routes.get"><g class="shape" ><rect x="10197.000000" y="1828.000000" width="219.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="10306.500000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">GET /api/documents/{id}</text></g><g id="routes.document_routes.index"><g class="shape" ><rect x="10436.000000" y="1828.000000" width="242.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="10557.000000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">POST /api/documents/index</text></g><g id="routes.document_routes.delete"><g class="shape" ><rect x="10698.000000" y="1828.000000" width="244.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="10820.000000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">DELETE /api/documents/{id}</text></g><g id="routes.document_routes.search"><g class="shape" ><rect x="10962.000000" y="1828.000000" width="250.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="11087.000000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">POST /api/documents/search</text></g><g id="routes.onenote_routes.notebooks"><g class="shape" ><rect x="11332.000000" y="1828.000000" width="249.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="11456.500000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">GET /api/onenote/notebooks</text></g><g id="routes.onenote_routes.sections"><g class="shape" ><rect x="11601.000000" y="1828.000000" width="232.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="11717.000000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">GET /api/onenote/sections</text></g><g id="routes.onenote_routes.pages"><g class="shape" ><rect x="11853.000000" y="1828.000000" width="215.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="11960.500000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">GET /api/onenote/pages</text></g><g id="routes.onenote_routes.sync"><g class="shape" ><rect x="12088.000000" y="1828.000000" width="216.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="12196.000000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">POST /api/onenote/sync</text></g><g id="routes.onenote_routes.incremental"><g class="shape" ><rect x="12324.000000" y="1828.000000" width="307.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="12477.500000" y="1866.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">POST /api/onenote/sync/incremental</text></g><g id="services.rag_engine.file"><g class="shape" ><rect x="7416.000000" y="2761.000000" width="210.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="7521.000000" y="2799.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">services/rag_engine.py</text></g><g id="services.rag_engine.responsibilities"><g class="shape" ><rect x="7646.000000" y="2711.000000" width="800.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="8046.000000" y="2736.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">responsibilities</text></g><g id="services.rag_engine.dependencies"><g class="shape" ><rect x="8466.000000" y="2711.000000" width="431.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="8681.500000" y="2736.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">dependencies</text></g><g id="services.rag_techniques.file"><g class="shape" ><rect x="4880.000000" y="3400.000000" width="241.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="5000.500000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">services/rag_techniques.py</text></g><g id="services.rag_techniques.techniques"><g class="shape" ><rect x="5141.000000" y="3300.000000" width="2606.000000" height="266.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="6444.000000" y="3325.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">techniques</text></g><g id="services.vector_store.file"><g class="shape" ><rect x="7867.000000" y="3279.000000" width="222.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="7978.000000" y="3317.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">services/vector_store.py</text></g><g id="services.vector_store.responsibilities"><g class="shape" ><rect x="8109.000000" y="3229.000000" width="895.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="8556.500000" y="3254.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">responsibilities</text></g><g id="services.vector_store.methods"><g class="shape" ><rect x="9024.000000" y="3229.000000" width="902.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="9475.000000" y="3254.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">methods</text></g><g id="services.vector_store.prod_alt"><g class="shape" ><rect x="9795.000000" y="3465.000000" width="430.000000" height="172.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B2 fill-B6" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="10010.000000" y="3490.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px"><tspan x="10010.000000" dy="0.000000">Prod Alt:</tspan><tspan x="10010.000000" dy="23.000000">Azure AI Search SDK</tspan></text></g><g id="services.document_processor.file"><g class="shape" ><rect x="9017.000000" y="2600.000000" width="281.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="9157.500000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">services/document_processor.py</text></g><g id="services.document_processor.responsibilities"><g class="shape" ><rect x="9318.000000" y="2550.000000" width="627.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="9631.500000" y="2575.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">responsibilities</text></g><g id="services.document_processor.config"><g class="shape" ><rect x="9965.000000" y="2550.000000" width="802.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="10366.000000" y="2575.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">config</text></g><g id="services.onenote_service.file"><g class="shape" ><rect x="10887.000000" y="2600.000000" width="248.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="11011.000000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">services/onenote_service.py</text></g><g id="services.onenote_service.responsibilities"><g class="shape" ><rect x="11155.000000" y="2550.000000" width="1046.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="11678.000000" y="2575.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">responsibilities</text></g><g id="services.onenote_service.auth_methods"><g class="shape" ><rect x="12221.000000" y="2550.000000" width="688.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="12565.000000" y="2575.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">auth_methods</text></g><g id="services.onenote_service.prod_ingest"><g class="shape" ><rect x="12805.000000" y="2786.000000" width="380.000000" height="172.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B2 fill-B6" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="12995.000000" y="2811.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px"><tspan x="12995.000000" dy="0.000000">Prod Alt:</tspan><tspan x="12995.000000" dy="23.000000">Databricks ingestion jobs</tspan></text></g><g id="services.settings_service.file"><g class="shape" ><rect x="13593.000000" y="2761.000000" width="246.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="13716.000000" y="2799.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">services/settings_service.py</text></g><g id="services.settings_service.responsibilities"><g class="shape" ><rect x="13859.000000" y="2711.000000" width="1021.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="14369.500000" y="2736.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">responsibilities</text></g><g id="services.settings_service.sensitive_keys"><g class="shape" ><rect x="14900.000000" y="2711.000000" width="749.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="15274.500000" y="2736.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">sensitive_keys</text></g><g id="services.database_service.file"><g class="shape" ><rect x="13051.000000" y="3400.000000" width="196.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="13149.000000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">services/database.py</text></g><g id="services.database_service.responsibilities"><g class="shape" ><rect x="13267.000000" y="3350.000000" width="808.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="13671.000000" y="3375.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">responsibilities</text></g><g id="services.database_service.tables"><g class="shape" ><rect x="14095.000000" y="3350.000000" width="488.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="14339.000000" y="3375.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">tables</text></g><g id="services.encryption_service.file"><g class="shape" ><rect x="14703.000000" y="3400.000000" width="209.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="14807.500000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">services/encryption.py</text></g><g id="services.encryption_service.responsibilities"><g class="shape" ><rect x="14932.000000" y="3350.000000" width="723.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="15293.500000" y="3375.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">responsibilities</text></g><g id="services.encryption_service.key_file"><g class="shape" ><rect x="15675.000000" y="3350.000000" width="470.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="15910.000000" y="3375.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">.encryption_key</text></g><g id="models.pydantic.file"><g class="shape" ><rect x="112.000000" y="212.000000" width="132.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="178.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">models/*.py</text></g><g id="models.pydantic.document_model"><g class="shape" ><rect x="264.000000" y="112.000000" width="556.000000" height="266.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="542.000000" y="137.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">Document</text></g><g id="models.pydantic.metadata_model"><g class="shape" ><rect x="840.000000" y="112.000000" width="784.000000" height="266.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1232.000000" y="137.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">DocumentMetadata</text></g><g id="models.pydantic.query_model"><g class="shape" ><rect x="1644.000000" y="112.000000" width="577.000000" height="266.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="1932.500000" y="137.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">QueryRequest</text></g><g id="models.pydantic.settings_model"><g class="shape" ><rect x="2241.000000" y="112.000000" width="676.000000" height="266.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="2579.000000" y="137.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">SettingResponse</text></g><g id="models.pydantic.rag_config"><g class="shape" ><rect x="2937.000000" y="112.000000" width="546.000000" height="266.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="3210.000000" y="137.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">RAGConfig</text></g><g id="config.config_py.settings_class"><g class="shape" ><rect x="13397.000000" y="1713.000000" width="2026.000000" height="266.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="14410.000000" y="1738.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">Settings (Pydantic BaseSettings)</text></g><g id="config.config_py.dynamic_settings"><g class="shape" ><rect x="15443.000000" y="1763.000000" width="467.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="15676.500000" y="1788.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">get_dynamic_settings()</text></g><g id="config.env_file.sections"><g class="shape" ><rect x="13998.000000" y="1286.000000" width="1064.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="14530.000000" y="1311.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">sections</text></g><g id="config.env_file.security"><g class="shape" ><rect x="15082.000000" y="1336.000000" width="227.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="15195.500000" y="1374.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">⚠️ NOT in git (gitignored)</text></g><g id="data_layer.sqlite_db.path"><g class="shape" ><rect x="11163.000000" y="4397.000000" width="228.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="11277.000000" y="4435.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">backend/data/settings.db</text></g><g id="data_layer.sqlite_db.settings_table"><g class="shape" ><rect x="11411.000000" y="4347.000000" width="818.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="11820.000000" y="4372.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">settings</text></g><g id="data_layer.chromadb.path"><g class="shape" ><rect x="12349.000000" y="4397.000000" width="233.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="12465.500000" y="4435.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">backend/data/chroma_db/</text></g><g id="data_layer.chromadb.collection"><g class="shape" ><rect x="12602.000000" y="4347.000000" width="998.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="13101.000000" y="4372.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">onenote_documents</text></g><g id="data_layer.encryption_key.path"><g class="shape" ><rect x="13720.000000" y="4308.000000" width="264.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="13852.000000" y="4346.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">backend/data/.encryption_key</text></g><g id="data_layer.encryption_key.format"><g class="shape" ><rect x="14004.000000" y="4308.000000" width="183.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="14095.500000" y="4346.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Fernet key (base64)</text></g><g id="data_layer.encryption_key.security"><g class="shape" ><rect x="14207.000000" y="4308.000000" width="139.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="14276.500000" y="4346.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">⚠️ NOT in git</text></g><g id="external_integrations.openai_integration.embeddings"><g class="shape" ><rect x="6607.000000" y="4493.000000" width="376.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="6795.000000" y="4518.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">text-embedding-3-small</text></g><g id="external_integrations.openai_integration.llm"><g class="shape" ><rect x="7003.000000" y="4493.000000" width="427.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="7216.500000" y="4518.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">Chat Completions</text></g><g id="external_integrations.openai_integration.azure_openai"><g class="shape" ><rect x="7341.000000" y="4729.000000" width="314.000000" height="172.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B2 fill-B6" style="stroke-width:2;stroke-dasharray:6.000000,5.919384;" /></g><text x="7498.000000" y="4754.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px"><tspan x="7498.000000" dy="0.000000">Prod Alt:</tspan><tspan x="7498.000000" dy="23.000000">Azure OpenAI Service</tspan></text></g><g id="external_integrations.msgraph_integration.auth"><g class="shape" ><rect x="7775.000000" y="4413.000000" width="166.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="7858.000000" y="4451.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">MSAL (OAuth 2.0)</text></g><g id="external_integrations.msgraph_integration.endpoints"><g class="shape" ><rect x="7961.000000" y="4363.000000" width="521.000000" height="166.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="8221.500000" y="4388.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:20px">endpoints</text></g><g id="external_integrations.langsmith_integration.tracing"><g class="shape" ><rect x="8602.000000" y="4596.000000" width="226.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="8715.000000" y="4634.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Request/response tracing</text></g><g id="external_integrations.langsmith_integration.analytics"><g class="shape" ><rect x="8848.000000" y="4596.000000" width="155.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="8925.500000" y="4634.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Usage analytics</text></g><g id="external_integrations.langsmith_integration.optional"><g class="shape" ><rect x="9023.000000" y="4596.000000" width="308.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="9177.000000" y="4634.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Enabled via LANGCHAIN_TRACING_V2</text></g><g id="external_integrations.app_insights.telemetry"><g class="shape" ><rect x="8878.000000" y="5162.000000" width="178.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="8967.000000" y="5200.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Logs, traces, alerts</text></g><g id="dependencies.requirements.web"><g class="shape" ><rect x="5222.000000" y="212.000000" width="227.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="5335.500000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">fastapi, uvicorn, pydantic</text></g><g id="dependencies.requirements.ai"><g class="shape" ><rect x="5469.000000" y="212.000000" width="250.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="5594.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">langchain, openai, chromadb</text></g><g id="dependencies.requirements.security"><g class="shape" ><rect x="5739.000000" y="212.000000" width="276.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="5877.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">cryptography, msal, python-jose</text></g><g id="dependencies.requirements.data"><g class="shape" ><rect x="6035.000000" y="212.000000" width="175.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="6122.500000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">tiktoken, requests</text></g><g id="dependencies.requirements.utils"><g class="shape" ><rect x="6230.000000" y="212.000000" width="212.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="6336.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">python-dotenv, logging</text></g><g id="logging.python_logging.level"><g class="shape" ><rect x="3703.000000" y="212.000000" width="144.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="3775.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">INFO (default)</text></g><g id="logging.python_logging.format"><g class="shape" ><rect x="3867.000000" y="212.000000" width="293.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4013.500000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">timestamp - name - level - message</text></g><g id="logging.python_logging.handlers"><g class="shape" ><rect x="4180.000000" y="212.000000" width="162.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4261.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Console (stdout)</text></g><g id="logging.langsmith_tracing.captures"><g class="shape" ><rect x="4462.000000" y="212.000000" width="258.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4591.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Requests, LLM calls, retrievals</text></g><g id="logging.langsmith_tracing.env_var"><g class="shape" ><rect x="4740.000000" y="212.000000" width="262.000000" height="66.000000" stroke="#0D32B2" fill="#F7F8FE" class=" stroke-B1 fill-B6" style="stroke-width:2;" /></g><text x="4871.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">LANGCHAIN_TRACING_V2=true</text></g><g id="entry_point.lifespan.startup.load_config"><g class="shape" ><rect x="7367.000000" y="257.000000" width="213.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7473.500000" y="295.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Load .env configuration</text></g><g id="entry_point.lifespan.startup.init_services"><g class="shape" ><rect x="7600.000000" y="257.000000" width="167.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7683.500000" y="295.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Initialize services</text></g><g id="entry_point.lifespan.startup.setup_ssl"><g class="shape" ><rect x="7787.000000" y="257.000000" width="211.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7892.500000" y="295.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Disable SSL verification</text></g><g id="entry_point.lifespan.startup.auto_sync"><g class="shape" ><rect x="8018.000000" y="257.000000" width="282.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8159.000000" y="295.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Auto-sync OneNote (incremental)</text></g><g id="entry_point.lifespan.shutdown.cleanup"><g class="shape" ><rect x="8420.000000" y="257.000000" width="176.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8508.000000" y="295.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Cleanup resources</text></g><g id="entry_point.lifespan.shutdown.close_connections"><g class="shape" ><rect x="8616.000000" y="257.000000" width="196.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8714.000000" y="295.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Close DB connections</text></g><g id="app_layer.middleware.cors.origins"><g class="shape" ><rect x="7415.000000" y="794.000000" width="241.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7535.500000" y="832.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">localhost:5173, :5174, :3000</text></g><g id="app_layer.middleware.cors.methods"><g class="shape" ><rect x="7676.000000" y="794.000000" width="72.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7712.000000" y="832.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">ALL</text></g><g id="app_layer.middleware.cors.headers"><g class="shape" ><rect x="7768.000000" y="794.000000" width="72.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7804.000000" y="832.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">ALL</text></g><g id="app_layer.middleware.cors.credentials"><g class="shape" ><rect x="7860.000000" y="794.000000" width="75.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7897.500000" y="832.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">true</text></g><g id="routes.query_routes.query.input"><g class="shape" ><rect x="6936.000000" y="1678.000000" width="803.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7337.500000" y="1699.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">input</text></g><g id="routes.query_routes.query.output"><g class="shape" ><rect x="7759.000000" y="1678.000000" width="554.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8036.000000" y="1699.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">output</text></g><g id="services.rag_engine.responsibilities.orchestrate"><g class="shape" ><rect x="7696.000000" y="2761.000000" width="223.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7807.500000" y="2799.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Orchestrate RAG pipeline</text></g><g id="services.rag_engine.responsibilities.technique_dispatch"><g class="shape" ><rect x="7939.000000" y="2761.000000" width="238.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8058.000000" y="2799.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Route to technique handler</text></g><g id="services.rag_engine.responsibilities.response_format"><g class="shape" ><rect x="8197.000000" y="2761.000000" width="199.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8296.500000" y="2799.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Format final response</text></g><g id="services.rag_engine.dependencies.vector_store"><g class="shape" ><rect x="8516.000000" y="2761.000000" width="183.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8607.500000" y="2799.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">VectorStoreService</text></g><g id="services.rag_engine.dependencies.llm"><g class="shape" ><rect x="8719.000000" y="2761.000000" width="128.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8783.000000" y="2799.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">OpenAI LLM</text></g><g id="services.rag_techniques.techniques.basic"><g class="shape" ><rect x="5191.000000" y="3350.000000" width="358.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="5370.000000" y="3371.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">BasicRAG</text></g><g id="services.rag_techniques.techniques.hyde"><g class="shape" ><rect x="5569.000000" y="3350.000000" width="585.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="5861.500000" y="3371.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">HyDERAG</text></g><g id="services.rag_techniques.techniques.cot"><g class="shape" ><rect x="6174.000000" y="3350.000000" width="507.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="6427.500000" y="3371.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">ChainOfThoughtRAG</text></g><g id="services.rag_techniques.techniques.selfask"><g class="shape" ><rect x="6701.000000" y="3350.000000" width="522.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="6962.000000" y="3371.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">SelfAskRAG</text></g><g id="services.rag_techniques.techniques.react"><g class="shape" ><rect x="7243.000000" y="3350.000000" width="454.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7470.000000" y="3371.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">ReActRAG</text></g><g id="services.vector_store.responsibilities.embed"><g class="shape" ><rect x="8159.000000" y="3279.000000" width="182.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8250.000000" y="3317.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Create embeddings</text></g><g id="services.vector_store.responsibilities.store"><g class="shape" ><rect x="8361.000000" y="3279.000000" width="223.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8472.500000" y="3317.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Store vectors + metadata</text></g><g id="services.vector_store.responsibilities.search"><g class="shape" ><rect x="8604.000000" y="3279.000000" width="165.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8686.500000" y="3317.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Similarity search</text></g><g id="services.vector_store.responsibilities.manage"><g class="shape" ><rect x="8789.000000" y="3279.000000" width="165.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8871.500000" y="3317.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">CRUD operations</text></g><g id="services.vector_store.methods.add_documents"><g class="shape" ><rect x="9074.000000" y="3279.000000" width="203.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="9175.500000" y="3317.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Add document chunks</text></g><g id="services.vector_store.methods.similarity_search"><g class="shape" ><rect x="9297.000000" y="3279.000000" width="184.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="9389.000000" y="3317.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Find similar vectors</text></g><g id="services.vector_store.methods.delete_by_page_id"><g class="shape" ><rect x="9501.000000" y="3279.000000" width="182.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="9592.000000" y="3317.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Delete page chunks</text></g><g id="services.vector_store.methods.get_page_modified_date"><g class="shape" ><rect x="9703.000000" y="3279.000000" width="173.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="9789.500000" y="3317.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Check for updates</text></g><g id="services.vector_store.prod_alt.benefits"><g class="shape" ><rect x="9845.000000" y="3521.000000" width="330.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="10010.000000" y="3559.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Managed scaling, RBAC, geo redundancy</text></g><g id="services.document_processor.responsibilities.chunk"><g class="shape" ><rect x="9368.000000" y="2600.000000" width="161.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="9448.500000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Split documents</text></g><g id="services.document_processor.responsibilities.tokenize"><g class="shape" ><rect x="9549.000000" y="2600.000000" width="139.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="9618.500000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Count tokens</text></g><g id="services.document_processor.responsibilities.optimize"><g class="shape" ><rect x="9708.000000" y="2600.000000" width="187.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="9801.500000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Optimize chunk size</text></g><g id="services.document_processor.config.chunk_size"><g class="shape" ><rect x="10015.000000" y="2600.000000" width="183.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="10106.500000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">CHUNK_SIZE (1000)</text></g><g id="services.document_processor.config.overlap"><g class="shape" ><rect x="10218.000000" y="2600.000000" width="209.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="10322.500000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">CHUNK_OVERLAP (200)</text></g><g id="services.document_processor.config.splitter"><g class="shape" ><rect x="10447.000000" y="2600.000000" width="270.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="10582.000000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">RecursiveCharacterTextSplitter</text></g><g id="services.onenote_service.responsibilities.authenticate"><g class="shape" ><rect x="11205.000000" y="2600.000000" width="223.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="11316.500000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">OAuth 2.0 / Manual token</text></g><g id="services.onenote_service.responsibilities.fetch"><g class="shape" ><rect x="11448.000000" y="2600.000000" width="273.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="11584.500000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Fetch notebooks/sections/pages</text></g><g id="services.onenote_service.responsibilities.parse"><g class="shape" ><rect x="11741.000000" y="2600.000000" width="186.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="11834.000000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Parse HTML content</text></g><g id="services.onenote_service.responsibilities.sync"><g class="shape" ><rect x="11947.000000" y="2600.000000" width="204.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="12049.000000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Incremental sync logic</text></g><g id="services.onenote_service.auth_methods.oauth"><g class="shape" ><rect x="12271.000000" y="2600.000000" width="219.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="12380.500000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">MSAL (client credentials)</text></g><g id="services.onenote_service.auth_methods.manual"><g class="shape" ><rect x="12510.000000" y="2600.000000" width="349.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="12684.500000" y="2638.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Bearer token (MICROSOFT_GRAPH_TOKEN)</text></g><g id="services.onenote_service.prod_ingest.pipeline"><g class="shape" ><rect x="12855.000000" y="2842.000000" width="280.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="12995.000000" y="2880.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">ADF → Delta Lake → Unity Catalog</text></g><g id="services.settings_service.responsibilities.crud"><g class="shape" ><rect x="13909.000000" y="2761.000000" width="147.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="13982.500000" y="2799.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Settings CRUD</text></g><g id="services.settings_service.responsibilities.encryption"><g class="shape" ><rect x="14076.000000" y="2761.000000" width="276.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14214.000000" y="2799.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Encrypt/decrypt sensitive values</text></g><g id="services.settings_service.responsibilities.defaults"><g class="shape" ><rect x="14372.000000" y="2761.000000" width="240.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14492.000000" y="2799.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Initialize defaults from .env</text></g><g id="services.settings_service.responsibilities.fallback"><g class="shape" ><rect x="14632.000000" y="2761.000000" width="198.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14731.000000" y="2799.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">DB-first, .env fallback</text></g><g id="services.settings_service.sensitive_keys.list"><g class="shape" ><rect x="14950.000000" y="2761.000000" width="649.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="15274.500000" y="2799.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">openai_api_key, langchain_api_key, microsoft_client_secret, microsoft_graph_token</text></g><g id="services.database_service.responsibilities.schema"><g class="shape" ><rect x="13317.000000" y="3400.000000" width="214.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="13424.000000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Initialize SQLite schema</text></g><g id="services.database_service.responsibilities.crud"><g class="shape" ><rect x="13551.000000" y="3400.000000" width="227.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="13664.500000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Settings CRUD operations</text></g><g id="services.database_service.responsibilities.transactions"><g class="shape" ><rect x="13798.000000" y="3400.000000" width="227.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="13911.500000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Transaction management</text></g><g id="services.database_service.tables.settings"><g class="shape" ><rect x="14145.000000" y="3400.000000" width="388.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14339.000000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">key, value, is_sensitive, description, timestamps</text></g><g id="services.encryption_service.responsibilities.encrypt"><g class="shape" ><rect x="14982.000000" y="3400.000000" width="172.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="15068.000000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Fernet encryption</text></g><g id="services.encryption_service.responsibilities.decrypt"><g class="shape" ><rect x="15174.000000" y="3400.000000" width="172.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="15260.000000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Fernet decryption</text></g><g id="services.encryption_service.responsibilities.key_management"><g class="shape" ><rect x="15366.000000" y="3400.000000" width="239.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="15485.500000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Load/create encryption key</text></g><g id="services.encryption_service.key_file.location"><g class="shape" ><rect x="15725.000000" y="3400.000000" width="148.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="15799.000000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">backend/data/</text></g><g id="services.encryption_service.key_file.security"><g class="shape" ><rect x="15893.000000" y="3400.000000" width="202.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="15994.000000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">NOT in git (gitignored)</text></g><g id="models.pydantic.document_model.fields"><g class="shape" ><rect x="314.000000" y="162.000000" width="456.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="542.000000" y="183.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">fields</text></g><g id="models.pydantic.metadata_model.fields"><g class="shape" ><rect x="890.000000" y="162.000000" width="684.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="1232.000000" y="183.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">fields</text></g><g id="models.pydantic.query_model.fields"><g class="shape" ><rect x="1694.000000" y="162.000000" width="477.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="1932.500000" y="183.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">fields</text></g><g id="models.pydantic.settings_model.fields"><g class="shape" ><rect x="2291.000000" y="162.000000" width="576.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2579.000000" y="183.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">fields</text></g><g id="models.pydantic.rag_config.fields"><g class="shape" ><rect x="2987.000000" y="162.000000" width="446.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="3210.000000" y="183.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">fields</text></g><g id="config.config_py.settings_class.sources"><g class="shape" ><rect x="13447.000000" y="1763.000000" width="707.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="13800.500000" y="1784.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">sources</text></g><g id="config.config_py.settings_class.fields"><g class="shape" ><rect x="14174.000000" y="1763.000000" width="1199.000000" height="166.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14773.500000" y="1784.000000" fill="#0A0F25" class="text fill-N1" style="text-anchor:middle;font-size:16px">fields</text></g><g id="config.config_py.dynamic_settings.priority"><g class="shape" ><rect x="15493.000000" y="1813.000000" width="367.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="15676.500000" y="1851.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">1. Database (SettingsService), 2. .env fallback</text></g><g id="config.env_file.sections.openai"><g class="shape" ><rect x="14048.000000" y="1336.000000" width="166.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14131.000000" y="1374.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">OPENAI_API_KEY</text></g><g id="config.env_file.sections.langchain"><g class="shape" ><rect x="14234.000000" y="1336.000000" width="203.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14335.500000" y="1374.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">LANGCHAIN_* settings</text></g><g id="config.env_file.sections.microsoft"><g class="shape" ><rect x="14457.000000" y="1336.000000" width="226.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14570.000000" y="1374.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">MICROSOFT_* credentials</text></g><g id="config.env_file.sections.app"><g class="shape" ><rect x="14703.000000" y="1336.000000" width="309.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14857.500000" y="1374.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">CHUNK_SIZE, VECTOR_DB_PATH, etc.</text></g><g id="data_layer.sqlite_db.settings_table.columns"><g class="shape" ><rect x="11461.000000" y="4397.000000" width="493.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="11707.500000" y="4435.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">id, key, value, is_sensitive, description, created_at, updated_at</text></g><g id="data_layer.sqlite_db.settings_table.indexes"><g class="shape" ><rect x="11974.000000" y="4397.000000" width="205.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="12076.500000" y="4435.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">idx_settings_key (key)</text></g><g id="data_layer.chromadb.collection.vectors"><g class="shape" ><rect x="12652.000000" y="4397.000000" width="261.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="12782.500000" y="4435.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">1536-dimensional embeddings</text></g><g id="data_layer.chromadb.collection.documents"><g class="shape" ><rect x="12933.000000" y="4397.000000" width="188.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="13027.000000" y="4435.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Original text chunks</text></g><g id="data_layer.chromadb.collection.metadata"><g class="shape" ><rect x="13141.000000" y="4397.000000" width="225.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="13253.500000" y="4435.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Page metadata per chunk</text></g><g id="data_layer.chromadb.collection.distance"><g class="shape" ><rect x="13386.000000" y="4397.000000" width="164.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="13468.000000" y="4435.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Cosine similarity</text></g><g id="external_integrations.openai_integration.embeddings.dimensions"><g class="shape" ><rect x="6657.000000" y="4543.000000" width="78.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="6696.000000" y="4581.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">1536</text></g><g id="external_integrations.openai_integration.embeddings.cost"><g class="shape" ><rect x="6755.000000" y="4543.000000" width="178.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="6844.000000" y="4581.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">0.02 per 1M tokens</text></g><g id="external_integrations.openai_integration.llm.models"><g class="shape" ><rect x="7053.000000" y="4543.000000" width="187.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7146.500000" y="4581.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">gpt-4, gpt-3.5-turbo</text></g><g id="external_integrations.openai_integration.llm.streaming"><g class="shape" ><rect x="7260.000000" y="4543.000000" width="120.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7320.000000" y="4581.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Supported</text></g><g id="external_integrations.openai_integration.azure_openai.compliance"><g class="shape" ><rect x="7391.000000" y="4785.000000" width="214.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7498.000000" y="4823.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Regional data residency</text></g><g id="external_integrations.msgraph_integration.endpoints.notebooks"><g class="shape" ><rect x="8011.000000" y="4413.000000" width="218.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8120.000000" y="4451.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">/me/onenote/notebooks</text></g><g id="external_integrations.msgraph_integration.endpoints.pages"><g class="shape" ><rect x="8249.000000" y="4413.000000" width="183.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8340.500000" y="4451.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">/pages/{id}/content</text></g><g id="routes.query_routes.query.input.query"><g class="shape" ><rect x="6986.000000" y="1728.000000" width="88.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7030.000000" y="1766.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">string</text></g><g id="routes.query_routes.query.input.technique"><g class="shape" ><rect x="7094.000000" y="1728.000000" width="242.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7215.000000" y="1766.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">basic|hyde|cot|selfask|react</text></g><g id="routes.query_routes.query.input.top_k"><g class="shape" ><rect x="7356.000000" y="1728.000000" width="146.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7429.000000" y="1766.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">int (default: 3)</text></g><g id="routes.query_routes.query.input.config"><g class="shape" ><rect x="7522.000000" y="1728.000000" width="167.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7605.500000" y="1766.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">RAGConfig object</text></g><g id="routes.query_routes.query.output.answer"><g class="shape" ><rect x="7809.000000" y="1728.000000" width="88.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7853.000000" y="1766.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">string</text></g><g id="routes.query_routes.query.output.sources"><g class="shape" ><rect x="7917.000000" y="1728.000000" width="128.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7981.000000" y="1766.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Document[]</text></g><g id="routes.query_routes.query.output.technique"><g class="shape" ><rect x="8065.000000" y="1728.000000" width="88.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8109.000000" y="1766.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">string</text></g><g id="routes.query_routes.query.output.metadata"><g class="shape" ><rect x="8173.000000" y="1728.000000" width="90.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="8218.000000" y="1766.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">object</text></g><g id="services.rag_techniques.techniques.basic.process"><g class="shape" ><rect x="5241.000000" y="3400.000000" width="258.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="5370.000000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Retrieve → Prompt → Generate</text></g><g id="services.rag_techniques.techniques.hyde.process"><g class="shape" ><rect x="5619.000000" y="3400.000000" width="485.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="5861.500000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Generate hypothetical answer → Embed → Retrieve → Generate</text></g><g id="services.rag_techniques.techniques.cot.process"><g class="shape" ><rect x="6224.000000" y="3400.000000" width="407.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="6427.500000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Think step-by-step → Retrieve → Reason → Generate</text></g><g id="services.rag_techniques.techniques.selfask.process"><g class="shape" ><rect x="6751.000000" y="3400.000000" width="422.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="6962.000000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Break into sub-questions → Answer each → Synthesize</text></g><g id="services.rag_techniques.techniques.react.process"><g class="shape" ><rect x="7293.000000" y="3400.000000" width="354.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="7470.000000" y="3438.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Reason → Act (retrieve) → Observe → Answer</text></g><g id="models.pydantic.document_model.fields.page_id"><g class="shape" ><rect x="364.000000" y="212.000000" width="66.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="397.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">str</text></g><g id="models.pydantic.document_model.fields.content"><g class="shape" ><rect x="450.000000" y="212.000000" width="66.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="483.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">str</text></g><g id="models.pydantic.document_model.fields.metadata"><g class="shape" ><rect x="536.000000" y="212.000000" width="184.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="628.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">DocumentMetadata</text></g><g id="models.pydantic.metadata_model.fields.page_title"><g class="shape" ><rect x="940.000000" y="212.000000" width="66.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="973.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">str</text></g><g id="models.pydantic.metadata_model.fields.section_name"><g class="shape" ><rect x="1026.000000" y="212.000000" width="66.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="1059.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">str</text></g><g id="models.pydantic.metadata_model.fields.notebook_name"><g class="shape" ><rect x="1112.000000" y="212.000000" width="66.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="1145.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">str</text></g><g id="models.pydantic.metadata_model.fields.created_date"><g class="shape" ><rect x="1198.000000" y="212.000000" width="110.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="1253.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">datetime</text></g><g id="models.pydantic.metadata_model.fields.modified_date"><g class="shape" ><rect x="1328.000000" y="212.000000" width="110.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="1383.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">datetime</text></g><g id="models.pydantic.metadata_model.fields.source_url"><g class="shape" ><rect x="1458.000000" y="212.000000" width="66.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="1491.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">str</text></g><g id="models.pydantic.query_model.fields.query"><g class="shape" ><rect x="1744.000000" y="212.000000" width="66.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="1777.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">str</text></g><g id="models.pydantic.query_model.fields.technique"><g class="shape" ><rect x="1830.000000" y="212.000000" width="66.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="1863.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">str</text></g><g id="models.pydantic.query_model.fields.top_k"><g class="shape" ><rect x="1916.000000" y="212.000000" width="65.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="1948.500000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">int</text></g><g id="models.pydantic.query_model.fields.config"><g class="shape" ><rect x="2001.000000" y="212.000000" width="120.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2061.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">RAGConfig</text></g><g id="models.pydantic.settings_model.fields.key"><g class="shape" ><rect x="2341.000000" y="212.000000" width="66.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2374.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">str</text></g><g id="models.pydantic.settings_model.fields.value"><g class="shape" ><rect x="2427.000000" y="212.000000" width="66.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2460.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">str</text></g><g id="models.pydantic.settings_model.fields.is_sensitive"><g class="shape" ><rect x="2513.000000" y="212.000000" width="76.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2551.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">bool</text></g><g id="models.pydantic.settings_model.fields.description"><g class="shape" ><rect x="2609.000000" y="212.000000" width="112.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2665.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">str | None</text></g><g id="models.pydantic.settings_model.fields.has_value"><g class="shape" ><rect x="2741.000000" y="212.000000" width="76.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="2779.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">bool</text></g><g id="models.pydantic.rag_config.fields.temperature"><g class="shape" ><rect x="3037.000000" y="212.000000" width="79.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="3076.500000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">float</text></g><g id="models.pydantic.rag_config.fields.model"><g class="shape" ><rect x="3136.000000" y="212.000000" width="66.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="3169.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">str</text></g><g id="models.pydantic.rag_config.fields.max_tokens"><g class="shape" ><rect x="3222.000000" y="212.000000" width="65.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="3254.500000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">int</text></g><g id="models.pydantic.rag_config.fields.stream"><g class="shape" ><rect x="3307.000000" y="212.000000" width="76.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="3345.000000" y="250.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">bool</text></g><g id="config.config_py.settings_class.sources.env_file"><g class="shape" ><rect x="13497.000000" y="1813.000000" width="102.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="13548.000000" y="1851.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">.env file</text></g><g id="config.config_py.settings_class.sources.env_vars"><g class="shape" ><rect x="13619.000000" y="1813.000000" width="205.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="13721.500000" y="1851.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Environment variables</text></g><g id="config.config_py.settings_class.sources.db_settings"><g class="shape" ><rect x="13844.000000" y="1813.000000" width="260.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="13974.000000" y="1851.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Database (via SettingsService)</text></g><g id="config.config_py.settings_class.fields.openai_api_key"><g class="shape" ><rect x="14224.000000" y="1813.000000" width="153.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14300.500000" y="1851.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">OpenAI API key</text></g><g id="config.config_py.settings_class.fields.langchain_api_key"><g class="shape" ><rect x="14397.000000" y="1813.000000" width="175.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14484.500000" y="1851.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">LangChain API key</text></g><g id="config.config_py.settings_class.fields.microsoft_credentials"><g class="shape" ><rect x="14592.000000" y="1813.000000" width="240.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14712.000000" y="1851.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Microsoft Graph credentials</text></g><g id="config.config_py.settings_class.fields.chunk_settings"><g class="shape" ><rect x="14852.000000" y="1813.000000" width="181.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="14942.500000" y="1851.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">Chunk size/overlap</text></g><g id="config.config_py.settings_class.fields.vector_db_path"><g class="shape" ><rect x="15053.000000" y="1813.000000" width="157.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="15131.500000" y="1851.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">ChromaDB path</text></g><g id="config.config_py.settings_class.fields.embedding_provider"><g class="shape" ><rect x="15230.000000" y="1813.000000" width="93.000000" height="66.000000" stroke="#0D32B2" fill="#FFFFFF" class=" stroke-B1 fill-N7" style="stroke-width:2;" /></g><text x="15276.500000" y="1851.500000" fill="#0A0F25" class="text-bold fill-N1" style="text-anchor:middle;font-size:16px">openai</text></g><g id="(entry_point.main_py -&gt; app_layer.fastapi_app)[0]"><marker id="mk-3488378134" markerWidth="10.000000" markerHeight="12.000000" refX="7.000000" refY="6.000000" viewBox="0.000000 0.000000 10.000000 12.000000" orient="auto" markerUnits="userSpaceOnUse"> <polygon points="0.000000,0.000000 10.000000,6.000000 0.000000,12.000000" fill="#0D32B2" class="connection fill-B1" stroke-width="2" /> </marker><path d="M 6929.500000 425.000000 L 6929.500000 740.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="6929.500000" y="589.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Initialize</text></g><g id="(app_layer.router -&gt; routes)[0]"><path d="M 8141.500000 962.000000 L 8141.500000 1525.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="8142.000000" y="1250.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Include routes</text></g><g id="(routes.query_routes -&gt; services.rag_engine)[0]"><path d="M 8156.999997 1947.000000 L 8156.999029 2657.333008" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="8157.000000" y="2309.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Process queries</text></g><g id="(routes.settings_routes -&gt; services.settings_service)[0]"><path d="M 9176.250000 1947.000000 L 9176.250000 2450.000000 S 9176.250000 2460.000000 9186.250000 2460.000000 L 14611.333008 2460.000000 S 14621.333008 2460.000000 14621.333008 2470.000000 L 14621.333008 2657.333008" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="11741.500000" y="2466.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Manage settings</text></g><g id="(routes.document_routes -&gt; services.document_processor)[0]"><path d="M 10600.750000 1947.000000 L 10600.750000 2164.000000 S 10600.750000 2174.000000 10610.750000 2174.000000 L 12107.750000 2174.000000 S 12117.750000 2174.000000 12117.750000 2184.000000 L 12117.750000 2400.000000 S 12117.750000 2410.000000 12107.750000 2410.000000 L 9902.500000 2410.000000 S 9892.500000 2410.000000 9892.500000 2420.000000 L 9892.500000 2496.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="11951.500000" y="2416.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Process documents</text></g><g id="(routes.onenote_routes -&gt; services.onenote_service)[0]"><path d="M 11981.750000 1947.000000 L 11981.750000 2114.000000 S 11981.750000 2124.000000 11991.750000 2124.000000 L 12859.750000 2124.000000 S 12869.750000 2124.000000 12869.750000 2134.000000 L 12869.750000 2265.000000 S 12869.750000 2275.000000 12879.750000 2275.000000 L 13659.000000 2275.000000 S 13669.000000 2275.000000 13669.000000 2285.000000 L 13669.000000 2400.000000 S 13669.000000 2410.000000 13659.000000 2410.000000 L 12995.000000 2410.000000 S 12985.000000 2410.000000 12985.000000 2420.000000 L 12985.000000 2496.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="13114.500000" y="2281.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Fetch OneNote</text></g><g id="services.(rag_engine -&gt; rag_techniques)[0]"><path d="M 7893.500000 2929.000000 L 7893.500000 3038.000000 S 7893.500000 3048.000000 7883.500000 3048.000000 L 6323.750000 3048.000000 S 6313.750000 3048.000000 6313.750000 3058.000000 L 6313.750000 3246.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="7063.500000" y="3054.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Dispatch to technique</text></g><g id="services.(rag_engine -&gt; vector_store)[0]"><path d="M 8420.500000 2929.000000 L 8420.500000 3175.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="8420.500000" y="3059.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Retrieve context</text></g><g id="(services.vector_store -&gt; data_layer.chromadb)[0]"><path d="M 9795.250000 3689.000000 L 9795.250000 4023.000000 S 9795.250000 4033.000000 9805.250000 4033.000000 L 12320.375000 4033.000000 S 12330.375000 4033.000000 12330.359375 4042.999988 L 12330.006250 4269.000005" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="11010.000000" y="4039.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Query vectors</text></g><g id="services.(settings_service -&gt; database_service)[0]"><path d="M 13817.833008 2929.000000 L 13817.833008 3296.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="13818.000000" y="3119.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">CRUD operations</text></g><g id="services.(settings_service -&gt; encryption_service)[0]"><path d="M 15424.833008 2929.000000 L 15424.833008 3296.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="15425.000000" y="3119.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Encrypt/decrypt</text></g><g id="(services.database_service -&gt; data_layer.sqlite_db)[0]"><path d="M 13817.833008 3568.000000 L 13817.833008 3923.000000 S 13817.833008 3933.000000 13807.833008 3933.000000 L 12350.375000 3933.000000 S 12340.375000 3933.000000 12340.375000 3943.000000 L 12340.375000 4158.000000 S 12340.375000 4168.000000 12330.375000 4168.000000 L 11706.125000 4168.000000 S 11696.125000 4168.000000 11696.111111 4177.999990 L 11696.005556 4254.000004" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="12777.500000" y="3939.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">SQL operations</text></g><g id="(services.encryption_service -&gt; data_layer.encryption_key)[0]"><path d="M 15424.833008 3568.000000 L 15424.833008 3772.000000 S 15424.833008 3782.000000 15414.833008 3782.000000 L 14043.125000 3782.000000 S 14033.125000 3782.000000 14033.125000 3792.000000 L 14033.125000 4254.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="14599.000000" y="3788.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Load key</text></g><g id="(services.vector_store -&gt; external_integrations.openai_integration.embeddings)[0]"><path d="M 8719.936523 3689.000000 L 8719.936523 3923.000000 S 8719.936523 3933.000000 8709.936523 3933.000000 L 8009.250000 3933.000000 S 7999.250000 3933.000000 7999.250000 3943.000000 L 7999.250000 4208.000000 S 7999.250000 4218.000000 7989.250000 4218.000000 L 6805.375000 4218.000000 S 6795.375000 4218.000000 6795.375000 4228.000000 L 6795.375000 4489.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="7885.500000" y="4224.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Create embeddings</text></g><g id="(services.rag_techniques -&gt; external_integrations.openai_integration.llm)[0]"><path d="M 7767.000000 3618.000000 L 7767.000000 3923.000000 S 7767.000000 3933.000000 7777.000000 3933.000000 L 7979.250000 3933.000000 S 7989.250000 3933.000000 7989.250000 3943.000000 L 7989.250000 4158.000000 S 7989.250000 4168.000000 7979.250000 4168.000000 L 7011.125000 4168.000000 S 7001.125000 4168.000000 7001.125000 4178.000000 L 7001.125000 4443.000000 S 7001.125000 4453.000000 7011.125000 4453.000000 L 7206.875000 4453.000000 S 7216.875000 4453.000000 7216.875000 4463.000000 L 7216.875000 4489.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="7611.500000" y="4174.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Generate answers</text></g><g id="(services.onenote_service -&gt; external_integrations.msgraph_integration)[0]"><path d="M 11348.125000 3010.000000 L 11348.125000 3973.000000 S 11348.125000 3983.000000 11338.125000 3983.000000 L 8139.375000 3983.000000 S 8129.375000 3983.000000 8129.375000 3993.000000 L 8129.375000 4309.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="10061.000000" y="3989.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Fetch pages</text></g><g id="(app_layer.fastapi_app -&gt; external_integrations.langsmith_integration)[0]"><path d="M 6929.500000 912.000000 L 6929.500000 1045.000000 S 6929.500000 1055.000000 6919.500000 1055.000000 L 4749.250000 1055.000000 S 4739.250000 1055.000000 4739.250000 1065.000000 L 4739.250000 4258.000000 S 4739.250000 4268.000000 4749.250000 4268.000000 L 8957.375000 4268.000000 S 8967.375000 4268.000000 8967.375000 4278.000000 L 8967.375000 4543.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="4739.500000" y="3753.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Trace (optional)</text></g><g id="services.(vector_store -&gt; vector_store.prod_alt)[0]"><path d="M 10010.250000 3181.000000 L 10010.250000 3461.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="10010.000000" y="3328.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Managed vector alt</text></g><g id="services.(onenote_service -&gt; onenote_service.prod_ingest)[0]"><path d="M 12995.000000 2502.000000 L 12995.000000 2782.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="12995.500000" y="2649.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Enterprise ingestion</text></g><g id="data_layer.(chromadb -&gt; managed_vector)[0]"><path d="M 12974.994275 4564.999992 L 12974.653626 4684.000041 S 12974.625000 4694.000000 12964.625000 4694.000000 L 12224.125000 4694.000000 S 12214.125000 4694.000000 12214.111111 4703.999990 L 12214.005556 4780.000004" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="12615.000000" y="4700.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Prod vector store</text></g><g id="data_layer.(sqlite_db -&gt; managed_db)[0]"><path d="M 11696.001381 4565.000000 L 11696.118094 4734.000002 S 11696.125000 4744.000000 11706.125000 4744.000000 L 12446.625000 4744.000000 S 12456.625000 4744.000000 12456.718746 4753.999561 L 12456.962502 4780.000176" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="12005.500000" y="4750.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Prod relational store</text></g><g id="external_integrations.(openai_integration -&gt; openai_integration.azure_openai)[0]"><path d="M 7498.875000 4315.000000 L 7498.875000 4725.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="7498.500000" y="4527.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Enterprise LLM</text></g><g id="external_integrations.(langsmith_integration -&gt; app_insights)[0]"><path d="M 8967.375000 4714.000000 L 8967.375000 5108.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="8967.000000" y="4918.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Azure-native telemetry</text></g><g id="(config.config_py -&gt; services)[0]"><path d="M 13684.000000 2031.000000 L 13684.000000 2316.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="13684.000000" y="2180.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Provide configuration</text></g><g id="config.(env_file -&gt; config_py)[0]"><path d="M 14654.375000 1504.000000 L 14654.375000 1659.000000" stroke="#0D32B2" fill="none" class="connection stroke-B1" style="stroke-width:2;" marker-end="url(#mk-3488378134)" mask="url(#d2-180374736)" /><text x="14654.500000" y="1588.000000" fill="#676C7E" class="text-italic fill-N2" style="text-anchor:middle;font-size:16px">Load settings</text></g><mask id="d2-180374736" maskUnits="userSpaceOnUse" x="-89" y="-140" width="16436" height="5569">
+<rect x="-89" y="-140" width="16436" height="5569" fill="white"></rect>
+<rect x="7903.000000" y="-39.000000" width="452" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7661.000000" y="112.000000" width="202" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7284.000000" y="649.000000" width="224" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9385.000000" y="1533.000000" width="258" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="10435.500000" y="2325.000000" width="155" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1726.500000" y="17.000000" width="142" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14573.500000" y="1191.000000" width="160" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12679.500000" y="4083.000000" width="150" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7848.000000" y="4083.000000" width="243" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5705.500000" y="117.000000" width="253" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4228.500000" y="117.000000" width="248" height="36" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6889.000000" y="262.000000" width="81" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8012.000000" y="162.000000" width="155" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6825.500000" y="749.000000" width="208" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7617.500000" y="699.000000" width="115" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8088.000000" y="799.000000" width="107" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6515.500000" y="1683.000000" width="132" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7557.500000" y="1583.000000" width="134" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9098.000000" y="1783.000000" width="156" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="10511.500000" y="1783.000000" width="178" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11899.500000" y="1783.000000" width="164" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8102.500000" y="2666.000000" width="108" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6233.000000" y="3255.000000" width="161" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8950.500000" y="3184.000000" width="191" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9790.500000" y="2505.000000" width="203" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11955.500000" y="2505.000000" width="161" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14544.000000" y="2666.000000" width="154" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13734.500000" y="3305.000000" width="165" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15334.000000" y="3305.000000" width="180" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1716.000000" y="67.000000" width="163" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14607.500000" y="1668.000000" width="92" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14633.000000" y="1241.000000" width="41" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11614.000000" y="4311.000000" width="164" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12920.500000" y="4311.000000" width="108" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12120.500000" y="4844.500000" width="187" height="37" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12372.500000" y="4844.500000" width="168" height="37" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13952.500000" y="4263.000000" width="161" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7071.500000" y="4318.000000" width="120" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8049.500000" y="4318.000000" width="158" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8913.500000" y="4551.000000" width="106" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8813.500000" y="5117.000000" width="306" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5748.000000" y="167.000000" width="168" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3907.000000" y="167.000000" width="231" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4585.500000" y="167.000000" width="293" height="31" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6684.500000" y="329.500000" width="141" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6890.500000" y="329.500000" width="87" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7042.500000" y="329.500000" width="132" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7803.000000" y="212.000000" width="61" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8574.000000" y="212.000000" width="84" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6636.500000" y="816.500000" width="121" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6822.500000" y="816.500000" width="34" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6921.500000" y="816.500000" width="132" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7118.500000" y="816.500000" width="104" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7601.000000" y="749.000000" width="148" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8127.500000" y="866.500000" width="28" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6419.500000" y="1750.500000" width="110" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6594.500000" y="1750.500000" width="149" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7555.500000" y="1633.000000" width="138" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8505.500000" y="1850.500000" width="121" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8691.500000" y="1850.500000" width="164" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8920.500000" y="1850.500000" width="164" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9149.500000" y="1850.500000" width="131" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9345.500000" y="1850.500000" width="188" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9598.500000" y="1850.500000" width="248" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="10011.500000" y="1850.500000" width="143" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="10219.500000" y="1850.500000" width="174" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="10458.500000" y="1850.500000" width="197" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="10720.500000" y="1850.500000" width="199" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="10984.500000" y="1850.500000" width="205" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11354.500000" y="1850.500000" width="204" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11623.500000" y="1850.500000" width="187" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11875.500000" y="1850.500000" width="170" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12110.500000" y="1850.500000" width="171" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12346.500000" y="1850.500000" width="262" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7438.500000" y="2783.500000" width="165" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7982.500000" y="2716.000000" width="127" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8623.000000" y="2716.000000" width="117" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4902.500000" y="3422.500000" width="196" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6397.500000" y="3305.000000" width="93" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7889.500000" y="3301.500000" width="177" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8493.000000" y="3234.000000" width="127" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9438.000000" y="3234.000000" width="74" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9926.000000" y="3470.000000" width="168" height="46" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9039.500000" y="2622.500000" width="236" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9568.000000" y="2555.000000" width="127" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="10340.000000" y="2555.000000" width="52" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="10909.500000" y="2622.500000" width="203" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11614.500000" y="2555.000000" width="127" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12504.000000" y="2555.000000" width="122" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12890.000000" y="2791.000000" width="210" height="46" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13615.500000" y="2783.500000" width="201" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14306.000000" y="2716.000000" width="127" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15214.000000" y="2716.000000" width="121" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13073.500000" y="3422.500000" width="151" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13607.500000" y="3355.000000" width="127" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14313.500000" y="3355.000000" width="51" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14725.500000" y="3422.500000" width="164" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15230.000000" y="3355.000000" width="127" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15842.500000" y="3355.000000" width="135" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="134.500000" y="234.500000" width="87" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="498.500000" y="117.000000" width="87" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1149.500000" y="117.000000" width="165" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1873.500000" y="117.000000" width="118" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2508.500000" y="117.000000" width="141" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3166.000000" y="117.000000" width="88" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14275.000000" y="1718.000000" width="270" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15578.000000" y="1768.000000" width="197" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14495.500000" y="1291.000000" width="69" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15104.500000" y="1358.500000" width="182" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11185.500000" y="4419.500000" width="183" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11787.000000" y="4352.000000" width="66" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12371.500000" y="4419.500000" width="188" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13013.500000" y="4352.000000" width="175" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13742.500000" y="4330.500000" width="219" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14026.500000" y="4330.500000" width="138" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14229.500000" y="4330.500000" width="94" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6694.000000" y="4498.000000" width="202" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7142.000000" y="4498.000000" width="149" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7409.000000" y="4734.000000" width="178" height="46" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7797.500000" y="4435.500000" width="121" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8179.000000" y="4368.000000" width="85" height="26" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8624.500000" y="4618.500000" width="181" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8870.500000" y="4618.500000" width="110" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9045.500000" y="4618.500000" width="263" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8900.500000" y="5184.500000" width="133" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5244.500000" y="234.500000" width="182" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5491.500000" y="234.500000" width="205" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5761.500000" y="234.500000" width="231" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6057.500000" y="234.500000" width="130" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6252.500000" y="234.500000" width="167" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3725.500000" y="234.500000" width="99" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3889.500000" y="234.500000" width="248" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4202.500000" y="234.500000" width="117" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4484.500000" y="234.500000" width="213" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="4762.500000" y="234.500000" width="217" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7389.500000" y="279.500000" width="168" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7622.500000" y="279.500000" width="122" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7809.500000" y="279.500000" width="166" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8040.500000" y="279.500000" width="237" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8442.500000" y="279.500000" width="131" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8638.500000" y="279.500000" width="151" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7437.500000" y="816.500000" width="196" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7698.500000" y="816.500000" width="27" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7790.500000" y="816.500000" width="27" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7882.500000" y="816.500000" width="30" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7319.500000" y="1683.000000" width="36" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8012.500000" y="1683.000000" width="47" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7718.500000" y="2783.500000" width="178" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7961.500000" y="2783.500000" width="193" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8219.500000" y="2783.500000" width="154" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8538.500000" y="2783.500000" width="138" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8741.500000" y="2783.500000" width="83" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5339.000000" y="3355.000000" width="62" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5830.500000" y="3355.000000" width="62" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6358.500000" y="3355.000000" width="138" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6924.000000" y="3355.000000" width="76" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7437.500000" y="3355.000000" width="65" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8181.500000" y="3301.500000" width="137" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8383.500000" y="3301.500000" width="178" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8626.500000" y="3301.500000" width="120" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8811.500000" y="3301.500000" width="120" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9096.500000" y="3301.500000" width="158" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9319.500000" y="3301.500000" width="139" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9523.500000" y="3301.500000" width="137" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9725.500000" y="3301.500000" width="128" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9867.500000" y="3543.500000" width="285" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9390.500000" y="2622.500000" width="116" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9571.500000" y="2622.500000" width="94" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="9730.500000" y="2622.500000" width="142" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="10037.500000" y="2622.500000" width="138" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="10240.500000" y="2622.500000" width="164" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="10469.500000" y="2622.500000" width="225" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11227.500000" y="2622.500000" width="178" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11470.500000" y="2622.500000" width="228" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11763.500000" y="2622.500000" width="141" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11969.500000" y="2622.500000" width="159" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12293.500000" y="2622.500000" width="174" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12532.500000" y="2622.500000" width="304" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12877.500000" y="2864.500000" width="235" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13931.500000" y="2783.500000" width="102" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14098.500000" y="2783.500000" width="231" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14394.500000" y="2783.500000" width="195" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14654.500000" y="2783.500000" width="153" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14972.500000" y="2783.500000" width="604" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13339.500000" y="3422.500000" width="169" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13573.500000" y="3422.500000" width="182" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13820.500000" y="3422.500000" width="182" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14167.500000" y="3422.500000" width="343" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15004.500000" y="3422.500000" width="127" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15196.500000" y="3422.500000" width="127" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15388.500000" y="3422.500000" width="194" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15747.500000" y="3422.500000" width="103" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15915.500000" y="3422.500000" width="157" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="523.500000" y="167.000000" width="37" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1213.500000" y="167.000000" width="37" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1914.000000" y="167.000000" width="37" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2560.500000" y="167.000000" width="37" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3191.500000" y="167.000000" width="37" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13774.500000" y="1768.000000" width="52" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14755.000000" y="1768.000000" width="37" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15515.500000" y="1835.500000" width="322" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14070.500000" y="1358.500000" width="121" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14256.500000" y="1358.500000" width="158" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14479.500000" y="1358.500000" width="181" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14725.500000" y="1358.500000" width="264" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11483.500000" y="4419.500000" width="448" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="11996.500000" y="4419.500000" width="160" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12674.500000" y="4419.500000" width="216" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="12955.500000" y="4419.500000" width="143" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13163.500000" y="4419.500000" width="180" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13408.500000" y="4419.500000" width="119" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6679.500000" y="4565.500000" width="33" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6777.500000" y="4565.500000" width="133" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7075.500000" y="4565.500000" width="142" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7282.500000" y="4565.500000" width="75" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7413.500000" y="4807.500000" width="169" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8033.500000" y="4435.500000" width="173" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8271.500000" y="4435.500000" width="138" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7008.500000" y="1750.500000" width="43" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7116.500000" y="1750.500000" width="197" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7378.500000" y="1750.500000" width="101" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7544.500000" y="1750.500000" width="122" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7831.500000" y="1750.500000" width="43" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7939.500000" y="1750.500000" width="83" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8087.500000" y="1750.500000" width="43" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="8195.500000" y="1750.500000" width="45" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5263.500000" y="3422.500000" width="213" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="5641.500000" y="3422.500000" width="440" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6246.500000" y="3422.500000" width="362" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6773.500000" y="3422.500000" width="377" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="7315.500000" y="3422.500000" width="309" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="386.500000" y="234.500000" width="21" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="472.500000" y="234.500000" width="21" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="558.500000" y="234.500000" width="139" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="962.500000" y="234.500000" width="21" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1048.500000" y="234.500000" width="21" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1134.500000" y="234.500000" width="21" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1220.500000" y="234.500000" width="65" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1350.500000" y="234.500000" width="65" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1480.500000" y="234.500000" width="21" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1766.500000" y="234.500000" width="21" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1852.500000" y="234.500000" width="21" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="1938.500000" y="234.500000" width="20" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2023.500000" y="234.500000" width="75" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2363.500000" y="234.500000" width="21" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2449.500000" y="234.500000" width="21" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2535.500000" y="234.500000" width="31" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2631.500000" y="234.500000" width="67" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="2763.500000" y="234.500000" width="31" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3059.500000" y="234.500000" width="34" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3158.500000" y="234.500000" width="21" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3244.500000" y="234.500000" width="20" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="3329.500000" y="234.500000" width="31" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13519.500000" y="1835.500000" width="57" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13641.500000" y="1835.500000" width="160" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="13866.500000" y="1835.500000" width="215" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14246.500000" y="1835.500000" width="108" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14419.500000" y="1835.500000" width="130" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14614.500000" y="1835.500000" width="195" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="14874.500000" y="1835.500000" width="136" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15075.500000" y="1835.500000" width="112" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="15252.500000" y="1835.500000" width="48" height="21" fill="rgba(0,0,0,0.75)"></rect>
+<rect x="6901.000000" y="573.000000" width="57" height="21" fill="black"></rect>
+<rect x="8095.000000" y="1234.000000" width="94" height="21" fill="black"></rect>
+<rect x="8106.000000" y="2293.000000" width="102" height="21" fill="black"></rect>
+<rect x="11687.000000" y="2450.000000" width="109" height="21" fill="black"></rect>
+<rect x="11888.000000" y="2400.000000" width="127" height="21" fill="black"></rect>
+<rect x="13066.000000" y="2265.000000" width="97" height="21" fill="black"></rect>
+<rect x="6992.000000" y="3038.000000" width="143" height="21" fill="black"></rect>
+<rect x="8367.000000" y="3043.000000" width="107" height="21" fill="black"></rect>
+<rect x="10965.000000" y="4023.000000" width="90" height="21" fill="black"></rect>
+<rect x="13762.000000" y="3103.000000" width="112" height="21" fill="black"></rect>
+<rect x="15372.000000" y="3103.000000" width="106" height="21" fill="black"></rect>
+<rect x="12727.000000" y="3923.000000" width="101" height="21" fill="black"></rect>
+<rect x="14569.000000" y="3772.000000" width="60" height="21" fill="black"></rect>
+<rect x="7821.000000" y="4208.000000" width="129" height="21" fill="black"></rect>
+<rect x="7552.000000" y="4158.000000" width="119" height="21" fill="black"></rect>
+<rect x="10021.000000" y="3973.000000" width="80" height="21" fill="black"></rect>
+<rect x="4688.000000" y="3737.000000" width="103" height="21" fill="black"></rect>
+<rect x="9946.000000" y="3312.000000" width="128" height="21" fill="black"></rect>
+<rect x="12930.000000" y="2633.000000" width="131" height="21" fill="black"></rect>
+<rect x="12559.000000" y="4684.000000" width="112" height="21" fill="black"></rect>
+<rect x="11938.000000" y="4734.000000" width="135" height="21" fill="black"></rect>
+<rect x="7450.000000" y="4511.000000" width="97" height="21" fill="black"></rect>
+<rect x="8892.000000" y="4902.000000" width="150" height="21" fill="black"></rect>
+<rect x="13613.000000" y="2164.000000" width="142" height="21" fill="black"></rect>
+<rect x="14610.000000" y="1572.000000" width="89" height="21" fill="black"></rect>
+</mask></svg></svg>

@@ -1,0 +1,76 @@
+# Architecture Overview (Summary)
+
+direction: right
+
+title: {
+  label: "High-Level Flow (Lite View)"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 22
+    bold: true
+  }
+}
+
+user: "Business User" {
+  shape: person
+  style.fill: "#E3F2FD"
+}
+
+web_app: "Web App\nReact + Vite" {
+  shape: rectangle
+  style.fill: "#FFF3E0"
+}
+
+api_layer: "API Layer\nFastAPI + LangChain" {
+  shape: rectangle
+  style.fill: "#E8F5E9"
+}
+
+data_ai: "Data & AI\nSQLite + Chroma + OpenAI" {
+  shape: rectangle
+  style.fill: "#F3E5F5"
+}
+
+observability: "Observability\nLangSmith Logging" {
+  shape: rectangle
+  style.fill: "#E1F5FE"
+}
+
+# Alternatives
+web_alt: "Alt: Next.js + Azure AD B2C" {
+  style.stroke-dash: 3
+  style.fill: "#FFFBEA"
+}
+
+api_alt: "Alt: Azure Functions + API Management" {
+  style.stroke-dash: 3
+  style.fill: "#E0F7FA"
+}
+
+data_alt: "Alt: Azure SQL + Azure AI Search" {
+  style.stroke-dash: 3
+  style.fill: "#FFFDE7"
+}
+
+source_alt: "Alt Source: Databricks / SharePoint Export" {
+  style.stroke-dash: 3
+  style.fill: "#FCE4EC"
+}
+
+observability_alt: "Alt: Azure Monitor + App Insights" {
+  style.stroke-dash: 3
+  style.fill: "#E1F5FE"
+}
+
+# Flow
+user -> web_app: "Browser"
+web_app -> api_layer: "REST / WebSocket"
+api_layer -> data_ai: "Queries + indexing"
+data_ai -> observability: "Emit metrics"
+
+web_app -> web_alt: "Enterprise UI"
+api_layer -> api_alt: "Managed compute"
+data_ai -> data_alt: "Production data plane"
+api_layer -> source_alt: "Enterprise ingestion"
+observability -> observability_alt: "Azure native"

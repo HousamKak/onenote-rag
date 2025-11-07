@@ -1,0 +1,214 @@
+# OneNote RAG System - Architecture Overview
+
+direction: right
+
+title: {
+  label: "OneNote RAG System - High-Level Architecture"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 24
+    bold: true
+  }
+}
+
+user: User {
+  shape: person
+  style.fill: "#E3F2FD"
+}
+
+frontend: Frontend Layer {
+  style.fill: "#FFF3E0"
+  
+  react: React + TypeScript {
+    shape: rectangle
+    style.fill: "#61DAFB"
+  }
+  
+  vite: Vite Build Tool {
+    shape: rectangle
+    style.fill: "#646CFF"
+  }
+  
+  components: UI Components {
+    chat: Chat Interface
+    settings: Settings Management
+    config: RAG Configuration
+    compare: Technique Comparison
+    index: Document Indexing
+  }
+  
+  state: State Management {
+    zustand: Zustand Store
+    theme: Theme Context
+  }
+  
+  routing: React Router {
+    shape: rectangle
+  }
+  
+  frontend_alt: "Prod-ready Alt:\nNext.js + Azure AD B2C" {
+    shape: rectangle
+    style.stroke-dash: 3
+    style.fill: "#FFFBEA"
+  }
+}
+
+backend: Backend Layer {
+  style.fill: "#E8F5E9"
+  
+  fastapi: FastAPI Server {
+    shape: rectangle
+    style.fill: "#009688"
+  }
+  
+  api: API Routes {
+    query: /api/query
+    settings: /api/settings
+    documents: /api/documents
+    onenote: /api/onenote
+    health: /api/health
+  }
+  
+  services: Core Services {
+    rag: RAG Engine
+    vector: Vector Store Service
+    processor: Document Processor
+    onenote_svc: OneNote Service
+    settings_svc: Settings Service
+  }
+  
+  backend_alt: "Prod-ready Alt:\nAzure Functions + APIM" {
+    shape: rectangle
+    style.stroke-dash: 3
+    style.fill: "#E0F7FA"
+  }
+}
+
+data: Data Layer {
+  style.fill: "#F3E5F5"
+  
+  sqlite: SQLite Database {
+    shape: cylinder
+    settings_tbl: Settings Table (encrypted)
+  }
+  
+  sqlite_alt: "Prod Alt:\nAzure SQL / PostgreSQL + pgvector" {
+    shape: cylinder
+    style.stroke-dash: 3
+    style.fill: "#FFFDE7"
+  }
+  
+  chromadb: ChromaDB {
+    shape: cylinder
+    embeddings: Vector Embeddings
+    metadata: Document Metadata
+  }
+  
+  chromadb_alt: "Prod Alt:\nAzure AI Search / Pinecone" {
+    shape: cylinder
+    style.stroke-dash: 3
+    style.fill: "#FFFDE7"
+  }
+  
+  encryption: Encryption Key {
+    shape: rectangle
+    style.fill: "#FF5722"
+    key_file: .encryption_key
+  }
+}
+
+external: External Services {
+  style.fill: "#FCE4EC"
+  
+  openai: OpenAI API {
+    shape: cloud
+    style.fill: "#10A37F"
+    embeddings_api: text-embedding-3-small
+    llm_api: GPT-4/GPT-3.5
+  }
+  
+  azure_openai: "Azure OpenAI Service" {
+    shape: cloud
+    style.stroke-dash: 3
+    style.fill: "#DFF7F5"
+    note: "Regional compliance + managed keys"
+  }
+  
+  msgraph: Microsoft Graph API {
+    shape: cloud
+    style.fill: "#0078D4"
+    onenote_api: OneNote API
+    auth: OAuth 2.0
+  }
+  
+  databricks: "Databricks Lakehouse (Enterprise Source)" {
+    shape: cloud
+    style.stroke-dash: 3
+    style.fill: "#F3E5F5"
+    ingest: "Delta tables / Unity Catalog"
+  }
+  
+  langsmith: LangSmith {
+    shape: cloud
+    style.fill: "#1C3C3C"
+    tracing: Request Tracing
+    analytics: Analytics
+  }
+  
+  app_insights: "Azure Application Insights" {
+    shape: cloud
+    style.stroke-dash: 3
+    style.fill: "#E1F5FE"
+    features: "Tracing + metrics"
+  }
+}
+
+# User interactions
+user -> frontend.react: "Interacts via browser"
+
+# Frontend to Backend
+frontend.components.chat -> backend.api.query: "POST /api/query\n(RAG queries)"
+frontend.components.settings -> backend.api.settings: "GET/PUT /api/settings\n(Manage API keys)"
+frontend.components.index -> backend.api.documents: "POST /api/documents/index\n(Index OneNote)"
+frontend.components.config -> backend.api.query: "POST /api/query\n(with technique config)"
+
+# Backend internal flow
+backend.api.query -> backend.services.rag: "Process query"
+backend.api.settings -> backend.services.settings_svc: "Manage settings"
+backend.api.documents -> backend.services.onenote_svc: "Fetch documents"
+
+# Services to Data
+backend.services.rag -> data.chromadb: "Retrieve embeddings\n& search vectors"
+backend.services.vector -> data.chromadb: "Store/Query vectors"
+backend.services.processor -> data.chromadb: "Add document chunks"
+backend.services.settings_svc -> data.sqlite: "Read/Write encrypted settings"
+backend.services.settings_svc -> data.encryption: "Encrypt/Decrypt API keys"
+
+# External API calls
+backend.services.rag -> external.openai.llm_api: "Generate answers"
+backend.services.vector -> external.openai.embeddings_api: "Create embeddings"
+backend.services.onenote_svc -> external.msgraph.onenote_api: "Fetch OneNote pages"
+backend.fastapi -> external.langsmith: "Trace requests\n(if enabled)"
+data.sqlite -> data.sqlite_alt: "Scale prod DB"
+data.chromadb -> data.chromadb_alt: "Managed vector search"
+external.msgraph -> external.databricks: "Enterprise ingestion"
+external.openai -> external.azure_openai: "Enterprise compliance"
+external.langsmith -> external.app_insights: "Azure-native monitoring"
+frontend.react -> frontend.frontend_alt: "Enterprise SPA option"
+backend.fastapi -> backend.backend_alt: "Serverless / managed API option"
+
+# Notes
+notes: Production Alternatives {
+  shape: rectangle
+  style.fill: "#FFF9C4"
+  style.stroke-dash: 3
+  
+  db_options: "Database:\n• PostgreSQL + pgvector\n• Pinecone\n• Weaviate\n• Qdrant"
+  
+  cache_options: "Caching:\n• Redis\n• Memcached"
+  
+  auth_options: "Auth:\n• Auth0\n• Azure AD B2C\n• Clerk"
+  
+  deployment: "Deployment:\n• Docker + K8s\n• Azure Container Apps\n• AWS ECS/Fargate"
+}

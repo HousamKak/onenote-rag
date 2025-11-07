@@ -1,0 +1,48 @@
+# Backend Architecture (Summary)
+
+direction: right
+
+title: {
+  label: "API + Services (Lite View)"
+  near: top-center
+  shape: text
+  style: {
+    font-size: 22
+    bold: true
+  }
+}
+
+gateway: "API Gateway\nFastAPI + Uvicorn"
+services: "Core Services\nRAG Engine + Vector Store + OneNote Service"
+storage: "Storage\nSQLite + ChromaDB"
+ai: "AI Providers\nOpenAI (LLM + Embeddings)"
+monitoring: "Monitoring\nLangSmith traces"
+
+gateway -> services -> storage
+services -> ai
+services -> monitoring
+
+# Alternatives
+gateway_alt: "Alt: Azure Functions + API Management"
+storage_alt: "Alt: Azure SQL + Azure AI Search"
+ai_alt: "Alt: Azure OpenAI / Claude"
+source_alt: "Alt Source: Databricks ingestion"
+monitoring_alt: "Alt: Azure App Insights"
+
+gateway_alt.style.stroke-dash: 3
+storage_alt.style.stroke-dash: 3
+ai_alt.style.stroke-dash: 3
+source_alt.style.stroke-dash: 3
+monitoring_alt.style.stroke-dash: 3
+
+gateway_alt.style.fill: "#E0F7FA"
+storage_alt.style.fill: "#FFFDE7"
+ai_alt.style.fill: "#DFF7F5"
+source_alt.style.fill: "#FCE4EC"
+monitoring_alt.style.fill: "#E1F5FE"
+
+gateway -> gateway_alt: "Managed platform"
+storage -> storage_alt: "Enterprise data"
+ai -> ai_alt: "Compliance"
+services -> source_alt: "Enterprise ingestion"
+monitoring -> monitoring_alt: "Azure native"
