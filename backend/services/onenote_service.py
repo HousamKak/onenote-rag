@@ -1,5 +1,19 @@
 """
 OneNote service for interacting with Microsoft Graph API.
+
+Rate Limiting Strategy for Large Sections (e.g., 125+ pages):
+---------------------------------------------------------
+1. Minimum 500ms delay between all API requests
+2. Automatic pagination support for list_pages()
+3. Handles 429 (Too Many Requests) with:
+   - Retry-After header detection
+   - 60s default wait time
+   - Up to 3 retry attempts per request
+4. Extra 200ms delay for datasets > 50 pages
+5. Exponential backoff for 5xx server errors
+
+This allows safe sync of sections with 125+ pages without hitting
+Microsoft Graph API rate limits (typically 600 requests/minute).
 """
 import logging
 import time
@@ -13,12 +27,12 @@ logger = logging.getLogger(__name__)
  
  
 class OneNoteService:
-    """Service for interacting with OneNote via Microsoft Graph API."""
+    """Service for interacting with OneNote via Microsoft Graph API with rate limiting."""
  
     GRAPH_API_ENDPOINT = "https://graph.microsoft.com/v1.0"
     
     # Rate limiting configuration
-    MIN_REQUEST_INTERVAL = 0.5  # Minimum 500ms between requests
+    MIN_REQUEST_INTERVAL = 0.5  # Minimum 500ms between requests (120 req/min max)
     RATE_LIMIT_RETRY_DELAY = 60  # Wait 60s on 429 error
     MAX_RATE_LIMIT_RETRIES = 3  # Max retries for 429 errors
  
