@@ -48,6 +48,7 @@ const ChatPage = () => {
         content: response.data.answer,
         metadata: response.data.metadata,
         sources: response.data.sources,
+        images: response.data.images,
       });
     },
     onError: (error) => {
