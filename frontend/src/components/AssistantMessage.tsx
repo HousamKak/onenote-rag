@@ -4,26 +4,26 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useTheme } from '../context/ThemeContext';
 import type { Message } from '../types/index';
-
+ 
 interface AssistantMessageProps {
   message: Message;
 }
-
+ 
 const AssistantMessage = ({ message }: AssistantMessageProps) => {
   const { theme } = useTheme();
   const [showSources, setShowSources] = useState(false);
   const [showMetadata, setShowMetadata] = useState(false);
   const [copied, setCopied] = useState(false);
-
+ 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(message.content);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-
+ 
   const hasSources = message.sources && message.sources.length > 0;
   const hasMetadata = message.metadata;
-
+ 
   if (theme === 'claude') {
     return (
       <div className="flex items-start max-w-3xl animate-fadeInUp">
@@ -53,7 +53,44 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
                 {message.content}
               </ReactMarkdown>
             </div>
-
+ 
+            {/* Display images if present */}
+            {message.images && message.images.length > 0 && (
+              <div className="mt-4 space-y-2">
+                <h4 className="text-sm font-semibold text-claude-text-secondary">
+                  Related Images ({message.images.length})
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {message.images.map((img, idx) => (
+                    <div
+                      key={idx}
+                      className="border border-claude-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                      onClick={() => window.open(
+                        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${img.public_url}`,
+                        '_blank'
+                      )}
+                    >
+                      <img
+                        src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${img.public_url}`}
+                        alt={img.page_title}
+                        className="w-full h-auto object-contain bg-claude-bg"
+                        loading="lazy"
+                        style={{ maxHeight: '300px' }}
+                      />
+                      <div className="p-2 bg-claude-bg border-t border-claude-border">
+                        <p className="text-xs text-claude-text truncate" title={img.page_title}>
+                          📄 {img.page_title}
+                        </p>
+                        <p className="text-xs text-claude-text-secondary">
+                          Image {img.image_index + 1}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+ 
             {/* Action buttons */}
             <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
               <button
@@ -63,7 +100,7 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
               >
                 {copied ? <Check size={16} /> : <Copy size={16} />}
               </button>
-
+ 
               {hasMetadata && message.metadata && (
                 <button
                   onClick={() => setShowMetadata(!showMetadata)}
@@ -74,7 +111,7 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
                   {showMetadata ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                 </button>
               )}
-
+ 
               {hasSources && message.sources && (
                 <button
                   onClick={() => setShowSources(!showSources)}
@@ -85,7 +122,7 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
                 </button>
               )}
             </div>
-
+ 
             {/* Expanded Metadata */}
             {showMetadata && hasMetadata && message.metadata && (
               <div className="mt-3 pt-3 border-t border-gray-100 space-y-2">
@@ -113,7 +150,7 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
               </div>
             )}
           </div>
-
+ 
           {/* Sources Section */}
           {showSources && hasSources && message.sources && (
             <div className="mt-3 space-y-2">
@@ -159,14 +196,14 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
       </div>
     );
   }
-
+ 
   // Brutalist theme
   return (
     <div className="flex items-start gap-4 max-w-3xl animate-fadeInUp">
       <div className="w-12 h-12 bg-neo-pink border-4 border-neo-black shadow-brutal-sm flex items-center justify-center flex-shrink-0 animate-bounce">
         <span className="text-neo-black text-lg font-black">AI</span>
       </div>
-
+ 
       <div className="flex-1 min-w-0">
         <div className="bg-white border-4 border-neo-black shadow-brutal px-5 py-4">
           <div className="prose max-w-none">
@@ -190,7 +227,44 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
               {message.content}
             </ReactMarkdown>
           </div>
-
+ 
+          {/* Display images if present */}
+          {message.images && message.images.length > 0 && (
+            <div className="mt-4 space-y-3">
+              <h4 className="text-sm font-black text-neo-black uppercase bg-neo-yellow px-2 py-1 border-2 border-neo-black inline-block">
+                Related Images ({message.images.length})
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {message.images.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className="border-4 border-neo-black shadow-brutal overflow-hidden hover:shadow-brutal-lg transition-all cursor-pointer hover:translate-x-1 hover:translate-y-1"
+                    onClick={() => window.open(
+                      `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${img.public_url}`,
+                      '_blank'
+                    )}
+                  >
+                    <img
+                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${img.public_url}`}
+                      alt={img.page_title}
+                      className="w-full h-auto object-contain bg-white"
+                      loading="lazy"
+                      style={{ maxHeight: '300px' }}
+                    />
+                    <div className="p-3 bg-neo-cyan border-t-4 border-neo-black">
+                      <p className="text-xs font-bold text-neo-black truncate" title={img.page_title}>
+                        📄 {img.page_title.toUpperCase()}
+                      </p>
+                      <p className="text-xs font-semibold text-neo-black">
+                        IMAGE {img.image_index + 1}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+ 
           {/* Action buttons */}
           <div className="flex items-center gap-2 mt-4 pt-4 border-t-4 border-neo-black">
             <button
@@ -200,7 +274,7 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
             >
               {copied ? <Check size={18} strokeWidth={3} /> : <Copy size={18} strokeWidth={3} />}
             </button>
-
+ 
             {hasMetadata && message.metadata && (
               <button
                 onClick={() => setShowMetadata(!showMetadata)}
@@ -211,7 +285,7 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
                 {showMetadata ? <ChevronUp size={16} strokeWidth={3} /> : <ChevronDown size={16} strokeWidth={3} />}
               </button>
             )}
-
+ 
             {hasSources && message.sources && (
               <button
                 onClick={() => setShowSources(!showSources)}
@@ -222,7 +296,7 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
               </button>
             )}
           </div>
-
+ 
           {/* Expanded Metadata */}
           {showMetadata && hasMetadata && message.metadata && (
             <div className="mt-4 pt-4 border-t-4 border-neo-black space-y-3">
@@ -249,7 +323,7 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
             </div>
           )}
         </div>
-
+ 
         {/* Sources Section */}
         {showSources && hasSources && message.sources && (
           <div className="mt-4 space-y-3">
@@ -295,5 +369,6 @@ const AssistantMessage = ({ message }: AssistantMessageProps) => {
     </div>
   );
 };
-
+ 
 export default AssistantMessage;
+ 
