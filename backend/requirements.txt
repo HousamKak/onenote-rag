@@ -60,3 +60,4 @@ typing_extensions==4.15.0
 urllib3==2.3.0
 pydantic_core==2.41.5
 watchfiles==1.1.1
+aiofiles==24.1.0

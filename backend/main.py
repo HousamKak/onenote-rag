@@ -14,6 +14,9 @@ from services import (
     VectorStoreService,
     RAGEngine,
 )
+from services.vision_service import GPT4VisionService
+from services.image_storage import ImageStorageService
+from services.multimodal_query import MultimodalQueryHandler
 from services.database import DatabaseService
 from services.encryption import EncryptionService
 from services.settings_service import SettingsService
@@ -121,6 +124,39 @@ async def lifespan(app: FastAPI):
     )
     logger.info("Document processor initialized")
  
+    # Multimodal services (optional - only if OpenAI API key is available)
+    multimodal_handler = None
+    try:
+        openai_key = dynamic_settings.get("openai_api_key", settings.openai_api_key)
+        if openai_key:
+            # Initialize vision service
+            vision_service = GPT4VisionService(
+                api_key=openai_key,
+                default_model="gpt-4o-mini",  # Use mini for cost efficiency during indexing
+                max_tokens=1000,
+                temperature=0.0
+            )
+            logger.info("Vision service initialized")
+
+            # Initialize image storage
+            image_storage = ImageStorageService(
+                storage_type="local",
+                base_path="backend/storage/images"
+            )
+            logger.info("Image storage initialized")
+
+            # Initialize multimodal query handler
+            multimodal_handler = MultimodalQueryHandler(
+                vision_service=vision_service,
+                image_storage=image_storage
+            )
+            logger.info("Multimodal query handler initialized")
+        else:
+            logger.info("Multimodal features disabled (no OpenAI API key)")
+    except Exception as e:
+        logger.warning(f"Failed to initialize multimodal services: {str(e)}")
+        logger.warning("Continuing with text-only mode")
+
     # Vector store
     os.makedirs(settings.vector_db_path, exist_ok=True)
     routes.vector_store = VectorStoreService(
@@ -128,9 +164,12 @@ async def lifespan(app: FastAPI):
         embedding_provider=dynamic_settings.get("embedding_provider", settings.embedding_provider),
     )
     logger.info("Vector store initialized")
- 
-    # RAG engine
-    routes.rag_engine = RAGEngine(vector_store=routes.vector_store)
+
+    # RAG engine with optional multimodal support
+    routes.rag_engine = RAGEngine(
+        vector_store=routes.vector_store,
+        multimodal_handler=multimodal_handler
+    )
     logger.info("RAG engine initialized")
  
     # Auto-sync OneNote documents on startup (INCREMENTAL ONLY)

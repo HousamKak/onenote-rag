@@ -47,12 +47,23 @@ class ResponseMetadata(BaseModel):
     retrieval_k: int = Field(..., description="Number of documents retrieved")
 
 
+class ImageReference(BaseModel):
+    """Reference to an image associated with the query response."""
+
+    page_id: str = Field(..., description="OneNote page ID containing the image")
+    page_title: str = Field(..., description="Page title")
+    image_index: int = Field(..., ge=0, description="Index of image in the page")
+    image_path: str = Field(..., description="Storage path of the image")
+    public_url: str = Field(..., description="Public URL or API endpoint to retrieve the image")
+
+
 class QueryResponse(BaseModel):
-    """Response model for RAG queries."""
+    """Response model for RAG queries with optional multimodal content."""
 
     answer: str = Field(..., description="Generated answer")
     sources: List[Source] = Field(..., description="Source documents used")
     metadata: ResponseMetadata = Field(..., description="Response metadata")
+    images: Optional[List[ImageReference]] = Field(default=None, description="Images related to the answer (for visual queries)")
 
     class Config:
         json_schema_extra = {

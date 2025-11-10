@@ -1,0 +1,501 @@
+title: Document Integrity - How page_id Links Everything
+
+direction: right
+
+# Source Document
+source: OneNote Page ABC123 {
+  style: {
+    fill: "#e3f2fd"
+    stroke: "#1976d2"
+    stroke-width: 3
+  }
+
+  header: Document Header {
+    shape: rectangle
+    style.fill: "#bbdefb"
+    id: "page_id: ABC123" {
+      style: {
+        bold: true
+        font-size: 18
+      }
+    }
+    title: "Architecture Overview"
+  }
+
+  components: Document Components {
+    text: Text Content {
+      shape: page
+      style.fill: "#e3f2fd"
+      content: |md
+        This describes our
+        system architecture
+        with microservices...
+        (800 words)
+      |
+    }
+
+    images: Images (2) {
+      shape: rectangle
+      style.fill: "#e3f2fd"
+      img1: "diagram.png"
+      img2: "screenshot.png"
+    }
+
+    metadata: Metadata {
+      shape: rectangle
+      style.fill: "#e3f2fd"
+      meta: |md
+        Notebook: Engineering
+        Tags: important
+        Author: John Doe
+      |
+    }
+  }
+}
+
+# After Processing - Everything has page_id
+after_process: After Processing - Everything Linked by page_id {
+  style: {
+    stroke-width: 2
+    stroke: "#4caf50"
+  }
+
+  vector_chunks: Vector Database {
+    shape: cylinder
+    style: {
+      fill: "#c8e6c9"
+      stroke: "#2e7d32"
+    }
+
+    chunk1: Chunk 1 {
+      shape: rectangle
+      style.fill: "#a5d6a7"
+
+      data: |md
+        **page_id: "ABC123"** 🔑
+        page_title: "Architecture Overview"
+        chunk_index: 0
+        total_chunks: 3
+        has_images: true
+        image_count: 2
+
+        Content: [Metadata + Text + Image desc...]
+        Embedding: [0.234, -0.456, ...]
+      |
+    }
+
+    chunk2: Chunk 2 {
+      shape: rectangle
+      style.fill: "#a5d6a7"
+
+      data: |md
+        **page_id: "ABC123"** 🔑
+        page_title: "Architecture Overview"
+        chunk_index: 1
+        total_chunks: 3
+        has_images: true
+        image_count: 2
+
+        Content: [Continuation...]
+        Embedding: [0.156, 0.322, ...]
+      |
+    }
+
+    chunk3: Chunk 3 {
+      shape: rectangle
+      style.fill: "#a5d6a7"
+
+      data: |md
+        **page_id: "ABC123"** 🔑
+        page_title: "Architecture Overview"
+        chunk_index: 2
+        total_chunks: 3
+        has_images: true
+        image_count: 2
+
+        Content: [Final part...]
+        Embedding: [0.089, -0.234, ...]
+      |
+    }
+  }
+
+  image_files: Image Storage {
+    shape: cylinder
+    style: {
+      fill: "#ffecb3"
+      stroke: "#f57f00"
+    }
+
+    file1: ABC123_0.png {
+      shape: rectangle
+      style.fill: "#ffe082"
+      desc: |md
+        📁 **ABC123_0.png**
+        (diagram.png)
+
+        Linked by: ABC123
+      |
+    }
+
+    file2: ABC123_1.png {
+      shape: rectangle
+      style.fill: "#ffe082"
+      desc: |md
+        📁 **ABC123_1.png**
+        (screenshot.png)
+
+        Linked by: ABC123
+      |
+    }
+  }
+}
+
+# Query & Retrieval
+query: Query: "Show me architecture diagram" {
+  shape: oval
+  style: {
+    fill: "#f8bbd0"
+    stroke: "#c2185b"
+  }
+}
+
+search: Vector Search {
+  shape: rectangle
+  style: {
+    fill: "#fce4ec"
+    stroke: "#c2185b"
+  }
+
+  process: |md
+    Embed query → Search vectors
+    **Found:** Chunk 1 (score: 0.92)
+  |
+}
+
+reunite: Reunite Complete Document {
+  shape: rectangle
+  style: {
+    fill: "#fff9c4"
+    stroke: "#f57f17"
+    stroke-width: 3
+  }
+
+  step1: Step 1: Get All Chunks {
+    shape: rectangle
+    style.fill: "#fff59d"
+    get: |md
+      Query: metadata.page_id = "ABC123"
+      **Found:** 3 chunks (Chunk 1, 2, 3)
+      **Combined text:** Full document content
+    |
+  }
+
+  step2: Step 2: Fetch All Images {
+    shape: rectangle
+    style.fill: "#fff59d"
+    get: |md
+      Pattern: storage/images/ABC123_*.png
+      **Found:** 2 images
+      - ABC123_0.png
+      - ABC123_1.png
+    |
+  }
+
+  step3: Step 3: Reconstruct {
+    shape: rectangle
+    style.fill: "#fff59d"
+    result: |md
+      **Complete Document ABC123:**
+      ✓ Full text (all chunks combined)
+      ✓ All images (2 files)
+      ✓ Complete metadata
+      ✓ Everything together!
+    |
+  }
+}
+
+complete_doc: Complete Document Response {
+  shape: document
+  style: {
+    fill: "#e1f5fe"
+    stroke: "#0277bd"
+    stroke-width: 2
+  }
+
+  response: |md
+    **Document: Architecture Overview**
+    **page_id: ABC123**
+
+    📝 **Text Content:**
+    This describes our system architecture
+    with microservices... [full text from all chunks]
+
+    🖼️ **Images:**
+    - Image 1: Architecture Diagram (ABC123_0.png)
+    - Image 2: Deployment Screenshot (ABC123_1.png)
+
+    📊 **Metadata:**
+    - Notebook: Engineering
+    - Section: Design Docs
+    - Tags: important, architecture
+    - Author: John Doe
+
+    ✅ **Document Integrity Maintained**
+    Everything from page ABC123 together!
+  |
+}
+
+# The Magic: page_id Linking
+magic: The Magic of page_id {
+  shape: hexagon
+  style: {
+    fill: "#ffccbc"
+    stroke: "#d84315"
+    stroke-width: 4
+  }
+
+  principle: |md
+    🔑 **page_id = "ABC123"**
+
+    **In Vector DB:**
+    - Chunk 1: metadata.page_id = "ABC123"
+    - Chunk 2: metadata.page_id = "ABC123"
+    - Chunk 3: metadata.page_id = "ABC123"
+
+    **In Image Storage:**
+    - ABC123_0.png ← Named with page_id
+    - ABC123_1.png ← Named with page_id
+
+    **Result:**
+    Find ANY chunk → Know page_id
+    → Get ALL chunks + ALL images
+
+    **Documents NEVER separated!**
+  |
+}
+
+# Comparison: Wrong vs Right Approach
+comparison: ❌ Wrong vs ✅ Right Approach {
+  style: {
+    stroke: "#9e9e9e"
+    stroke-width: 2
+  }
+
+  wrong: ❌ Separate Indices (Wrong) {
+    shape: rectangle
+    style: {
+      fill: "#ffebee"
+      stroke: "#c62828"
+    }
+
+    problem: |md
+      **3 Separate Searches:**
+      1. Text index → Find text
+      2. Image index → Find images
+      3. Metadata index → Find metadata
+
+      **Problem:**
+      - How to merge results?
+      - Images separated from text
+      - Document integrity lost
+      - Complex and expensive
+    |
+  }
+
+  right: ✅ Unified Index (Right) {
+    shape: rectangle
+    style: {
+      fill: "#e8f5e9"
+      stroke: "#2e7d32"
+    }
+
+    solution: |md
+      **1 Unified Search:**
+      Text + Metadata + Image descriptions
+      embedded together with page_id
+
+      **Solution:**
+      - Single search finds everything
+      - page_id links to images
+      - Document stays together
+      - Simple and cheap
+    |
+  }
+}
+
+# Example Scenarios
+examples: Real-World Query Examples {
+  style: {
+    stroke: "#673ab7"
+  }
+
+  textquery: Scenario 1 - Text Query {
+    shape: rectangle
+    style.fill: "#ede7f6"
+
+    query: Query - How do microservices communicate {
+      style.fill: "#d1c4e9"
+    }
+
+    result: |md
+      **Search Result:**
+      Found Chunk 2 (page_id: ABC123)
+      "...communicate via message queue..."
+
+      **Retrieved:**
+      ✓ Full text (all 3 chunks)
+      ✓ 2 images available
+      ✓ Complete document
+
+      **User sees:**
+      Full answer with option to view images
+    |
+  }
+
+  visualquery: Scenario 2 - Visual Query {
+    shape: rectangle
+    style.fill: "#ede7f6"
+
+    query: Query - Show me the diagram {
+      style.fill: "#d1c4e9"
+    }
+
+    result: |md
+      **Search Result:**
+      Found Chunk 1 (page_id: ABC123)
+      "...[Image 1]: Architecture diagram..."
+
+      **Retrieved:**
+      ✓ Full text (context)
+      ✓ Fetched ABC123_0.png
+      ✓ Sent to GPT-4o Vision
+
+      **User sees:**
+      Visual answer + actual diagram displayed
+    |
+  }
+
+  metaquery: Scenario 3 - Metadata Query {
+    shape: rectangle
+    style.fill: "#ede7f6"
+
+    query: Query - Important docs from Engineering {
+      style.fill: "#d1c4e9"
+    }
+
+    result: |md
+      **Search Result:**
+      Found Chunk 1 (page_id: ABC123)
+      "...Notebook: Engineering
+       Tags: important..."
+
+      **Retrieved:**
+      ✓ Complete document ABC123
+      ✓ All text + images + metadata
+
+      **User sees:**
+      Full document matching criteria
+    |
+  }
+}
+
+# Connections - Processing
+source.header -> after_process.vector_chunks: "page_id\ninherited" {
+  style: {
+    stroke: "#4caf50"
+    stroke-width: 3
+  }
+}
+source.header -> after_process.image_files: "page_id\nin filename" {
+  style: {
+    stroke: "#f57f00"
+    stroke-width: 3
+  }
+}
+
+source.components.text -> after_process.vector_chunks.chunk1: "Split into chunks"
+source.components.images -> after_process.image_files.file1: "Stored with page_id"
+
+# Connections - Query Flow
+query -> search
+search -> after_process.vector_chunks.chunk1: "Found match" {
+  style.stroke: "#c2185b"
+}
+
+after_process.vector_chunks.chunk1 -> reunite.step1: "page_id: ABC123"
+reunite.step1 -> after_process.vector_chunks: "Get all with\npage_id=ABC123" {
+  style: {
+    stroke: "#f57f17"
+    stroke-dash: 3
+  }
+}
+
+reunite.step1 -> reunite.step2: "Know image count"
+reunite.step2 -> after_process.image_files: "Fetch ABC123_*" {
+  style: {
+    stroke: "#f57f17"
+    stroke-dash: 3
+  }
+}
+
+reunite.step2 -> reunite.step3: "All images"
+reunite.step3 -> complete_doc: "Complete\nDocument"
+
+# Magic connection
+after_process.vector_chunks -> magic: "page_id\nmetadata" {
+  style: {
+    stroke: "#d84315"
+    stroke-width: 2
+  }
+}
+after_process.image_files -> magic: "page_id\nnaming" {
+  style: {
+    stroke: "#d84315"
+    stroke-width: 2
+  }
+}
+reunite -> magic: "Uses page_id\nto reunite" {
+  style: {
+    stroke: "#d84315"
+    stroke-width: 2
+  }
+}
+
+# Key Takeaway
+takeaway: 🎯 Key Takeaway {
+  shape: rectangle
+  style: {
+    fill: "#fff3e0"
+    stroke: "#e65100"
+    stroke-width: 3
+  }
+
+  message: |md
+    **Every chunk is a "pointer" to the complete document**
+
+    When you retrieve a chunk:
+    1. Check chunk.metadata["page_id"]
+    2. Get all chunks with same page_id
+    3. Fetch all images with that page_id
+    4. Reconstruct complete document
+
+    **Document integrity is GUARANTEED!**
+
+    No matter how you search (text, metadata, or images),
+    you always get the complete document.
+  |
+}
+
+# Notes
+notes: |md
+  **Benefits:**
+  ✓ Simple architecture (1 index, not 3)
+  ✓ Single search (not multiple)
+  ✓ Document integrity maintained
+  ✓ Text + Images + Metadata always together
+  ✓ Lower cost, better performance
+| {
+  style: {
+    font-size: 14
+  }
+}

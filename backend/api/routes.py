@@ -497,6 +497,49 @@ async def get_indexed_pages(
     except Exception as e:
         logger.error(f"Error getting indexed pages: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# Multimodal / Image routes
+@router.get("/images/{page_id}/{image_index}")
+async def get_image(
+    page_id: str,
+    image_index: int
+):
+    """
+    Retrieve an image by page_id and image index.
+
+    Returns the image file directly for display.
+    """
+    try:
+        from services.image_storage import ImageStorageService
+
+        # Initialize image storage
+        image_storage = ImageStorageService(
+            storage_type="local",
+            base_path="backend/storage/images"
+        )
+
+        # Generate image path
+        image_path = image_storage.generate_image_path(page_id, image_index)
+
+        # Check if image exists
+        if not await image_storage.exists(image_path):
+            raise HTTPException(status_code=404, detail="Image not found")
+
+        # Download image
+        image_data = await image_storage.download(image_path)
+
+        if not image_data:
+            raise HTTPException(status_code=404, detail="Image not found")
+
+        from fastapi.responses import Response
+        return Response(content=image_data, media_type="image/png")
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error retrieving image: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
  
  
 # Query routes
@@ -505,12 +548,31 @@ async def query_documents(
     request: QueryRequest,
     engine: RAGEngine = Depends(get_rag_engine)
 ):
-    """Query the RAG system."""
+    """Query the RAG system (text-only, synchronous)."""
     try:
         response = engine.query(request.question, request.config)
         return response
     except Exception as e:
         logger.error(f"Error processing query: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/query/multimodal", response_model=QueryResponse)
+async def query_documents_multimodal(
+    request: QueryRequest,
+    engine: RAGEngine = Depends(get_rag_engine)
+):
+    """
+    Query the RAG system with multimodal support (text + images).
+
+    Automatically detects visual queries and includes relevant images in the response.
+    Uses the async query method for full multimodal support.
+    """
+    try:
+        response = await engine.query_async(request.question, request.config)
+        return response
+    except Exception as e:
+        logger.error(f"Error processing multimodal query: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
  
  
