@@ -120,3 +120,5 @@ dmypy.json
 backend/data/chroma_db/
 
 *.encryption_key
+
+storage
