@@ -113,6 +113,7 @@ export interface Message {
   timestamp: Date;
   metadata?: ResponseMetadata;
   sources?: Source[];
+  images?: ImageReference[];
 }
 
 export interface Conversation {
