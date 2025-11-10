@@ -4,12 +4,12 @@ import { Send, Loader2, ExternalLink, Clock, Zap } from 'lucide-react';
 import { queryApi } from '../api/client';
 import { useStore } from '../store/useStore';
 import type { QueryResponse } from '../types/index';
-
+ 
 const QueryPage = () => {
   const [question, setQuestion] = useState('');
   const currentConfig = useStore((state) => state.currentConfig);
   const addQueryToHistory = useStore((state) => state.addQueryToHistory);
-
+ 
   const queryMutation = useMutation({
     mutationFn: (question: string) =>
       queryApi.query({ question, config: currentConfig || undefined }),
@@ -17,19 +17,19 @@ const QueryPage = () => {
       addQueryToHistory(response.data);
     },
   });
-
+ 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (question.trim()) {
       queryMutation.mutate(question.trim());
     }
   };
-
+ 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="bg-white rounded-lg shadow-sm p-6">
         <h2 className="text-xl font-semibold mb-4">Ask a Question</h2>
-
+ 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <textarea
@@ -41,7 +41,7 @@ const QueryPage = () => {
               disabled={queryMutation.isPending}
             />
           </div>
-
+ 
           <div className="flex items-center justify-between">
             <div className="text-sm text-gray-600">
               {currentConfig ? (
@@ -73,12 +73,12 @@ const QueryPage = () => {
           </div>
         </form>
       </div>
-
+ 
       {/* Result */}
       {queryMutation.data && (
         <AnswerCard response={queryMutation.data.data} />
       )}
-
+ 
       {/* Error */}
       {queryMutation.error && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4">
@@ -91,7 +91,7 @@ const QueryPage = () => {
     </div>
   );
 };
-
+ 
 const AnswerCard = ({ response }: { response: QueryResponse }) => {
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -120,7 +120,7 @@ const AnswerCard = ({ response }: { response: QueryResponse }) => {
           ))}
         </div>
       </div>
-
+ 
       {/* Answer */}
       <div className="p-6">
         <h3 className="text-lg font-semibold mb-3">Answer</h3>
@@ -128,7 +128,42 @@ const AnswerCard = ({ response }: { response: QueryResponse }) => {
           {response.answer}
         </div>
       </div>
-
+ 
+      {/* Images */}
+      {response.images && response.images.length > 0 && (
+        <div className="border-t px-6 py-4">
+          <h3 className="text-lg font-semibold mb-3">Related Images ({response.images.length})</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {response.images.map((img, idx) => (
+              <div
+                key={idx}
+                className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                onClick={() => window.open(
+                  `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${img.public_url}`,
+                  '_blank'
+                )}
+              >
+                <img
+                  src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${img.public_url}`}
+                  alt={img.page_title}
+                  className="w-full h-auto object-contain bg-gray-50"
+                  loading="lazy"
+                  style={{ maxHeight: '200px' }}
+                />
+                <div className="p-3 bg-gray-50 border-t border-gray-200">
+                  <p className="text-sm font-medium text-gray-900 truncate" title={img.page_title}>
+                    📄 {img.page_title}
+                  </p>
+                  <p className="text-xs text-gray-600">
+                    Image {img.image_index + 1}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+ 
       {/* Sources */}
       {response.sources.length > 0 && (
         <div className="border-t px-6 py-4">
@@ -168,5 +203,6 @@ const AnswerCard = ({ response }: { response: QueryResponse }) => {
     </div>
   );
 };
-
+ 
 export default QueryPage;
+ 
