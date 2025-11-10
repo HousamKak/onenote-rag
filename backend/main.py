@@ -143,11 +143,15 @@ async def lifespan(app: FastAPI):
             logger.info("Vision service initialized")
 
             # Initialize image storage
+            base_dir = os.path.dirname(os.path.dirname(__file__))  # Project root
+            storage_path = os.path.join(base_dir, "storage", "images")
+            os.makedirs(storage_path, exist_ok=True)
+            
             image_storage = ImageStorageService(
                 storage_type="local",
-                base_path="backend/storage/images"
+                base_path=storage_path
             )
-            logger.info("Image storage initialized")
+            logger.info(f"Image storage initialized at: {storage_path}")
 
             # Initialize multimodal document processor (for indexing)
             multimodal_processor = MultimodalDocumentProcessor(
