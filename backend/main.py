@@ -236,8 +236,42 @@ async def lifespan(app: FastAPI):
                         logger.info(f"Adding new page: {doc.metadata.page_title}")
                         documents_added += 1
                     
-                    # Process and add the document
-                    chunks = routes.document_processor.chunk_documents([doc])
+                    # Process and add the document (with multimodal support if available)
+                    use_multimodal = multimodal_processor is not None
+
+                    if use_multimodal:
+                        # Multimodal processing: text + metadata + images
+                        chunks, image_data_list = await multimodal_processor.chunk_document_multimodal(
+                            document=doc,
+                            enrich_with_metadata=True,
+                            include_images=True
+                        )
+
+                        # Store images in image storage
+                        if image_data_list and image_storage:
+                            for img_data in image_data_list:
+                                try:
+                                    img_path = image_storage.generate_image_path(
+                                        page_id=img_data["page_id"],
+                                        image_index=img_data["position"]
+                                    )
+                                    await image_storage.upload(
+                                        image_path=img_path,
+                                        image_data=img_data["data"],
+                                        content_type="image/png",
+                                        metadata={
+                                            "page_id": img_data["page_id"],
+                                            "position": img_data["position"]
+                                        }
+                                    )
+                                except Exception as e:
+                                    logger.error(f"Error storing image during startup sync: {str(e)}")
+
+                            logger.debug(f"Stored {len(image_data_list)} images for {page_id}")
+                    else:
+                        # Text-only processing
+                        chunks = routes.document_processor.chunk_documents([doc])
+
                     routes.vector_store.add_documents(chunks)
                     total_chunks += len(chunks)
                 
