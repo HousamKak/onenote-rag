@@ -67,10 +67,19 @@ export interface ResponseMetadata {
   retrieval_k: number;
 }
 
+export interface ImageReference {
+page_id: string;
+page_title: string;
+image_index: number;
+image_path: string;
+public_url: string;
+}
+
 export interface QueryResponse {
   answer: string;
   sources: Source[];
   metadata: ResponseMetadata;
+  images?: ImageReference[];
 }
 
 export interface QueryRequest {

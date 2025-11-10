@@ -142,7 +142,7 @@ class MultimodalQueryHandler:
                             "image_index": i,
                             "image_path": image_path,
                             "image_data": image_data,
-                            "public_url": self.image_storage.get_public_url(image_path)
+                            "public_url": f"/api/images/{page_id}/{i}"
                         })
 
                 except Exception as e:
