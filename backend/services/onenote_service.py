@@ -1,6 +1,6 @@
 """
 OneNote service for interacting with Microsoft Graph API.
-
+ 
 Rate Limiting Strategy for Large Sections (e.g., 125+ pages):
 ---------------------------------------------------------
 1. Minimum 500ms delay between all API requests
@@ -11,7 +11,7 @@ Rate Limiting Strategy for Large Sections (e.g., 125+ pages):
    - Up to 3 retry attempts per request
 4. Extra 200ms delay for datasets > 50 pages
 5. Exponential backoff for 5xx server errors
-
+ 
 This allows safe sync of sections with 125+ pages without hitting
 Microsoft Graph API rate limits (typically 600 requests/minute).
 """
@@ -22,6 +22,7 @@ import requests
 from msal import ConfidentialClientApplication
  
 from models.document import Document, DocumentMetadata
+from services.rate_limiter import AdaptiveRateLimiter, BatchProcessor
  
 logger = logging.getLogger(__name__)
  
@@ -30,7 +31,7 @@ class OneNoteService:
     """Service for interacting with OneNote via Microsoft Graph API with rate limiting."""
  
     GRAPH_API_ENDPOINT = "https://graph.microsoft.com/v1.0"
-    
+   
     # Rate limiting configuration
     MIN_REQUEST_INTERVAL = 0.5  # Minimum 500ms between requests (120 req/min max)
     RATE_LIMIT_RETRY_DELAY = 60  # Wait 60s on 429 error
@@ -50,8 +51,16 @@ class OneNoteService:
         self.client_secret = client_secret
         self.tenant_id = tenant_id
         self.access_token: Optional[str] = None
-        
-        # Rate limiting state
+       
+        # Initialize adaptive rate limiter (100 req/min, well below 600 limit)
+        self.rate_limiter = AdaptiveRateLimiter(
+            requests_per_minute=100,
+            burst_size=10,
+            min_interval_ms=500  # Minimum 500ms between requests
+        )
+        self.batch_processor = BatchProcessor(self.rate_limiter)
+       
+        # Legacy rate limiting (kept for backwards compatibility, but unused)
         self.last_request_time = 0
        
         # Create a session for connection pooling and reuse
@@ -90,71 +99,57 @@ class OneNoteService:
  
         except Exception as e:
             logger.error(f"Error during authentication: {str(e)}")
-    
-    def _wait_for_rate_limit(self) -> None:
-        """Enforce minimum delay between API requests to avoid rate limiting."""
-        current_time = time.time()
-        time_since_last_request = current_time - self.last_request_time
-        
-        if time_since_last_request < self.MIN_REQUEST_INTERVAL:
-            sleep_time = self.MIN_REQUEST_INTERVAL - time_since_last_request
-            logger.debug(f"Rate limiting: sleeping for {sleep_time:.2f}s")
-            time.sleep(sleep_time)
-        
-        self.last_request_time = time.time()
-    
+   
     def _make_request_with_retry(self, url: str, max_retries: int = 3) -> Optional[Dict[str, Any]]:
         """
-        Make HTTP request with rate limiting and retry logic for 429 errors.
-        
+        Make HTTP request with adaptive rate limiting and retry logic.
+       
         Args:
             url: API endpoint URL
             max_retries: Maximum number of retries for server errors
-            
+           
         Returns:
             Response JSON data or None on failure
         """
         retry_delay = 2
-        rate_limit_retries = 0
-        
+       
         for attempt in range(max_retries):
             try:
-                # Apply rate limiting
-                self._wait_for_rate_limit()
-                
+                # Acquire rate limit token (will wait if necessary)
+                self.rate_limiter.acquire(wait=True)
+               
                 response = self.session.get(url, timeout=30)
-                
+               
                 # Handle rate limiting (429)
                 if response.status_code == 429:
-                    rate_limit_retries += 1
-                    
-                    if rate_limit_retries > self.MAX_RATE_LIMIT_RETRIES:
-                        logger.error(f"Max rate limit retries ({self.MAX_RATE_LIMIT_RETRIES}) exceeded")
-                        return None
-                    
-                    # Check for Retry-After header
+                    # Extract Retry-After header
                     retry_after = response.headers.get('Retry-After')
-                    if retry_after:
-                        try:
-                            wait_time = int(retry_after)
-                        except ValueError:
-                            wait_time = self.RATE_LIMIT_RETRY_DELAY
-                    else:
-                        wait_time = self.RATE_LIMIT_RETRY_DELAY
-                    
+                    try:
+                        wait_time = int(retry_after) if retry_after else None
+                    except ValueError:
+                        wait_time = None
+                   
+                    # Tell rate limiter about the error (it will adapt)
+                    self.rate_limiter.handle_rate_limit_error(retry_after=wait_time)
+                    self.rate_limiter.record_error(is_rate_limit=True)
+                   
                     logger.warning(
-                        f"Rate limit hit (429). Waiting {wait_time}s before retry "
-                        f"({rate_limit_retries}/{self.MAX_RATE_LIMIT_RETRIES})"
+                        f"Rate limit hit (429). Rate limiter adapting and waiting... "
+                        f"(current rate: {self.rate_limiter.requests_per_minute:.1f} req/min)"
                     )
-                    time.sleep(wait_time)
                     continue
-                
+               
                 response.raise_for_status()
+               
+                # Record success for adaptive rate limiting
+                self.rate_limiter.record_success()
+               
                 return response.json()
-                
+               
             except requests.RequestException as e:
                 if attempt < max_retries - 1:
                     if hasattr(e, 'response') and e.response is not None and e.response.status_code >= 500:
+                        self.rate_limiter.record_error(is_rate_limit=False)
                         logger.warning(
                             f"Server error (attempt {attempt + 1}/{max_retries}): {str(e)}. "
                             f"Retrying in {retry_delay}s..."
@@ -162,10 +157,11 @@ class OneNoteService:
                         time.sleep(retry_delay)
                         retry_delay *= 2  # Exponential backoff
                         continue
-                
+               
                 logger.error(f"Request failed: {str(e)}")
+                self.rate_limiter.record_error(is_rate_limit=False)
                 return None
-        
+       
         return None
  
     def _get_headers(self) -> Dict[str, str]:
@@ -188,12 +184,12 @@ class OneNoteService:
  
         url = f"{self.GRAPH_API_ENDPOINT}/me/onenote/notebooks"
         data = self._make_request_with_retry(url)
-        
+       
         if data:
             notebooks = data.get("value", [])
             logger.info(f"Found {len(notebooks)} notebooks")
             return notebooks
-        
+       
         return []
  
     def list_sections(self, notebook_id: str) -> List[Dict[str, Any]]:
@@ -211,12 +207,12 @@ class OneNoteService:
  
         url = f"{self.GRAPH_API_ENDPOINT}/me/onenote/notebooks/{notebook_id}/sections"
         data = self._make_request_with_retry(url)
-        
+       
         if data:
             sections = data.get("value", [])
             logger.info(f"Found {len(sections)} sections in notebook {notebook_id}")
             return sections
-        
+       
         return []
  
     def list_pages(self, section_id: str) -> List[Dict[str, Any]]:
@@ -236,37 +232,34 @@ class OneNoteService:
         all_pages = []
         url = f"{self.GRAPH_API_ENDPOINT}/me/onenote/sections/{section_id}/pages"
         page_batch = 1
-        
+       
         # Fetch all pages using pagination with rate limiting
         while url:
             logger.debug(f"Fetching page batch {page_batch} for section {section_id}")
-            
+           
             data = self._make_request_with_retry(url)
-            
+           
             if not data:
                 # If request failed, return what we have so far
                 logger.warning(f"Failed to fetch page batch {page_batch}, returning {len(all_pages)} pages collected so far")
                 break
-            
+           
             pages = data.get("value", [])
             all_pages.extend(pages)
             logger.debug(f"Batch {page_batch}: Retrieved {len(pages)} pages (total: {len(all_pages)})")
-            
+           
             # Check for next page
             url = data.get("@odata.nextLink")
             if url:
                 page_batch += 1
-                # Additional small delay between pagination requests for large datasets
-                if len(all_pages) > 50:
-                    logger.debug(f"Large dataset detected ({len(all_pages)} pages), adding extra delay")
-                    time.sleep(0.2)  # Extra 200ms for large datasets
-        
+                # Rate limiter handles timing automatically
+       
         logger.info(f"Found {len(all_pages)} total pages in section {section_id} across {page_batch} batches")
         return all_pages
  
     def get_page_content(self, page_id: str) -> Optional[str]:
         """
-        Get the HTML content of a OneNote page with rate limiting and retry logic.
+        Get the HTML content of a OneNote page with adaptive rate limiting.
         This is called for each page, so rate limiting is critical for large sections.
  
         Args:
@@ -277,51 +270,58 @@ class OneNoteService:
         """
         if not self.access_token:
             return None
-        
-        # Apply rate limiting before making request
-        self._wait_for_rate_limit()
-        
+       
         max_retries = 3
         retry_delay = 2
-        rate_limit_retries = 0
        
         for attempt in range(max_retries):
             try:
+                # Acquire rate limit token (adaptive)
+                self.rate_limiter.acquire(wait=True)
+               
                 url = f"{self.GRAPH_API_ENDPOINT}/me/onenote/pages/{page_id}/content"
                 response = self.session.get(url, timeout=30)
-                
+               
                 # Handle rate limiting (429)
                 if response.status_code == 429:
-                    rate_limit_retries += 1
-                    
-                    if rate_limit_retries > self.MAX_RATE_LIMIT_RETRIES:
-                        logger.error(f"Max rate limit retries exceeded for page {page_id}")
-                        return None
-                    
-                    retry_after = response.headers.get('Retry-After', str(self.RATE_LIMIT_RETRY_DELAY))
+                    retry_after = response.headers.get('Retry-After')
                     try:
-                        wait_time = int(retry_after)
+                        wait_time = int(retry_after) if retry_after else None
                     except ValueError:
-                        wait_time = self.RATE_LIMIT_RETRY_DELAY
-                    
-                    logger.warning(f"Rate limit hit fetching page content. Waiting {wait_time}s...")
-                    time.sleep(wait_time)
+                        wait_time = None
+                   
+                    self.rate_limiter.handle_rate_limit_error(retry_after=wait_time)
+                    self.rate_limiter.record_error(is_rate_limit=True)
+                   
+                    logger.warning(
+                        f"Rate limit hit fetching page {page_id}. "
+                        f"Adapting rate to {self.rate_limiter.requests_per_minute:.1f} req/min..."
+                    )
                     continue
-                
+               
                 response.raise_for_status()
                 content = response.text
+               
+                # Record success
+                self.rate_limiter.record_success()
+               
                 logger.debug(f"Retrieved content for page {page_id} ({len(content)} chars)")
                 return content
  
             except requests.RequestException as e:
                 if attempt < max_retries - 1:
                     if hasattr(e, 'response') and e.response is not None and e.response.status_code >= 500:
-                        logger.warning(f"Server error fetching content (attempt {attempt + 1}/{max_retries}): {str(e)}. Retrying in {retry_delay}s...")
+                        self.rate_limiter.record_error(is_rate_limit=False)
+                        logger.warning(
+                            f"Server error fetching content (attempt {attempt + 1}/{max_retries}): {str(e)}. "
+                            f"Retrying in {retry_delay}s..."
+                        )
                         time.sleep(retry_delay)
                         retry_delay *= 2
                         continue
                
                 logger.error(f"Error fetching page content: {str(e)}")
+                self.rate_limiter.record_error(is_rate_limit=False)
                 return None
        
         return None
@@ -388,4 +388,21 @@ class OneNoteService:
  
         logger.info(f"Retrieved {len(documents)} documents")
         return documents
+   
+    def get_rate_limiter_stats(self) -> Dict[str, Any]:
+        """
+        Get rate limiter statistics for monitoring and debugging.
+       
+        Returns:
+            Dictionary with statistics including:
+            - current_rate: Current requests per minute
+            - total_requests: Total requests made
+            - rate_limited_count: Number of 429 errors encountered
+            - error_count: Total number of errors
+            - success_count: Total successful requests
+            - current_tokens: Available tokens in bucket
+        """
+        stats = self.rate_limiter.get_statistics()
+        stats['current_rate'] = self.rate_limiter.requests_per_minute
+        return stats
  
