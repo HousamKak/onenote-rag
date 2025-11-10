@@ -128,7 +128,11 @@ async def lifespan(app: FastAPI):
     multimodal_handler = None
     try:
         openai_key = dynamic_settings.get("openai_api_key", settings.openai_api_key)
+        access_token = dynamic_settings.get("microsoft_graph_token", settings.microsoft_graph_token)
+
         if openai_key:
+            from services.multimodal_processor import MultimodalDocumentProcessor
+
             # Initialize vision service
             vision_service = GPT4VisionService(
                 api_key=openai_key,
@@ -145,12 +149,28 @@ async def lifespan(app: FastAPI):
             )
             logger.info("Image storage initialized")
 
-            # Initialize multimodal query handler
+            # Initialize multimodal document processor (for indexing)
+            multimodal_processor = MultimodalDocumentProcessor(
+                vision_service=vision_service,
+                chunk_size=chunk_size,
+                chunk_overlap=chunk_overlap,
+                max_images_per_document=10,
+                access_token=access_token
+            )
+            logger.info("Multimodal document processor initialized")
+
+            # Initialize multimodal query handler (for queries)
             multimodal_handler = MultimodalQueryHandler(
                 vision_service=vision_service,
                 image_storage=image_storage
             )
             logger.info("Multimodal query handler initialized")
+
+            # Expose multimodal services to routes
+            routes.vision_service = vision_service
+            routes.image_storage = image_storage
+            routes.multimodal_processor = multimodal_processor
+            logger.info("Multimodal services exposed to API routes")
         else:
             logger.info("Multimodal features disabled (no OpenAI API key)")
     except Exception as e:

@@ -34,6 +34,11 @@ document_processor: Optional[DocumentProcessor] = None
 vector_store: Optional[VectorStoreService] = None
 rag_engine: Optional[RAGEngine] = None
 settings_service: Optional[SettingsService] = None
+
+# Multimodal services (optional - initialized if OpenAI key available)
+multimodal_processor: Optional[Any] = None  # MultimodalDocumentProcessor
+vision_service: Optional[Any] = None  # GPT4VisionService
+image_storage: Optional[Any] = None  # ImageStorageService
  
  
 def get_rag_engine() -> RAGEngine:
@@ -321,6 +326,7 @@ class SyncRequest(BaseModel):
     notebook_ids: Optional[List[str]] = None
     full_sync: bool = False  # Changed default to False for incremental sync
     force_reindex: bool = False  # Force reindexing even if not modified
+    multimodal: bool = True  # Enable multimodal processing (images) if available
  
  
 class SyncResponse(BaseModel):
@@ -341,14 +347,31 @@ async def sync_documents(
     store: VectorStoreService = Depends(get_vector_store)
 ):
     """
-    Sync OneNote documents to vector database.
-   
-    Supports three modes:
+    Sync OneNote documents to vector database with optional multimodal support.
+
+    Supports four modes:
     - Incremental sync (default): Only updates modified/new documents
     - Full sync: Clears DB and reindexes everything
     - Force reindex: Reindexes all documents without checking modification dates
+    - Multimodal (default if available): Processes images along with text
+
+    Multimodal processing:
+    - If multimodal=True and services available: Uses MultimodalDocumentProcessor
+    - If multimodal=False or services unavailable: Uses standard DocumentProcessor (text-only)
+    - Images are analyzed with GPT-4o Vision and stored separately
+    - All components linked by page_id for document integrity
     """
     try:
+        # Check if multimodal processing is requested and available
+        use_multimodal = request.multimodal and multimodal_processor is not None
+
+        if request.multimodal and multimodal_processor is None:
+            logger.warning("Multimodal processing requested but not available - falling back to text-only")
+
+        if use_multimodal:
+            logger.info("Using MULTIMODAL processing (text + images)")
+        else:
+            logger.info("Using TEXT-ONLY processing")
         # Get documents from OneNote
         logger.info(f"Fetching documents from OneNote (notebooks: {request.notebook_ids})")
         documents = onenote.get_all_documents(request.notebook_ids)
@@ -413,8 +436,43 @@ async def sync_documents(
                 # Full sync or force reindex - just count as added
                 documents_added += 1
  
-            # Process and chunk the document
-            chunks = processor.chunk_documents([doc])
+            # Process and chunk the document (multimodal or text-only)
+            if use_multimodal:
+                # Multimodal processing: text + metadata + images
+                chunks, image_data_list = await multimodal_processor.chunk_document_multimodal(
+                    document=doc,
+                    enrich_with_metadata=True,
+                    include_images=True
+                )
+
+                # Store images in image storage
+                if image_data_list and image_storage:
+                    for img_data in image_data_list:
+                        try:
+                            image_path = image_storage.generate_image_path(
+                                page_id=img_data["page_id"],
+                                image_index=img_data["position"]
+                            )
+                            await image_storage.upload(
+                                image_path=image_path,
+                                image_data=img_data["data"],
+                                content_type="image/png",
+                                metadata={
+                                    "page_id": img_data["page_id"],
+                                    "position": img_data["position"],
+                                    "url": img_data.get("url", "")
+                                }
+                            )
+                            logger.debug(f"Stored image {img_data['position']} for page {page_id}")
+                        except Exception as e:
+                            logger.error(f"Error storing image: {str(e)}")
+
+                    logger.info(f"Stored {len(image_data_list)} images for document {page_id}")
+            else:
+                # Text-only processing (original behavior)
+                chunks = processor.chunk_documents([doc])
+
+            # Add chunks to vector store
             store.add_documents(chunks)
             total_chunks += len(chunks)
  
