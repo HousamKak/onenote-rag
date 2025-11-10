@@ -1,0 +1,597 @@
+title: Multimodal RAG - Detailed Processing Flow
+
+direction: down
+
+# Input Document
+input: OneNote Page Input {
+  style: {
+    fill: "#e3f2fd"
+    stroke: "#1976d2"
+    stroke-width: 2
+  }
+
+  doc: Document {
+    shape: page
+    page_id: "ABC123" {
+      style.bold: true
+    }
+    title: "Architecture Overview"
+    notebook: "Engineering"
+    section: "Design Docs"
+    author: "John Doe"
+    tags: "important, architecture"
+    created: "January 2025"
+  }
+
+  content: Content {
+    shape: rectangle
+    html: |md
+      **HTML Content:**
+      ```html
+      <p>This describes our system...</p>
+      <img src="graph.ms.com/resources/1"/>
+      <img src="graph.ms.com/resources/2"/>
+      ```
+    |
+  }
+}
+
+# Step 1: Extract Components
+step1: Step 1: Extract Components {
+  style: {
+    fill: "#fff3e0"
+    stroke: "#f57c00"
+  }
+
+  text_extraction: Text Extraction {
+    shape: rectangle
+    process: |md
+      **extract_text_from_html()**
+      - Parse HTML with BeautifulSoup
+      - Remove scripts/styles
+      - Clean whitespace
+    |
+
+    result: |md
+      **Result:**
+      "This describes our system
+      architecture with microservices
+      that communicate via..."
+    | {
+      style.fill: "#ffe0b2"
+    }
+  }
+
+  metadata_building: Metadata Context Building {
+    shape: rectangle
+    process: |md
+      **build_metadata_context()**
+      - Format document metadata
+      - Create searchable context
+    |
+
+    result: |md
+      **Result:**
+      ```
+      --- Document Context ---
+      Document: "Architecture Overview"
+      Notebook: Engineering, Section: Design Docs
+      Author: John Doe
+      Tags: important, architecture
+      Created: January 2025
+      --- Content ---
+      ```
+    | {
+      style.fill: "#ffe0b2"
+    }
+  }
+
+  image_extraction: Image Extraction & Analysis {
+    shape: rectangle
+    process: |md
+      **extract_and_analyze_images()**
+      1. Find image tags in HTML
+      2. Download images
+      3. Analyze with GPT-4o Vision
+    |
+
+    vision_analysis: GPT-4o Vision {
+      shape: cloud
+      style: {
+        fill: "#c8e6c9"
+      }
+      model: "gpt-4o-mini"
+      task: "search_optimized + ocr"
+    }
+
+    result: |md
+      **Result for Image 1:**
+      ```
+      [Image 1]: Architecture diagram
+      showing API Gateway connecting
+      to Auth Service and User Service.
+      Text in image: "API Gateway",
+      "Auth Service", "Database"
+      Key elements: microservices,
+      message queue, PostgreSQL
+      ```
+    | {
+      style.fill: "#ffe0b2"
+    }
+  }
+}
+
+# Step 2: Build Unified Content
+step2: Step 2: Build Unified Content {
+  style: {
+    fill: "#f3e5f5"
+    stroke: "#7b1fa2"
+  }
+
+  combine: Combine All Components {
+    shape: rectangle
+
+    unified_content: |md
+      **Enriched Document Content:**
+
+      ```text
+      --- Document Context ---
+      Document: "Architecture Overview"
+      Notebook: Engineering, Section: Design Docs
+      Author: John Doe
+      Tags: important, architecture
+      Created: January 2025
+
+      --- Content ---
+      This describes our system architecture
+      with microservices that communicate
+      via message queue...
+
+      === Images in Document ===
+      [Image 1]: Architecture diagram showing
+      API Gateway connecting to Auth Service
+      and User Service.
+      Text in image: "API Gateway", "Auth Service"
+      Key elements: microservices, databases
+
+      [Image 2]: Screenshot of deployment
+      pipeline showing Build → Test → Deploy
+      Text in image: "Build", "Test", "Deploy"
+      ```
+
+      **Character count:** ~800 chars
+    | {
+      style.fill: "#e1bee7"
+    }
+  }
+
+  metadata_attach: Attach Metadata {
+    shape: rectangle
+    meta: |md
+      **Chunk Metadata:**
+      ```json
+      {
+        "page_id": "ABC123",
+        "page_title": "Architecture Overview",
+        "notebook_name": "Engineering",
+        "section_name": "Design Docs",
+        "author": "John Doe",
+        "tags": "important,architecture",
+        "created_date": "2025-01-15",
+        "metadata_enriched": true,
+        "has_images": true,
+        "image_count": 2,
+        "image_paths": [
+          "ABC123_0.png",
+          "ABC123_1.png"
+        ]
+      }
+      ```
+    | {
+      style.fill: "#e1bee7"
+    }
+  }
+}
+
+# Step 3: Chunk & Embed
+step3: Step 3: Chunk & Embed {
+  style: {
+    fill: "#e8f5e9"
+    stroke: "#388e3c"
+  }
+
+  chunking: Text Chunking {
+    shape: rectangle
+    splitter: |md
+      **RecursiveCharacterTextSplitter**
+      - chunk_size: 1000
+      - chunk_overlap: 200
+      - Respects document structure
+    |
+
+    chunks_created: |md
+      **Chunks Created:**
+      - Chunk 0: Metadata + First 800 chars
+      - Chunk 1: Overlap + Continuation
+      - (Same metadata for all chunks)
+    | {
+      style.fill: "#c8e6c9"
+    }
+  }
+
+  embedding: Generate Embeddings {
+    shape: rectangle
+    model: |md
+      **OpenAI text-embedding-ada-002**
+      - Dimension: 1536
+      - Cost: $0.0001/1K tokens
+    |
+
+    result: |md
+      **Chunk 0 Embedding:**
+      [0.234, -0.456, 0.178, ..., 0.089]
+      (1536 dimensions)
+
+      **Chunk 1 Embedding:**
+      [0.156, 0.322, -0.112, ..., 0.234]
+      (1536 dimensions)
+    | {
+      style.fill: "#c8e6c9"
+    }
+  }
+}
+
+# Step 4: Store
+step4: Step 4: Dual Storage {
+  style: {
+    fill: "#fff9c4"
+    stroke: "#f57f17"
+  }
+
+  vector_storage: Vector Database Storage {
+    shape: cylinder
+    db: ChromaDB / Qdrant {
+      style: {
+        fill: "#ffeb3b"
+      }
+    }
+
+    stored_chunks: |md
+      **Stored Chunks:**
+
+      **Document: ABC123, Chunk 0**
+      - page_content: [enriched text]
+      - metadata: {page_id, title, ...}
+      - embedding: [0.234, -0.456, ...]
+
+      **Document: ABC123, Chunk 1**
+      - page_content: [continuation]
+      - metadata: {page_id, title, ...}
+      - embedding: [0.156, 0.322, ...]
+
+      **Index:** Optimized for cosine similarity
+    | {
+      style.fill: "#fff59d"
+    }
+  }
+
+  image_storage: Image File Storage {
+    shape: cylinder
+    storage: Local / S3 / MinIO {
+      style: {
+        fill: "#ffeb3b"
+      }
+    }
+
+    stored_images: |md
+      **Stored Images:**
+
+      📁 storage/images/
+        └── ABC123/
+            ├── ABC123_0.png (diagram.png)
+            │   └── ABC123_0.json (metadata)
+            └── ABC123_1.png (screenshot.png)
+                └── ABC123_1.json (metadata)
+
+      **Linked by:** page_id = "ABC123"
+    | {
+      style.fill: "#fff59d"
+    }
+  }
+}
+
+# Step 5: Query Processing
+step5: Step 5: Query Processing {
+  style: {
+    fill: "#fce4ec"
+    stroke: "#c2185b"
+  }
+
+  user_query: User Query {
+    shape: oval
+    style: {
+      fill: "#f8bbd0"
+    }
+    q1: '"Show me the architecture diagram"'
+  }
+
+  detect: Query Analysis {
+    shape: rectangle
+
+    detection: |md
+      **is_visual_query()**
+      Keywords: "show", "diagram"
+      **Result: True** ✓
+    | {
+      style.fill: "#f8bbd0"
+    }
+  }
+
+  vector_search: Vector Similarity Search {
+    shape: rectangle
+
+    search: |md
+      **Vector Store Search:**
+      1. Embed query: "architecture diagram"
+      2. Cosine similarity search
+      3. Top-k results (k=5)
+    |
+
+    results: |md
+      **Search Results:**
+
+      **Chunk 1** (page_id: ABC123, score: 0.92)
+      Content: "...[Image 1]: Architecture
+      diagram showing API Gateway..."
+
+      **Chunk 2** (page_id: XYZ789, score: 0.85)
+      Content: "...deployment architecture..."
+
+      All chunks have page_id metadata!
+    | {
+      style.fill: "#f8bbd0"
+    }
+  }
+
+  retrieve_complete: Retrieve Complete Documents {
+    shape: rectangle
+
+    process: |md
+      **For each unique page_id:**
+      1. Get all chunks (same page_id)
+      2. Fetch images from storage
+      3. Reconstruct full document
+    |
+
+    document: |md
+      **Retrieved Document ABC123:**
+      - page_title: "Architecture Overview"
+      - text: [Combined from all chunks]
+      - images: [
+          ABC123_0.png (diagram),
+          ABC123_1.png (screenshot)
+        ]
+      - metadata: {notebook, tags, author}
+    | {
+      style.fill: "#f8bbd0"
+    }
+  }
+}
+
+# Step 6: Answer Generation
+step6: Step 6: Answer Generation {
+  style: {
+    fill: "#e1f5fe"
+    stroke: "#0277bd"
+  }
+
+  visual_answer: Visual Query Path {
+    shape: rectangle
+
+    gpt4o: GPT-4o Vision Analysis {
+      shape: cloud
+      style: {
+        fill: "#81d4fa"
+      }
+
+      input: |md
+        **Input to GPT-4o:**
+        - Question: "Show me the architecture diagram"
+        - Images: [ABC123_0.png, ABC123_1.png]
+        - Context: Text from retrieved chunks
+      |
+
+      output: |md
+        **GPT-4o Response:**
+        "The architecture diagram shows a
+        microservices-based system. The API
+        Gateway serves as the entry point,
+        connecting to an Auth Service and
+        User Service. Both services interact
+        with a PostgreSQL database. The
+        services communicate via a message
+        queue for async operations..."
+      |
+    }
+  }
+
+  text_answer: Text Query Path {
+    shape: rectangle
+
+    gpt4: GPT-4 Text Generation {
+      shape: cloud
+      style: {
+        fill: "#81d4fa"
+      }
+
+      input: |md
+        **Input to GPT-4:**
+        - Question: [text question]
+        - Context: Text from chunks
+        - No images needed
+      |
+    }
+  }
+
+  final_response: Final Response {
+    shape: document
+    style: {
+      fill: "#b3e5fc"
+    }
+
+    response: |md
+      **API Response:**
+      ```json
+      {
+        "answer": "The architecture diagram shows...",
+        "sources": [
+          {
+            "page_id": "ABC123",
+            "page_title": "Architecture Overview",
+            "notebook": "Engineering",
+            "images": ["ABC123_0.png", "ABC123_1.png"]
+          }
+        ],
+        "images": [
+          {
+            "url": "/storage/images/ABC123_0.png",
+            "title": "Architecture Diagram"
+          }
+        ],
+        "metadata": {
+          "is_visual_query": true,
+          "chunks_retrieved": 2,
+          "documents_found": 1
+        }
+      }
+      ```
+    |
+  }
+}
+
+# Key Insight
+insight: 🔑 Document Integrity Principle {
+  shape: hexagon
+  style: {
+    fill: "#ffccbc"
+    stroke: "#d84315"
+    stroke-width: 3
+  }
+
+  principle: |md
+    **Every chunk stores page_id**
+
+    When we find a chunk:
+    ✓ We know which document it's from
+    ✓ We can get ALL chunks from that document
+    ✓ We can fetch ALL images for that document
+    ✓ We can retrieve complete metadata
+
+    **Documents are NEVER separated!**
+    Text + Images + Metadata always together
+  |
+}
+
+# Connections - Processing Flow
+input.doc -> step1.text_extraction: "HTML Content"
+input.doc -> step1.metadata_building: "Metadata"
+input.content -> step1.image_extraction: "Images"
+
+step1.image_extraction.vision_analysis -> step1.image_extraction.result: "Analysis"
+
+step1.text_extraction.result -> step2.combine: "Text"
+step1.metadata_building.result -> step2.combine: "Context"
+step1.image_extraction.result -> step2.combine: "Image Descriptions"
+
+step2.combine.unified_content -> step3.chunking: "Unified Content"
+step2.metadata_attach.meta -> step3.chunking: "Metadata"
+
+step3.chunking.chunks_created -> step3.embedding: "Text Chunks"
+
+step3.embedding.result -> step4.vector_storage: "Embedded Chunks"
+step1.image_extraction -> step4.image_storage: "Image Files"
+
+# Connections - Query Flow
+step5.user_query -> step5.detect: "Query"
+step5.detect.detection -> step5.vector_search: "Query Type"
+step5.vector_search -> step4.vector_storage.stored_chunks: "Search" {
+  style.stroke: "#7b1fa2"
+  style.stroke-width: 2
+}
+step4.vector_storage.stored_chunks -> step5.vector_search.results: "Top-k Chunks\n(with page_id)"
+
+step5.vector_search.results -> step5.retrieve_complete: "Chunks"
+step5.retrieve_complete -> step4.image_storage.stored_images: "Fetch by page_id" {
+  style.stroke: "#f57f17"
+  style.stroke-width: 2
+  style.stroke-dash: 3
+}
+
+# Connections - Answer Generation
+step5.retrieve_complete.document -> step6.visual_answer: "Visual Query\n+ Images"
+step5.retrieve_complete.document -> step6.text_answer: "Text Query"
+
+step6.visual_answer.gpt4o.output -> step6.final_response: "Answer"
+step6.text_answer.gpt4 -> step6.final_response: "Answer"
+
+# Document Integrity Connection
+step4.vector_storage -> insight: "page_id\nin metadata" {
+  style.stroke: "#d84315"
+  style.stroke-width: 2
+}
+step4.image_storage -> insight: "page_id\nin filename" {
+  style.stroke: "#d84315"
+  style.stroke-width: 2
+}
+step5.retrieve_complete -> insight: "Uses page_id\nto reunite" {
+  style.stroke: "#d84315"
+  style.stroke-width: 2
+}
+
+# Performance Notes
+performance: Performance Metrics {
+  shape: rectangle
+  style: {
+    fill: "#e0f2f1"
+    stroke: "#00695c"
+  }
+
+  indexing: |md
+    **Indexing (per document):**
+    - Text extraction: ~0.5s
+    - Image analysis (2 images): ~3s
+    - Embedding: ~0.2s
+    - Total: ~3.7s
+  |
+
+  querying: |md
+    **Query Processing:**
+    - Vector search: ~100ms
+    - Image retrieval: ~50ms
+    - GPT-4o Vision: ~1.5s
+    - Total: ~1.65s
+  |
+
+  cost: |md
+    **Cost (1000 docs, 5000 images):**
+    - Text embedding: $10.50
+    - Image analysis: $7.50
+    - Total indexing: $18.00
+    - Query (text): ~$0.001
+    - Query (visual): ~$0.005
+  |
+}
+
+# Notes
+notes: |md
+  **Implementation Files:**
+  - document_processor.py: Text + metadata
+  - vision_service.py: GPT-4o Vision
+  - multimodal_processor.py: Unified processing
+  - image_storage.py: Image storage
+  - multimodal_query.py: Visual queries
+| {
+  style: {
+    font-size: 12
+  }
+}

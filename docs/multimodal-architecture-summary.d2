@@ -1,0 +1,232 @@
+title: Multimodal RAG Architecture - High Level Overview
+
+direction: down
+
+# OneNote Source
+onenote: OneNote Document {
+  shape: cylinder
+  style: {
+    fill: "#e3f2fd"
+    stroke: "#1976d2"
+  }
+
+  doc_id: "page_id: ABC123" {shape: text}
+  title: "Architecture Overview" {shape: text}
+  text: "Text Content" {shape: text}
+  images: "2 Images" {shape: text}
+  metadata: "Notebook, Tags, Author" {shape: text}
+}
+
+# Processing Layer
+processing: Multimodal Processing {
+  shape: rectangle
+  style: {
+    fill: "#fff3e0"
+    stroke: "#f57c00"
+  }
+
+  extract: Extract Components {
+    shape: rectangle
+    text_extract: "Text Extraction"
+    meta_build: "Metadata Context"
+    image_analyze: "GPT-4o Vision\nImage Analysis"
+  }
+
+  enrich: Build Unified Content {
+    shape: rectangle
+    content: |md
+      --- Document Context ---
+      Metadata (notebook, tags)
+      --- Content ---
+      Text content
+      === Images ===
+      Image descriptions
+    |
+  }
+
+  chunk: Chunk & Embed {
+    shape: rectangle
+    chunker: "RecursiveCharacterTextSplitter"
+    embedder: "OpenAI text-embedding-ada-002"
+  }
+}
+
+# Storage Layer
+storage: Storage Layer {
+  style: {
+    fill: "#f3e5f5"
+    stroke: "#7b1fa2"
+  }
+
+  vector_db: Vector Database {
+    shape: cylinder
+    style: {
+      fill: "#ce93d8"
+    }
+
+    chunk1: |md
+      **Chunk 1** (page_id: ABC123)
+      Document: "Architecture Overview"
+      Notebook: Engineering
+      [Full enriched content]
+      Embedding: [0.23, -0.45, ...]
+    |
+
+    chunk2: |md
+      **Chunk 2** (page_id: ABC123)
+      [Continuation...]
+      Embedding: [0.15, 0.32, ...]
+    |
+  }
+
+  image_storage: Image Storage {
+    shape: cylinder
+    style: {
+      fill: "#ce93d8"
+    }
+
+    img1: "ABC123_0.png" {shape: rectangle}
+    img2: "ABC123_1.png" {shape: rectangle}
+  }
+}
+
+# Query Layer
+query: Query Processing {
+  shape: rectangle
+  style: {
+    fill: "#e8f5e9"
+    stroke: "#388e3c"
+  }
+
+  user_query: User Query {
+    shape: oval
+    q: '"Show me the architecture diagram"'
+  }
+
+  detect: Detect Query Type {
+    shape: diamond
+    visual: "Is Visual Query?"
+  }
+
+  search: Vector Search {
+    shape: rectangle
+    find: "Find chunks by\nsemantic similarity"
+  }
+
+  retrieve: Retrieve Complete Document {
+    shape: rectangle
+    process_steps: |md
+      1. Get all chunks with page_id
+      2. Fetch images from storage
+      3. Reconstruct full document
+    |
+  }
+}
+
+# Answer Generation
+answer: Answer Generation {
+  shape: rectangle
+  style: {
+    fill: "#fce4ec"
+    stroke: "#c2185b"
+  }
+
+  text_llm: Text Answer {
+    shape: rectangle
+    model: "GPT-4"
+  }
+
+  vision_llm: Visual Answer {
+    shape: rectangle
+    model: "GPT-4o Vision"
+  }
+
+  response: Final Response {
+    shape: document
+    content: |md
+      **Answer:** Detailed response
+      **Sources:** Document titles
+      **Images:** ABC123_0.png, ABC123_1.png
+    |
+  }
+}
+
+# Key Principle
+principle: Document Integrity {
+  shape: rectangle
+  style: {
+    fill: "#fff9c4"
+    stroke: "#f57f17"
+    stroke-width: 3
+  }
+
+  key: |md
+    🔑 **Every chunk knows its page_id**
+
+    → Can always retrieve complete document
+    → Text, Images, Metadata stay together
+    → Never separated or orphaned
+  |
+}
+
+# Connections - Processing Flow
+onenote -> processing.extract: "Input"
+processing.extract -> processing.enrich: "Components"
+processing.enrich -> processing.chunk: "Unified Content"
+processing.chunk -> storage.vector_db: "Embedded Chunks"
+processing.chunk -> storage.image_storage: "Image Files"
+
+# Connections - Query Flow
+query.user_query -> query.detect: "Question"
+query.detect -> query.search: "Search"
+query.search -> storage.vector_db: "Semantic Search"
+storage.vector_db -> query.retrieve: "Matching Chunks\n(with page_id)"
+query.retrieve -> storage.image_storage: "Fetch Images\nby page_id" {
+  style.stroke-dash: 3
+}
+
+# Connections - Answer Generation
+query.retrieve -> answer.text_llm: "Text Query" {
+  style.stroke: "#388e3c"
+}
+query.retrieve -> answer.vision_llm: "Visual Query\n+ Images" {
+  style.stroke: "#c2185b"
+}
+answer.text_llm -> answer.response: "Answer"
+answer.vision_llm -> answer.response: "Visual Answer"
+
+# Document Integrity Principle Connection
+storage.vector_db -> principle: "page_id links\neverything" {
+  style.stroke: "#f57f17"
+  style.stroke-width: 2
+}
+storage.image_storage -> principle: "Named by\npage_id" {
+  style.stroke: "#f57f17"
+  style.stroke-width: 2
+}
+
+# Legend
+legend: Legend {
+  shape: rectangle
+  style: {
+    fill: "#eceff1"
+    stroke: "#546e7a"
+  }
+
+  flows: |md
+    **Processing Flow:** OneNote → Processing → Storage
+    **Query Flow:** User → Search → Retrieve → Answer
+    **Key:** page_id maintains document integrity
+  |
+}
+
+# Notes
+notes: |md
+  **Cost:** $0.0015/image (GPT-4o-mini)
+  **Accuracy:** +10-15% with metadata enrichment
+  **Architecture:** Single unified vector index
+| {
+  style: {
+    font-size: 14
+  }
+}
