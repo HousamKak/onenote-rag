@@ -148,29 +148,41 @@ class OneNoteService:
  
     def list_pages(self, section_id: str) -> List[Dict[str, Any]]:
         """
-        List all pages in a section with retry logic.
+        List all pages in a section with retry logic and pagination support.
  
         Args:
             section_id: Section ID
  
         Returns:
-            List of page dictionaries
+            List of page dictionaries (fetches all pages via pagination)
         """
         if not self.access_token:
             return []
  
         max_retries = 3
         retry_delay = 2
+        all_pages = []
        
         for attempt in range(max_retries):
             try:
                 url = f"{self.GRAPH_API_ENDPOINT}/me/onenote/sections/{section_id}/pages"
-                response = self.session.get(url, timeout=30)
-                response.raise_for_status()
- 
-                pages = response.json().get("value", [])
-                logger.info(f"Found {len(pages)} pages in section {section_id}")
-                return pages
+                
+                # Fetch all pages using pagination
+                while url:
+                    response = self.session.get(url, timeout=30)
+                    response.raise_for_status()
+                    
+                    data = response.json()
+                    pages = data.get("value", [])
+                    all_pages.extend(pages)
+                    
+                    # Check for next page
+                    url = data.get("@odata.nextLink")
+                    if url:
+                        logger.debug(f"Fetching next page batch for section {section_id}")
+                
+                logger.info(f"Found {len(all_pages)} pages in section {section_id}")
+                return all_pages
  
             except requests.RequestException as e:
                 if attempt < max_retries - 1:
@@ -178,6 +190,7 @@ class OneNoteService:
                         logger.warning(f"Server error fetching pages (attempt {attempt + 1}/{max_retries}): {str(e)}. Retrying in {retry_delay}s...")
                         time.sleep(retry_delay)
                         retry_delay *= 2
+                        all_pages = []  # Reset on retry
                         continue
                
                 logger.error(f"Error fetching pages: {str(e)}")
