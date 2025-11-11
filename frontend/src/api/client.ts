@@ -52,6 +52,13 @@ export const oneNoteApi = {
   listPages: (sectionId: string) => api.get<{ pages: Page[] }>(`/onenote/pages/${sectionId}`),
 };
  
+// Settings endpoints
+export const settingsApi = {
+  getAll: () => api.get('/settings'),
+  get: (key: string) => api.get(`/settings/${key}`),
+  update: (key: string, value: string) => api.put(`/settings/${key}`, { value }),
+};
+
 // Health check
 export const healthCheck = () => api.get('/health');
  

@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     microsoft_client_secret: str = ""
     microsoft_tenant_id: str = ""
     microsoft_graph_token: str = ""  # Manual Bearer token from Graph Explorer
+    use_azure_ad_auth: bool = True  # True = Azure AD (client credentials), False = Manual token
  
     # Application
     chunk_size: int = 1000
@@ -77,6 +78,7 @@ def get_dynamic_settings() -> dict:
         "microsoft_client_secret": settings.microsoft_client_secret,
         "microsoft_tenant_id": settings.microsoft_tenant_id,
         "microsoft_graph_token": settings.microsoft_graph_token,
+        "use_azure_ad_auth": str(settings.use_azure_ad_auth),
         "chunk_size": str(settings.chunk_size),
         "chunk_overlap": str(settings.chunk_overlap),
         "enable_startup_sync": str(settings.enable_startup_sync),

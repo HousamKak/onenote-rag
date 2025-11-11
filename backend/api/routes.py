@@ -39,6 +39,14 @@ settings_service: Optional[SettingsService] = None
 multimodal_processor: Optional[Any] = None  # MultimodalDocumentProcessor
 vision_service: Optional[Any] = None  # GPT4VisionService
 image_storage: Optional[Any] = None  # ImageStorageService
+
+# Startup sync status
+sync_status: Dict[str, Any] = {
+    "in_progress": False,
+    "status": "not_started",
+    "message": "Sync has not started yet",
+    "documents_processed": 0
+}
  
  
 def get_rag_engine() -> RAGEngine:
@@ -81,6 +89,12 @@ def get_settings_service() -> SettingsService:
 async def health_check():
     """Health check endpoint."""
     return {"status": "healthy"}
+
+
+@router.get("/sync-status")
+async def get_sync_status():
+    """Get the status of the background startup sync."""
+    return sync_status
 
 
 # Settings routes

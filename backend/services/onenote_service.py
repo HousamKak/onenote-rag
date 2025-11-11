@@ -37,7 +37,7 @@ class OneNoteService:
     RATE_LIMIT_RETRY_DELAY = 60  # Wait 60s on 429 error
     MAX_RATE_LIMIT_RETRIES = 3  # Max retries for 429 errors
  
-    def __init__(self, client_id: str = "", client_secret: str = "", tenant_id: str = "", manual_token: str = ""):
+    def __init__(self, client_id: str = "", client_secret: str = "", tenant_id: str = "", manual_token: str = "", use_azure_ad: bool = True):
         """
         Initialize OneNote service.
  
@@ -46,10 +46,13 @@ class OneNoteService:
             client_secret: Microsoft application client secret (optional if using manual_token)
             tenant_id: Microsoft tenant ID (optional if using manual_token)
             manual_token: Manual Bearer token from Graph Explorer (bypasses OAuth)
+            use_azure_ad: If True, use Azure AD auth (client credentials). If False, use manual token.
         """
         self.client_id = client_id
         self.client_secret = client_secret
         self.tenant_id = tenant_id
+        self.manual_token = manual_token
+        self.use_azure_ad = use_azure_ad
         self.access_token: Optional[str] = None
        
         # Initialize adaptive rate limiter (100 req/min, well below 600 limit)
@@ -67,15 +70,22 @@ class OneNoteService:
         self.session = requests.Session()
         self.session.headers.update({"Content-Type": "application/json"})
  
-        # Use manual token if provided, otherwise authenticate via OAuth
-        if manual_token:
-            self.access_token = manual_token
-            self.session.headers.update({"Authorization": f"Bearer {manual_token}"})
-            logger.info("Using manual Bearer token from Graph Explorer")
-        elif client_id and client_secret and tenant_id:
-            self._authenticate()
+        # Authenticate based on use_azure_ad setting
+        if use_azure_ad:
+            # Use Azure AD (client credentials flow)
+            if client_id and client_secret and tenant_id:
+                self._authenticate()
+                logger.info("Using Azure AD authentication (client credentials)")
+            else:
+                logger.warning("Azure AD auth enabled but credentials missing")
         else:
-            logger.warning("No authentication method provided. Service will not work.")
+            # Use manual token
+            if manual_token:
+                self.access_token = manual_token
+                self.session.headers.update({"Authorization": f"Bearer {manual_token}"})
+                logger.info("Using manual Bearer token from Graph Explorer")
+            else:
+                logger.warning("Manual token auth enabled but token missing")
  
     def _authenticate(self) -> None:
         """Authenticate with Microsoft Graph API using client credentials."""

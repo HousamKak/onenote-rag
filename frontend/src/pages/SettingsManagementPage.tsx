@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Save, AlertCircle, CheckCircle2, Eye, EyeOff, TestTube, ChevronDown, ChevronUp } from 'lucide-react';
+import { Save, AlertCircle, CheckCircle2, Eye, EyeOff, ChevronDown, ChevronUp } from 'lucide-react';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
 
@@ -105,7 +105,27 @@ export default function SettingsManagementPage() {
     }
   };
 
-  const testConnection = async () => {
+  const clearSetting = async (key: string) => {
+    try {
+      setSaving(true);
+      await axios.put(`${API_BASE_URL}/settings/${key}`, {
+        value: '',
+      });
+      
+      setMessage({ type: 'success', text: `${key} cleared successfully` });
+      setTimeout(() => setMessage(null), 3000);
+      
+      // Refresh settings to get updated values
+      await fetchSettings();
+    } catch (error) {
+      console.error('Failed to clear setting:', error);
+      setMessage({ type: 'error', text: `Failed to clear ${key}` });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const testOpenAIConnection = async () => {
     try {
       setTestingConnection(true);
       setConnectionStatus(null);
@@ -117,6 +137,29 @@ export default function SettingsManagementPage() {
       setConnectionStatus({
         status: 'error',
         message: 'Failed to test connection',
+      });
+    } finally {
+      setTestingConnection(false);
+    }
+  };
+
+  const testOneNoteConnection = async () => {
+    try {
+      setTestingConnection(true);
+      setConnectionStatus(null);
+      
+      const response = await axios.get(`${API_BASE_URL}/onenote/notebooks`);
+      const authMethod = editedValues['use_azure_ad_auth'] === 'true' ? 'Azure AD' : 'Manual Token';
+      setConnectionStatus({
+        status: 'success',
+        message: `Connected successfully using ${authMethod}! Found ${response.data.notebooks.length} notebook(s).`,
+      });
+    } catch (error: any) {
+      console.error('OneNote connection test failed:', error);
+      const authMethod = editedValues['use_azure_ad_auth'] === 'true' ? 'Azure AD' : 'Manual Token';
+      setConnectionStatus({
+        status: 'error',
+        message: `Failed to connect using ${authMethod}: ${error.response?.data?.detail || error.message}`,
       });
     } finally {
       setTestingConnection(false);
@@ -186,6 +229,17 @@ export default function SettingsManagementPage() {
             >
               <Save className="w-4 h-4" />
             </button>
+            
+            {setting.has_value && (
+              <button
+                onClick={() => clearSetting(setting.key)}
+                disabled={saving}
+                aria-label={`Clear ${setting.key}`}
+                className="px-3 py-2 rounded-lg font-medium shadow-claude transition-all flex items-center gap-1 flex-shrink-0 bg-red-500 hover:bg-red-600 text-white disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
+              >
+                <AlertCircle className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
       );
@@ -244,6 +298,17 @@ export default function SettingsManagementPage() {
           >
             <Save className="w-5 h-5" />
           </button>
+          
+          {setting.has_value && (
+            <button
+              onClick={() => clearSetting(setting.key)}
+              disabled={saving}
+              aria-label={`Clear ${setting.key}`}
+              className="px-3 py-2 border-2 border-black font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all flex-shrink-0 bg-red-400 hover:bg-red-500 disabled:bg-gray-200 disabled:cursor-not-allowed"
+            >
+              <AlertCircle className="w-5 h-5" />
+            </button>
+          )}
         </div>
       </div>
     );
@@ -312,45 +377,67 @@ export default function SettingsManagementPage() {
           </div>
         )}
 
-        {/* Connection Test */}
+        {/* Connection Tests */}
         <div className={theme === 'claude'
-          ? 'mb-6 p-5 border border-claude-border rounded-lg bg-gray-50'
-          : 'mb-6 p-6 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+          ? 'mb-6 p-4 border border-claude-border rounded-lg bg-gray-50'
+          : 'mb-6 p-4 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
         }>
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div className="flex-1 min-w-[200px]">
-              <h3 className={theme === 'claude' ? 'font-semibold text-lg mb-1 text-claude-text' : 'font-bold text-lg mb-1'}>
-                Test API Connection
-              </h3>
-              <p className={theme === 'claude' ? 'text-sm text-claude-text-secondary' : 'text-sm text-gray-600'}>
-                Verify your OpenAI API key is working correctly
-              </p>
+          <h3 className={theme === 'claude' ? 'font-semibold text-base mb-3 text-claude-text' : 'font-bold text-base mb-3'}>
+            Test Connections
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {/* OpenAI Test */}
+            <div className={theme === 'claude' ? 'p-3 bg-white rounded border border-gray-200' : 'p-3 bg-yellow-50 border-2 border-black'}>
+              <div className="flex items-center justify-between mb-2">
+                <span className={theme === 'claude' ? 'text-sm font-medium' : 'text-sm font-bold'}>OpenAI API</span>
+                <button
+                  onClick={testOpenAIConnection}
+                  disabled={testingConnection}
+                  className={theme === 'claude'
+                    ? 'px-3 py-1 bg-claude-primary text-white text-xs rounded font-medium hover:bg-claude-primary-hover disabled:bg-gray-300'
+                    : 'px-3 py-1 bg-purple-400 border border-black text-xs font-bold hover:bg-purple-500 disabled:bg-gray-200'
+                  }
+                >
+                  {testingConnection ? 'Testing...' : 'Test'}
+                </button>
+              </div>
             </div>
-            <button
-              onClick={testConnection}
-              disabled={testingConnection}
-              className={theme === 'claude'
-                ? `px-5 py-2.5 bg-claude-primary text-white rounded-lg font-medium shadow-claude hover:bg-claude-primary-hover transition-all disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2`
-                : `px-6 py-3 bg-purple-400 border-2 border-black font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-purple-500 active:shadow-none active:translate-x-1 active:translate-y-1 transition-all disabled:bg-gray-200 disabled:cursor-not-allowed flex items-center gap-2`
-              }
-            >
-              <TestTube className="w-5 h-5" />
-              {testingConnection ? 'Testing...' : 'Test Connection'}
-            </button>
+            
+            {/* OneNote Test */}
+            <div className={theme === 'claude' ? 'p-3 bg-white rounded border border-gray-200' : 'p-3 bg-blue-50 border-2 border-black'}>
+              <div className="flex items-center justify-between mb-2">
+                <div>
+                  <span className={theme === 'claude' ? 'text-sm font-medium' : 'text-sm font-bold'}>OneNote</span>
+                  <p className={theme === 'claude' ? 'text-xs text-claude-text-secondary' : 'text-xs text-gray-600'}>
+                    {editedValues['use_azure_ad_auth'] === 'true' ? 'via Azure AD' : 'via Manual Token'}
+                  </p>
+                </div>
+                <button
+                  onClick={testOneNoteConnection}
+                  disabled={testingConnection}
+                  className={theme === 'claude'
+                    ? 'px-3 py-1 bg-claude-primary text-white text-xs rounded font-medium hover:bg-claude-primary-hover disabled:bg-gray-300'
+                    : 'px-3 py-1 bg-blue-400 border border-black text-xs font-bold hover:bg-blue-500 disabled:bg-gray-200'
+                  }
+                >
+                  {testingConnection ? 'Testing...' : 'Test'}
+                </button>
+              </div>
+            </div>
           </div>
           
           {connectionStatus && (
             <div
               className={theme === 'claude'
-                ? `mt-4 p-3 rounded-lg ${
+                ? `mt-3 p-3 rounded-lg text-sm ${
                     connectionStatus.status === 'success' ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
                   }`
-                : `mt-4 p-3 border-2 border-black ${
+                : `mt-3 p-3 border-2 border-black text-sm ${
                     connectionStatus.status === 'success' ? 'bg-green-200' : 'bg-red-200'
                   }`
               }
             >
-              <p className={theme === 'claude' ? 'font-medium text-sm' : 'font-bold'}>{connectionStatus.message}</p>
+              <p className={theme === 'claude' ? 'font-medium' : 'font-bold'}>{connectionStatus.message}</p>
             </div>
           )}
         </div>
@@ -365,6 +452,42 @@ export default function SettingsManagementPage() {
             }>
               🔐 API Keys & Credentials
             </h2>
+            
+            {/* Microsoft Authentication Toggle */}
+            <div className={theme === 'claude'
+              ? 'mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg'
+              : 'mb-4 p-4 bg-blue-100 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+            }>
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <h3 className={theme === 'claude' ? 'font-semibold text-sm text-claude-text' : 'font-bold text-sm'}>
+                    Microsoft Authentication Method
+                  </h3>
+                  <p className={theme === 'claude' ? 'text-xs text-claude-text-secondary mt-1' : 'text-xs text-gray-600 mt-1'}>
+                    {editedValues['use_azure_ad_auth'] === 'true' 
+                      ? 'Using Azure AD (Client ID, Secret, Tenant ID)' 
+                      : 'Using Manual Graph Explorer Token'}
+                  </p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer ml-4">
+                  <input
+                    type="checkbox"
+                    checked={editedValues['use_azure_ad_auth'] === 'true'}
+                    onChange={(e) => {
+                      const newValue = e.target.checked ? 'true' : 'false';
+                      handleValueChange('use_azure_ad_auth', newValue);
+                      saveSetting('use_azure_ad_auth');
+                    }}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                  <span className={`ml-3 text-sm font-medium ${theme === 'claude' ? 'text-claude-text' : 'text-gray-900'}`}>
+                    Use Azure AD
+                  </span>
+                </label>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {settings.filter(s => s.is_sensitive).map((setting) => renderInput(setting))}
             </div>

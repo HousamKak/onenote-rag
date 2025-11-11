@@ -82,6 +82,11 @@ class SettingsService:
                 "is_sensitive": True
             },
             {
+                "key": "use_azure_ad_auth",
+                "description": "Use Azure AD authentication (true) or Manual Token (false)",
+                "is_sensitive": False
+            },
+            {
                 "key": "chunk_size",
                 "description": "Document chunk size for processing",
                 "is_sensitive": False
@@ -166,6 +171,7 @@ class SettingsService:
             "microsoft_client_secret": {"description": "Microsoft Azure AD Client Secret", "is_sensitive": True},
             "microsoft_tenant_id": {"description": "Microsoft Azure AD Tenant ID", "is_sensitive": False},
             "microsoft_graph_token": {"description": "Microsoft Graph API Bearer Token (optional)", "is_sensitive": True},
+            "use_azure_ad_auth": {"description": "Use Azure AD authentication (true) or Manual Token (false)", "is_sensitive": False},
             "chunk_size": {"description": "Document chunk size for processing", "is_sensitive": False},
             "chunk_overlap": {"description": "Overlap between document chunks", "is_sensitive": False},
             "enable_startup_sync": {"description": "Auto-sync OneNote on startup (true/false)", "is_sensitive": False},
