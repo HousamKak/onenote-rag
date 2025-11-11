@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Save, AlertCircle, CheckCircle2, Eye, EyeOff, ChevronDown, ChevronUp } from 'lucide-react';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
-
+ 
 interface Setting {
   key: string;
   value: string;
@@ -10,9 +10,9 @@ interface Setting {
   description: string | null;
   has_value: boolean;
 }
-
+ 
 const API_BASE_URL = 'http://localhost:8000/api';
-
+ 
 export default function SettingsManagementPage() {
   const { theme } = useTheme();
   const [settings, setSettings] = useState<Setting[]>([]);
@@ -24,17 +24,18 @@ export default function SettingsManagementPage() {
   const [testingConnection, setTestingConnection] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [connectionStatus, setConnectionStatus] = useState<{ status: string; message: string } | null>(null);
-
+ 
   useEffect(() => {
     fetchSettings();
   }, []);
-
+ 
   const fetchSettings = async () => {
     try {
       setLoading(true);
+ 
       const response = await axios.get<Setting[]>(`${API_BASE_URL}/settings`);
       setSettings(response.data);
-      
+ 
       // Initialize edited values with current values
       const initialValues: Record<string, string> = {};
       response.data.forEach((setting) => {
@@ -48,39 +49,61 @@ export default function SettingsManagementPage() {
       setLoading(false);
     }
   };
-
+ 
   const handleValueChange = (key: string, value: string) => {
     setEditedValues((prev) => ({ ...prev, [key]: value }));
   };
-
+ 
   const toggleShowSensitive = (key: string) => {
     setShowSensitive((prev) => ({ ...prev, [key]: !prev[key] }));
   };
-
-  const saveSetting = async (key: string) => {
+ 
+  const saveSetting = async (key: string, valueOverride?: string) => {
     try {
       setSaving(true);
+     
+      // Get current setting
+      const currentSetting = settings.find(s => s.key === key);
+     
+     
+      // Determine value to save
+      const newValue = valueOverride !== undefined
+        ? valueOverride
+        : (editedValues[key] !== undefined ? editedValues[key] : currentSetting?.value || '');
+ 
+      // Send update to backend
       await axios.put(`${API_BASE_URL}/settings/${key}`, {
-        value: editedValues[key],
+        value: newValue
       });
-      
+     
+      // Update local state
+      setSettings(prevSettings => {
+        const updated = prevSettings.map(s =>
+          s.key === key ? { ...s, value: newValue, has_value: newValue !== '' } : s
+        );
+        return updated;
+      });
+     
+      // Sync editedValues
+      setEditedValues(prev => ({
+        ...prev,
+        [key]: newValue
+      }));
+     
       setMessage({ type: 'success', text: `${key} saved successfully` });
       setTimeout(() => setMessage(null), 3000);
-      
-      // Refresh settings to get updated values
-      await fetchSettings();
-    } catch (error) {
-      console.error('Failed to save setting:', error);
+    } catch (error: any) {
+      console.error(`Failed to save setting '${key}':`, error);
       setMessage({ type: 'error', text: `Failed to save ${key}` });
     } finally {
       setSaving(false);
     }
   };
-
+ 
   const saveAllSettings = async () => {
     try {
       setSaving(true);
-      
+     
       // Save all modified settings
       const promises = Object.entries(editedValues).map(([key, value]) => {
         const original = settings.find((s) => s.key === key);
@@ -89,12 +112,12 @@ export default function SettingsManagementPage() {
         }
         return Promise.resolve();
       });
-      
+     
       await Promise.all(promises);
-      
+     
       setMessage({ type: 'success', text: 'All settings saved successfully' });
       setTimeout(() => setMessage(null), 3000);
-      
+     
       // Refresh settings
       await fetchSettings();
     } catch (error) {
@@ -104,17 +127,17 @@ export default function SettingsManagementPage() {
       setSaving(false);
     }
   };
-
+ 
   const clearSetting = async (key: string) => {
     try {
       setSaving(true);
       await axios.put(`${API_BASE_URL}/settings/${key}`, {
         value: '',
       });
-      
+     
       setMessage({ type: 'success', text: `${key} cleared successfully` });
       setTimeout(() => setMessage(null), 3000);
-      
+     
       // Refresh settings to get updated values
       await fetchSettings();
     } catch (error) {
@@ -124,12 +147,12 @@ export default function SettingsManagementPage() {
       setSaving(false);
     }
   };
-
+ 
   const testOpenAIConnection = async () => {
     try {
       setTestingConnection(true);
       setConnectionStatus(null);
-      
+     
       const response = await axios.post(`${API_BASE_URL}/settings/test-connection`);
       setConnectionStatus(response.data);
     } catch (error) {
@@ -142,21 +165,23 @@ export default function SettingsManagementPage() {
       setTestingConnection(false);
     }
   };
-
+ 
   const testOneNoteConnection = async () => {
     try {
       setTestingConnection(true);
       setConnectionStatus(null);
-      
-      const response = await axios.get(`${API_BASE_URL}/onenote/notebooks`);
+     
       const authMethod = editedValues['use_azure_ad_auth'] === 'true' ? 'Azure AD' : 'Manual Token';
+      const response = await axios.get(`${API_BASE_URL}/onenote/notebooks`);
+     
       setConnectionStatus({
         status: 'success',
         message: `Connected successfully using ${authMethod}! Found ${response.data.notebooks.length} notebook(s).`,
       });
     } catch (error: any) {
-      console.error('OneNote connection test failed:', error);
       const authMethod = editedValues['use_azure_ad_auth'] === 'true' ? 'Azure AD' : 'Manual Token';
+      console.error(`OneNote connection test failed using ${authMethod}:`, error);
+     
       setConnectionStatus({
         status: 'error',
         message: `Failed to connect using ${authMethod}: ${error.response?.data?.detail || error.message}`,
@@ -165,15 +190,67 @@ export default function SettingsManagementPage() {
       setTestingConnection(false);
     }
   };
-
+ 
   const getSensitiveInputType = (key: string) => {
     return showSensitive[key] ? 'text' : 'password';
   };
-
+ 
   const renderInput = (setting: Setting) => {
-    const value = editedValues[setting.key] || '';
+    // Use editedValues if present, otherwise fall back to the setting's actual value
+    const value = editedValues[setting.key] !== undefined ? editedValues[setting.key] : setting.value;
     const hasChanged = value !== setting.value;
-
+ 
+    // Special handling for boolean toggle settings (auto-save on toggle)
+    const isBooleanSetting = setting.key === 'use_azure_ad_auth' || setting.key === 'enable_startup_sync';
+   
+    if (isBooleanSetting && theme === 'claude') {
+      const isEnabled = value === 'true';
+     
+      const handleToggle = async () => {
+        const newValue = isEnabled ? 'false' : 'true';
+        handleValueChange(setting.key, newValue);
+        await saveSetting(setting.key, newValue);
+      };
+     
+      return (
+        <div key={setting.key} className="border border-claude-border rounded-lg p-4 bg-white hover:border-claude-primary transition-colors h-full flex flex-col">
+          <div className="flex items-start justify-between mb-2">
+            <div className="flex-1 min-w-0">
+              <label className="block text-sm font-semibold text-claude-text mb-1 truncate" title={setting.key}>
+                {setting.key}
+              </label>
+              {setting.description && (
+                <p className="text-xs text-claude-text-secondary line-clamp-2">{setting.description}</p>
+              )}
+            </div>
+          </div>
+ 
+          <div className="flex items-center gap-3 mt-auto">
+            <div className="flex items-center gap-2 flex-1">
+              <span className="text-sm font-medium text-claude-text">
+                {isEnabled ? (setting.key === 'use_azure_ad_auth' ? 'Azure AD' : 'Enabled') : (setting.key === 'use_azure_ad_auth' ? 'Manual Token' : 'Disabled')}
+              </span>
+              <button
+                onClick={handleToggle}
+                disabled={saving}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  isEnabled ? 'bg-claude-primary' : 'bg-gray-300'
+                } ${saving ? 'opacity-50 cursor-not-allowed' : ''}`}
+                role="switch"
+                aria-checked={isEnabled}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    isEnabled ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+ 
     if (theme === 'claude') {
       return (
         <div key={setting.key} className="border border-claude-border rounded-lg p-4 bg-white hover:border-claude-primary transition-colors h-full flex flex-col">
@@ -192,7 +269,7 @@ export default function SettingsManagementPage() {
               </span>
             )}
           </div>
-
+ 
           <div className="flex gap-2 mt-auto">
             <div className="flex-1 relative">
               <input
@@ -216,7 +293,7 @@ export default function SettingsManagementPage() {
                 </button>
               )}
             </div>
-            
+           
             <button
               onClick={() => saveSetting(setting.key)}
               disabled={!hasChanged || saving}
@@ -229,7 +306,7 @@ export default function SettingsManagementPage() {
             >
               <Save className="w-4 h-4" />
             </button>
-            
+           
             {setting.has_value && (
               <button
                 onClick={() => clearSetting(setting.key)}
@@ -244,8 +321,55 @@ export default function SettingsManagementPage() {
         </div>
       );
     }
-
-    // Neo-brutalism theme
+ 
+    // Special handling for boolean toggle settings in neo-brutalism theme (auto-save on toggle)
+    if (isBooleanSetting) {
+      const isEnabled = value === 'true';
+     
+      const handleToggle = async () => {
+        const newValue = isEnabled ? 'false' : 'true';
+        handleValueChange(setting.key, newValue);
+        await saveSetting(setting.key, newValue);
+      };
+     
+      return (
+        <div key={setting.key} className="border-2 border-black p-4 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] h-full flex flex-col">
+          <div className="flex items-start justify-between mb-2">
+            <div className="flex-1 min-w-0">
+              <label className="block text-base font-bold mb-1 truncate" title={setting.key}>{setting.key}</label>
+              {setting.description && (
+                <p className="text-xs text-gray-600 mb-2 line-clamp-2">{setting.description}</p>
+              )}
+            </div>
+          </div>
+ 
+          <div className="flex items-center gap-3 mt-auto">
+            <div className="flex items-center gap-2 flex-1">
+              <span className="text-sm font-bold">
+                {isEnabled ? (setting.key === 'use_azure_ad_auth' ? 'AZURE AD' : 'ENABLED') : (setting.key === 'use_azure_ad_auth' ? 'MANUAL TOKEN' : 'DISABLED')}
+              </span>
+              <button
+                onClick={handleToggle}
+                disabled={saving}
+                className={`relative inline-flex h-7 w-14 items-center rounded-full border-2 border-black transition-colors ${
+                  isEnabled ? 'bg-blue-400' : 'bg-gray-300'
+                } ${saving ? 'opacity-50 cursor-not-allowed' : ''}`}
+                role="switch"
+                aria-checked={isEnabled}
+              >
+                <span
+                  className={`inline-block h-5 w-5 transform rounded-full bg-white border-2 border-black transition-transform ${
+                    isEnabled ? 'translate-x-7' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+ 
+    // Neo-brutalism theme (regular inputs)
     return (
       <div key={setting.key} className="border-2 border-black p-4 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] h-full flex flex-col">
         <div className="flex items-start justify-between mb-2">
@@ -261,7 +385,7 @@ export default function SettingsManagementPage() {
             </span>
           )}
         </div>
-
+ 
         <div className="flex gap-2 mt-auto">
           <div className="flex-1 relative">
             <input
@@ -285,7 +409,7 @@ export default function SettingsManagementPage() {
               </button>
             )}
           </div>
-          
+         
           <button
             onClick={() => saveSetting(setting.key)}
             disabled={!hasChanged || saving}
@@ -298,7 +422,7 @@ export default function SettingsManagementPage() {
           >
             <Save className="w-5 h-5" />
           </button>
-          
+         
           {setting.has_value && (
             <button
               onClick={() => clearSetting(setting.key)}
@@ -313,7 +437,7 @@ export default function SettingsManagementPage() {
       </div>
     );
   };
-
+ 
   if (loading) {
     return (
       <div className={`min-h-screen p-8 ${theme === 'claude' ? 'bg-white' : 'bg-yellow-50'}`}>
@@ -325,7 +449,7 @@ export default function SettingsManagementPage() {
       </div>
     );
   }
-
+ 
   return (
     <div className={`h-full overflow-y-auto p-6 ${theme === 'claude' ? 'bg-white' : 'bg-yellow-50'}`}>
       <div className="max-w-6xl mx-auto pb-20">
@@ -351,14 +475,14 @@ export default function SettingsManagementPage() {
             </>
           )}
         </div>
-
+ 
         {/* Message Banner */}
         {message && (
           <div
-            className={theme === 'claude' 
+            className={theme === 'claude'
               ? `mb-6 p-4 rounded-lg border ${
-                  message.type === 'success' 
-                    ? 'bg-green-50 border-green-200 text-green-800' 
+                  message.type === 'success'
+                    ? 'bg-green-50 border-green-200 text-green-800'
                     : 'bg-red-50 border-red-200 text-red-800'
                 }`
               : `mb-6 p-4 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${
@@ -376,7 +500,7 @@ export default function SettingsManagementPage() {
             </div>
           </div>
         )}
-
+ 
         {/* Connection Tests */}
         <div className={theme === 'claude'
           ? 'mb-6 p-4 border border-claude-border rounded-lg bg-gray-50'
@@ -402,7 +526,7 @@ export default function SettingsManagementPage() {
                 </button>
               </div>
             </div>
-            
+           
             {/* OneNote Test */}
             <div className={theme === 'claude' ? 'p-3 bg-white rounded border border-gray-200' : 'p-3 bg-blue-50 border-2 border-black'}>
               <div className="flex items-center justify-between mb-2">
@@ -425,7 +549,7 @@ export default function SettingsManagementPage() {
               </div>
             </div>
           </div>
-          
+         
           {connectionStatus && (
             <div
               className={theme === 'claude'
@@ -441,18 +565,18 @@ export default function SettingsManagementPage() {
             </div>
           )}
         </div>
-
+ 
         {/* Settings List - Separated by Sensitive and Optional */}
         <div className="mb-6 space-y-6">
           {/* Sensitive Settings Section */}
           <div>
-            <h2 className={theme === 'claude' 
+            <h2 className={theme === 'claude'
               ? 'text-xl font-semibold text-claude-text mb-4'
               : 'text-2xl font-black mb-4'
             }>
               🔐 API Keys & Credentials
             </h2>
-            
+           
             {/* Microsoft Authentication Toggle */}
             <div className={theme === 'claude'
               ? 'mb-3 p-3 bg-blue-50 border border-blue-200 rounded'
@@ -476,7 +600,7 @@ export default function SettingsManagementPage() {
                     onChange={async (e) => {
                       const newValue = e.target.checked ? 'true' : 'false';
                       handleValueChange('use_azure_ad_auth', newValue);
-                      await saveSetting('use_azure_ad_auth');
+                      await saveSetting('use_azure_ad_auth', newValue);
                     }}
                     className="sr-only peer"
                   />
@@ -487,12 +611,12 @@ export default function SettingsManagementPage() {
                 </label>
               </div>
             </div>
-
+ 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {settings.filter(s => s.is_sensitive).map((setting) => renderInput(setting))}
             </div>
           </div>
-
+ 
           {/* Optional Settings Section - Collapsible */}
           <div>
             <button
@@ -505,7 +629,7 @@ export default function SettingsManagementPage() {
               {showOptionalSettings ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
               <span>⚙️ Application Settings ({settings.filter(s => !s.is_sensitive).length})</span>
             </button>
-            
+           
             {showOptionalSettings && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {settings.filter(s => !s.is_sensitive).map((setting) => renderInput(setting))}
@@ -513,7 +637,7 @@ export default function SettingsManagementPage() {
             )}
           </div>
         </div>
-
+ 
         {/* Save All Button */}
         <div className="flex justify-end mb-6">
           <button
@@ -528,7 +652,7 @@ export default function SettingsManagementPage() {
             {saving ? 'Saving...' : 'Save All Settings'}
           </button>
         </div>
-
+ 
         {/* Help Text */}
         <div className={theme === 'claude'
           ? 'mt-8 p-5 border border-blue-200 bg-blue-50 rounded-lg'
@@ -549,3 +673,4 @@ export default function SettingsManagementPage() {
     </div>
   );
 }
+ 
