@@ -640,19 +640,20 @@ async def get_image(
     Returns the image file directly for display.
     """
     try:
-        from services.image_storage import ImageStorageService
-
-        # Initialize image storage
-        image_storage = ImageStorageService(
-            storage_type="local",
-            base_path="backend/storage/images"
-        )
+        # Use the globally initiallized image_storage service if available
+        # This ensures we use the same path as during indexing
+        if image_storage is None:
+            raise HTTPException(
+                status_code=500,
+                detail="Image storage service not availabke. Multimodal features may be disabled."
+            )
 
         # Generate image path
         image_path = image_storage.generate_image_path(page_id, image_index)
 
         # Check if image exists
         if not await image_storage.exists(image_path):
+            logger.warning(f"Image not found: {image_path}")
             raise HTTPException(status_code=404, detail="Image not found")
 
         # Download image
