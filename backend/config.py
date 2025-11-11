@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     microsoft_client_id: str = ""
     microsoft_client_secret: str = ""
     microsoft_tenant_id: str = ""
-    oauth_redirect_uri: str = "http://localhost:8000/auth/callback"
+    oauth_redirect_uri: str = "http://localhost:5173/auth/callback"
     oauth_scopes: str = "User.Read Notes.Read"
  
     # Application
@@ -75,6 +75,7 @@ def get_dynamic_settings() -> dict:
         "langchain_api_key": settings.langchain_api_key,
         "langchain_project": settings.langchain_project,
         "microsoft_client_id": settings.microsoft_client_id,
+        "microsoft_client_secret": settings.microsoft_client_secret,
         "microsoft_tenant_id": settings.microsoft_tenant_id,
         "oauth_redirect_uri": settings.oauth_redirect_uri,
         "oauth_scopes": settings.oauth_scopes,
