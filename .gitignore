@@ -124,3 +124,6 @@ backend/data/chroma_db/
 storage
 
 settings.local.json
+
+start-backend.ps1
+start-frontend.ps1
