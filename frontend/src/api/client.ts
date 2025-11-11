@@ -82,7 +82,8 @@ export const configApi = {
  
 // Query endpoints
 export const queryApi = {
-  query: (request: QueryRequest) => api.post<QueryResponse>('/query', request),
+  query: (request: QueryRequest) => api.post<QueryResponse>('/query/multimodal', request),
+  queryTextOnly: (request: QueryRequest) => api.post<QueryResponse>('/query', request),
   compare: (question: string, configNames: string[]) =>
     api.post('/query/compare', { question, config_names: configNames }),
 };
