@@ -141,27 +141,7 @@ async def get_setting(
     except Exception as e:
         logger.error(f"Error getting setting {key}: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.put("/settings/{key}")
-async def update_setting(
-    key: str,
-    update: SettingUpdate,
-    service: SettingsService = Depends(get_settings_service)
-) -> Dict[str, Any]:
-    """Update a setting value."""
-    try:
-        service.set_setting(key=key, value=update.value)
-        return {
-            "status": "success",
-            "message": f"Setting '{key}' updated successfully"
-        }
-    except Exception as e:
-        logger.error(f"Error updating setting {key}: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-
+ 
  
 @router.put("/settings/{key}")
 async def update_setting(
@@ -173,7 +153,21 @@ async def update_setting(
     global onenote_service
    
     try:
+        # Get old value for logging
+        old_value = service.get_setting(key, decrypt=False)
+       
+        # Mask sensitive values in logs
+        from services.settings_service import SENSITIVE_KEYS
+        is_sensitive = key in SENSITIVE_KEYS
+        old_display = "********" if (is_sensitive and old_value) else old_value
+        new_display = "********" if (is_sensitive and update.value) else update.value
+       
+        logger.info(f"Updating setting '{key}': {old_display} → {new_display}")
+       
+        # Save the setting
         service.set_setting(key=key, value=update.value)
+       
+ 
        
         # Reinitialize OneNote service if authentication-related settings changed
         onenote_auth_keys = [
@@ -186,14 +180,16 @@ async def update_setting(
        
         if key in onenote_auth_keys:
             try:
-                # Get all current settings
+                # Get all current settings (includes the value we just saved)
                 all_settings = service.get_settings_dict()
                
-                # Parse the use_azure_ad_auth setting
+                # Determine authentication mode
                 use_azure_ad_str = all_settings.get("use_azure_ad_auth", "true")
                 use_azure_ad = use_azure_ad_str.lower() in ('true', '1', 'yes')
+                auth_method = "Azure AD" if use_azure_ad else "Manual Token"
+                logger.info(f"Reinitializing OneNote service with {auth_method} authentication")
                
-                # Reinitialize the OneNote service with updated settings
+                # Reinitialize the OneNote service
                 onenote_service = OneNoteService(
                     client_id=all_settings.get("microsoft_client_id", ""),
                     client_secret=all_settings.get("microsoft_client_secret", ""),
@@ -202,11 +198,14 @@ async def update_setting(
                     use_azure_ad=use_azure_ad,
                 )
                
-                auth_method = "Azure AD" if use_azure_ad else "Manual Token"
-                logger.info(f"OneNote service reinitialized with {auth_method} authentication")
+                logger.info("OneNote service reinitialized successfully")
                
             except Exception as reinit_error:
-                logger.warning(f"Failed to reinitialize OneNote service: {str(reinit_error)}")
+                logger.error(f"Error reinitializing OneNote service: {str(reinit_error)}")
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Setting updated but service reintialization failed: {str(reinit_error)}"
+                )
        
         return {
             "status": "success",
@@ -383,7 +382,7 @@ async def list_pages(
     section_id: str,
     service: OneNoteService = Depends(get_onenote_service)
 ):
-    """List all pages in a section."""
+    """List all pages in a section (limited to 20 pages)."""
     try:
         pages = service.list_pages(section_id)
         return {"pages": pages}
@@ -640,12 +639,12 @@ async def get_image(
     Returns the image file directly for display.
     """
     try:
-        # Use the globally initiallized image_storage service if available
+        # Use the globally initialized image_storage service if available
         # This ensures we use the same path as during indexing
         if image_storage is None:
             raise HTTPException(
-                status_code=500,
-                detail="Image storage service not availabke. Multimodal features may be disabled."
+                status_code=503,
+                detail="Image storage service not available. Multimodal features may be disabled."
             )
 
         # Generate image path
