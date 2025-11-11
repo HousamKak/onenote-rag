@@ -55,6 +55,10 @@ class OneNoteService:
         self.use_azure_ad = use_azure_ad
         self.access_token: Optional[str] = None
        
+        # Log authentication mode
+        auth_mode = "Azure AD" if use_azure_ad else "Manual Token"
+        logger.info(f"Initializing OneNote Service with {auth_mode} authentication")
+       
         # Initialize adaptive rate limiter (100 req/min, well below 600 limit)
         self.rate_limiter = AdaptiveRateLimiter(
             requests_per_minute=100,
@@ -72,30 +76,34 @@ class OneNoteService:
  
         # Authenticate based on use_azure_ad setting
         if use_azure_ad:
-            # Use Azure AD (client credentials flow)
             if client_id and client_secret and tenant_id:
                 self._authenticate()
-                logger.info("Using Azure AD authentication (client credentials)")
             else:
-                logger.warning("Azure AD auth enabled but credentials missing")
+                logger.warning("Azure AD authentication enabled but credentials are incomplete")
         else:
-            # Use manual token
             if manual_token:
                 self.access_token = manual_token
                 self.session.headers.update({"Authorization": f"Bearer {manual_token}"})
-                logger.info("Using manual Bearer token from Graph Explorer")
             else:
-                logger.warning("Manual token auth enabled but token missing")
+                logger.warning("Manual token authentication enabled but token is missing")
  
     def _authenticate(self) -> None:
         """Authenticate with Microsoft Graph API using client credentials."""
         try:
+            logger.info(f"🔐 Starting Azure AD authentication process...")
+           
+            authority_url = f"https://login.microsoftonline.com/{self.tenant_id}"
+            logger.info(f"   • Authority URL: {authority_url}")
+            logger.info(f"   • Scope: https://graph.microsoft.com/.default")
+           
             app = ConfidentialClientApplication(
                 self.client_id,
-                authority=f"https://login.microsoftonline.com/{self.tenant_id}",
+                authority=authority_url,
                 client_credential=self.client_secret,
             )
+            logger.info(f"✅ MSAL ConfidentialClientApplication created")
  
+            logger.info(f"🔄 Requesting access token from Microsoft Entra ID...")
             result = app.acquire_token_for_client(
                 scopes=["https://graph.microsoft.com/.default"]
             )
@@ -103,12 +111,16 @@ class OneNoteService:
             if "access_token" in result:
                 self.access_token = result["access_token"]
                 self.session.headers.update({"Authorization": f"Bearer {self.access_token}"})
-                logger.info("Successfully authenticated with Microsoft Graph API")
+                logger.info("Azure AD authentication successful")
             else:
-                logger.error(f"Authentication failed: {result.get('error_description')}")
+                error = result.get('error', 'Unknown error')
+                error_description = result.get('error_description', 'No description provided')
+                logger.error(f"Azure AD authentication failed: {error} - {error_description}")
  
         except Exception as e:
-            logger.error(f"Error during authentication: {str(e)}")
+            logger.error(f"Exception during Azure AD authentication: {str(e)}")
+            import traceback
+            logger.debug(f"Full traceback:\n{traceback.format_exc()}")
    
     def _make_request_with_retry(self, url: str, max_retries: int = 3) -> Optional[Dict[str, Any]]:
         """
@@ -220,21 +232,22 @@ class OneNoteService:
        
         if data:
             sections = data.get("value", [])
-            logger.info(f"Found {len(sections)} sections in notebook {notebook_id}")
+            logger.debug(f"Found {len(sections)} sections in notebook {notebook_id}")
             return sections
        
         return []
  
-    def list_pages(self, section_id: str) -> List[Dict[str, Any]]:
+    def list_pages(self, section_id: str, max_pages: int = 20) -> List[Dict[str, Any]]:
         """
-        List all pages in a section with rate limiting, retry logic and pagination support.
-        Handles large sections (e.g., 125 pages) by implementing rate limiting between requests.
+        List pages in a section with rate limiting, retry logic and pagination support.
+        Handles large sections by implementing rate limiting between requests.
  
         Args:
             section_id: Section ID
+            max_pages: Maximum number of pages to retrieve (default: 20)
  
         Returns:
-            List of page dictionaries (fetches all pages via pagination with rate limiting)
+            List of page dictionaries (fetches pages via pagination with rate limiting, up to max_pages)
         """
         if not self.access_token:
             return []
@@ -243,20 +256,20 @@ class OneNoteService:
         url = f"{self.GRAPH_API_ENDPOINT}/me/onenote/sections/{section_id}/pages"
         page_batch = 1
        
-        # Fetch all pages using pagination with rate limiting
-        while url:
-            logger.debug(f"Fetching page batch {page_batch} for section {section_id}")
-           
+        # Fetch pages using pagination with rate limiting, up to max_pages
+        while url and len(all_pages) < max_pages:
             data = self._make_request_with_retry(url)
            
             if not data:
-                # If request failed, return what we have so far
                 logger.warning(f"Failed to fetch page batch {page_batch}, returning {len(all_pages)} pages collected so far")
                 break
            
             pages = data.get("value", [])
-            all_pages.extend(pages)
-            logger.debug(f"Batch {page_batch}: Retrieved {len(pages)} pages (total: {len(all_pages)})")
+            # Only add pages up to the max limit
+            remaining_slots = max_pages - len(all_pages)
+            pages_to_add = pages[:remaining_slots]
+            all_pages.extend(pages_to_add)
+            logger.debug(f"Batch {page_batch}: Retrieved {len(pages_to_add)} pages (total: {len(all_pages)}/{max_pages})")
            
             # Check for next page
             url = data.get("@odata.nextLink")
@@ -264,7 +277,10 @@ class OneNoteService:
                 page_batch += 1
                 # Rate limiter handles timing automatically
        
-        logger.info(f"Found {len(all_pages)} total pages in section {section_id} across {page_batch} batches")
+        if len(all_pages) >= max_pages:
+            logger.info(f"Reached page limit: {len(all_pages)} pages in section {section_id} (limit: {max_pages})")
+        else:
+            logger.info(f"Found {len(all_pages)} pages in section {section_id}")
         return all_pages
  
     def get_page_content(self, page_id: str) -> Optional[str]:
