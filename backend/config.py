@@ -20,9 +20,10 @@ class Settings(BaseSettings):
  
     # Microsoft OAuth (User-Delegated Authentication)
     microsoft_client_id: str = ""
+    microsoft_client_secret: str = ""
     microsoft_tenant_id: str = ""
-    oauth_redirect_uri: str = "http://localhost:5173/auth/callback"
-    oauth_scopes: str = "User.Read Notes.Read Notes.Read.All"
+    oauth_redirect_uri: str = "http://localhost:8000/auth/callback"
+    oauth_scopes: str = "User.Read Notes.Read Notes.Read"
  
     # Application
     chunk_size: int = 1000
