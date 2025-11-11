@@ -161,6 +161,63 @@ async def update_setting(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+
+ 
+@router.put("/settings/{key}")
+async def update_setting(
+    key: str,
+    update: SettingUpdate,
+    service: SettingsService = Depends(get_settings_service)
+) -> Dict[str, Any]:
+    """Update a setting value."""
+    global onenote_service
+   
+    try:
+        service.set_setting(key=key, value=update.value)
+       
+        # Reinitialize OneNote service if authentication-related settings changed
+        onenote_auth_keys = [
+            "use_azure_ad_auth",
+            "microsoft_client_id",
+            "microsoft_client_secret",
+            "microsoft_tenant_id",
+            "microsoft_graph_token"
+        ]
+       
+        if key in onenote_auth_keys:
+            try:
+                # Get all current settings
+                all_settings = service.get_settings_dict()
+               
+                # Parse the use_azure_ad_auth setting
+                use_azure_ad_str = all_settings.get("use_azure_ad_auth", "true")
+                use_azure_ad = use_azure_ad_str.lower() in ('true', '1', 'yes')
+               
+                # Reinitialize the OneNote service with updated settings
+                onenote_service = OneNoteService(
+                    client_id=all_settings.get("microsoft_client_id", ""),
+                    client_secret=all_settings.get("microsoft_client_secret", ""),
+                    tenant_id=all_settings.get("microsoft_tenant_id", ""),
+                    manual_token=all_settings.get("microsoft_graph_token", ""),
+                    use_azure_ad=use_azure_ad,
+                )
+               
+                auth_method = "Azure AD" if use_azure_ad else "Manual Token"
+                logger.info(f"OneNote service reinitialized with {auth_method} authentication")
+               
+            except Exception as reinit_error:
+                logger.warning(f"Failed to reinitialize OneNote service: {str(reinit_error)}")
+       
+        return {
+            "status": "success",
+            "message": f"Setting '{key}' updated successfully"
+        }
+    except Exception as e:
+        logger.error(f"Error updating setting {key}: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+ 
+ 
+ 
 @router.post("/settings")
 async def create_setting(
     setting: SettingCreate,
