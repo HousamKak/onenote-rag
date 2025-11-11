@@ -9,17 +9,19 @@ from fastapi.middleware.cors import CORSMiddleware
  
 from config import get_settings, set_settings_service, get_dynamic_settings
 from services import (
-    OneNoteService,
     DocumentProcessor,
     VectorStoreService,
     RAGEngine,
 )
+from services.auth_service import AuthService
+from services.token_store import TokenStore
 from services.vision_service import GPT4VisionService
 from services.image_storage import ImageStorageService
 from services.multimodal_query import MultimodalQueryHandler
 from services.database import DatabaseService
 from services.encryption import EncryptionService
 from services.settings_service import SettingsService
+from middleware.auth import initialize_auth
 import api.routes as routes
  
 # Configure logging
@@ -102,23 +104,30 @@ async def lifespan(app: FastAPI):
     # Initialize services
     logger.info("Initializing services...")
  
-    # OneNote service
+    # Authentication services (user-delegated OAuth)
     try:
-        use_azure_ad_str = dynamic_settings.get("use_azure_ad_auth", str(settings.use_azure_ad_auth))
-        use_azure_ad = use_azure_ad_str.lower() in ('true', '1', 'yes')
-        
-        routes.onenote_service = OneNoteService(
-            client_id=dynamic_settings.get("microsoft_client_id", settings.microsoft_client_id),
-            client_secret=dynamic_settings.get("microsoft_client_secret", settings.microsoft_client_secret),
-            tenant_id=dynamic_settings.get("microsoft_tenant_id", settings.microsoft_tenant_id),
-            manual_token=dynamic_settings.get("microsoft_graph_token", settings.microsoft_graph_token),
-            use_azure_ad=use_azure_ad,
+        client_id = dynamic_settings.get("microsoft_client_id", settings.microsoft_client_id)
+        tenant_id = dynamic_settings.get("microsoft_tenant_id", settings.microsoft_tenant_id)
+
+        routes.auth_service = AuthService(
+            client_id=client_id,
+            tenant_id=tenant_id
         )
-        auth_method = "Azure AD" if use_azure_ad else "Manual Token"
-        logger.info(f"OneNote service initialized with {auth_method} authentication")
+        logger.info("Auth service initialized for user-delegated OAuth")
+
+        routes.token_store = TokenStore()
+        logger.info("Token store initialized (in-memory)")
+
+        # Initialize auth middleware
+        initialize_auth(routes.auth_service, routes.token_store)
+        logger.info("Authentication middleware initialized")
+
+        # Note: OneNote service is now created per-user, not globally
+        routes.onenote_service = None  # Keep for backward compatibility
+
     except Exception as e:
-        logger.warning(f"OneNote service initialization failed: {str(e)}")
-        logger.warning("OneNote features will not be available")
+        logger.warning(f"Authentication service initialization failed: {str(e)}")
+        logger.warning("User authentication will not be available")
  
     # Document processor
     chunk_size = int(dynamic_settings.get("chunk_size", settings.chunk_size))
@@ -133,11 +142,8 @@ async def lifespan(app: FastAPI):
     multimodal_handler = None
     try:
         openai_key = dynamic_settings.get("openai_api_key", settings.openai_api_key)
-        access_token = dynamic_settings.get("microsoft_graph_token", settings.microsoft_graph_token)
 
         if openai_key:
-            from services.multimodal_processor import MultimodalDocumentProcessor
-
             # Initialize vision service
             vision_service = GPT4VisionService(
                 api_key=openai_key,
@@ -151,22 +157,12 @@ async def lifespan(app: FastAPI):
             base_dir = os.path.dirname(os.path.dirname(__file__))  # Project root
             storage_path = os.path.join(base_dir, "storage", "images")
             os.makedirs(storage_path, exist_ok=True)
-            
+
             image_storage = ImageStorageService(
                 storage_type="local",
                 base_path=storage_path
             )
             logger.info(f"Image storage initialized at: {storage_path}")
-
-            # Initialize multimodal document processor (for indexing)
-            multimodal_processor = MultimodalDocumentProcessor(
-                vision_service=vision_service,
-                chunk_size=chunk_size,
-                chunk_overlap=chunk_overlap,
-                max_images_per_document=10,
-                access_token=access_token
-            )
-            logger.info("Multimodal document processor initialized")
 
             # Initialize multimodal query handler (for queries)
             multimodal_handler = MultimodalQueryHandler(
@@ -176,9 +172,10 @@ async def lifespan(app: FastAPI):
             logger.info("Multimodal query handler initialized")
 
             # Expose multimodal services to routes
+            # Note: MultimodalDocumentProcessor is created per-request with user's token
             routes.vision_service = vision_service
             routes.image_storage = image_storage
-            routes.multimodal_processor = multimodal_processor
+            routes.multimodal_processor = None  # Created per-request now
             logger.info("Multimodal services exposed to API routes")
         else:
             logger.info("Multimodal features disabled (no OpenAI API key)")
@@ -203,10 +200,10 @@ async def lifespan(app: FastAPI):
  
     logger.info("✅ Application startup complete! Server is ready to accept requests.")
  
-    # Schedule auto-sync to run in background (non-blocking)
-    # This performs an incremental sync to catch any changes since last run
-    enable_sync = dynamic_settings.get("enable_startup_sync", str(settings.enable_startup_sync)).lower() == "true"
-    if routes.onenote_service and enable_sync:
+    # NOTE: Auto-sync is disabled with user-delegated authentication
+    # Users must manually trigger sync after logging in (per-user sync)
+    # Keeping the sync code for future reference but disabling it
+    if False:  # Disabled - no global OneNote service
         logger.info("Scheduling automatic incremental sync in background...")
         
         # Import asyncio to schedule background task
@@ -337,21 +334,14 @@ async def lifespan(app: FastAPI):
         # Schedule the background task
         asyncio.create_task(background_sync())
         logger.info("Background sync task scheduled")
-    else:
-        if not routes.onenote_service:
-            logger.info("OneNote service not available, skipping auto-sync")
-            routes.sync_status = {
-                "in_progress": False,
-                "status": "skipped",
-                "message": "OneNote service not available"
-            }
-        else:
-            logger.info("Startup sync disabled in settings")
-            routes.sync_status = {
-                "in_progress": False,
-                "status": "disabled",
-                "message": "Startup sync is disabled"
-            }
+
+    # Auto-sync disabled - users trigger sync manually after login
+    logger.info("Startup sync disabled (user-delegated auth mode)")
+    routes.sync_status = {
+        "in_progress": False,
+        "status": "disabled",
+        "message": "Sync is user-triggered after login"
+    }
  
     yield
  

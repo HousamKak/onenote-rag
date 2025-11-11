@@ -27,6 +27,10 @@ openai==2.7.1
 # OneNote/Microsoft Graph
 msal==1.34.0
 requests==2.32.5
+
+# JWT Authentication
+PyJWT==2.8.0
+python-jose[cryptography]==3.3.0
  
 # HTTP Clients (for SSL bypass)
 httpx==0.28.1

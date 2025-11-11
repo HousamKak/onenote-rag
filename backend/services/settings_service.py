@@ -13,9 +13,7 @@ logger = logging.getLogger(__name__)
 # Settings that should be encrypted
 SENSITIVE_KEYS = {
     "openai_api_key",
-    "langchain_api_key",
-    "microsoft_client_secret",
-    "microsoft_graph_token"
+    "langchain_api_key"
 }
 
 
@@ -63,13 +61,8 @@ class SettingsService:
             },
             {
                 "key": "microsoft_client_id",
-                "description": "Microsoft Azure AD Client ID",
+                "description": "Microsoft Azure AD Client ID for OAuth",
                 "is_sensitive": False
-            },
-            {
-                "key": "microsoft_client_secret",
-                "description": "Microsoft Azure AD Client Secret",
-                "is_sensitive": True
             },
             {
                 "key": "microsoft_tenant_id",
@@ -77,13 +70,13 @@ class SettingsService:
                 "is_sensitive": False
             },
             {
-                "key": "microsoft_graph_token",
-                "description": "Microsoft Graph API Bearer Token (optional)",
-                "is_sensitive": True
+                "key": "oauth_redirect_uri",
+                "description": "OAuth redirect URI for authentication callbacks",
+                "is_sensitive": False
             },
             {
-                "key": "use_azure_ad_auth",
-                "description": "Use Azure AD authentication (true) or Manual Token (false)",
+                "key": "oauth_scopes",
+                "description": "OAuth scopes (space-separated)",
                 "is_sensitive": False
             },
             {

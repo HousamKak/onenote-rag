@@ -2,10 +2,11 @@
 API routes for the OneNote RAG application.
 """
 import logging
+import secrets
 from typing import List, Dict, Any, Optional
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
- 
+
 from models import (
     QueryRequest,
     QueryResponse,
@@ -15,6 +16,7 @@ from models import (
 )
 from models.rag_config import PRESET_CONFIGS, AVAILABLE_MODELS
 from models.settings import SettingCreate, SettingUpdate, SettingResponse
+from models.user import UserContext
 from services import (
     OneNoteService,
     DocumentProcessor,
@@ -22,18 +24,25 @@ from services import (
     RAGEngine,
 )
 from services.settings_service import SettingsService
-from config import get_settings
+from services.auth_service import AuthService
+from services.token_store import TokenStore
+from middleware.auth import get_current_user, generate_state
+from config import get_settings, get_dynamic_settings
  
 logger = logging.getLogger(__name__)
  
 router = APIRouter()
  
 # Global services (will be initialized in main.py)
-onenote_service: Optional[OneNoteService] = None
+onenote_service: Optional[OneNoteService] = None  # Will be removed - per-user now
 document_processor: Optional[DocumentProcessor] = None
 vector_store: Optional[VectorStoreService] = None
 rag_engine: Optional[RAGEngine] = None
 settings_service: Optional[SettingsService] = None
+
+# Authentication services
+auth_service: Optional[AuthService] = None
+token_store: Optional[TokenStore] = None
 
 # Multimodal services (optional - initialized if OpenAI key available)
 multimodal_processor: Optional[Any] = None  # MultimodalDocumentProcessor
@@ -56,11 +65,13 @@ def get_rag_engine() -> RAGEngine:
     return rag_engine
  
  
-def get_onenote_service() -> OneNoteService:
-    """Dependency to get OneNote service."""
-    if onenote_service is None:
-        raise HTTPException(status_code=500, detail="OneNote service not initialized")
-    return onenote_service
+def get_onenote_service(user: UserContext = Depends(get_current_user)) -> OneNoteService:
+    """
+    Dependency to create user-specific OneNote service.
+
+    Each user gets their own OneNote service instance with their access token.
+    """
+    return OneNoteService(access_token=user.access_token)
  
  
 def get_vector_store() -> VectorStoreService:
@@ -97,7 +108,161 @@ async def get_sync_status():
     return sync_status
 
 
+# ================================
+# Authentication Routes
+# ================================
+
+
+class AuthCallbackRequest(BaseModel):
+    """Request model for OAuth callback."""
+    code: str
+    state: str
+
+
+@router.get("/auth/login")
+async def login():
+    """
+    Generate Microsoft OAuth login URL.
+
+    Returns authorization URL and state for CSRF protection.
+    """
+    if not auth_service:
+        raise HTTPException(status_code=500, detail="Auth service not initialized")
+
+    settings = get_dynamic_settings()
+    redirect_uri = settings.get("oauth_redirect_uri", "http://localhost:5173/auth/callback")
+    scopes = settings.get("oauth_scopes", "User.Read Notes.Read Notes.Read.All").split()
+
+    state = generate_state()
+    auth_url = auth_service.get_authorization_url(
+        redirect_uri=redirect_uri,
+        state=state,
+        scopes=scopes
+    )
+
+    return {
+        "auth_url": auth_url,
+        "state": state
+    }
+
+
+@router.post("/auth/callback")
+async def auth_callback(request: AuthCallbackRequest):
+    """
+    Handle OAuth callback and exchange code for tokens.
+
+    Returns access token (session token) for frontend to use in API calls.
+    """
+    if not auth_service or not token_store:
+        raise HTTPException(status_code=500, detail="Auth service not initialized")
+
+    try:
+        settings = get_dynamic_settings()
+        redirect_uri = settings.get("oauth_redirect_uri", "http://localhost:5173/auth/callback")
+        scopes = settings.get("oauth_scopes", "User.Read Notes.Read Notes.Read.All").split()
+
+        # Exchange authorization code for tokens
+        token_response = await auth_service.acquire_token_by_code(
+            code=request.code,
+            redirect_uri=redirect_uri,
+            scopes=scopes
+        )
+
+        # Validate and extract user info from ID token
+        id_token = token_response.get("id_token")
+        if not id_token:
+            # Fallback to access token if no ID token
+            id_token = token_response.get("access_token")
+
+        claims = auth_service.validate_token(id_token)
+        user_info = auth_service.extract_user_info(claims)
+        user_id = user_info["user_id"]
+
+        if not user_id:
+            raise HTTPException(status_code=400, detail="Could not extract user ID from token")
+
+        # Store tokens for this user
+        token_store.set_tokens(
+            user_id=user_id,
+            access_token=token_response["access_token"],
+            refresh_token=token_response.get("refresh_token", ""),
+            expires_in=token_response.get("expires_in", 3600),
+            token_type=token_response.get("token_type", "Bearer"),
+            scope=token_response.get("scope"),
+            id_token=id_token
+        )
+
+        logger.info(f"User {user_id} authenticated successfully")
+
+        # Return the ID token to frontend (it will use this for auth)
+        return {
+            "access_token": id_token,  # Frontend will send this as Bearer token
+            "token_type": "Bearer",
+            "user": {
+                "id": user_id,
+                "email": user_info.get("email"),
+                "name": user_info.get("name")
+            }
+        }
+
+    except Exception as e:
+        logger.error(f"OAuth callback failed: {e}")
+        raise HTTPException(status_code=400, detail=f"Authentication failed: {str(e)}")
+
+
+@router.post("/auth/refresh")
+async def refresh_token(user: UserContext = Depends(get_current_user)):
+    """
+    Refresh user's access token.
+
+    This is automatically called by the get_current_user middleware when needed,
+    but can also be called explicitly by the frontend.
+    """
+    if not token_store:
+        raise HTTPException(status_code=500, detail="Token store not initialized")
+
+    # Token is already refreshed by middleware if needed
+    token_data = token_store.get_tokens(user.user_id)
+
+    if not token_data:
+        raise HTTPException(status_code=401, detail="Session expired")
+
+    # Return the ID token (frontend auth token)
+    return {
+        "access_token": token_data.id_token or token_data.access_token,
+        "token_type": "Bearer"
+    }
+
+
+@router.post("/auth/logout")
+async def logout(user: UserContext = Depends(get_current_user)):
+    """
+    Logout user and clear their tokens.
+    """
+    if not token_store:
+        raise HTTPException(status_code=500, detail="Token store not initialized")
+
+    token_store.delete_tokens(user.user_id)
+    logger.info(f"User {user.user_id} logged out")
+
+    return {"message": "Logged out successfully"}
+
+
+@router.get("/auth/user")
+async def get_user_info(user: UserContext = Depends(get_current_user)):
+    """
+    Get current user information.
+    """
+    return {
+        "id": user.user_id,
+        "email": user.email,
+        "name": user.name
+    }
+
+
+# ================================
 # Settings routes
+# ================================
 @router.get("/settings", response_model=List[SettingResponse])
 async def get_all_settings(
     service: SettingsService = Depends(get_settings_service)
@@ -433,10 +598,28 @@ async def sync_documents(
     - All components linked by page_id for document integrity
     """
     try:
-        # Check if multimodal processing is requested and available
-        use_multimodal = request.multimodal and multimodal_processor is not None
+        # Create multimodal processor with user's access token if requested
+        user_multimodal_processor = None
+        if request.multimodal and vision_service and image_storage:
+            from services.multimodal_processor import MultimodalDocumentProcessor
+            settings = get_dynamic_settings()
+            chunk_size = int(settings.get("chunk_size", 1000))
+            chunk_overlap = int(settings.get("chunk_overlap", 200))
 
-        if request.multimodal and multimodal_processor is None:
+            # Get user's access token from the onenote service dependency
+            user_multimodal_processor = MultimodalDocumentProcessor(
+                vision_service=vision_service,
+                chunk_size=chunk_size,
+                chunk_overlap=chunk_overlap,
+                max_images_per_document=10,
+                access_token=onenote.access_token  # User's token from OneNote service
+            )
+            logger.info("Created multimodal processor with user's access token")
+
+        # Check if multimodal processing is available
+        use_multimodal = request.multimodal and user_multimodal_processor is not None
+
+        if request.multimodal and user_multimodal_processor is None:
             logger.warning("Multimodal processing requested but not available - falling back to text-only")
 
         if use_multimodal:
@@ -510,7 +693,7 @@ async def sync_documents(
             # Process and chunk the document (multimodal or text-only)
             if use_multimodal:
                 # Multimodal processing: text + metadata + images
-                chunks, image_data_list = await multimodal_processor.chunk_document_multimodal(
+                chunks, image_data_list = await user_multimodal_processor.chunk_document_multimodal(
                     document=doc,
                     enrich_with_metadata=True,
                     include_images=True
@@ -580,6 +763,7 @@ class IndexStats(BaseModel):
  
 @router.get("/index/stats", response_model=IndexStats)
 async def get_index_stats(
+    user: UserContext = Depends(get_current_user),
     store: VectorStoreService = Depends(get_vector_store)
 ):
     """Get vector database statistics."""
@@ -593,6 +777,7 @@ async def get_index_stats(
  
 @router.delete("/index/clear")
 async def clear_index(
+    user: UserContext = Depends(get_current_user),
     store: VectorStoreService = Depends(get_vector_store)
 ):
     """Clear all documents from vector database."""
@@ -617,6 +802,7 @@ class IndexedPage(BaseModel):
  
 @router.get("/index/pages")
 async def get_indexed_pages(
+    user: UserContext = Depends(get_current_user),
     store: VectorStoreService = Depends(get_vector_store)
 ):
     """Get list of all indexed pages with their metadata."""
@@ -632,7 +818,8 @@ async def get_indexed_pages(
 @router.get("/images/{page_id}/{image_index}")
 async def get_image(
     page_id: str,
-    image_index: int
+    image_index: int,
+    user: UserContext = Depends(get_current_user)
 ):
     """
     Retrieve an image by page_id and image index.
@@ -675,6 +862,7 @@ async def get_image(
 @router.post("/query", response_model=QueryResponse)
 async def query_documents(
     request: QueryRequest,
+    user: UserContext = Depends(get_current_user),
     engine: RAGEngine = Depends(get_rag_engine)
 ):
     """Query the RAG system (text-only, synchronous)."""
@@ -689,6 +877,7 @@ async def query_documents(
 @router.post("/query/multimodal", response_model=QueryResponse)
 async def query_documents_multimodal(
     request: QueryRequest,
+    user: UserContext = Depends(get_current_user),
     engine: RAGEngine = Depends(get_rag_engine)
 ):
     """
@@ -708,6 +897,7 @@ async def query_documents_multimodal(
 @router.post("/query/compare", response_model=CompareResponse)
 async def compare_configs(
     request: CompareRequest,
+    user: UserContext = Depends(get_current_user),
     engine: RAGEngine = Depends(get_rag_engine)
 ):
     """Compare results from multiple configurations."""

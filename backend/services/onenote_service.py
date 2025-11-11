@@ -19,8 +19,7 @@ import logging
 import time
 from typing import List, Dict, Any, Optional
 import requests
-from msal import ConfidentialClientApplication
- 
+
 from models.document import Document, DocumentMetadata
 from services.rate_limiter import AdaptiveRateLimiter, BatchProcessor
  
@@ -37,24 +36,15 @@ class OneNoteService:
     RATE_LIMIT_RETRY_DELAY = 60  # Wait 60s on 429 error
     MAX_RATE_LIMIT_RETRIES = 3  # Max retries for 429 errors
  
-    def __init__(self, client_id: str = "", client_secret: str = "", tenant_id: str = "", manual_token: str = "", use_azure_ad: bool = True):
+    def __init__(self, access_token: str):
         """
-        Initialize OneNote service.
- 
+        Initialize OneNote service with user's access token.
+
         Args:
-            client_id: Microsoft application client ID (optional if using manual_token)
-            client_secret: Microsoft application client secret (optional if using manual_token)
-            tenant_id: Microsoft tenant ID (optional if using manual_token)
-            manual_token: Manual Bearer token from Graph Explorer (bypasses OAuth)
-            use_azure_ad: If True, use Azure AD auth (client credentials). If False, use manual token.
+            access_token: User's Microsoft Graph access token (from OAuth flow)
         """
-        self.client_id = client_id
-        self.client_secret = client_secret
-        self.tenant_id = tenant_id
-        self.manual_token = manual_token
-        self.use_azure_ad = use_azure_ad
-        self.access_token: Optional[str] = None
-       
+        self.access_token = access_token
+
         # Initialize adaptive rate limiter (100 req/min, well below 600 limit)
         self.rate_limiter = AdaptiveRateLimiter(
             requests_per_minute=100,
@@ -62,53 +52,18 @@ class OneNoteService:
             min_interval_ms=500  # Minimum 500ms between requests
         )
         self.batch_processor = BatchProcessor(self.rate_limiter)
-       
+
         # Legacy rate limiting (kept for backwards compatibility, but unused)
         self.last_request_time = 0
-       
+
         # Create a session for connection pooling and reuse
         self.session = requests.Session()
-        self.session.headers.update({"Content-Type": "application/json"})
- 
-        # Authenticate based on use_azure_ad setting
-        if use_azure_ad:
-            # Use Azure AD (client credentials flow)
-            if client_id and client_secret and tenant_id:
-                self._authenticate()
-                logger.info("Using Azure AD authentication (client credentials)")
-            else:
-                logger.warning("Azure AD auth enabled but credentials missing")
-        else:
-            # Use manual token
-            if manual_token:
-                self.access_token = manual_token
-                self.session.headers.update({"Authorization": f"Bearer {manual_token}"})
-                logger.info("Using manual Bearer token from Graph Explorer")
-            else:
-                logger.warning("Manual token auth enabled but token missing")
- 
-    def _authenticate(self) -> None:
-        """Authenticate with Microsoft Graph API using client credentials."""
-        try:
-            app = ConfidentialClientApplication(
-                self.client_id,
-                authority=f"https://login.microsoftonline.com/{self.tenant_id}",
-                client_credential=self.client_secret,
-            )
- 
-            result = app.acquire_token_for_client(
-                scopes=["https://graph.microsoft.com/.default"]
-            )
- 
-            if "access_token" in result:
-                self.access_token = result["access_token"]
-                self.session.headers.update({"Authorization": f"Bearer {self.access_token}"})
-                logger.info("Successfully authenticated with Microsoft Graph API")
-            else:
-                logger.error(f"Authentication failed: {result.get('error_description')}")
- 
-        except Exception as e:
-            logger.error(f"Error during authentication: {str(e)}")
+        self.session.headers.update({
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {access_token}"
+        })
+
+        logger.info("OneNote service initialized with user access token")
    
     def _make_request_with_retry(self, url: str, max_retries: int = 3) -> Optional[Dict[str, Any]]:
         """

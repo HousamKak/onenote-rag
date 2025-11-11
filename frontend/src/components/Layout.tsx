@@ -1,7 +1,8 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, Plus } from 'lucide-react';
+import { Menu, Plus, LogOut, User } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 import Sidebar from './Sidebar';
 import ThemeSwitcher from './ThemeSwitcher';
 
@@ -9,6 +10,7 @@ const Layout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { theme } = useTheme();
+  const { user, logout } = useAuth();
   const { setSidebarOpen, createConversation, setCurrentConversation, conversations, currentConversationId } = useStore();
 
   const isQueryPage = location.pathname === '/query' || location.pathname === '/';
@@ -60,6 +62,12 @@ const Layout = () => {
             </div>
 
             <div className="flex items-center gap-3">
+              {user && (
+                <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-lg">
+                  <User size={16} className="text-gray-600" />
+                  <span className="text-sm text-gray-700">{user.email || user.name || 'User'}</span>
+                </div>
+              )}
               <ThemeSwitcher />
               {isQueryPage && (
                 <button
@@ -70,6 +78,14 @@ const Layout = () => {
                   New Chat
                 </button>
               )}
+              <button
+                onClick={logout}
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                title="Logout"
+              >
+                <LogOut size={18} />
+                <span className="hidden md:inline">Logout</span>
+              </button>
             </div>
           </header>
 
@@ -106,6 +122,12 @@ const Layout = () => {
           </div>
 
           <div className="flex items-center gap-3">
+            {user && (
+              <div className="hidden sm:flex items-center gap-2 px-3 py-2 bg-neo-yellow border-4 border-neo-black font-bold">
+                <User size={16} />
+                <span className="text-sm">{user.email || user.name || 'USER'}</span>
+              </div>
+            )}
             <ThemeSwitcher />
             {isQueryPage && (
               <button
@@ -116,6 +138,14 @@ const Layout = () => {
                 NEW CHAT
               </button>
             )}
+            <button
+              onClick={logout}
+              className="flex items-center gap-2 px-4 py-2 font-bold text-neo-black bg-neo-pink border-4 border-neo-black shadow-brutal hover:shadow-brutal-hover hover:translate-x-1 hover:translate-y-1 active:shadow-none active:translate-x-2 active:translate-y-2 uppercase text-sm"
+              title="Logout"
+            >
+              <LogOut size={18} strokeWidth={3} />
+              <span className="hidden md:inline">LOGOUT</span>
+            </button>
           </div>
         </header>
 

@@ -18,12 +18,11 @@ class Settings(BaseSettings):
     langchain_api_key: str = ""
     langchain_project: str = "onenote-rag"
  
-    # Microsoft Graph
+    # Microsoft OAuth (User-Delegated Authentication)
     microsoft_client_id: str = ""
-    microsoft_client_secret: str = ""
     microsoft_tenant_id: str = ""
-    microsoft_graph_token: str = ""  # Manual Bearer token from Graph Explorer
-    use_azure_ad_auth: bool = True  # True = Azure AD (client credentials), False = Manual token
+    oauth_redirect_uri: str = "http://localhost:5173/auth/callback"
+    oauth_scopes: str = "User.Read Notes.Read Notes.Read.All"
  
     # Application
     chunk_size: int = 1000
@@ -75,10 +74,9 @@ def get_dynamic_settings() -> dict:
         "langchain_api_key": settings.langchain_api_key,
         "langchain_project": settings.langchain_project,
         "microsoft_client_id": settings.microsoft_client_id,
-        "microsoft_client_secret": settings.microsoft_client_secret,
         "microsoft_tenant_id": settings.microsoft_tenant_id,
-        "microsoft_graph_token": settings.microsoft_graph_token,
-        "use_azure_ad_auth": str(settings.use_azure_ad_auth),
+        "oauth_redirect_uri": settings.oauth_redirect_uri,
+        "oauth_scopes": settings.oauth_scopes,
         "chunk_size": str(settings.chunk_size),
         "chunk_overlap": str(settings.chunk_overlap),
         "enable_startup_sync": str(settings.enable_startup_sync),
