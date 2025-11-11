@@ -6,10 +6,10 @@ import os
 from typing import Optional, List, Dict, Any
 from .database import DatabaseService
 from .encryption import EncryptionService
-
+ 
 logger = logging.getLogger(__name__)
-
-
+ 
+ 
 # Settings that should be encrypted
 SENSITIVE_KEYS = {
     "openai_api_key",
@@ -17,11 +17,18 @@ SENSITIVE_KEYS = {
     "microsoft_client_secret",
     "microsoft_graph_token"
 }
-
-
+ 
+ 
+DEFAULT_VALUES: Dict[str, str] = {
+    "use_azure_ad_auth": "true",
+    "enable_startup_sync": "false",
+    "langchain_tracing_v2": "false",
+}
+ 
+ 
 class SettingsService:
     """Service for managing application settings with encryption."""
-
+ 
     def __init__(
         self,
         db_service: DatabaseService,
@@ -29,7 +36,7 @@ class SettingsService:
     ):
         """
         Initialize settings service.
-
+ 
         Args:
             db_service: Database service instance
             encryption_service: Encryption service instance
@@ -37,7 +44,7 @@ class SettingsService:
         self.db = db_service
         self.encryption = encryption_service
         self._initialize_default_settings()
-
+ 
     def _initialize_default_settings(self) -> None:
         """Initialize default settings with descriptions."""
         defaults = [
@@ -107,7 +114,7 @@ class SettingsService:
                 "is_sensitive": False
             }
         ]
-
+ 
         # Only create if they don't exist (don't overwrite existing values)
         for default in defaults:
             existing = self.db.get_setting(default["key"])
@@ -122,15 +129,15 @@ class SettingsService:
                         description=default.get("description")
                     )
                     logger.info(f"Migrated {default['key']} from .env to database")
-
+ 
     def get_setting(self, key: str, decrypt: bool = True) -> Optional[str]:
         """
         Get a setting value.
-
+ 
         Args:
             key: Setting key
             decrypt: Whether to decrypt sensitive values
-
+ 
         Returns:
             Setting value or None if not found
         """
@@ -138,9 +145,15 @@ class SettingsService:
         if not setting:
             # Fallback to environment variable
             return os.getenv(key.upper())
-
+ 
         value = setting["value"]
-
+ 
+        # Apply default fallback for known keys when stored value is empty
+        if not value:
+            default_value = DEFAULT_VALUES.get(key)
+            if default_value is not None:
+                value = default_value
+ 
         # Decrypt if sensitive and requested
         if decrypt and key in SENSITIVE_KEYS and value:
             try:
@@ -148,16 +161,16 @@ class SettingsService:
             except Exception as e:
                 logger.error(f"Failed to decrypt {key}: {str(e)}")
                 return None
-
+ 
         return value
-
+ 
     def get_all_settings(self, mask_sensitive: bool = True) -> List[Dict[str, Any]]:
         """
         Get all settings.
-
+ 
         Args:
             mask_sensitive: Whether to mask sensitive values
-
+ 
         Returns:
             List of settings with values (includes all defaults even if not in DB)
         """
@@ -177,22 +190,26 @@ class SettingsService:
             "enable_startup_sync": {"description": "Auto-sync OneNote on startup (true/false)", "is_sensitive": False},
             "embedding_provider": {"description": "Embedding provider (openai)", "is_sensitive": False}
         }
-        
+       
         # Get existing settings from database
         db_settings = {s["key"]: s for s in self.db.get_all_settings()}
         result = []
-
+ 
         # Process all default settings
         for key, default_info in all_defaults.items():
             is_sensitive = key in SENSITIVE_KEYS
-            
+           
             # Check if setting exists in database
             if key in db_settings:
                 db_setting = db_settings[key]
                 value = db_setting["value"]
+                if not value:
+                    default_value = DEFAULT_VALUES.get(key)
+                    if default_value is not None:
+                        value = default_value
                 description = db_setting.get("description") or default_info["description"]
                 has_value = bool(value)
-                
+               
                 # Mask or decrypt sensitive values
                 if mask_sensitive and is_sensitive:
                     value = "********" if has_value else ""
@@ -204,14 +221,17 @@ class SettingsService:
             else:
                 # Setting not in DB, check environment variable
                 env_value = os.getenv(key.upper())
-                value = env_value or ""
+                if env_value:
+                    value = env_value
+                else:
+                    value = DEFAULT_VALUES.get(key, "")
                 description = default_info["description"]
-                has_value = bool(env_value)
-                
+                has_value = bool(value)
+               
                 # Mask sensitive env values
                 if mask_sensitive and is_sensitive and has_value:
                     value = "********"
-
+ 
             result.append({
                 "key": key,
                 "value": value,
@@ -219,9 +239,9 @@ class SettingsService:
                 "description": description,
                 "has_value": has_value
             })
-
+ 
         return result
-
+ 
     def set_setting(
         self,
         key: str,
@@ -230,61 +250,72 @@ class SettingsService:
     ) -> Dict[str, Any]:
         """
         Set a setting value.
-
+ 
         Args:
             key: Setting key
             value: Setting value
             description: Optional description
-
+ 
         Returns:
             Updated setting
         """
+        if not value:
+            default_value = DEFAULT_VALUES.get(key)
+            if default_value is not None:
+                value = default_value
+ 
         is_sensitive = key in SENSITIVE_KEYS
-
+ 
         # Encrypt sensitive values
         if is_sensitive and value:
             value = self.encryption.encrypt(value)
-
+ 
         return self.db.set_setting(
             key=key,
             value=value,
             is_sensitive=is_sensitive,
             description=description
         )
-
+ 
     def delete_setting(self, key: str) -> bool:
         """
         Delete a setting.
-
+ 
         Args:
             key: Setting key
-
+ 
         Returns:
             True if deleted
         """
         return self.db.delete_setting(key)
-
+ 
     def get_settings_dict(self) -> Dict[str, str]:
         """
         Get all settings as a dictionary (decrypted).
-
+ 
         Returns:
             Dictionary of key-value pairs
         """
         settings = self.db.get_all_settings()
         result = {}
-
+ 
         for setting in settings:
             key = setting["key"]
             value = setting["value"]
-
+ 
+            if not value:
+                default_value = DEFAULT_VALUES.get(key)
+                if default_value is not None:
+                    value = default_value
+ 
             # Decrypt sensitive values
             if key in SENSITIVE_KEYS and value:
                 try:
                     value = self.encryption.decrypt(value)
                 except Exception:
                     continue
-
+ 
             result[key] = value
-
+ 
         return result
+ 
