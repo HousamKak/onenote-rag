@@ -455,34 +455,34 @@ export default function SettingsManagementPage() {
             
             {/* Microsoft Authentication Toggle */}
             <div className={theme === 'claude'
-              ? 'mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg'
-              : 'mb-4 p-4 bg-blue-100 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+              ? 'mb-3 p-3 bg-blue-50 border border-blue-200 rounded'
+              : 'mb-3 p-3 bg-blue-100 border-2 border-black'
             }>
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <h3 className={theme === 'claude' ? 'font-semibold text-sm text-claude-text' : 'font-bold text-sm'}>
-                    Microsoft Authentication Method
-                  </h3>
-                  <p className={theme === 'claude' ? 'text-xs text-claude-text-secondary mt-1' : 'text-xs text-gray-600 mt-1'}>
-                    {editedValues['use_azure_ad_auth'] === 'true' 
-                      ? 'Using Azure AD (Client ID, Secret, Tenant ID)' 
-                      : 'Using Manual Graph Explorer Token'}
-                  </p>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className={theme === 'claude' ? 'font-medium text-xs text-claude-text' : 'font-bold text-xs'}>
+                      Microsoft Auth:
+                    </span>
+                    <span className={theme === 'claude' ? 'text-xs text-claude-text-secondary' : 'text-xs text-gray-600'}>
+                      {editedValues['use_azure_ad_auth'] === 'true' ? 'Azure AD' : 'Manual Token'}
+                    </span>
+                  </div>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer ml-4">
+                <label className="relative inline-flex items-center cursor-pointer">
                   <input
                     type="checkbox"
                     checked={editedValues['use_azure_ad_auth'] === 'true'}
-                    onChange={(e) => {
+                    onChange={async (e) => {
                       const newValue = e.target.checked ? 'true' : 'false';
                       handleValueChange('use_azure_ad_auth', newValue);
-                      saveSetting('use_azure_ad_auth');
+                      await saveSetting('use_azure_ad_auth');
                     }}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                  <span className={`ml-3 text-sm font-medium ${theme === 'claude' ? 'text-claude-text' : 'text-gray-900'}`}>
-                    Use Azure AD
+                  <div className="w-9 h-5 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                  <span className={`ml-2 text-xs font-medium ${theme === 'claude' ? 'text-claude-text' : 'text-gray-900'}`}>
+                    Azure AD
                   </span>
                 </label>
               </div>
