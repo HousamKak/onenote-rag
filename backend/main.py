@@ -107,11 +107,13 @@ async def lifespan(app: FastAPI):
     # Authentication services (user-delegated OAuth)
     try:
         client_id = dynamic_settings.get("microsoft_client_id", settings.microsoft_client_id)
+        client_secret = dynamic_settings.get("microsoft_client_secret", settings.microsoft_client_secret)
         tenant_id = dynamic_settings.get("microsoft_tenant_id", settings.microsoft_tenant_id)
 
         routes.auth_service = AuthService(
             client_id=client_id,
-            tenant_id=tenant_id
+            tenant_id=tenant_id,
+            client_secret=client_secret,
         )
         logger.info("Auth service initialized for user-delegated OAuth")
 
