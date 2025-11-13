@@ -98,8 +98,8 @@ async def get_current_user(
                 # Refresh the token
                 scopes = token_data.scope.split(" ") if token_data.scope else [
                     "User.Read",
-                    "Notes.Read",
-                    "Notes.Read.All"
+                    "Files.Read",
+                    "Notes.Read"
                 ]
                 new_token_response = await auth_service.refresh_access_token(
                     token_data.refresh_token, scopes
