@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     microsoft_client_secret: str = ""
     microsoft_tenant_id: str = ""
     oauth_redirect_uri: str = "http://localhost:5173/auth/callback"
-    oauth_scopes: str = "User.Read Notes.Read"
+    oauth_scopes: str = "User.Read Files.Read Notes.Read openid profile offline_access"
  
     # Application
     chunk_size: int = 1000
