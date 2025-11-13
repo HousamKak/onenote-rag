@@ -21,8 +21,11 @@ from services.multimodal_query import MultimodalQueryHandler
 from services.database import DatabaseService
 from services.encryption import EncryptionService
 from services.settings_service import SettingsService
+from services.document_cache import DocumentCacheService
+from services.document_cache_db import DocumentCacheDB
 from middleware.auth import initialize_auth
 import api.routes as routes
+import api.sync_routes as sync_routes
  
 # Configure logging
 logging.basicConfig(
@@ -199,150 +202,39 @@ async def lifespan(app: FastAPI):
         multimodal_handler=multimodal_handler
     )
     logger.info("RAG engine initialized")
- 
+
+    # =========================================================================
+    # Initialize Document Cache & Sync System
+    # =========================================================================
+    logger.info("Initializing document cache and sync system...")
+
+    # Initialize document cache database
+    cache_db_path = "./data/document_cache.db"
+    os.makedirs(os.path.dirname(cache_db_path), exist_ok=True)
+
+    cache_db = DocumentCacheDB(db_path=cache_db_path)
+    logger.info(f"Document cache database initialized at: {cache_db_path}")
+
+    # Initialize document cache service
+    routes.document_cache = DocumentCacheService(db_path=cache_db_path)
+    logger.info("Document cache service initialized")
+
+    # Store cache_db for global access
+    routes.cache_db = cache_db
+
+    # Set sync services for API routes
+    sync_routes.set_document_cache(routes.document_cache)
+
+    logger.info("✅ Document cache and sync system initialized")
+    logger.info("Note: Sync is user-triggered. Use /api/sync/* endpoints after login.")
+
     logger.info("✅ Application startup complete! Server is ready to accept requests.")
- 
-    # NOTE: Auto-sync is disabled with user-delegated authentication
-    # Users must manually trigger sync after logging in (per-user sync)
-    # Keeping the sync code for future reference but disabling it
-    if False:  # Disabled - no global OneNote service
-        logger.info("Scheduling automatic incremental sync in background...")
-        
-        # Import asyncio to schedule background task
-        import asyncio
-        
-        # Create background task function
-        async def background_sync():
-            """Background task to sync OneNote documents without blocking startup."""
-            try:
-                # Set sync status
-                routes.sync_status = {
-                    "in_progress": True,
-                    "status": "running",
-                    "message": "Background sync in progress...",
-                    "documents_processed": 0
-                }
-                
-                logger.info("Starting background incremental sync...")
-                
-                # Fetch all documents from OneNote
-                documents = routes.onenote_service.get_all_documents()
-                logger.info(f"Retrieved {len(documents)} documents from OneNote")
-               
-                if documents:
-                    documents_added = 0
-                    documents_updated = 0
-                    documents_skipped = 0
-                    total_chunks = 0
-                    
-                    # Perform incremental sync - only process changed/new documents
-                    for doc in documents:
-                        page_id = doc.metadata.page_id
-                        modified_date = doc.metadata.modified_date
-                        
-                        # Check if document exists and compare modification dates
-                        existing_modified = routes.vector_store.get_page_modified_date(page_id)
-                        
-                        if existing_modified and modified_date:
-                            # Convert to ISO format for comparison
-                            existing_dt_str = existing_modified
-                            new_dt_str = modified_date.isoformat()
-                            
-                            if existing_dt_str == new_dt_str:
-                                # Document unchanged, skip it
-                                logger.debug(f"Skipping unchanged page: {doc.metadata.page_title}")
-                                documents_skipped += 1
-                                continue
-                            else:
-                                # Document modified, update it
-                                logger.info(f"Updating modified page: {doc.metadata.page_title}")
-                                routes.vector_store.delete_by_page_id(page_id)
-                                documents_updated += 1
-                        else:
-                            # New document
-                            logger.info(f"Adding new page: {doc.metadata.page_title}")
-                            documents_added += 1
-                        
-                        # Process and add the document (with multimodal support if available)
-                        use_multimodal = multimodal_processor is not None
 
-                        if use_multimodal:
-                            # Multimodal processing: text + metadata + images
-                            chunks, image_data_list = await multimodal_processor.chunk_document_multimodal(
-                                document=doc,
-                                enrich_with_metadata=True,
-                                include_images=True
-                            )
-
-                            # Store images in image storage
-                            if image_data_list and image_storage:
-                                for img_data in image_data_list:
-                                    try:
-                                        img_path = image_storage.generate_image_path(
-                                            page_id=img_data["page_id"],
-                                            image_index=img_data["position"]
-                                        )
-                                        await image_storage.upload(
-                                            image_path=img_path,
-                                            image_data=img_data["data"],
-                                            content_type="image/png",
-                                            metadata={
-                                                "page_id": img_data["page_id"],
-                                                "position": img_data["position"]
-                                            }
-                                        )
-                                    except Exception as e:
-                                        logger.error(f"Error storing image during startup sync: {str(e)}")
-
-                                logger.debug(f"Stored {len(image_data_list)} images for {page_id}")
-                        else:
-                            # Text-only processing
-                            chunks = routes.document_processor.chunk_documents([doc])
-
-                        routes.vector_store.add_documents(chunks)
-                        total_chunks += len(chunks)
-                        
-                        # Update progress
-                        routes.sync_status["documents_processed"] = documents_added + documents_updated
-                    
-                    logger.info(f"✅ Background sync complete: {documents_added} added, {documents_updated} updated, {documents_skipped} skipped ({total_chunks} chunks)")
-                    routes.sync_status = {
-                        "in_progress": False,
-                        "status": "complete",
-                        "message": f"Sync complete: {documents_added} added, {documents_updated} updated, {documents_skipped} skipped",
-                        "documents_added": documents_added,
-                        "documents_updated": documents_updated,
-                        "documents_skipped": documents_skipped,
-                        "total_chunks": total_chunks
-                    }
-                else:
-                    logger.info("No documents found in OneNote")
-                    routes.sync_status = {
-                        "in_progress": False,
-                        "status": "complete",
-                        "message": "No documents found in OneNote",
-                        "documents_processed": 0
-                    }
-                       
-            except Exception as e:
-                logger.error(f"Background sync failed: {str(e)}")
-                routes.sync_status = {
-                    "in_progress": False,
-                    "status": "error",
-                    "message": f"Sync failed: {str(e)}",
-                    "documents_processed": 0
-                }
-        
-        # Schedule the background task
-        asyncio.create_task(background_sync())
-        logger.info("Background sync task scheduled")
-
-    # Auto-sync disabled - users trigger sync manually after login
-    logger.info("Startup sync disabled (user-delegated auth mode)")
+    # Sync status tracking (for backward compatibility with frontend)
     routes.sync_status = {
         "in_progress": False,
-        "status": "disabled",
-        "message": "Sync is user-triggered after login"
+        "status": "ready",
+        "message": "Sync system ready. Use /api/sync/* endpoints to trigger sync."
     }
  
     yield
@@ -370,6 +262,9 @@ app.add_middleware(
  
 # Include routes
 app.include_router(routes.router, prefix="/api")
+
+# Include sync routes
+app.include_router(sync_routes.router)
  
  
 @app.get("/")

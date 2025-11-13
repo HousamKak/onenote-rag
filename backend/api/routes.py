@@ -49,6 +49,10 @@ multimodal_processor: Optional[Any] = None  # MultimodalDocumentProcessor
 vision_service: Optional[Any] = None  # GPT4VisionService
 image_storage: Optional[Any] = None  # ImageStorageService
 
+# Document cache services (new sync system)
+document_cache: Optional[Any] = None  # DocumentCacheService
+cache_db: Optional[Any] = None  # DocumentCacheDB
+
 # Startup sync status
 sync_status: Dict[str, Any] = {
     "in_progress": False,
@@ -108,6 +112,38 @@ def get_settings_service() -> SettingsService:
     if settings_service is None:
         raise HTTPException(status_code=500, detail="Settings service not initialized")
     return settings_service
+
+
+def create_sync_orchestrator_for_user(user: UserContext):
+    """
+    Create a SyncOrchestrator instance for a specific user.
+
+    Args:
+        user: Current user context with access token
+
+    Returns:
+        SyncOrchestrator configured for the user
+    """
+    from services.sync_orchestrator import SyncOrchestrator
+
+    if not document_cache or not cache_db:
+        raise HTTPException(status_code=500, detail="Document cache not initialized")
+
+    if not image_storage:
+        raise HTTPException(status_code=500, detail="Image storage not initialized")
+
+    # Create OneNoteService with user's token
+    user_onenote_service = OneNoteService(access_token=user.access_token)
+
+    # Create SyncOrchestrator
+    orchestrator = SyncOrchestrator(
+        onenote_service=user_onenote_service,
+        document_cache=document_cache,
+        image_storage=image_storage,
+        cache_db=cache_db
+    )
+
+    return orchestrator
 
 
 # Health check
@@ -623,180 +659,135 @@ class SyncResponse(BaseModel):
 @router.post("/index/sync", response_model=SyncResponse)
 async def sync_documents(
     request: SyncRequest,
-    onenote: OneNoteService = Depends(get_onenote_service),
+    user: UserContext = Depends(get_current_user),
     processor: DocumentProcessor = Depends(get_document_processor),
     store: VectorStoreService = Depends(get_vector_store)
 ):
     """
-    Sync OneNote documents to vector database with optional multimodal support.
+    Sync OneNote documents using the new cache-based system.
 
-    Supports four modes:
-    - Incremental sync (default): Only updates modified/new documents
-    - Full sync: Clears DB and reindexes everything
-    - Force reindex: Reindexes all documents without checking modification dates
-    - Multimodal (default if available): Processes images along with text
+    NEW ARCHITECTURE:
+    Step 1: Sync from OneNote → Local Cache (SyncOrchestrator)
+    Step 2: Index from Cache → Vector Store (DocumentProcessor)
 
-    Multimodal processing:
-    - If multimodal=True and services available: Uses MultimodalDocumentProcessor
-    - If multimodal=False or services unavailable: Uses standard DocumentProcessor (text-only)
-    - Images are analyzed with GPT-4o Vision and stored separately
-    - All components linked by page_id for document integrity
+    Benefits:
+    - Respects rate limits during sync
+    - RAG queries read from cache (no Graph API calls)
+    - Faster, more reliable
+    - Full audit trail
+
+    Supports three modes:
+    - Incremental sync (default): Only updates changed documents
+    - Full sync (full_sync=True): Syncs all documents
+    - Force reindex (force_reindex=True): Re-indexes all from cache
+
+    Multimodal processing is supported if image services are available.
     """
     try:
-        # Create multimodal processor with user's access token if requested
-        user_multimodal_processor = None
-        if request.multimodal and vision_service and image_storage:
-            from services.multimodal_processor import MultimodalDocumentProcessor
-            settings = get_dynamic_settings()
-            chunk_size = int(settings.get("chunk_size", 1000))
-            chunk_overlap = int(settings.get("chunk_overlap", 200))
+        logger.info(f"Starting sync with new cache-based system (full_sync={request.full_sync}, force_reindex={request.force_reindex})")
 
-            # Get user's access token from the onenote service dependency
-            user_multimodal_processor = MultimodalDocumentProcessor(
-                vision_service=vision_service,
-                chunk_size=chunk_size,
-                chunk_overlap=chunk_overlap,
-                max_images_per_document=10,
-                access_token=onenote.access_token  # User's token from OneNote service
+        # Step 1: Sync OneNote → Local Cache (respects rate limits)
+        logger.info("Step 1: Syncing from OneNote to local cache...")
+        orchestrator = create_sync_orchestrator_for_user(user)
+
+        if request.full_sync:
+            sync_result = await orchestrator.sync_full(
+                notebook_ids=request.notebook_ids,
+                triggered_by="api",
+                user_id=user.user_id
             )
-            logger.info("Created multimodal processor with user's access token")
-
-        # Check if multimodal processing is available
-        use_multimodal = request.multimodal and user_multimodal_processor is not None
-
-        if request.multimodal and user_multimodal_processor is None:
-            logger.warning("Multimodal processing requested but not available - falling back to text-only")
-
-        if use_multimodal:
-            logger.info("Using MULTIMODAL processing (text + images)")
         else:
-            logger.info("Using TEXT-ONLY processing")
-        # Get documents from OneNote
-        logger.info(f"Fetching documents from OneNote (notebooks: {request.notebook_ids})")
-        documents = onenote.get_all_documents(request.notebook_ids)
- 
-        if not documents:
+            sync_result = await orchestrator.sync_incremental(
+                triggered_by="api",
+                user_id=user.user_id
+            )
+
+        logger.info(f"Sync to cache complete: {sync_result.pages_added} added, {sync_result.pages_updated} updated, {sync_result.pages_deleted} deleted")
+
+        # Step 2: Index from Cache → Vector Store
+        logger.info("Step 2: Indexing documents from cache to vector store...")
+
+        if not document_cache:
+            raise HTTPException(status_code=500, detail="Document cache not initialized")
+
+        # Get documents that need indexing
+        if request.force_reindex:
+            # Force reindex: get all documents from cache
+            documents_to_index = document_cache.get_all_documents()
+            logger.info(f"Force reindex: Processing all {len(documents_to_index)} documents from cache")
+
+            # Clear vector store for force reindex
+            if request.full_sync:
+                logger.info("Clearing vector store for full reindex")
+                store.clear_collection()
+        else:
+            # Normal flow: only index documents that need it
+            documents_to_index = document_cache.get_documents_needing_indexing()
+            logger.info(f"Found {len(documents_to_index)} documents needing indexing")
+
+        if not documents_to_index:
             return SyncResponse(
                 status="success",
-                documents_processed=0,
-                documents_added=0,
-                documents_updated=0,
-                documents_skipped=0,
+                documents_processed=sync_result.pages_fetched,
+                documents_added=sync_result.pages_added,
+                documents_updated=sync_result.pages_updated,
+                documents_skipped=sync_result.pages_skipped,
                 chunks_created=0,
-                message="No documents found to sync"
+                message=f"Sync complete: {sync_result.pages_added} added, {sync_result.pages_updated} updated, {sync_result.pages_deleted} deleted. No documents need indexing."
             )
- 
-        # Clear existing data if full sync
-        if request.full_sync:
-            logger.info("Performing full sync - clearing existing data")
-            store.clear_collection()
- 
-        # Process documents based on sync mode
-        documents_added = 0
-        documents_updated = 0
-        documents_skipped = 0
+
+        # Process and index documents
         total_chunks = 0
- 
-        for doc in documents:
-            page_id = doc.metadata.page_id
-            modified_date = doc.metadata.modified_date
-           
-            # Check if document needs updating (incremental sync)
-            if not request.full_sync and not request.force_reindex:
-                existing_modified = store.get_page_modified_date(page_id)
-               
-                if existing_modified and modified_date:
-                    # CRITICAL FIX: Convert both to ISO format for proper comparison
-                    # The stored date is already in ISO format from .isoformat()
-                    existing_dt_str = existing_modified  # Already a string in ISO format
-                    
-                    # Convert the datetime object to ISO format for comparison
-                    new_dt_str = modified_date.isoformat()
-                    
-                    # Compare the ISO formatted strings
-                    if existing_dt_str == new_dt_str:
-                        logger.debug(f"Skipping unchanged page: {doc.metadata.page_title} (modified: {existing_dt_str})")
-                        documents_skipped += 1
-                        continue
-                    else:
-                        logger.info(f"Page modified: {doc.metadata.page_title}")
-                        logger.debug(f"  Existing: {existing_dt_str}")
-                        logger.debug(f"  New:      {new_dt_str}")
-               
-                # Document is new or modified - delete old version and add new
-                if existing_modified:
-                    logger.info(f"Updating modified page: {doc.metadata.page_title}")
-                    store.delete_by_page_id(page_id)
-                    documents_updated += 1
-                else:
-                    logger.info(f"Adding new page: {doc.metadata.page_title}")
-                    documents_added += 1
-            else:
-                # Full sync or force reindex - just count as added
-                documents_added += 1
- 
-            # Process and chunk the document (multimodal or text-only)
-            if use_multimodal:
-                # Multimodal processing: text + metadata + images
-                chunks, image_data_list = await user_multimodal_processor.chunk_document_multimodal(
-                    document=doc,
-                    enrich_with_metadata=True,
-                    include_images=True
+
+        for doc in documents_to_index:
+            try:
+                # Chunk the document
+                chunks = processor.chunk_documents([doc], enrich_with_metadata=True)
+
+                # Add to vector store
+                store.add_documents(chunks)
+                total_chunks += len(chunks)
+
+                # Mark as indexed in cache
+                document_cache.mark_document_indexed(
+                    page_id=doc.page_id,
+                    chunk_count=len(chunks),
+                    image_count=doc.metadata.image_count
                 )
 
-                # Store images in image storage
-                if image_data_list and image_storage:
-                    for img_data in image_data_list:
-                        try:
-                            image_path = image_storage.generate_image_path(
-                                page_id=img_data["page_id"],
-                                image_index=img_data["position"]
-                            )
-                            await image_storage.upload(
-                                image_path=image_path,
-                                image_data=img_data["data"],
-                                content_type="image/png",
-                                metadata={
-                                    "page_id": img_data["page_id"],
-                                    "position": img_data["position"],
-                                    "url": img_data.get("url", "")
-                                }
-                            )
-                            logger.debug(f"Stored image {img_data['position']} for page {page_id}")
-                        except Exception as e:
-                            logger.error(f"Error storing image: {str(e)}")
+                logger.debug(f"Indexed {doc.metadata.page_title}: {len(chunks)} chunks")
 
-                    logger.info(f"Stored {len(image_data_list)} images for document {page_id}")
-            else:
-                # Text-only processing (original behavior)
-                chunks = processor.chunk_documents([doc])
+            except Exception as e:
+                logger.error(f"Error indexing document {doc.page_id}: {e}")
+                # Continue with other documents
 
-            # Add chunks to vector store
-            store.add_documents(chunks)
-            total_chunks += len(chunks)
- 
+        logger.info(f"✅ Indexing complete: {len(documents_to_index)} documents, {total_chunks} chunks")
+
+        # Build response message
         message_parts = []
-        if documents_added > 0:
-            message_parts.append(f"{documents_added} added")
-        if documents_updated > 0:
-            message_parts.append(f"{documents_updated} updated")
-        if documents_skipped > 0:
-            message_parts.append(f"{documents_skipped} skipped")
-       
-        message = f"Successfully synced: {', '.join(message_parts)} ({total_chunks} chunks)"
- 
+        if sync_result.pages_added > 0:
+            message_parts.append(f"{sync_result.pages_added} added")
+        if sync_result.pages_updated > 0:
+            message_parts.append(f"{sync_result.pages_updated} updated")
+        if sync_result.pages_deleted > 0:
+            message_parts.append(f"{sync_result.pages_deleted} deleted")
+        if sync_result.pages_skipped > 0:
+            message_parts.append(f"{sync_result.pages_skipped} skipped")
+
+        message = f"Sync complete: {', '.join(message_parts)} ({total_chunks} chunks indexed)"
+
         return SyncResponse(
             status="success",
-            documents_processed=len(documents),
-            documents_added=documents_added,
-            documents_updated=documents_updated,
-            documents_skipped=documents_skipped,
+            documents_processed=sync_result.pages_fetched,
+            documents_added=sync_result.pages_added,
+            documents_updated=sync_result.pages_updated,
+            documents_skipped=sync_result.pages_skipped,
             chunks_created=total_chunks,
             message=message
         )
- 
+
     except Exception as e:
-        logger.error(f"Error during sync: {str(e)}")
+        logger.error(f"Error during sync: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
  
  

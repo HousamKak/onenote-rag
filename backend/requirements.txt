@@ -48,6 +48,9 @@ typer==0.20.0
 
 # Encryption & Database
 cryptography==42.0.5
+
+# Background Task Scheduling
+APScheduler==3.10.4
  
 # CORS
 fastapi_cors==0.0.6
