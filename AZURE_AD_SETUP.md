@@ -90,7 +90,7 @@ After registration:
    MICROSOFT_CLIENT_ID=your_client_id_here
    MICROSOFT_TENANT_ID=your_tenant_id_here
    OAUTH_REDIRECT_URI=http://localhost:5173/auth/callback
-   OAUTH_SCOPES=User.Read Notes.Read Notes.Read.All
+   OAUTH_SCOPES=User.Read Files.Read Notes.Read
    ```
 
 4. **Remove or leave empty** (these are no longer used):
