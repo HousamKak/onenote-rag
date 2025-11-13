@@ -1,7 +1,7 @@
 """User models for authentication and authorization."""
 from dataclasses import dataclass
 from typing import Optional
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 @dataclass
@@ -33,4 +33,4 @@ class TokenData:
         if not self.expires_at:
             return True
         # Add 5 minute buffer to avoid edge cases
-        return datetime.utcnow() >= self.expires_at - datetime.timedelta(minutes=5)
+        return datetime.utcnow() >= self.expires_at - timedelta(minutes=5)
