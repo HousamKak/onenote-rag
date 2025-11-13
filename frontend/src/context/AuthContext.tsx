@@ -2,7 +2,7 @@
  * Authentication Context for managing user authentication state.
  * Handles login, logout, token management, and user session.
  */
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
@@ -70,7 +70,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async () => {
     try {
       // Get authorization URL from backend
-      const response = await axios.get(`${API_URL}/auth/login`);
+      const loginUrl = `${API_URL}/auth/login`;
+      console.log('Calling Login URL:', loginUrl); //Debug log
+      const response = await axios.get(loginUrl);
       const { auth_url, state } = response.data;
 
       // Store state for validation
@@ -84,7 +86,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const handleCallback = async (code: string, state: string) => {
+  const handleCallback = useCallback(async (code: string, state: string) => {
     try {
       // Verify state to prevent CSRF
       const storedState = sessionStorage.getItem('oauth_state');
@@ -111,7 +113,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       console.error('OAuth callback failed:', error);
       throw error;
     }
-  };
+  },[]); //Empty deps - function doesn't depend on any state
 
   const logout = () => {
     // Clear token from storage
