@@ -1,7 +1,7 @@
 /**
  * OAuth Callback Page - Handles the redirect from Microsoft OAuth.
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -10,9 +10,16 @@ const CallbackPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const { handleCallback } = useAuth();
   const [error, setError] = useState<string | null>(null);
+  const processingRef = useRef(false)
 
   useEffect(() => {
     const processCallback = async () => {
+      // Prevent multiple executions
+      if(processingRef.current){
+        console.log('Callback already processing, skipping...');
+        return;
+      }
+      processingRef.current=true;
       const code = searchParams.get('code');
       const state = searchParams.get('state');
       const errorParam = searchParams.get('error');
