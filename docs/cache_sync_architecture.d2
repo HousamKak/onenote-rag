@@ -1,0 +1,223 @@
+direction: right
+
+title: "OneNote RAG - Cache-Based Sync Architecture" {
+  shape: text
+  near: top-center
+  style: {
+    font-size: 24
+    bold: true
+  }
+}
+
+# User & Authentication Layer
+user: User {
+  shape: person
+  style.fill: "#e3f2fd"
+}
+
+auth: "Auth Service\n(OAuth 2.0)" {
+  shape: hexagon
+  style.fill: "#fff3e0"
+}
+
+# API Layer
+api: "FastAPI\nApplication" {
+  shape: rectangle
+  style.fill: "#f3e5f5"
+}
+
+# Main Endpoints
+endpoints: {
+  sync_endpoint: "/api/index/sync\n(Updated - Cache-based)" {
+    shape: rectangle
+    style.fill: "#e8f5e9"
+  }
+
+  query_endpoint: "/api/query\n(Reads from Cache)" {
+    shape: rectangle
+    style.fill: "#e8f5e9"
+  }
+
+  new_sync_endpoints: "/api/sync/*\n(10 new endpoints)" {
+    shape: rectangle
+    style.fill: "#fff9c4"
+  }
+}
+
+# Core Services
+services: {
+  sync_orchestrator: "Sync Orchestrator\n• Full Sync\n• Incremental Sync\n• Smart Sync\n• Pause/Resume/Cancel" {
+    shape: rectangle
+    style.fill: "#ffccbc"
+  }
+
+  cache_service: "Document Cache Service\n• Cache documents\n• Get documents\n• Mark indexed\n• Track sync state" {
+    shape: rectangle
+    style.fill: "#c8e6c9"
+  }
+
+  onenote_service: "OneNote Service\n(User-delegated)" {
+    shape: rectangle
+    style.fill: "#b3e5fc"
+  }
+
+  rate_limiter: "Adaptive Rate Limiter\n• 100 req/min\n• Burst: 10\n• Auto backoff on 429\n• Respects Retry-After" {
+    shape: hexagon
+    style.fill: "#ffcdd2"
+  }
+
+  doc_processor: "Document Processor\n• Chunk documents\n• Extract text\n• Process metadata" {
+    shape: rectangle
+    style.fill: "#d1c4e9"
+  }
+
+  rag_engine: "RAG Engine\n• Query processing\n• Context retrieval\n• LLM integration" {
+    shape: rectangle
+    style.fill: "#f8bbd0"
+  }
+}
+
+# Storage Layer
+storage: {
+  cache_db: "Document Cache DB\n(SQLite)\n• onenote_documents\n• onenote_images\n• sync_state\n• sync_history\n• sync_jobs" {
+    shape: cylinder
+    style.fill: "#c5cae9"
+  }
+
+  vector_store: "Vector Store\n(ChromaDB)\n• Embeddings\n• Chunks\n• Metadata" {
+    shape: cylinder
+    style.fill: "#b2dfdb"
+  }
+
+  image_storage: "Image Storage\n(Filesystem)\n./storage/images/" {
+    shape: cylinder
+    style.fill: "#ffe0b2"
+  }
+}
+
+# External Service
+graph_api: "Microsoft Graph API\n• OneNote endpoints\n• Rate limit: 600 req/min\n• OAuth protected" {
+  shape: cloud
+  style.fill: "#bbdefb"
+}
+
+# === CONNECTIONS - User Flow ===
+user -> auth: "1. Login"
+auth -> user: "Access Token"
+user -> api: "2. API Request\n(with token)"
+
+# === CONNECTIONS - Sync Flow (Phase 1: OneNote → Cache) ===
+api -> endpoints.sync_endpoint: "Sync Request"
+endpoints.sync_endpoint -> services.sync_orchestrator: "Trigger Sync\n(full/incremental/smart)"
+services.sync_orchestrator -> services.onenote_service: "Fetch documents"
+services.onenote_service -> services.rate_limiter: "API call"
+services.rate_limiter -> graph_api: "Rate-limited requests\n(100 req/min)" {
+  style.stroke: "#ff5722"
+  style.stroke-width: 3
+}
+graph_api -> services.rate_limiter: "OneNote data"
+services.rate_limiter -> services.onenote_service: "Response"
+services.onenote_service -> services.sync_orchestrator: "Documents + Images"
+services.sync_orchestrator -> services.cache_service: "Store in cache"
+services.cache_service -> storage.cache_db: "Write documents" {
+  style.stroke: "#4caf50"
+  style.stroke-width: 3
+}
+services.sync_orchestrator -> storage.image_storage: "Save images"
+
+# === CONNECTIONS - Index Flow (Phase 2: Cache → Vector Store) ===
+endpoints.sync_endpoint -> services.cache_service: "Get unindexed docs"
+services.cache_service -> storage.cache_db: "Query\nunindexed documents"
+storage.cache_db -> services.cache_service: "Documents"
+services.cache_service -> services.doc_processor: "Documents to process"
+services.doc_processor -> services.doc_processor: "Chunk & embed"
+services.doc_processor -> storage.vector_store: "Store chunks" {
+  style.stroke: "#2196f3"
+  style.stroke-width: 3
+}
+services.doc_processor -> endpoints.sync_endpoint: "Processing complete"
+endpoints.sync_endpoint -> services.cache_service: "Mark as indexed"
+services.cache_service -> storage.cache_db: "Update indexed_at"
+
+# === CONNECTIONS - Query Flow (Reads from Cache) ===
+endpoints.query_endpoint -> services.rag_engine: "User query"
+services.rag_engine -> storage.vector_store: "Semantic search"
+storage.vector_store -> services.rag_engine: "Relevant chunks\n(with page_id)"
+services.rag_engine -> services.cache_service: "Get full document\n(by page_id)" {
+  style.stroke: "#9c27b0"
+  style.stroke-width: 3
+}
+services.cache_service -> storage.cache_db: "Fetch document" {
+  style.stroke-dash: 3
+  label: "No Graph API call! ✅"
+}
+storage.cache_db -> services.cache_service: "Full document"
+services.cache_service -> storage.image_storage: "Get images"
+storage.image_storage -> services.cache_service: "Image files"
+services.cache_service -> services.rag_engine: "Complete context"
+services.rag_engine -> endpoints.query_endpoint: "LLM response"
+endpoints.query_endpoint -> api: "Response"
+api -> user: "Answer"
+
+# === CONNECTIONS - New Sync Endpoints ===
+endpoints.new_sync_endpoints -> services.sync_orchestrator: "/sync/full\n/sync/incremental\n/sync/smart"
+endpoints.new_sync_endpoints -> services.cache_service: "/sync/cache/stats\n/sync/health"
+endpoints.new_sync_endpoints -> storage.cache_db: "/sync/history\n/sync/status/{job_id}"
+
+# Legend
+legend: {
+  title: "Flow Legend" {
+    shape: text
+    style.font-size: 16
+    style.bold: true
+  }
+
+  phase1: "━━ Phase 1: OneNote → Cache (Rate Limited)" {
+    shape: text
+    style.fill: "#ff5722"
+  }
+
+  phase2: "━━ Phase 2: Cache → Vector Store (No Limits)" {
+    shape: text
+    style.fill: "#4caf50"
+  }
+
+  query: "━━ Query Flow (Reads from Cache)" {
+    shape: text
+    style.fill: "#9c27b0"
+  }
+
+  near: bottom-right
+}
+
+# Key Benefits Box
+benefits: {
+  title: "✅ Key Benefits" {
+    shape: text
+    style.font-size: 16
+    style.bold: true
+  }
+
+  benefit1: "• 2-3x faster queries (no Graph API calls)" {
+    shape: text
+  }
+
+  benefit2: "• No rate limit errors during queries" {
+    shape: text
+  }
+
+  benefit3: "• Offline operation capability" {
+    shape: text
+  }
+
+  benefit4: "• Complete audit trail & monitoring" {
+    shape: text
+  }
+
+  benefit5: "• Pause/resume/cancel sync control" {
+    shape: text
+  }
+
+  near: bottom-left
+  style.fill: "#e8f5e9"
+}

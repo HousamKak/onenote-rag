@@ -1,0 +1,270 @@
+direction: down
+
+title: "OneNote RAG - Architecture Comparison" {
+  shape: text
+  near: top-center
+  style: {
+    font-size: 28
+    bold: true
+  }
+}
+
+# BEFORE - Old Direct Access Architecture
+before: {
+  label: "❌ BEFORE: Direct Graph API Access"
+  style.fill: "#ffebee"
+  style.stroke: "#c62828"
+  style.stroke-width: 3
+
+  user_before: "User Query" {
+    shape: rectangle
+    style.fill: "#e3f2fd"
+  }
+
+  rag_before: "RAG Engine" {
+    shape: rectangle
+    style.fill: "#f8bbd0"
+  }
+
+  vector_before: "Vector Store\n(ChromaDB)" {
+    shape: cylinder
+    style.fill: "#b2dfdb"
+  }
+
+  processor_before: "Document\nProcessor" {
+    shape: rectangle
+    style.fill: "#d1c4e9"
+  }
+
+  onenote_before: "OneNote\nService" {
+    shape: rectangle
+    style.fill: "#b3e5fc"
+  }
+
+  graph_before: "Graph API\n⚠️ Rate Limits!" {
+    shape: cloud
+    style.fill: "#ffcdd2"
+  }
+
+  problems: "PROBLEMS:\n• Every query hits Graph API\n• Frequent rate limit errors (429)\n• 2-3s latency per query\n• Offline mode impossible\n• No concurrent users\n• No audit trail" {
+    shape: text
+    style.fill: "#ffccbc"
+    style.font-size: 14
+  }
+
+  user_before -> rag_before: "Query"
+  rag_before -> vector_before: "Search"
+  vector_before -> rag_before: "Chunks\n(with page_id)"
+  rag_before -> processor_before: "Fetch full doc\n(by page_id)"
+  processor_before -> onenote_before: "Get document"
+  onenote_before -> graph_before: "API Call\nEVERY TIME! ❌" {
+    style.stroke: "#d32f2f"
+    style.stroke-width: 4
+    style.animated: true
+  }
+  graph_before -> onenote_before: "429 Too Many\nRequests! 💥"
+  onenote_before -> processor_before: "Document\n(if not rate limited)"
+  processor_before -> rag_before: "Full context"
+  rag_before -> user_before: "Answer\n(slow & unreliable)"
+}
+
+# AFTER - New Cache-Based Architecture
+after: {
+  label: "✅ AFTER: Cache-Based Sync System"
+  style.fill: "#e8f5e9"
+  style.stroke: "#2e7d32"
+  style.stroke-width: 3
+
+  # Query Path (Fast - No Graph API)
+  query_path: {
+    label: "QUERY PATH (Fast)"
+    style.fill: "#f1f8e9"
+    style.stroke: "#558b2f"
+
+    user_after: "User Query" {
+      shape: rectangle
+      style.fill: "#e3f2fd"
+    }
+
+    rag_after: "RAG Engine" {
+      shape: rectangle
+      style.fill: "#f8bbd0"
+    }
+
+    vector_after: "Vector Store\n(ChromaDB)" {
+      shape: cylinder
+      style.fill: "#b2dfdb"
+    }
+
+    cache_service: "Document\nCache Service" {
+      shape: rectangle
+      style.fill: "#c8e6c9"
+    }
+
+    cache_db: "Cache DB\n(SQLite)\n📦 Local!" {
+      shape: cylinder
+      style.fill: "#c5cae9"
+    }
+
+    user_after -> rag_after: "Query"
+    rag_after -> vector_after: "Search"
+    vector_after -> rag_after: "Chunks\n(with page_id)"
+    rag_after -> cache_service: "Fetch full doc\n(by page_id)"
+    cache_service -> cache_db: "Read from\nLocal Cache ✅" {
+      style.stroke: "#2e7d32"
+      style.stroke-width: 4
+      style.stroke-dash: 3
+    }
+    cache_db -> cache_service: "Document\n(instant!)"
+    cache_service -> rag_after: "Full context"
+    rag_after -> user_after: "Answer\n(fast & reliable)"
+
+    no_api: "NO Graph API calls! 🎉" {
+      shape: text
+      style.fill: "#c8e6c9"
+      style.font-size: 16
+      style.bold: true
+    }
+  }
+
+  # Sync Path (Background - Rate Limited)
+  sync_path: {
+    label: "SYNC PATH (Background)"
+    style.fill: "#fff9c4"
+    style.stroke: "#f57f17"
+
+    sync_trigger: "Sync Trigger\n(manual or scheduled)" {
+      shape: rectangle
+      style.fill: "#fff3e0"
+    }
+
+    orchestrator: "Sync\nOrchestrator" {
+      shape: rectangle
+      style.fill: "#ffccbc"
+    }
+
+    rate_limiter: "Rate Limiter\n100 req/min ⏱️" {
+      shape: hexagon
+      style.fill: "#ffcdd2"
+    }
+
+    onenote_after: "OneNote\nService" {
+      shape: rectangle
+      style.fill: "#b3e5fc"
+    }
+
+    graph_after: "Graph API\n✅ Controlled!" {
+      shape: cloud
+      style.fill: "#bbdefb"
+    }
+
+    cache_db2: "Cache DB\n(SQLite)" {
+      shape: cylinder
+      style.fill: "#c5cae9"
+    }
+
+    sync_trigger -> orchestrator: "Full/Incremental/Smart"
+    orchestrator -> onenote_after: "Fetch documents"
+    onenote_after -> rate_limiter: "Request"
+    rate_limiter -> graph_after: "Controlled\nAPI Calls ✅" {
+      style.stroke: "#ff6f00"
+      style.stroke-width: 3
+    }
+    graph_after -> rate_limiter: "Response"
+    rate_limiter -> onenote_after: "Data"
+    onenote_after -> orchestrator: "Documents"
+    orchestrator -> cache_db2: "Store in cache" {
+      style.stroke: "#558b2f"
+      style.stroke-width: 3
+    }
+
+    sync_note: "Rate limits respected!\nAuto backoff on 429" {
+      shape: text
+      style.fill: "#ffe0b2"
+      style.font-size: 14
+    }
+  }
+
+  benefits: "BENEFITS:\n✅ 2-3x faster queries (0.5-1s)\n✅ No rate limit errors\n✅ Offline operation\n✅ Unlimited concurrent users\n✅ Complete audit trail\n✅ Pause/resume/cancel control" {
+    shape: text
+    style.fill: "#c8e6c9"
+    style.font-size: 14
+    style.bold: true
+  }
+}
+
+# Performance Metrics
+metrics: {
+  label: "📊 PERFORMANCE COMPARISON"
+  style.fill: "#e1f5fe"
+  style.stroke: "#01579b"
+
+  before_metrics: {
+    label: "Before"
+    style.fill: "#ffebee"
+
+    query_time_before: "Query: 2-3s" {
+      shape: text
+    }
+
+    rate_errors_before: "Rate Errors: Frequent ❌" {
+      shape: text
+    }
+
+    offline_before: "Offline: Not Possible ❌" {
+      shape: text
+    }
+
+    users_before: "Concurrent Users: Limited ❌" {
+      shape: text
+    }
+  }
+
+  after_metrics: {
+    label: "After"
+    style.fill: "#e8f5e9"
+
+    query_time_after: "Query: 0.5-1s ⚡" {
+      shape: text
+    }
+
+    rate_errors_after: "Rate Errors: None ✅" {
+      shape: text
+    }
+
+    offline_after: "Offline: Works! ✅" {
+      shape: text
+    }
+
+    users_after: "Concurrent Users: Unlimited ✅" {
+      shape: text
+    }
+  }
+
+  near: bottom-center
+}
+
+# Two-Phase Process
+phases: {
+  label: "🔄 TWO-PHASE PROCESS"
+  style.fill: "#fce4ec"
+  style.stroke: "#880e4f"
+
+  phase1: "Phase 1: OneNote → Cache\n• Respects rate limits (100 req/min)\n• Runs in background\n• Full/Incremental sync strategies" {
+    shape: text
+    style.fill: "#fff9c4"
+  }
+
+  phase2: "Phase 2: Cache → Vector Store\n• No rate limits!\n• Fast indexing\n• No network latency" {
+    shape: text
+    style.fill: "#c8e6c9"
+  }
+
+  near: top-right
+}
+
+before -> after: "MIGRATION\nCOMPLETE! 🎉" {
+  style.stroke: "#2e7d32"
+  style.stroke-width: 5
+  style.animated: true
+}

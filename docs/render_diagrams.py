@@ -21,6 +21,8 @@ DIAGRAM_FILES = [
     "frontend-architecture-summary.d2",
     "backend-architecture.d2",
     "backend-architecture-summary.d2",
+    "cache_sync_architecture.d2",
+    "before_after_architecture.d2",
 ]
 
 def render_d2_to_svg(d2_file: str, svg_file: str) -> bool:
