@@ -57,6 +57,21 @@ sync_status: Dict[str, Any] = {
     "documents_processed": 0
 }
  
+REQUIRED_OIDC_SCOPES = ["openid","profile","offline_access"]
+
+def build_oauth_scopes(raw_scopes: List[str]) -> List[str]: 
+    """Ensure OpenID Connect scopes are included for ID tokens."""
+    scopes = [scope for scope in (raw_scopes or []) if scope]
+    added_scopes=List[str]=[]
+    for required_scope in REQUIRED_OIDC_SCOPES:
+        if required_scope not in scopes:
+            scopes.append(required_scope)
+            added_scopes.append(required_scope)
+    if added_scopes:
+        logger.info(f"Added required OpenID scopes automatically: {added_scopes}")
+    return scopes
+
+
  
 def get_rag_engine() -> RAGEngine:
     """Dependency to get RAG engine."""
@@ -113,6 +128,23 @@ async def get_sync_status():
 # ================================
 
 
+@router.get("/auth/debug")
+async def auth_debug():
+    """Debug endpoint to check auth configuration."""
+    settings = get_dynamic_settings()
+    client_secret = settings.get("microsoft_client_secret", "")
+    return {
+        "auth_service_initialized": auth_service is not None,
+        "microsoft_client_id": settings.get("microsoft_client_id", ""),
+        "microsoft_client_secret_set": bool(client_secret), # Don't expose the actual secret
+        "microsoft_client_secret_length": len(client_secret) if client_secret else 0,
+        "microsoft_tenant_id": settings.get("microsoft_tenant_id", ""),
+        "oauth_redirect_uri": settings.get("oauth_redirect_uri", ""),
+        "oauth_scopes": settings.get("oauth_scopes", ""),
+    }
+
+
+
 class AuthCallbackRequest(BaseModel):
     """Request model for OAuth callback."""
     code: str
@@ -131,7 +163,10 @@ async def login():
 
     settings = get_dynamic_settings()
     redirect_uri = settings.get("oauth_redirect_uri", "http://localhost:5173/auth/callback")
-    scopes = settings.get("oauth_scopes", "User.Read Notes.Read Notes.Read.All").split()
+    scopes = settings.get("oauth_scopes", "User.Read Files.Read Notes.Read").split()
+    scopes = build_oauth_scopes(scopes)
+    
+    logger.info(f"Login endpoint called. Redirect URI: {redirect_uri}, Scopes: {scopes}")
 
     state = generate_state()
     auth_url = auth_service.get_authorization_url(
@@ -140,9 +175,11 @@ async def login():
         scopes=scopes
     )
 
+    logger.info(f"Generated auth URL: {auth_url}")
     return {
         "auth_url": auth_url,
-        "state": state
+        "state": state,
+        "redirect_uri": redirect_uri,
     }
 
 
@@ -159,7 +196,8 @@ async def auth_callback(request: AuthCallbackRequest):
     try:
         settings = get_dynamic_settings()
         redirect_uri = settings.get("oauth_redirect_uri", "http://localhost:5173/auth/callback")
-        scopes = settings.get("oauth_scopes", "User.Read Notes.Read Notes.Read.All").split()
+        scopes = settings.get("oauth_scopes", "User.Read Files.Read Notes.Read").split()
+        scopes = build_oauth_scopes(scopes)
 
         # Exchange authorization code for tokens
         token_response = await auth_service.acquire_token_by_code(
@@ -172,7 +210,14 @@ async def auth_callback(request: AuthCallbackRequest):
         id_token = token_response.get("id_token")
         if not id_token:
             # Fallback to access token if no ID token
-            id_token = token_response.get("access_token")
+            logger.error("ID token missing from token response. Ensure OpenID scopes are configured.")
+            raise HTTPException(
+                status_code=400, 
+                detail=(
+                    "Authentication failed: Microsoft did not return an ID token. "
+                    "Verify that 'openid pofile offline_access' scopes are configured in settings."
+                    ),
+            )
 
         claims = auth_service.validate_token(id_token)
         user_info = auth_service.extract_user_info(claims)
