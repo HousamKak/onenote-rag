@@ -186,6 +186,58 @@ const IndexPage = () => {
       });
     },
   });
+ 
+  const forceReindexMutation = useMutation({
+    mutationFn: (selectedIds?: string[]) => indexApi.forceReindex(selectedIds),
+    onSuccess: (response) => {
+      queryClient.invalidateQueries({ queryKey: ['indexStats'] });
+      refetchStats();
+      const data = response.data;
+      const processed = data?.documents_processed || 0;
+      const chunks = data?.chunks_created || 0;
+ 
+      setNotification({
+        show: true,
+        title: 'Force Reindex Completed',
+        message: `Successfully reindexed ${processed} documents (${chunks} chunks)`,
+        variant: 'success',
+      });
+    },
+    onError: (error: any) => {
+      setNotification({
+        show: true,
+        title: 'Force Reindex Failed',
+        message: error.response?.data?.detail || error.message,
+        variant: 'error',
+      });
+    },
+  });
+ 
+  const detailedStatsMutation = useMutation({
+    mutationFn: () => indexApi.getDetailedStats(),
+    onSuccess: (response) => {
+      const stats = response.data;
+      const vectorChunks = stats.vector_store?.chunks_in_chromadb || 0;
+      const dbChunks = stats.database?.total_chunks_expected || 0;
+      const inSync = stats.sync_status?.in_sync || false;
+      const missing = stats.sync_status?.missing_chunks || 0;
+     
+      setNotification({
+        show: true,
+        title: 'Detailed Statistics',
+        message: `Vector Store: ${vectorChunks} chunks | Database: ${dbChunks} chunks | ${inSync ? '✅ In Sync' : `⚠️ ${missing} chunks missing`}`,
+        variant: inSync ? 'success' : 'error',
+      });
+    },
+    onError: (error: any) => {
+      setNotification({
+        show: true,
+        title: 'Stats Failed',
+        message: error.response?.data?.detail || error.message,
+        variant: 'error',
+      });
+    },
+  });
 
   const demoMutation = useMutation({
     mutationFn: () => {
@@ -342,6 +394,49 @@ const IndexPage = () => {
                   Clear selection
                 </button>
               )}
+                           
+              {/* Admin Controls - Separated */}
+              <div className="ml-auto flex items-center gap-2 pl-4 border-l-2 border-gray-200">
+                <button
+                  onClick={() => {
+                    forceReindexMutation.mutate(undefined);
+                  }}
+                  disabled={forceReindexMutation.isPending || syncMutation.isPending || fullSyncMutation.isPending}
+                  className="flex items-center gap-2 px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-400 text-sm font-medium transition-colors"
+                  title="Reset indexed_at for all documents and re-index everything"
+                >
+                  {forceReindexMutation.isPending ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" />
+                      Reindexing...
+                    </>
+                  ) : (
+                    <>
+                      <Zap size={14} />
+                      Force Reindex All
+                    </>
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    detailedStatsMutation.mutate();
+                  }}
+                  disabled={detailedStatsMutation.isPending}
+                  className="flex items-center gap-2 px-3 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 disabled:bg-gray-100 text-sm font-medium transition-colors"
+                  title="View detailed statistics from database and vector store"
+                >
+                  {detailedStatsMutation.isPending ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" />
+                    </>
+                  ) : (
+                    <>
+                      <Activity size={14} />
+                      View Details
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
 
