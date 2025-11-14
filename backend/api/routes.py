@@ -66,7 +66,7 @@ REQUIRED_OIDC_SCOPES = ["openid","profile","offline_access"]
 def build_oauth_scopes(raw_scopes: List[str]) -> List[str]: 
     """Ensure OpenID Connect scopes are included for ID tokens."""
     scopes = [scope for scope in (raw_scopes or []) if scope]
-    added_scopes=List[str]=[]
+    added_scopes: List[str]=[]
     for required_scope in REQUIRED_OIDC_SCOPES:
         if required_scope not in scopes:
             scopes.append(required_scope)
@@ -105,6 +105,23 @@ def get_document_processor() -> DocumentProcessor:
     if document_processor is None:
         raise HTTPException(status_code=500, detail="Document processor not initialized")
     return document_processor
+
+
+def get_multimodal_processor():
+    """
+    Dependency to get multimodal procesor (optional).
+    
+    Creates a MultimodalDocumentProcessor if vision_service is available
+    (i.e., OpenAI key is configured). Includes image_storage to read
+    cached images instead of re-downloading from OneNote.
+    """
+    if vision_service:
+        from services.multimodal_document_processor import MultimodalDocumentProcessor
+        return MultimodalDocumentProcessor(
+            vision_service=vision_service,
+            image_storage=image_storage # pass image_storage for reacding cached images
+        )
+    return None # Returns None if multimodal services not available
 
 
 def get_settings_service() -> SettingsService:
@@ -661,7 +678,8 @@ async def sync_documents(
     request: SyncRequest,
     user: UserContext = Depends(get_current_user),
     processor: DocumentProcessor = Depends(get_document_processor),
-    store: VectorStoreService = Depends(get_vector_store)
+    store: VectorStoreService = Depends(get_vector_store),
+    multimodal_proc: Optional[Any] = Depends(get_multimodal_processor)
 ):
     """
     Sync OneNote documents using the new cache-based system.
@@ -738,30 +756,65 @@ async def sync_documents(
 
         # Process and index documents
         total_chunks = 0
+        indexed_count = 0
+        multimodal_count = 0
 
         for doc in documents_to_index:
             try:
-                # Chunk the document
-                chunks = processor.chunk_documents([doc], enrich_with_metadata=True)
+                #============================================
+                # MULTIMODAL PROCESSING & CHUNKING
+                #============================================
+                #check if multimodal processor is available and document has images
+                if multimodal_proc and doc.metadata and doc.metadata.image_count > 0 :
+                    logger.info(f"🖼️ Processing {doc.metadata.image_count} images for '{doc.metadata.page_title}'")
+                    
+                    try:
+                        # Use multimodal processor to analyze images and chunk document
+                        # This returns (chunks_with_image_context, image_data_list)
+                        chunks, image_data = await multimodal_proc.chunk_document_multimodal(
+                            doc,
+                            enrich_with_metadata=True,
+                            include_images=True
+                        )
+                        multimodal_count += 1
+                        logger.info(f"✅ Created {len(chunks)} multimodal chunks with {len(image_data)} images for '{doc.metadata.page_title}'")
+                    except Exception as img_error:
+                        logger.warning(f"⚠️  Failed to process images for '{doc.metadata.page_title}': {img_error}")
+                        logger.debug(f"Image processing error details:", exc_info=True)
+                        # Fallback to text-only chunking
+                        chunks = processor.chunk_documents([doc])
+                else:
+                    # Standard text-only chunking (no images or multimodal not available)
+                    chunks = processor.chunk_documents([doc])
+                
+                # ============================================
+                # EMBEDDING & VECTOR STORE
+                # ============================================
+                # Add to vector store (embeddings include both text AND image context)
+                if chunks:
+                    store.add_documents(chunks)
+                    total_chunks += len(chunks)
+                    indexed_count += 1
 
-                # Add to vector store
-                store.add_documents(chunks)
-                total_chunks += len(chunks)
+                    # Mark as indexed in cache
+                    document_cache.mark_document_indexed(
+                        page_id=doc.page_id,
+                        chunk_count=len(chunks),
+                        image_count=doc.metadata.image_count if doc.metadata else 0
+                    )
 
-                # Mark as indexed in cache
-                document_cache.mark_document_indexed(
-                    page_id=doc.page_id,
-                    chunk_count=len(chunks),
-                    image_count=doc.metadata.image_count
-                )
-
-                logger.debug(f"Indexed {doc.metadata.page_title}: {len(chunks)} chunks")
+                    logger.debug(f"✅ Indexed '{doc.metadata.page_title}': {len(chunks)} chunks")
 
             except Exception as e:
-                logger.error(f"Error indexing document {doc.page_id}: {e}")
+                logger.error(f"❌ Error indexing document {doc.page_id}: {e}")
+                import traceback
+                logger.error(traceback.format_exc())
                 # Continue with other documents
 
-        logger.info(f"✅ Indexing complete: {len(documents_to_index)} documents, {total_chunks} chunks")
+        logger.info(f"✅ Indexing complete: {indexed_count}/{len(documents_to_index)} documents, {total_chunks} chunks")
+        if multimodal_count > 0:
+            logger.info(f" 🎨 Multimodal processing for {multimodal_count} documents enriched with image context")
+
 
         # Build response message
         message_parts = []
@@ -774,7 +827,10 @@ async def sync_documents(
         if sync_result.pages_skipped > 0:
             message_parts.append(f"{sync_result.pages_skipped} skipped")
 
-        message = f"Sync complete: {', '.join(message_parts)} ({total_chunks} chunks indexed)"
+        message = f"Sync complete: {', '.join(message_parts)} ({total_chunks} chunks indexed"
+        if multimodal_count > 0:
+            message += f", {multimodal_count} with image context"
+        message += ")"
 
         return SyncResponse(
             status="success",
@@ -811,6 +867,62 @@ async def get_index_stats(
         raise HTTPException(status_code=500, detail=str(e))
  
  
+@router.get("/index/stats/detailed")
+async def get_detailed_stats(
+     user: UserContext = Depends(get_current_user),
+     store: VectorStoreService = Depends(get_vector_store)
+     
+):
+    """Get detailed statistics from both database and vector store"""
+    try:
+        #Get vector store stats
+        vector_stats = store.get_stats()
+        
+        # Get database stats
+        if document_cache:
+            import sqlite3
+            conn = sqlite3.connect(document_cache.db_path if hasattr(document_cache, 'db_path') else 'data/document_cache.db')
+            cursor = conn.cursor()
+            
+            cursor.execute('''
+                SELECT
+                    COUNT(*) as total_docs,
+                    COUNT(CASE WHEN indexed_at IS NOT NULL THEN 1 END) as indexed_docs,
+                    COUNT(CASE WHEN indexed_at IS NULL THEN 1 END) as unindexed_docs,
+                    SUM(chunk_count) as total_chunks_db,
+                    SUM(image_count) as total_images,
+                    COUNT(CASE WHEN image_count > 0 THEN 1 END) as doc_with_images
+                    FROM onenote_document
+                    WHERE is_deleted = 0
+                ''')
+            db_stats = cursor.fetchone()
+            conn.close()
+            
+            return{
+                "vector_store":{
+                    "chunks_in_chromadb":vector_stats["total_documents"],
+                    "collection_name":vector_stats["collection_name"],
+                },
+                "database":{
+                    "total_documents":db_stats[0] or 0,
+                    "indexed_documents":db_stats[1] or 0,
+                    "unindexed_documents":db_stats[2] or 0,
+                    "total_chunks_expected":db_stats[3] or 0,
+                    "total_images":db_stats[4] or 0,
+                    "documents_with_images":db_stats[5] or 0,
+                },
+                "sync_status":{
+                    "in_sync":(db_stats[3] or 0) == vector_stats["total_documents"],
+                    "missing_chunks": max(0, (db_stats[3] or 0) - vector_stats["total_documents"])
+                }
+            }
+        else:
+            return {"error":"Document cache not initialized"}
+    except Exception as e:
+        logger.error(f"Error getting detailed stats: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.delete("/index/clear")
 async def clear_index(
     user: UserContext = Depends(get_current_user),
@@ -854,21 +966,27 @@ async def get_indexed_pages(
 @router.get("/images/{page_id}/{image_index}")
 async def get_image(
     page_id: str,
-    image_index: int,
-    user: UserContext = Depends(get_current_user)
+    image_index: int
+    # No auth required - images are public cached content
 ):
     """
     Retrieve an image by page_id and image index.
 
     Returns the image file directly for display.
+    Public endpoint - no authentication required
     """
     try:
+        # URL decode the page_id (! becomes %21 etc.)
+        from urllib.parse import unquote
+        page_id = unquote(page_id)
+        
+        logger.debug(f"Image request: page_id={page_id}, image_index={image_index}")
         # Use the globally initiallized image_storage service if available
         # This ensures we use the same path as during indexing
         if image_storage is None:
             raise HTTPException(
                 status_code=500,
-                detail="Image storage service not availabke. Multimodal features may be disabled."
+                detail="Image storage service not available. Multimodal features may be disabled."
             )
 
         # Generate image path
