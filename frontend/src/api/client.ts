@@ -96,7 +96,15 @@ export const indexApi = {
       full_sync: fullSync,
       multimodal: multimodal
     }),
+  forceReindex:(notebookIds?: string[]) =>
+    api.post('/index/sync', {
+      notebook_ids: notebookIds,
+      full_sync: false,
+      force_reindex: true,
+      multimodal: true
+  }),
   getStats: () => api.get<IndexStats>('/index/stats'),
+  getDetailedStats: () => api.get<any>('/index/stats/detailed'),
   getPages: () => api.get<{ pages: IndexedPage[] }>('/index/pages'),
   clear: () => api.delete('/index/clear'),
 };
