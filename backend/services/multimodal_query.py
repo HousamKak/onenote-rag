@@ -3,6 +3,7 @@ Multimodal query handler for detecting and processing visual queries.
 
 Maintains document integrity by using page_id to reunite documents with their images.
 """
+
 import logging
 from typing import List, Dict, Optional, Tuple
 from langchain_core.documents import Document
@@ -23,17 +24,29 @@ class MultimodalQueryHandler:
 
     # Keywords that indicate a visual query
     VISUAL_KEYWORDS = [
-        "image", "picture", "photo", "screenshot",
-        "diagram", "chart", "graph", "illustration",
-        "visual", "show me", "look like", "see",
-        "drawing", "sketch", "figure", "plot",
-        "visualization", "graphic", "infographic"
+        "image",
+        "picture",
+        "photo",
+        "screenshot",
+        "diagram",
+        "chart",
+        "graph",
+        "illustration",
+        "visual",
+        "show me",
+        "look like",
+        "see",
+        "drawing",
+        "sketch",
+        "figure",
+        "plot",
+        "visualization",
+        "graphic",
+        "infographic",
     ]
 
     def __init__(
-        self,
-        vision_service: GPT4VisionService,
-        image_storage: ImageStorageService
+        self, vision_service: GPT4VisionService, image_storage: ImageStorageService
     ):
         """
         Initialize multimodal query handler.
@@ -65,13 +78,19 @@ class MultimodalQueryHandler:
 
         # Check for question patterns about visual content
         visual_patterns = [
-            "what does", "how does", "what do",
-            "what is shown", "what are shown",
-            "which image", "which diagram"
+            "what does",
+            "how does",
+            "what do",
+            "what is shown",
+            "what are shown",
+            "which image",
+            "which diagram",
         ]
 
         for pattern in visual_patterns:
-            if pattern in query_lower and any(kw in query_lower for kw in ["image", "diagram", "chart", "show"]):
+            if pattern in query_lower and any(
+                kw in query_lower for kw in ["image", "diagram", "chart", "show"]
+            ):
                 logger.debug(f"Visual query detected (pattern: '{pattern}')")
                 return True
 
@@ -81,7 +100,7 @@ class MultimodalQueryHandler:
         self,
         documents: List[Document],
         max_images: int = 5,
-        max_images_per_doc: int = 2
+        max_images_per_doc: int = 2,
     ) -> List[Dict[str, any]]:
         """
         Extract and download images from retrieved documents using page_id.
@@ -95,10 +114,10 @@ class MultimodalQueryHandler:
             max_images_per_doc: Maximum images per document
 
         Returns:
-            List of image data dictionaries
+            List of image data dictionaries (deduplicated)
         """
         images = []
-
+        seen_images = set()
         for doc in documents:
             if len(images) >= max_images:
                 break
@@ -120,11 +139,16 @@ class MultimodalQueryHandler:
                 if len(images) >= max_images:
                     break
 
+                # Skip if we've already seen this image
+                image_key = (page_id, i)
+                if image_key in seen_images:
+                    logger.debug(f"Skipping duplicate image for page_id {page_id}/{i}")
+                    continue
+                
                 try:
                     # Generate image path using page_id
                     image_path = self.image_storage.generate_image_path(
-                        page_id=page_id,
-                        image_index=i
+                        page_id=page_id, image_index=i
                     )
 
                     # Check if image exists
@@ -136,17 +160,22 @@ class MultimodalQueryHandler:
                     image_data = await self.image_storage.download(image_path)
 
                     if image_data:
-                        images.append({
-                            "page_id": page_id,
-                            "page_title": doc.metadata.get("page_title"),
-                            "image_index": i,
-                            "image_path": image_path,
-                            "image_data": image_data,
-                            "public_url": f"/api/images/{page_id}/{i}"
-                        })
+                        images.append(
+                            {
+                                "page_id": page_id,
+                                "page_title": doc.metadata.get("page_title"),
+                                "image_index": i,
+                                "image_path": image_path,
+                                "image_data": image_data,
+                                "public_url": f"/api/images/{page_id}/{i}",
+                            }
+                        )
+                        seen_images.add(image_key)
 
                 except Exception as e:
-                    logger.error(f"Error retrieving image {i} for document {page_id}: {str(e)}")
+                    logger.error(
+                        f"Error retrieving image {i} for document {page_id}: {str(e)}"
+                    )
                     continue
 
         logger.info(f"Retrieved {len(images)} images from {len(documents)} documents")
@@ -157,7 +186,7 @@ class MultimodalQueryHandler:
         query: str,
         documents: List[Document],
         images: List[Dict[str, any]],
-        context: str
+        context: str,
     ) -> str:
         """
         Answer a visual query using retrieved images and GPT-4o Vision.
@@ -180,7 +209,7 @@ class MultimodalQueryHandler:
                 question=query,
                 images=image_data_list,
                 context=context,
-                model="gpt-4o"  # Use best model for question answering
+                model="gpt-4o",  # Use best model for question answering
             )
 
             return answer
@@ -194,59 +223,60 @@ class MultimodalQueryHandler:
         query: str,
         documents: List[Document],
         base_answer: str,
-        max_images: int = 5
+        max_images: int = 5,
+        pre_filtered_images: Optional[List[Dict[str, any]]] = None,
     ) -> Tuple[str, List[Dict[str, any]]]:
         """
-        Enhance query response with images if it's a visual query.
+        Enhance query response with images if available.
 
         Args:
             query: User query
             documents: Retrieved documents
             base_answer: Base text answer from RAG
             max_images: Maximum images to include
+            pre_filtered_images: Already filtered images (skips get_images_from_documents)
 
         Returns:
             Tuple of (enhanced_answer, images_list)
         """
-        # Check if visual query
-        if not self.is_visual_query(query):
-            logger.debug("Not a visual query, returning base answer")
-            return (base_answer, [])
-
-        # Get images from documents using page_id
-        images = await self.get_images_from_documents(
-            documents=documents,
-            max_images=max_images
-        )
+        # Use pre-filtered images if provided, otherwise get from documents
+        if pre_filtered_images is not None:
+            images = pre_filtered_images[:max_images]
+            logger.info(f"Using {len(images)} pre-filtered images for visual query")
+        else:
+            # Get images from documents using page_id
+            images = await self.get_images_from_documents(
+                documents=documents, max_images=max_images
+            )
 
         if not images:
-            logger.info("No images found for visual query")
+            logger.debug("No images available in retrieved documents")
             return (base_answer, [])
 
         # Build text context from documents
-        context = "\n\n".join([
-            f"From: {doc.metadata.get('page_title', 'Unknown')}\n{doc.page_content[:500]}..."
-            for doc in documents[:3]
-        ])
+        context = "\n\n".join(
+            [
+                f"From: {doc.metadata.get('page_title', 'Unknown')}\n{doc.page_content[:500]}..."
+                for doc in documents[:3]
+            ]
+        )
 
         # Get visual answer
         visual_answer = await self.answer_visual_query(
-            query=query,
-            documents=documents,
-            images=images,
-            context=context
+            query=query, documents=documents, images=images, context=context
         )
 
         # Combine base answer with visual answer
-        enhanced_answer = f"{visual_answer}\n\n---\n\nAdditional Context:\n{base_answer}"
+        enhanced_answer = (
+            f"{visual_answer}\n\n---\n\nAdditional Context:\n{base_answer}"
+        )
 
         logger.info(f"Enhanced answer with {len(images)} images")
 
         return (enhanced_answer, images)
 
     def format_images_for_response(
-        self,
-        images: List[Dict[str, any]]
+        self, images: List[Dict[str, any]]
     ) -> List[Dict[str, str]]:
         """
         Format images for API response (without binary data).
@@ -260,19 +290,20 @@ class MultimodalQueryHandler:
         formatted = []
 
         for img in images:
-            formatted.append({
-                "page_id": img["page_id"],
-                "page_title": img.get("page_title", "Unknown"),
-                "image_index": img["image_index"],
-                "image_path": img["image_path"],
-                "public_url": img["public_url"]
-            })
+            formatted.append(
+                {
+                    "page_id": img["page_id"],
+                    "page_title": img.get("page_title", "Unknown"),
+                    "image_index": img["image_index"],
+                    "image_path": img["image_path"],
+                    "public_url": img["public_url"],
+                }
+            )
 
         return formatted
 
     async def group_documents_by_page_id(
-        self,
-        documents: List[Document]
+        self, documents: List[Document]
     ) -> Dict[str, Dict]:
         """
         Group retrieved chunks by page_id to reconstruct complete documents.
@@ -302,7 +333,7 @@ class MultimodalQueryHandler:
                     "has_images": doc.metadata.get("has_images", False),
                     "image_count": doc.metadata.get("image_count", 0),
                     "chunks": [],
-                    "images": []
+                    "images": [],
                 }
 
             grouped[page_id]["chunks"].append(doc)
@@ -316,12 +347,12 @@ class MultimodalQueryHandler:
                     if await self.image_storage.exists(image_path):
                         image_data = await self.image_storage.download(image_path)
                         if image_data:
-                            doc_data["images"].append({
-                                "index": i,
-                                "path": image_path,
-                                "data": image_data
-                            })
+                            doc_data["images"].append(
+                                {"index": i, "path": image_path, "data": image_data}
+                            )
 
-        logger.info(f"Grouped {len(documents)} chunks into {len(grouped)} complete documents")
+        logger.info(
+            f"Grouped {len(documents)} chunks into {len(grouped)} complete documents"
+        )
 
         return grouped
