@@ -3,11 +3,14 @@ Sync Orchestrator - Manages synchronization between Graph API and local cache.
 Implements full, incremental, and smart sync strategies with rate limiting.
 """
 import asyncio
+import base64
 import logging
+import re
 import uuid
 from datetime import datetime, timedelta
 from typing import List, Optional, Dict, Any
 from bs4 import BeautifulSoup
+import requests
 
 from models.document import Document, DocumentMetadata
 from models.document_cache import SyncResult, SyncJob, SyncHistory, SyncState
@@ -622,24 +625,75 @@ class SyncOrchestrator:
         """
         page_id = page['id']
         page_title = page.get('title', 'Untitled')
-
+        page_modified = self._parse_datetime(page.get('lastModifiedDateTime'))
+        
         # Check if document exists in cache
         existing_doc = self.cache.get_document(page_id)
         is_new = existing_doc is None
 
+        # Skip if page already cached and note modified
+        if existing_doc and existing_doc.metadata.modified_date:
+            # Compare modification dates
+            if page_modified and existing_doc.metadata.modified_date >= page_modified:
+                logger.debug(f"Skipping page {page_id} - already up-to-date in cache")
+                return {
+                    'page_id': page_id,
+                    'is_new': False,
+                    'skipped': True,
+                    'api_calls': 0
+                }
+                
+                
         # Fetch page content
-        content_response = await self._fetch_with_rate_limit(
+        html_content = await self._fetch_with_rate_limit(
             self.onenote.get_page_content,
             page_id
         )
 
+        if not html_content:
+            logger.warning(f"Failed to fetch content for page {page_id}")
+            html_content = ""
+            
         # Parse HTML and extract text
-        html_content = content_response.get('content', '')
         plain_text = self._extract_text_from_html(html_content)
 
-        # Extract images
+        # Extract images with metadata
         images = self._extract_images_from_html(html_content, page_id)
 
+        # Check for existing cached images
+        existing_images = self.cache.get_images_for_document(page_id)
+        existing_image_count = len(existing_images)
+        
+        # Download image data WITH RATE LIMITING (only if needed)
+        downloaded_images = []
+        
+        # If we already have images cached and count matches, skip download
+        if not is_new and existing_image_count>0 and existing_image_count == len(images):
+            logger.debug(f"Skipping image download for page {page_id} - {existing_image_count} images already cached")
+            # Use existing image metadata
+            for existing_img in existing_images:
+                downloaded_images.append({
+                    'data': None,  # No need to re-download
+                    'alt_text': existing_img.alt_text,
+                    'resource_id': existing_img.graph_resource_id
+                    'cached': True
+                })
+        else:
+            # Download images
+            for idx, img_meta in enumerate(images):
+                # Add delay between image downloads to avoid rate limits
+                # Image resources have MUCH stricter rate limits than pages
+                if idx > 0 : # Not first image
+                    await asyncio.sleep(3.0) # 3 second delay between image downloads (20 per minute)
+                
+                image_bytes = await self._download_image(img_meta.get('src'))
+                if image_bytes:
+                    img_meta['data'] = image_bytes
+                    img_meta['cached'] = False
+                    downloaded_images.append(img_meta)
+                else:
+                    logger.debug(f"Failed to download image from {img_meta.get('src')} ")
+                    
         # Create document metadata
         metadata = DocumentMetadata(
             page_id=page_id,
@@ -649,13 +703,15 @@ class SyncOrchestrator:
             created_date=self._parse_datetime(page.get('createdDateTime')),
             modified_date=self._parse_datetime(page.get('lastModifiedDateTime')),
             author=page.get('createdBy', {}).get('user', {}).get('displayName', 'Unknown'),
-            source_url=page.get('links', {}).get('oneNoteWebUrl', {}).get('href', ''),
-            has_images=len(images) > 0,
-            image_count=len(images)
+            url=page.get('links', {}).get('oneNoteWebUrl', {}).get('href', ''),
+            tags=[],
+            has_images=len(downloaded_images) > 0,
+            image_count=len(downloaded_images)
         )
 
         # Create document
         document = Document(
+            id=page_id,
             page_id=page_id,
             content=plain_text,
             html_content=html_content,
@@ -665,8 +721,12 @@ class SyncOrchestrator:
         # Cache document
         self.cache.cache_document(document)
 
-        # Cache images
-        for idx, image_data in enumerate(images):
+        # Cache images (skip if already cached)
+        for idx, image_data in enumerate(downloaded_images):
+            # Skip if this image is already cached
+            if image_data.get('cached'):
+                continue
+            
             # Save image file
             image_path = self.image_storage.generate_image_path(page_id, idx)
             await self.image_storage.upload(image_path, image_data['data'])
@@ -807,6 +867,91 @@ class SyncOrchestrator:
             logger.warning(f"Error extracting text: {e}")
             return ""
 
+    async def _download_image(self, image_url: str) -> Optional[bytes]:
+            """
+            Download image from URL (Graph API or data URL).
+    
+            Args:
+                image_url: URL of the image
+    
+            Returns:
+                Image data as bytes, or None if download fails
+            """
+            if not image_url:
+                return None
+            
+            try:
+                # Handle data URLs (base64 encoded images)
+                if image_url.startswith('data:image'):
+                    match = re.search(r'base64,(.+)', image_url)
+                    if match:
+                        base64_data = match.group(1)
+                        return base64.b64decode(base64_data)
+                    return None
+    
+                # Download from Graph API URL with authentication
+                # Use the rate limiter's internal mechanism
+                loop = asyncio.get_event_loop()
+            
+                def _download():
+                    """Synchronous download wrapped for async."""
+                    # This will block until rate limiter allows
+                    self.rate_limiter.acquire(wait=True)
+                
+                    headers = {
+                        'Authorization': f'Bearer {self.onenote.access_token}'
+                    }
+                
+                    max_retries = 3
+                    for attempt in range(max_retries):
+                        response = requests.get(image_url, headers=headers, timeout=30)
+                    
+                        # Handle rate limit errors with hardcoded 10-minute wait
+                        if response.status_code == 429:
+                            # Microsoft Graph API image resources require LONG waits
+                            wait_time = 600  # Hardcoded 10 minutes (600 seconds)
+                        
+                            logger.warning(
+                                f"⚠️  Rate limit hit on image download (attempt {attempt + 1}/{max_retries}). "
+                                f"Waiting {wait_time}s (10 minutes) as required by Microsoft Graph API. "
+                                f"Image resource endpoint has very strict limits."
+                            )
+                            self.rate_limiter.record_error(is_rate_limit=True)
+                        
+                            if attempt < max_retries - 1:
+                                import time
+                                logger.info(f"⏰ Pausing image downloads for 10 minutes...")
+                                time.sleep(wait_time)
+                                logger.info(f"⏰ Resuming after 10-minute wait...")
+                                continue
+                            else:
+                                logger.error(
+                                    f"❌ Failed to download image after {max_retries} attempts and "
+                                    f"30 minutes of waiting. Skipping this image to continue sync."
+                                )
+                                return None  # Give up gracefully
+                    
+                        response.raise_for_status()
+                        self.rate_limiter.record_success()
+                        return response.content
+            
+                # Run in thread pool to avoid blocking event loop
+                image_data = await loop.run_in_executor(None, _download)
+                logger.debug(f"Downloaded image: {len(image_data)} bytes")
+                return image_data
+    
+            except requests.exceptions.HTTPError as e:
+                if hasattr(e, 'response') and e.response and e.response.status_code == 429:
+                    logger.warning(f"Rate limit error downloading image: {image_url}")
+                    self.rate_limiter.record_error(is_rate_limit=True)
+                else:
+                    logger.warning(f"HTTP error downloading image from {image_url}: {str(e)}")
+                return None
+            except Exception as e:
+                logger.warning(f"Error downloading image from {image_url}: {str(e)}")
+                return None
+    
+    
     @staticmethod
     def _extract_images_from_html(html_content: str, page_id: str) -> List[Dict[str, Any]]:
         """
