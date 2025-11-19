@@ -124,10 +124,11 @@ class RateLimiter:
         Args:
             retry_after: Seconds to wait from Retry-After header (if available)
         """
-        wait_time = retry_after if retry_after else 60
+        # Hardcoded 10 minutes (600 seconds) wait on rate limits
+        wait_time = 600
        
         logger.warning(
-            f"Rate limit hit (429). Waiting {wait_time}s as requested by server."
+            f"Rate limit hit (429). Waiting {wait_time}s (10 minutes) - server suggested {retry_after}s."
         )
        
         # Reset tokens to 0 to prevent immediate retry
