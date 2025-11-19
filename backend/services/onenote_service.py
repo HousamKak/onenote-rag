@@ -45,11 +45,11 @@ class OneNoteService:
         """
         self.access_token = access_token
 
-        # Initialize adaptive rate limiter (100 req/min, well below 600 limit)
+        # Initialize adaptive rate limiter (30 req/min, very conservative)
         self.rate_limiter = AdaptiveRateLimiter(
-            requests_per_minute=100,
-            burst_size=10,
-            min_interval_ms=500  # Minimum 500ms between requests
+            requests_per_minute=30,
+            burst_size=5,
+            min_interval_ms=1500  # Minimum 500ms between requests
         )
         self.batch_processor = BatchProcessor(self.rate_limiter)
 
@@ -341,11 +341,16 @@ class OneNoteService:
                         created_date=page.get("createdDateTime"),
                         modified_date=page.get("lastModifiedDateTime"),
                         url=page_url,
+                        tags=[],
+                        has_images=False,
+                        image_count=0,
                     )
  
                     doc = Document(
                         id=page_id,
+                        page_id=page_id,
                         content=content,
+                        html_content=content,
                         metadata=metadata,
                     )
  
