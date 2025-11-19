@@ -286,6 +286,18 @@ if __name__ == "__main__":
         host="0.0.0.0",
         port=8000,
         reload=True,
+        reload_excludes=[
+            "data/*",
+            "storage/*",
+            "chroma_db/*",
+            "*.db",
+            "*.db-journal",
+            "*db-shm",
+            "*db-wal",
+            "*.log",
+            "*.parquet",
+            "*.bin",
+        ],
         log_level="info"
     )
  
