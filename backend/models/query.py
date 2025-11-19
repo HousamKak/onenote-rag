@@ -45,6 +45,7 @@ class ResponseMetadata(BaseModel):
     timestamp: datetime = Field(default_factory=datetime.utcnow, description="Response timestamp")
     model_name: str = Field(..., description="LLM model used")
     retrieval_k: int = Field(..., description="Number of documents retrieved")
+    filter_summary: Optional[Dict[str, Any]] = Field(None, description="Context filter summary if filtering was applied")
 
 
 class ImageReference(BaseModel):
