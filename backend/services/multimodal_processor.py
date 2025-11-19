@@ -1,6 +1,6 @@
 """
 Multimodal document processor for handling text, metadata, and images together.
-
+ 
 This maintains DOCUMENT INTEGRITY - everything is linked by page_id.
 """
 import logging
@@ -10,18 +10,18 @@ from typing import List, Dict, Optional, Tuple
 from bs4 import BeautifulSoup
 from langchain_core.documents import Document as LangChainDocument
 import httpx
-
+ 
 from models.document import Document
 from .document_processor import DocumentProcessor
 from .vision_service import GPT4VisionService
-
+ 
 logger = logging.getLogger(__name__)
-
-
+ 
+ 
 class MultimodalDocumentProcessor(DocumentProcessor):
     """
     Enhanced document processor with multimodal capabilities.
-
+ 
     Handles text, metadata, and images in a unified indexing approach where:
     - Text content is extracted
     - Metadata is enriched (prepended as context)
@@ -29,10 +29,11 @@ class MultimodalDocumentProcessor(DocumentProcessor):
     - Everything is combined into unified chunks
     - page_id links all components together
     """
-
+ 
     def __init__(
         self,
         vision_service: GPT4VisionService,
+        image_storage = None,  # ImageStorageService - optional for using cached images
         chunk_size: int = 1000,
         chunk_overlap: int = 200,
         max_images_per_document: int = 10,
@@ -40,9 +41,10 @@ class MultimodalDocumentProcessor(DocumentProcessor):
     ):
         """
         Initialize multimodal document processor.
-
+ 
         Args:
             vision_service: GPT-4o Vision service instance
+            image_storage: Optional image storage service for reading cached images
             chunk_size: Size of text chunks
             chunk_overlap: Overlap between chunks
             max_images_per_document: Maximum images to process per document
@@ -50,67 +52,73 @@ class MultimodalDocumentProcessor(DocumentProcessor):
         """
         super().__init__(chunk_size, chunk_overlap)
         self.vision_service = vision_service
+        self.image_storage = image_storage
         self.max_images_per_document = max_images_per_document
         self.access_token = access_token
-
+ 
         # HTTP client for downloading images
         self.http_client = httpx.AsyncClient(
             timeout=30.0,
             verify=False,
             headers={"Authorization": f"Bearer {access_token}"} if access_token else {}
         )
-
+ 
         logger.info("Initialized MultimodalDocumentProcessor with image support")
-
+ 
     def extract_image_urls_from_html(self, html_content: str) -> List[Dict[str, str]]:
         """
         Extract image URLs and metadata from OneNote HTML content.
-
+ 
         OneNote images are typically in the format:
         <img src="https://graph.microsoft.com/v1.0/users/.../onenote/resources/{id}/$value" />
-
+ 
         Args:
             html_content: HTML content from OneNote
-
+ 
         Returns:
             List of dictionaries with image info (url, alt_text, etc.)
         """
         try:
             soup = BeautifulSoup(html_content, "html.parser")
             images = []
-
+ 
             for img in soup.find_all('img'):
                 src = img.get('src', '')
                 alt = img.get('alt', '')
                 data_fullres = img.get('data-fullres-src', '')  # OneNote may have full-res versions
-
+ 
                 # Use full-res if available, otherwise use src
                 image_url = data_fullres if data_fullres else src
-
+ 
                 if image_url:
                     images.append({
                         "url": image_url,
                         "alt_text": alt,
                         "position": len(images)  # Track position in document
                     })
-
+ 
             logger.debug(f"Extracted {len(images)} image URLs from HTML")
             return images[:self.max_images_per_document]  # Limit number of images
-
+ 
         except Exception as e:
             logger.error(f"Error extracting image URLs: {str(e)}")
             return []
-
+ 
     async def download_image(self, image_url: str) -> Optional[bytes]:
         """
         Download image from URL.
-
+       
+        ⚠️ WARNING: This should NOT be called during indexing!
+        Images should be cached during sync and read from storage.
+        This is only a fallback for legacy/testing purposes.
+ 
         Args:
             image_url: URL of the image
-
+ 
         Returns:
             Image data as bytes, or None if download fails
         """
+        logger.warning(f"⚠️ UNEXPECTED: download_image() called for {image_url[:50]}... - Images should be cached!")
         try:
             # Handle data URLs (base64 encoded images)
             if image_url.startswith('data:image'):
@@ -119,50 +127,77 @@ class MultimodalDocumentProcessor(DocumentProcessor):
                 if match:
                     base64_data = match.group(1)
                     return base64.b64decode(base64_data)
-
+ 
             # Download from URL
             response = await self.http_client.get(image_url)
             response.raise_for_status()
             return response.content
-
+ 
         except Exception as e:
             logger.error(f"Error downloading image from {image_url}: {str(e)}")
             return None
-
+ 
     async def extract_and_analyze_images(
         self,
         html_content: str,
+        page_id: Optional[str] = None,
         document_context: Optional[str] = None
     ) -> List[Dict[str, any]]:
         """
         Extract images from HTML and analyze them with GPT-4o Vision.
-
+       
+        If image_storage and page_id are provided, reads from local cache.
+        Otherwise downloads from OneNote URLs.
+ 
         Args:
             html_content: HTML content from OneNote
+            page_id: Optional page ID to read cached images
             document_context: Optional context about the document
-
+ 
         Returns:
             List of image analysis results
         """
         # Extract image URLs
         image_infos = self.extract_image_urls_from_html(html_content)
-
+ 
         if not image_infos:
-            logger.debug("No images found in document")
+            logger.debug("No images found in document HTML")
             return []
-
-        logger.info(f"Processing {len(image_infos)} images")
-
+ 
+        logger.info(f"Processing {len(image_infos)} images from document")
+ 
         # Download and analyze each image
         analyzed_images = []
         for i, img_info in enumerate(image_infos):
             try:
-                # Download image
-                image_data = await self.download_image(img_info["url"])
+                # Try to read from cache first if available
+                image_data = None
+                if self.image_storage and page_id:
+                    try:
+                        image_path = self.image_storage.generate_image_path(page_id, i)
+                        if await self.image_storage.exists(image_path):
+                            image_data = await self.image_storage.download(image_path)
+                            logger.debug(f"✅ Read image {i+1} from cache: {image_path}")
+                        else:
+                            logger.warning(f"⚠️  Image {i+1} not found in cache at {image_path}")
+                    except Exception as cache_error:
+                        logger.error(f"❌ Failed to read from cache: {cache_error}")
+               
+                # DO NOT FALLBACK TO ONEAPI - Images must be cached during sync!
+                # If we don't have image_storage or page_id, we can't process images
                 if not image_data:
-                    logger.warning(f"Failed to download image {i+1}")
+                    if not self.image_storage:
+                        logger.warning(f"⚠️  Image storage not configured, skipping image {i+1}")
+                    elif not page_id:
+                        logger.warning(f"⚠️  No page_id provided, cannot read cached image {i+1}")
+                    else:
+                        logger.warning(f"⚠️  Image {i+1} not available in cache, skipping. Ensure sync completed successfully.")
                     continue
-
+                   
+                if not image_data:
+                    logger.warning(f"Failed to get image {i+1}")
+                    continue
+ 
                 # Analyze with GPT-4o Vision
                 context_str = f"{document_context} - Image {i+1}" if document_context else None
                 image_context = await self.vision_service.create_image_context_for_indexing(
@@ -170,7 +205,7 @@ class MultimodalDocumentProcessor(DocumentProcessor):
                     image_index=i,
                     document_context=context_str
                 )
-
+ 
                 analyzed_images.append({
                     "position": i,
                     "url": img_info["url"],
@@ -178,16 +213,16 @@ class MultimodalDocumentProcessor(DocumentProcessor):
                     "context": image_context,
                     "data": image_data  # Keep for storage
                 })
-
+ 
                 logger.debug(f"Analyzed image {i+1}/{len(image_infos)}")
-
+ 
             except Exception as e:
                 logger.error(f"Error processing image {i+1}: {str(e)}")
                 continue
-
+ 
         logger.info(f"Successfully analyzed {len(analyzed_images)} images")
         return analyzed_images
-
+ 
     async def chunk_document_multimodal(
         self,
         document: Document,
@@ -196,19 +231,19 @@ class MultimodalDocumentProcessor(DocumentProcessor):
     ) -> Tuple[List[LangChainDocument], List[Dict]]:
         """
         Process and chunk a document with multimodal support (text + metadata + images).
-
+ 
         This creates a unified embedding approach where:
         - Metadata is prepended as context (if enabled)
         - Text content is extracted
         - Images are analyzed and their descriptions are appended
         - Everything is chunked together for semantic search
         - page_id in metadata links everything
-
+ 
         Args:
             document: Document to process
             enrich_with_metadata: If True, prepend metadata context
             include_images: If True, analyze and include images
-
+ 
         Returns:
             Tuple of (chunks, image_data_list)
             - chunks: LangChain Document chunks ready for embedding
@@ -217,39 +252,40 @@ class MultimodalDocumentProcessor(DocumentProcessor):
         # Extract text
         text = self.extract_text_from_html(document.content)
         text = self.clean_text(text)
-
+ 
         if not text:
             logger.warning(f"No text extracted from document {document.id}")
             return ([], [])
-
+ 
         # Build content parts
         content_parts = []
-
+ 
         # 1. Add metadata context
         if enrich_with_metadata:
             metadata_context = self.build_metadata_context(document)
             if metadata_context:
                 content_parts.append(metadata_context)
-
+ 
         # 2. Add text content
         content_parts.append(text)
-
+ 
         # 3. Extract and analyze images
         image_data_list = []
         if include_images:
             try:
                 doc_context = f"{document.metadata.page_title} from {document.metadata.notebook_name}"
                 analyzed_images = await self.extract_and_analyze_images(
-                    document.content,
+                    document.html_content,  # Use HTML content to extract <img> tags!
+                    page_id=document.metadata.page_id,  # Pass page_id to use cached images
                     document_context=doc_context
                 )
-
+ 
                 if analyzed_images:
                     content_parts.append("\n\n=== Images in Document ===\n")
                     for img in analyzed_images:
                         content_parts.append(img["context"])
                         content_parts.append("\n")
-
+ 
                         # Store image data for later storage
                         image_data_list.append({
                             "page_id": document.metadata.page_id,
@@ -258,15 +294,15 @@ class MultimodalDocumentProcessor(DocumentProcessor):
                             "data": img["data"],
                             "alt_text": img.get("alt_text", "")
                         })
-
+ 
                     logger.info(f"Added {len(analyzed_images)} image contexts to document {document.id}")
-
+ 
             except Exception as e:
                 logger.error(f"Error processing images for document {document.id}: {str(e)}")
-
+ 
         # Combine all content
         enriched_text = "".join(content_parts)
-
+ 
         # Create metadata - KEY: page_id links everything!
         metadata = {
             "page_id": document.metadata.page_id,  # ← The magic key!
@@ -280,31 +316,31 @@ class MultimodalDocumentProcessor(DocumentProcessor):
             "has_images": len(image_data_list) > 0,
             "image_count": len(image_data_list),
         }
-
+ 
         # Add dates
         if document.metadata.created_date:
             metadata["created_date"] = document.metadata.created_date.isoformat()
         if document.metadata.modified_date:
             metadata["modified_date"] = document.metadata.modified_date.isoformat()
-
+ 
         # Chunk the enriched content
         chunks = self.text_splitter.create_documents(
             texts=[enriched_text],
             metadatas=[metadata]
         )
-
+ 
         # Add chunk indices
         for i, chunk in enumerate(chunks):
             chunk.metadata["chunk_index"] = i
             chunk.metadata["total_chunks"] = len(chunks)
-
+ 
         logger.info(
             f"Created {len(chunks)} multimodal chunks from document {document.id} "
             f"(text + {len(image_data_list)} images)"
         )
-
+ 
         return (chunks, image_data_list)
-
+ 
     async def chunk_documents_multimodal(
         self,
         documents: List[Document],
@@ -313,18 +349,18 @@ class MultimodalDocumentProcessor(DocumentProcessor):
     ) -> Tuple[List[LangChainDocument], List[Dict]]:
         """
         Process and chunk multiple documents with multimodal support.
-
+ 
         Args:
             documents: List of documents to process
             enrich_with_metadata: If True, prepend metadata context
             include_images: If True, analyze and include images
-
+ 
         Returns:
             Tuple of (all_chunks, all_image_data)
         """
         all_chunks = []
         all_image_data = []
-
+ 
         for document in documents:
             chunks, image_data = await self.chunk_document_multimodal(
                 document,
@@ -333,23 +369,24 @@ class MultimodalDocumentProcessor(DocumentProcessor):
             )
             all_chunks.extend(chunks)
             all_image_data.extend(image_data)
-
+ 
         logger.info(
             f"Created {len(all_chunks)} chunks from {len(documents)} documents "
             f"with {len(all_image_data)} images"
         )
-
+ 
         return (all_chunks, all_image_data)
-
+ 
     async def close(self):
         """Close HTTP client and cleanup resources."""
         await self.http_client.aclose()
         logger.debug("Closed MultimodalDocumentProcessor HTTP client")
-
+ 
     async def __aenter__(self):
         """Async context manager entry."""
         return self
-
+ 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         """Async context manager exit."""
         await self.close()
+ 
