@@ -100,7 +100,7 @@ class DocumentCacheService:
         # Upsert to database
         self.db.upsert_document(cached_doc)
 
-        logger.debug(f"Cached document: {document.page_id}")
+        logger.debug(f"Cached document: {document.id}")
 
     def cache_documents_bulk(self, documents: List[Document]) -> int:
         """
@@ -290,7 +290,7 @@ class DocumentCacheService:
             created_date=cached_doc.created_date or datetime.now(),
             modified_date=cached_doc.modified_date,
             author=cached_doc.author or "Unknown",
-            source_url=cached_doc.source_url or "",
+            url=cached_doc.source_url or "",
             tags=cached_doc.tags or [],
             has_images=cached_doc.image_count > 0,
             image_count=cached_doc.image_count
@@ -298,6 +298,7 @@ class DocumentCacheService:
 
         # Create document
         return Document(
+            id=cached_doc.page_id,
             page_id=cached_doc.page_id,
             content=content or "",
             html_content=cached_doc.html_content,
@@ -316,11 +317,9 @@ class DocumentCacheService:
         """
         # Extract plain text from HTML if not already extracted
         plain_text = document.content
-        if not plain_text and document.html_content:
-            plain_text = self._extract_text_from_html(document.html_content)
 
         return CachedDocument(
-            page_id=document.page_id,
+            page_id=document.id,
             html_content=document.html_content or "",
             plain_text=plain_text,
             notebook_id=getattr(document.metadata, 'notebook_id', ''),
@@ -331,7 +330,7 @@ class DocumentCacheService:
             author=document.metadata.author,
             created_date=document.metadata.created_date,
             modified_date=document.metadata.modified_date,
-            source_url=document.metadata.source_url,
+            source_url=document.metadata.url,
             tags=document.metadata.tags,
             last_synced_at=datetime.now(),
             sync_version=1,
