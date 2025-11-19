@@ -50,6 +50,18 @@ class RerankingConfig(BaseModel):
     top_n: int = Field(default=3, ge=1, le=10, description="Number of documents to keep after re-ranking")
 
 
+class ContextFilterConfig(BaseModel):
+    """Configuration for intelligent context filtering."""
+    enabled: bool = Field(default=True, description="Enable context filtering based")
+    model_name: str = Field(default="gpt-4o-mini", description="LLM model for context filtering")
+    strictness: Literal["lenient", "balanced", "strict"] = Field(
+        default="balanced",
+        description="lenient (inclusive), balanced, strict (selective)"
+    )
+    max_relevant_chunks: int = Field(default=10, ge=5, le=20, description="Max text chunks to keep")
+    max_relevant_images: int = Field(default=5, ge=0, le=10, description="Max images to keep")
+    
+    
 class RAGConfig(BaseModel):
     """Complete RAG configuration with all techniques."""
 
@@ -67,7 +79,8 @@ class RAGConfig(BaseModel):
     step_back: StepBackConfig = Field(default_factory=StepBackConfig)
     hyde: HyDEConfig = Field(default_factory=HyDEConfig)
     reranking: RerankingConfig = Field(default_factory=RerankingConfig)
-
+    context_filter: ContextFilterConfig = Field(default_factory=ContextFilterConfig)
+    
     model_config = {
         "protected_namespaces": (),
         "json_schema_extra": {
