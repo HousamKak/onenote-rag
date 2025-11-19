@@ -675,7 +675,7 @@ class SyncOrchestrator:
                 downloaded_images.append({
                     'data': None,  # No need to re-download
                     'alt_text': existing_img.alt_text,
-                    'resource_id': existing_img.graph_resource_id
+                    'resource_id': existing_img.graph_resource_id,
                     'cached': True
                 })
         else:
