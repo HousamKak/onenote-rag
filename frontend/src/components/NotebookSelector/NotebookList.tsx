@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Notebook } from '../../types';
+import type { Notebook } from '../../types';
 import { NotebookCard } from './NotebookCard';
 
 interface NotebookListProps {

@@ -176,6 +176,17 @@ export interface Page {
   contentUrl?: string;
 }
 
+export interface IndexedPage {
+  page_id: string;
+  page_title: string;
+  section_name: string;
+  notebook_name: string;
+  modified_date?: string;
+  created_date?: string;
+  chunk_count: number;
+  url?: string;
+}
+
 export interface SyncHistory {
   timestamp: Date;
   status: 'success' | 'error';

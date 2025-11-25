@@ -1,5 +1,5 @@
 import React from 'react';
-import { Notebook } from '../../types';
+import type { Notebook } from '../../types';
 
 interface NotebookCardProps {
   notebook: Notebook;

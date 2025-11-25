@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Notebook } from '../../types';
+import type { Notebook } from '../../types';
 import { notebookApi } from '../../api/client';
 import { NotebookList } from './NotebookList';
 
