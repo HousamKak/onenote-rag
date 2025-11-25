@@ -14,11 +14,13 @@ import requests
 
 from models.document import Document, DocumentMetadata
 from models.document_cache import SyncResult, SyncJob, SyncHistory, SyncState
+from models.notebook import Notebook
 from services.onenote_service import OneNoteService
 from services.document_cache import DocumentCacheService
 from services.document_cache_db import DocumentCacheDB
 from services.image_storage import ImageStorageService
 from services.rate_limiter import AdaptiveRateLimiter
+from services.notebook_db import NotebookDB
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +35,8 @@ class SyncOrchestrator:
         onenote_service: OneNoteService,
         document_cache: DocumentCacheService,
         image_storage: ImageStorageService,
-        cache_db: DocumentCacheDB
+        cache_db: DocumentCacheDB,
+        notebook_db: Optional[NotebookDB] = None
     ):
         """
         Initialize sync orchestrator.
@@ -43,11 +46,13 @@ class SyncOrchestrator:
             document_cache: Document cache service
             image_storage: Image storage service
             cache_db: Direct database access for sync state
+            notebook_db: Notebook database for selection management (optional)
         """
         self.onenote = onenote_service
         self.cache = document_cache
         self.image_storage = image_storage
         self.cache_db = cache_db
+        self.notebook_db = notebook_db
 
         # Use the rate limiter from OneNoteService
         self.rate_limiter = onenote_service.rate_limiter
@@ -108,33 +113,40 @@ class SyncOrchestrator:
             # Update sync state
             self._update_sync_state_status("syncing")
 
-            # Step 1: Fetch all notebooks
-            logger.info("Fetching notebooks...")
-            notebooks = await self._fetch_with_rate_limit(
-                self.onenote.list_notebooks
-            )
-            api_calls += 1
+            # Step 1: Get notebooks to sync
+            notebooks_to_sync = await self._get_notebooks_to_sync(notebook_ids, user_id)
 
-            if notebook_ids:
-                notebooks = [nb for nb in notebooks if nb['id'] in notebook_ids]
+            if not notebooks_to_sync:
+                logger.warning("No notebooks selected for sync")
+                return self._create_sync_result(
+                    job_id, start_time, 0, 0, 0, 0, 0, api_calls, errors, error_details, "completed"
+                )
 
-            logger.info(f"Found {len(notebooks)} notebooks")
+            logger.info(f"Syncing {len(notebooks_to_sync)} notebook(s)")
 
             # Step 2: For each notebook, get sections and pages
-            for notebook in notebooks:
+            for notebook_obj in notebooks_to_sync:
                 if self._should_stop():
                     logger.info("Sync cancelled or paused")
                     break
 
-                notebook_id = notebook['id']
-                notebook_name = notebook.get('displayName', 'Unknown')
+                notebook_id = notebook_obj.id
+                notebook_name = notebook_obj.display_name
+                site_id = notebook_obj.site_id
 
-                logger.info(f"Processing notebook: {notebook_name}")
+                logger.info(f"Processing notebook: {notebook_name} (shared={notebook_obj.is_shared})")
+
+                # Update notebook sync status
+                if self.notebook_db and user_id:
+                    self.notebook_db.update_sync_status(
+                        notebook_id, user_id, "syncing", None, None, None
+                    )
 
                 try:
-                    # Get sections
+                    # Get sections using site-scoped endpoint
                     sections = await self._fetch_with_rate_limit(
-                        self.onenote.list_sections,
+                        self.onenote.list_sections_site_scoped,
+                        site_id,
                         notebook_id
                     )
                     api_calls += 1
@@ -150,9 +162,10 @@ class SyncOrchestrator:
                         logger.info(f"  Processing section: {section_name}")
 
                         try:
-                            # Get pages in section (with pagination support)
+                            # Get pages in section using site-scoped endpoint
                             pages = await self._fetch_with_rate_limit(
-                                self.onenote.list_pages,
+                                self.onenote.list_pages_site_scoped,
+                                site_id,
                                 section_id
                             )
                             api_calls += 1
@@ -170,7 +183,8 @@ class SyncOrchestrator:
                                         notebook_id,
                                         notebook_name,
                                         section_id,
-                                        section_name
+                                        section_name,
+                                        site_id=site_id  # Pass site_id for site-scoped content fetching
                                     )
 
                                     pages_fetched += 1
@@ -608,7 +622,8 @@ class SyncOrchestrator:
         notebook_id: str,
         notebook_name: str,
         section_id: str,
-        section_name: str
+        section_name: str,
+        site_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """
         Sync a single page from Graph API to cache.
@@ -644,11 +659,19 @@ class SyncOrchestrator:
                 }
                 
                 
-        # Fetch page content
-        html_content = await self._fetch_with_rate_limit(
-            self.onenote.get_page_content,
-            page_id
-        )
+        # Fetch page content using site-scoped endpoint if site_id provided
+        if site_id:
+            html_content = await self._fetch_with_rate_limit(
+                self.onenote.get_page_content_site_scoped,
+                site_id,
+                page_id
+            )
+        else:
+            # Fall back to user-scoped endpoint for backward compatibility
+            html_content = await self._fetch_with_rate_limit(
+                self.onenote.get_page_content,
+                page_id
+            )
 
         if not html_content:
             logger.warning(f"Failed to fetch content for page {page_id}")
@@ -982,6 +1005,66 @@ class SyncOrchestrator:
             logger.warning(f"Error extracting images: {e}")
 
         return images
+
+    async def _get_notebooks_to_sync(
+        self,
+        notebook_ids: Optional[List[str]],
+        user_id: Optional[str]
+    ) -> List[Notebook]:
+        """
+        Get notebooks to sync based on user selection.
+
+        Priority:
+        1. If notebook_ids specified, use those (from NotebookDB if available)
+        2. Otherwise, get all selected notebooks from NotebookDB for user
+        3. Fall back to all notebooks from API (legacy behavior)
+
+        Args:
+            notebook_ids: Specific notebook IDs to sync (None = use selection)
+            user_id: User ID for notebook selection
+
+        Returns:
+            List of Notebook objects to sync
+        """
+        # If notebook_db not available, fall back to legacy API-based sync
+        if not self.notebook_db or not user_id:
+            logger.warning("NotebookDB or user_id not available, falling back to API-based notebook discovery")
+            # Fetch from API (legacy behavior)
+            notebooks_api = await self._fetch_with_rate_limit(
+                self.onenote.list_notebooks
+            )
+
+            # Convert to Notebook objects (without site_id - will use user-scoped endpoints)
+            notebook_objects = []
+            for nb in notebooks_api:
+                if not notebook_ids or nb['id'] in notebook_ids:
+                    # Create minimal Notebook object for backward compatibility
+                    notebook_objects.append(Notebook(
+                        id=nb['id'],
+                        user_id=user_id or "unknown",
+                        display_name=nb.get('displayName', 'Unknown'),
+                        site_id="",  # Empty site_id will trigger fallback to user-scoped endpoints
+                        is_shared=False,
+                        is_selected=True
+                    ))
+            return notebook_objects
+
+        # Use NotebookDB to get selected notebooks
+        if notebook_ids:
+            # Get specific notebooks by ID
+            notebooks = []
+            for nb_id in notebook_ids:
+                nb = self.notebook_db.get_notebook(nb_id, user_id)
+                if nb:
+                    notebooks.append(nb)
+                else:
+                    logger.warning(f"Notebook {nb_id} not found in database for user {user_id}")
+        else:
+            # Get all selected notebooks for user
+            notebooks = self.notebook_db.get_notebooks_for_user(user_id, selected_only=True)
+
+        logger.info(f"Found {len(notebooks)} notebooks to sync for user {user_id}")
+        return notebooks
 
     @staticmethod
     def _parse_datetime(value: Any) -> Optional[datetime]:

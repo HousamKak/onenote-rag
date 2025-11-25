@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Save, AlertCircle, CheckCircle2, Eye, EyeOff, ChevronDown, ChevronUp } from 'lucide-react';
+import { Save, AlertCircle, CheckCircle2, Eye, EyeOff, ChevronDown, ChevronUp, BookOpen } from 'lucide-react';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
+import { NotebookSelector } from '../components/NotebookSelector';
 
 interface Setting {
   key: string;
@@ -24,6 +25,7 @@ export default function SettingsManagementPage() {
   const [testingConnection, setTestingConnection] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [connectionStatus, setConnectionStatus] = useState<{ status: string; message: string } | null>(null);
+  const [showNotebookSelector, setShowNotebookSelector] = useState(false);
 
   useEffect(() => {
     fetchSettings();
@@ -514,6 +516,36 @@ export default function SettingsManagementPage() {
           </div>
         </div>
 
+        {/* Notebook Management Section */}
+        <div className="mb-6">
+          <h2 className={theme === 'claude'
+            ? 'text-xl font-semibold text-claude-text mb-4'
+            : 'text-2xl font-black mb-4'
+          }>
+            📚 Notebook Management
+          </h2>
+
+          <div className={theme === 'claude'
+            ? 'p-4 border border-claude-border rounded-lg bg-white'
+            : 'p-4 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+          }>
+            <p className={theme === 'claude' ? 'text-sm text-claude-text-secondary mb-4' : 'text-sm mb-4'}>
+              Select which OneNote notebooks (owned and shared) to include in your RAG system.
+            </p>
+
+            <button
+              onClick={() => setShowNotebookSelector(true)}
+              className={theme === 'claude'
+                ? 'px-4 py-2 bg-claude-primary text-white rounded-lg font-medium hover:bg-claude-primary-hover transition-all flex items-center gap-2'
+                : 'px-4 py-2 bg-purple-400 border-2 border-black font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-purple-500 active:shadow-none active:translate-x-1 active:translate-y-1 transition-all flex items-center gap-2'
+              }
+            >
+              <BookOpen className="w-5 h-5" />
+              Manage Notebooks
+            </button>
+          </div>
+        </div>
+
         {/* Save All Button */}
         <div className="flex justify-end mb-6">
           <button
@@ -546,6 +578,20 @@ export default function SettingsManagementPage() {
           </ul>
         </div>
       </div>
+
+      {/* Notebook Selector Dialog */}
+      {showNotebookSelector && (
+        <NotebookSelector
+          onClose={() => setShowNotebookSelector(false)}
+          onNotebooksSelected={async (notebookIds) => {
+            setMessage({
+              type: 'success',
+              text: `Successfully selected ${notebookIds.length} notebook(s). You can now sync them.`,
+            });
+            setTimeout(() => setMessage(null), 5000);
+          }}
+        />
+      )}
     </div>
   );
 }

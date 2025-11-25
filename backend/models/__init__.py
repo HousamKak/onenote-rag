@@ -16,6 +16,13 @@ from .settings import (
     SettingUpdate,
     SettingResponse,
 )
+from .notebook import (
+    Notebook,
+    NotebookCandidate,
+    NormalizedNotebook,
+    NotebookSelectionRequest,
+    NotebookStatus,
+)
 
 __all__ = [
     "Document",
@@ -37,4 +44,9 @@ __all__ = [
     "SettingCreate",
     "SettingUpdate",
     "SettingResponse",
+    "Notebook",
+    "NotebookCandidate",
+    "NormalizedNotebook",
+    "NotebookSelectionRequest",
+    "NotebookStatus",
 ]

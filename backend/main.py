@@ -26,6 +26,7 @@ from services.document_cache_db import DocumentCacheDB
 from middleware.auth import initialize_auth
 import api.routes as routes
 import api.sync_routes as sync_routes
+import api.notebook_routes as notebook_routes
  
 # Configure logging
 logging.basicConfig(
@@ -228,6 +229,25 @@ async def lifespan(app: FastAPI):
     logger.info("✅ Document cache and sync system initialized")
     logger.info("Note: Sync is user-triggered. Use /api/sync/* endpoints after login.")
 
+    # =========================================================================
+    # Initialize Notebook Management System
+    # =========================================================================
+    logger.info("Initializing notebook management system...")
+
+    # Initialize notebook database
+    from services.notebook_db import NotebookDB
+    notebook_db_path = "./data/notebooks.db"
+    os.makedirs(os.path.dirname(notebook_db_path), exist_ok=True)
+
+    notebook_db = NotebookDB(db_path=notebook_db_path)
+    logger.info(f"Notebook database initialized at: {notebook_db_path}")
+
+    # Set notebook database for API routes (both notebook and sync routes need it)
+    notebook_routes.set_notebook_db(notebook_db)
+    routes.notebook_db = notebook_db
+
+    logger.info("✅ Notebook management system initialized")
+
     logger.info("✅ Application startup complete! Server is ready to accept requests.")
 
     # Sync status tracking (for backward compatibility with frontend)
@@ -265,6 +285,9 @@ app.include_router(routes.router, prefix="/api")
 
 # Include sync routes
 app.include_router(sync_routes.router)
+
+# Include notebook routes
+app.include_router(notebook_routes.router)
  
  
 @app.get("/")

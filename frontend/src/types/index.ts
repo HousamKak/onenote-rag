@@ -131,6 +131,33 @@ export interface Notebook {
   displayName: string;
   createdDateTime?: string;
   lastModifiedDateTime?: string;
+  siteId?: string;
+  isShared?: boolean;
+  userRole?: string;
+  sharedBy?: string;
+  webUrl?: string;
+  isSelected?: boolean;
+}
+
+export interface NotebookDiscoveryResponse {
+  notebooks: Notebook[];
+  total: number;
+  by_source: {
+    owned: number;
+    recent: number;
+    shared: number;
+  };
+}
+
+export interface NotebookStatus {
+  id: string;
+  displayName: string;
+  isSelected: boolean;
+  syncStatus: 'never_synced' | 'syncing' | 'completed' | 'error';
+  lastSyncedAt: string | null;
+  pageCount: number;
+  sectionCount: number;
+  errorMessage: string | null;
 }
 
 export interface Section {

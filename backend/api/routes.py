@@ -53,6 +53,9 @@ image_storage: Optional[Any] = None  # ImageStorageService
 document_cache: Optional[Any] = None  # DocumentCacheService
 cache_db: Optional[Any] = None  # DocumentCacheDB
 
+# Notebook management services
+notebook_db: Optional[Any] = None  # NotebookDB
+
 # Startup sync status
 sync_status: Dict[str, Any] = {
     "in_progress": False,
@@ -152,12 +155,13 @@ def create_sync_orchestrator_for_user(user: UserContext):
     # Create OneNoteService with user's token
     user_onenote_service = OneNoteService(access_token=user.access_token)
 
-    # Create SyncOrchestrator
+    # Create SyncOrchestrator with notebook_db for selection management
     orchestrator = SyncOrchestrator(
         onenote_service=user_onenote_service,
         document_cache=document_cache,
         image_storage=image_storage,
-        cache_db=cache_db
+        cache_db=cache_db,
+        notebook_db=notebook_db
     )
 
     return orchestrator

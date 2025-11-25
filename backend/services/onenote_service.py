@@ -362,7 +362,7 @@ class OneNoteService:
     def get_rate_limiter_stats(self) -> Dict[str, Any]:
         """
         Get rate limiter statistics for monitoring and debugging.
-       
+
         Returns:
             Dictionary with statistics including:
             - current_rate: Current requests per minute
@@ -375,4 +375,143 @@ class OneNoteService:
         stats = self.rate_limiter.get_statistics()
         stats['current_rate'] = self.rate_limiter.requests_per_minute
         return stats
- 
+
+    # =========================================================================
+    # SITE-SCOPED ENDPOINTS (for shared notebooks support)
+    # =========================================================================
+
+    def list_sections_site_scoped(self, site_id: str, notebook_id: str) -> List[Dict[str, Any]]:
+        """
+        List all sections in a notebook using site-scoped endpoint.
+
+        This method enables access to shared notebooks by using the site-scoped
+        API endpoint instead of the user-scoped /me endpoint.
+
+        Args:
+            site_id: SharePoint site ID (from getNotebookFromWebUrl)
+            notebook_id: Notebook ID
+
+        Returns:
+            List of section dictionaries
+        """
+        if not self.access_token:
+            return []
+
+        url = f"{self.GRAPH_API_ENDPOINT}/sites/{site_id}/onenote/notebooks/{notebook_id}/sections"
+        data = self._make_request_with_retry(url)
+
+        if data:
+            sections = data.get("value", [])
+            logger.info(f"Found {len(sections)} sections in notebook {notebook_id} (site-scoped)")
+            return sections
+
+        return []
+
+    def list_pages_site_scoped(self, site_id: str, section_id: str) -> List[Dict[str, Any]]:
+        """
+        List all pages in a section using site-scoped endpoint.
+
+        Args:
+            site_id: SharePoint site ID
+            section_id: Section ID
+
+        Returns:
+            List of page dictionaries (with pagination support)
+        """
+        if not self.access_token:
+            return []
+
+        all_pages = []
+        url = f"{self.GRAPH_API_ENDPOINT}/sites/{site_id}/onenote/sections/{section_id}/pages"
+        page_batch = 1
+
+        # Fetch all pages using pagination with rate limiting
+        while url:
+            logger.debug(f"Fetching page batch {page_batch} for section {section_id} (site-scoped)")
+
+            data = self._make_request_with_retry(url)
+
+            if not data:
+                logger.warning(f"Failed to fetch page batch {page_batch}, returning {len(all_pages)} pages collected so far")
+                break
+
+            pages = data.get("value", [])
+            all_pages.extend(pages)
+            logger.debug(f"Batch {page_batch}: Retrieved {len(pages)} pages (total: {len(all_pages)})")
+
+            # Check for next page
+            url = data.get("@odata.nextLink")
+            if url:
+                page_batch += 1
+
+        logger.info(f"Found {len(all_pages)} total pages in section {section_id} across {page_batch} batches (site-scoped)")
+        return all_pages
+
+    def get_page_content_site_scoped(self, site_id: str, page_id: str) -> Optional[str]:
+        """
+        Get the HTML content of a OneNote page using site-scoped endpoint.
+
+        Args:
+            site_id: SharePoint site ID
+            page_id: Page ID
+
+        Returns:
+            HTML content as string, or None if error
+        """
+        if not self.access_token:
+            return None
+
+        max_retries = 3
+        retry_delay = 2
+
+        for attempt in range(max_retries):
+            try:
+                # Acquire rate limit token (adaptive)
+                self.rate_limiter.acquire(wait=True)
+
+                url = f"{self.GRAPH_API_ENDPOINT}/sites/{site_id}/onenote/pages/{page_id}/content"
+                response = self.session.get(url, timeout=30)
+
+                # Handle rate limiting (429)
+                if response.status_code == 429:
+                    retry_after = response.headers.get('Retry-After')
+                    try:
+                        wait_time = int(retry_after) if retry_after else None
+                    except ValueError:
+                        wait_time = None
+
+                    self.rate_limiter.handle_rate_limit_error(retry_after=wait_time)
+                    self.rate_limiter.record_error(is_rate_limit=True)
+
+                    logger.warning(
+                        f"Rate limit hit fetching page {page_id} (site-scoped). "
+                        f"Adapting rate to {self.rate_limiter.requests_per_minute:.1f} req/min..."
+                    )
+                    continue
+
+                response.raise_for_status()
+                content = response.text
+
+                # Record success
+                self.rate_limiter.record_success()
+
+                logger.debug(f"Retrieved content for page {page_id} ({len(content)} chars) (site-scoped)")
+                return content
+
+            except requests.RequestException as e:
+                if attempt < max_retries - 1:
+                    if hasattr(e, 'response') and e.response is not None and e.response.status_code >= 500:
+                        self.rate_limiter.record_error(is_rate_limit=False)
+                        logger.warning(
+                            f"Server error fetching content (attempt {attempt + 1}/{max_retries}): {str(e)}. "
+                            f"Retrying in {retry_delay}s..."
+                        )
+                        time.sleep(retry_delay)
+                        retry_delay *= 2
+                        continue
+
+                logger.error(f"Error fetching page content (site-scoped): {str(e)}")
+                self.rate_limiter.record_error(is_rate_limit=False)
+                return None
+
+        return None

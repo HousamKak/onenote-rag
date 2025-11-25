@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { RAGConfig, QueryRequest, QueryResponse, IndexStats, IndexedPage, Notebook, Section, Page } from '../types/index';
+import type { RAGConfig, QueryRequest, QueryResponse, IndexStats, IndexedPage, Notebook, Section, Page, NotebookDiscoveryResponse, NotebookStatus } from '../types/index';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
@@ -129,6 +129,13 @@ export const settingsApi = {
   update: (key: string, value: string) => api.put(`/settings/${key}`, { value }),
 };
 
+// Notebook management endpoints
+export const notebookApi = {
+  discover: () => api.get<NotebookDiscoveryResponse>('/notebooks/discover'),
+  select: (notebookIds: string[]) => api.post('/notebooks/select', { notebook_ids: notebookIds }),
+  getStatus: () => api.get<{ notebooks: NotebookStatus[] }>('/notebooks/status'),
+  list: (selectedOnly: boolean = false) => api.get<{ notebooks: Notebook[] }>(`/notebooks/list?selected_only=${selectedOnly}`),
+};
+
 // Health check
 export const healthCheck = () => api.get('/health');
- 
