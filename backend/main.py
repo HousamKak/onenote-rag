@@ -93,16 +93,16 @@ async def lifespan(app: FastAPI):
     routes.settings_service = SettingsService(db_service, encryption_service)
     set_settings_service(routes.settings_service)
     logger.info("Settings service initialized")
-    
+   
     # Get dynamic settings (from database or .env)
     dynamic_settings = get_dynamic_settings()
-    
+   
     # Update environment variables with database settings if available
     if dynamic_settings.get("openai_api_key"):
         os.environ['OPENAI_API_KEY'] = dynamic_settings["openai_api_key"]
     if dynamic_settings.get("langchain_api_key"):
         os.environ['LANGCHAIN_API_KEY'] = dynamic_settings["langchain_api_key"]
-    
+   
     logger.info("Configuration loaded from database (with .env fallback)")
  
     # Initialize services
@@ -113,24 +113,24 @@ async def lifespan(app: FastAPI):
         client_id = dynamic_settings.get("microsoft_client_id", settings.microsoft_client_id)
         client_secret = dynamic_settings.get("microsoft_client_secret", settings.microsoft_client_secret)
         tenant_id = dynamic_settings.get("microsoft_tenant_id", settings.microsoft_tenant_id)
-
+ 
         routes.auth_service = AuthService(
             client_id=client_id,
             tenant_id=tenant_id,
             client_secret=client_secret,
         )
         logger.info("Auth service initialized for user-delegated OAuth")
-
+ 
         routes.token_store = TokenStore()
         logger.info("Token store initialized (in-memory)")
-
+ 
         # Initialize auth middleware
         initialize_auth(routes.auth_service, routes.token_store)
         logger.info("Authentication middleware initialized")
-
+ 
         # Note: OneNote service is now created per-user, not globally
         routes.onenote_service = None  # Keep for backward compatibility
-
+ 
     except Exception as e:
         logger.warning(f"Authentication service initialization failed: {str(e)}")
         logger.warning("User authentication will not be available")
@@ -148,7 +148,7 @@ async def lifespan(app: FastAPI):
     multimodal_handler = None
     try:
         openai_key = dynamic_settings.get("openai_api_key", settings.openai_api_key)
-
+ 
         if openai_key:
             # Initialize vision service
             vision_service = GPT4VisionService(
@@ -158,25 +158,25 @@ async def lifespan(app: FastAPI):
                 temperature=0.0
             )
             logger.info("Vision service initialized")
-
+ 
             # Initialize image storage
             base_dir = os.path.dirname(os.path.dirname(__file__))  # Project root
             storage_path = os.path.join(base_dir, "storage", "images")
             os.makedirs(storage_path, exist_ok=True)
-
+ 
             image_storage = ImageStorageService(
                 storage_type="local",
                 base_path=storage_path
             )
             logger.info(f"Image storage initialized at: {storage_path}")
-
+ 
             # Initialize multimodal query handler (for queries)
             multimodal_handler = MultimodalQueryHandler(
                 vision_service=vision_service,
                 image_storage=image_storage
             )
             logger.info("Multimodal query handler initialized")
-
+ 
             # Expose multimodal services to routes
             # Note: MultimodalDocumentProcessor is created per-request with user's token
             routes.vision_service = vision_service
@@ -188,7 +188,7 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning(f"Failed to initialize multimodal services: {str(e)}")
         logger.warning("Continuing with text-only mode")
-
+ 
     # Vector store
     os.makedirs(settings.vector_db_path, exist_ok=True)
     routes.vector_store = VectorStoreService(
@@ -196,60 +196,96 @@ async def lifespan(app: FastAPI):
         embedding_provider=dynamic_settings.get("embedding_provider", settings.embedding_provider),
     )
     logger.info("Vector store initialized")
-
+ 
     # RAG engine with optional multimodal support
     routes.rag_engine = RAGEngine(
         vector_store=routes.vector_store,
         multimodal_handler=multimodal_handler
     )
     logger.info("RAG engine initialized")
-
+ 
     # =========================================================================
     # Initialize Document Cache & Sync System
     # =========================================================================
     logger.info("Initializing document cache and sync system...")
-
+ 
     # Initialize document cache database
     cache_db_path = "./data/document_cache.db"
     os.makedirs(os.path.dirname(cache_db_path), exist_ok=True)
-
+ 
+    # ✅ AUTO-APPLY DATABASE MIGRATIONS
+    try:
+        logger.info("Checking for pending database migrations...")
+        from cli import get_migration_manager
+       
+        migration_manager = get_migration_manager(cache_db_path)
+        pending_count = len(migration_manager.get_pending_migrations())
+       
+        if pending_count > 0:
+            logger.info(f"Found {pending_count} pending migration(s), applying now...")
+            migration_manager.migrate()
+            logger.info("✅ Database migrations applied successfully")
+        else:
+            logger.info("✅ Database is up to date (no pending migrations)")
+    except Exception as e:
+        logger.error(f"❌ Database migration failed: {e}")
+        logger.error("Application startup failed due to migration error")
+        raise  # Fail startup if migrations fail
+ 
     cache_db = DocumentCacheDB(db_path=cache_db_path)
     logger.info(f"Document cache database initialized at: {cache_db_path}")
-
+ 
     # Initialize document cache service
     routes.document_cache = DocumentCacheService(db_path=cache_db_path)
     logger.info("Document cache service initialized")
-
+ 
     # Store cache_db for global access
     routes.cache_db = cache_db
-
+ 
     # Set sync services for API routes
     sync_routes.set_document_cache(routes.document_cache)
-
+ 
     logger.info("✅ Document cache and sync system initialized")
     logger.info("Note: Sync is user-triggered. Use /api/sync/* endpoints after login.")
-
+ 
     # =========================================================================
     # Initialize Notebook Management System
     # =========================================================================
     logger.info("Initializing notebook management system...")
-
+ 
     # Initialize notebook database
     from services.notebook_db import NotebookDB
     notebook_db_path = "./data/notebooks.db"
     os.makedirs(os.path.dirname(notebook_db_path), exist_ok=True)
-
+ 
+    # ✅ AUTO-APPLY NOTEBOOKS DATABASE MIGRATIONS
+    try:
+        logger.info("Checking for pending notebooks database migrations...")
+        notebooks_migration_manager = get_migration_manager(notebook_db_path)
+        notebooks_pending = len(notebooks_migration_manager.get_pending_migrations())
+       
+        if notebooks_pending > 0:
+            logger.info(f"Found {notebooks_pending} pending migration(s) for notebooks.db, applying now...")
+            notebooks_migration_manager.migrate()
+            logger.info("✅ Notebooks database migrations applied successfully")
+        else:
+            logger.info("✅ Notebooks database is up to date")
+    except Exception as e:
+        logger.error(f"❌ Notebooks database migration failed: {e}")
+        logger.error("Application startup failed due to migration error")
+        raise  # Fail startup if migrations fail
+ 
     notebook_db = NotebookDB(db_path=notebook_db_path)
     logger.info(f"Notebook database initialized at: {notebook_db_path}")
-
+ 
     # Set notebook database for API routes (both notebook and sync routes need it)
     notebook_routes.set_notebook_db(notebook_db)
     routes.notebook_db = notebook_db
-
+ 
     logger.info("✅ Notebook management system initialized")
-
+ 
     logger.info("✅ Application startup complete! Server is ready to accept requests.")
-
+ 
     # Sync status tracking (for backward compatibility with frontend)
     routes.sync_status = {
         "in_progress": False,
@@ -282,10 +318,10 @@ app.add_middleware(
  
 # Include routes
 app.include_router(routes.router, prefix="/api")
-
+ 
 # Include sync routes
 app.include_router(sync_routes.router)
-
+ 
 # Include notebook routes
 app.include_router(notebook_routes.router)
  
@@ -323,4 +359,5 @@ if __name__ == "__main__":
         ],
         log_level="info"
     )
+ 
  
