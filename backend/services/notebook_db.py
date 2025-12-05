@@ -1,6 +1,6 @@
 """
 Database service for OneNote notebook management.
-
+ 
 Handles storage and retrieval of notebook metadata including:
 - Discovered notebooks (owned and shared)
 - User notebook preferences (selected/unselected)
@@ -11,132 +11,56 @@ import logging
 from datetime import datetime
 from typing import Optional, List, Dict, Any
 from pathlib import Path
-
+ 
 from models.notebook import Notebook, NotebookStatus
-
+ 
 logger = logging.getLogger(__name__)
-
-
+ 
+ 
 class NotebookDB:
     """Database service for notebook management."""
-
+ 
     def __init__(self, db_path: str = "data/notebooks.db"):
         """
         Initialize notebook database.
-
+ 
         Args:
             db_path: Path to SQLite database file
         """
         self.db_path = db_path
         self._ensure_db_exists()
         logger.info(f"NotebookDB initialized at {db_path}")
-
+ 
     def _ensure_db_exists(self):
-        """Ensure database and schema exist."""
+        """
+        Ensure database file exists.
+       
+        Note: Schema migrations are now handled by the migration system in main.py
+        during application startup. This just ensures the file exists.
+        """
         db_dir = Path(self.db_path).parent
         db_dir.mkdir(parents=True, exist_ok=True)
-
-        # Check if database needs to be initialized
+       
+        # Just ensure the file exists (migrations are handled in main.py)
         if not Path(self.db_path).exists():
-            logger.info("Database does not exist, running migrations...")
-            self._run_migrations()
-        else:
-            logger.info("Database exists, checking schema...")
-            # TODO: Add schema version checking
-
-    def _run_migrations(self):
-        """Run database migrations."""
-        migration_file = Path(__file__).parent.parent / "migrations" / "002_create_notebooks_schema.sql"
-
-        if not migration_file.exists():
-            logger.warning(f"Migration file not found: {migration_file}, creating schema inline...")
-            self._create_schema_inline()
-            return
-
-        logger.info(f"Running migration: {migration_file}")
-
-        with open(migration_file, 'r') as f:
-            migration_sql = f.read()
-
-        conn = self._get_connection()
-        try:
-            conn.executescript(migration_sql)
-            conn.commit()
-            logger.info("Migration completed successfully")
-        except Exception as e:
-            logger.error(f"Migration failed: {e}")
-            raise
-        finally:
+            logger.info("Creating new database file (schema will be created by migrations)")
+            conn = self._get_connection()
             conn.close()
-
-    def _create_schema_inline(self):
-        """Create schema inline if migration file doesn't exist."""
-        schema_sql = """
-        -- Notebooks table
-        CREATE TABLE IF NOT EXISTS notebooks (
-            id TEXT PRIMARY KEY,
-            user_id TEXT NOT NULL,
-            display_name TEXT NOT NULL,
-            created_datetime TIMESTAMP,
-            last_modified_datetime TIMESTAMP,
-
-            -- Shared notebook support
-            site_id TEXT NOT NULL,
-            is_shared BOOLEAN DEFAULT 0,
-            user_role TEXT,
-            shared_by TEXT,
-
-            -- Discovery metadata
-            web_url TEXT,
-            sections_url TEXT,
-
-            -- User preference
-            is_selected BOOLEAN DEFAULT 1,
-
-            -- Sync tracking
-            last_synced_at TIMESTAMP,
-            sync_status TEXT DEFAULT 'never_synced',
-            page_count INTEGER DEFAULT 0,
-            section_count INTEGER DEFAULT 0,
-            error_message TEXT,
-
-            -- Timestamps
-            discovered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        );
-
-        -- Indexes
-        CREATE INDEX IF NOT EXISTS idx_notebooks_user_id ON notebooks(user_id);
-        CREATE INDEX IF NOT EXISTS idx_notebooks_user_selected ON notebooks(user_id, is_selected);
-        CREATE INDEX IF NOT EXISTS idx_notebooks_shared ON notebooks(is_shared);
-        CREATE INDEX IF NOT EXISTS idx_notebooks_sync_status ON notebooks(sync_status);
-        """
-
-        conn = self._get_connection()
-        try:
-            conn.executescript(schema_sql)
-            conn.commit()
-            logger.info("Schema created successfully (inline)")
-        except Exception as e:
-            logger.error(f"Schema creation failed: {e}")
-            raise
-        finally:
-            conn.close()
-
+ 
     def _get_connection(self) -> sqlite3.Connection:
         """Get database connection."""
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row  # Enable column access by name
         return conn
-
+ 
     # =========================================================================
     # NOTEBOOK OPERATIONS
     # =========================================================================
-
+ 
     def upsert_notebook(self, notebook: Notebook) -> None:
         """
         Insert or update a notebook.
-
+ 
         Args:
             notebook: Notebook object to upsert
         """
@@ -176,15 +100,15 @@ class NotebookDB:
             logger.debug(f"Upserted notebook: {notebook.id} ({notebook.display_name})")
         finally:
             conn.close()
-
+ 
     def get_notebook(self, notebook_id: str, user_id: str) -> Optional[Notebook]:
         """
         Get notebook by ID and user.
-
+ 
         Args:
             notebook_id: Notebook ID
             user_id: User ID
-
+ 
         Returns:
             Notebook if found, None otherwise
         """
@@ -195,21 +119,21 @@ class NotebookDB:
                 (notebook_id, user_id)
             )
             row = cursor.fetchone()
-
+ 
             if row:
                 return self._row_to_notebook(row)
             return None
         finally:
             conn.close()
-
+ 
     def get_notebooks_for_user(self, user_id: str, selected_only: bool = False) -> List[Notebook]:
         """
         Get all notebooks for a user.
-
+ 
         Args:
             user_id: User ID
             selected_only: If True, only return selected notebooks
-
+ 
         Returns:
             List of Notebook objects
         """
@@ -225,18 +149,18 @@ class NotebookDB:
                     "SELECT * FROM notebooks WHERE user_id = ? ORDER BY display_name",
                     (user_id,)
                 )
-
+ 
             rows = cursor.fetchall()
             return [self._row_to_notebook(row) for row in rows]
         finally:
             conn.close()
-
+ 
     def update_selection(self, user_id: str, notebook_ids: List[str]) -> None:
         """
         Update which notebooks are selected for sync.
-
+ 
         Deselects all notebooks for the user, then selects the specified ones.
-
+ 
         Args:
             user_id: User ID
             notebook_ids: List of notebook IDs to select
@@ -248,7 +172,7 @@ class NotebookDB:
                 "UPDATE notebooks SET is_selected = 0, updated_at = CURRENT_TIMESTAMP WHERE user_id = ?",
                 (user_id,)
             )
-
+ 
             # Select specified notebooks
             if notebook_ids:
                 placeholders = ','.join('?' * len(notebook_ids))
@@ -256,12 +180,12 @@ class NotebookDB:
                     f"UPDATE notebooks SET is_selected = 1, updated_at = CURRENT_TIMESTAMP WHERE user_id = ? AND id IN ({placeholders})",
                     (user_id, *notebook_ids)
                 )
-
+ 
             conn.commit()
             logger.info(f"Updated selection for user {user_id}: {len(notebook_ids)} notebooks selected")
         finally:
             conn.close()
-
+ 
     def update_sync_status(
         self,
         notebook_id: str,
@@ -273,7 +197,7 @@ class NotebookDB:
     ) -> None:
         """
         Update sync status for a notebook.
-
+ 
         Args:
             notebook_id: Notebook ID
             user_id: User ID
@@ -298,14 +222,14 @@ class NotebookDB:
             logger.debug(f"Updated sync status for notebook {notebook_id}: {sync_status}")
         finally:
             conn.close()
-
+ 
     def get_notebook_status(self, user_id: str) -> List[NotebookStatus]:
         """
         Get sync status for all notebooks of a user.
-
+ 
         Args:
             user_id: User ID
-
+ 
         Returns:
             List of NotebookStatus objects
         """
@@ -318,7 +242,7 @@ class NotebookDB:
                 WHERE user_id = ?
                 ORDER BY display_name
             """, (user_id,))
-
+ 
             rows = cursor.fetchall()
             return [NotebookStatus(
                 id=row['id'],
@@ -332,7 +256,7 @@ class NotebookDB:
             ) for row in rows]
         finally:
             conn.close()
-
+ 
     def _row_to_notebook(self, row: sqlite3.Row) -> Notebook:
         """Convert database row to Notebook object."""
         return Notebook(
@@ -349,3 +273,4 @@ class NotebookDB:
             sections_url=row['sections_url'],
             is_selected=bool(row['is_selected'])
         )
+ 
