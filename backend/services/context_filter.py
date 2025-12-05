@@ -87,13 +87,37 @@ class ContextFilterService:
         self.temperature = temperature
         self.strictness = strictness
        
-        # Initialize LLM with async HTTP client (SSL verification disabled for corporate proxies)
-        http_client = httpx.AsyncClient(verify=False)
+        # Initialize LLM with SSL verification disabled for corporate proxies
+        # Disable SSL warnings
+        import urllib3
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+       
+        # Create HTTP clients with SSL verification disabled
+        http_client = httpx.Client(verify=False, timeout=60.0)
+       
         self.llm = ChatOpenAI(
             model_name=model_name,
             temperature=temperature,
-            http_client=http_client
+            http_client=http_client,
+            default_headers={},
+            model_kwargs={}
         )
+       
+        # IMPORTANT: Monkey-patch the async client after initialization
+        # LangChain creates root_async_client internally - we need to replace it
+        import openai
+        import os
+       
+        # Get API key from environment or from the initialized client
+        api_key = os.getenv("OPENAI_API_KEY") or getattr(self.llm, 'openai_api_key', None)
+       
+        if api_key:
+            self.llm.root_async_client = openai.AsyncOpenAI(
+                api_key=api_key,
+                http_client=httpx.AsyncClient(verify=False, timeout=60.0)
+            )
+        else:
+            logger.warning("Could not get OpenAI API key for async client")
        
         logger.info(f"Context filter initialized with {model_name} (strictness: {strictness})")
    
