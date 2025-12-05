@@ -137,6 +137,7 @@ export interface Notebook {
   sharedBy?: string;
   webUrl?: string;
   isSelected?: boolean;
+  source?: 'owned' | 'recent' | 'shared';
 }
 
 export interface NotebookDiscoveryResponse {
