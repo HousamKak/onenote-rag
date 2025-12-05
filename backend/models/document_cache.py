@@ -31,7 +31,8 @@ class CachedDocument(BaseModel):
     last_synced_at: datetime
     sync_version: int = 1
     is_deleted: bool = False
-
+    needs_resync: bool = False
+    
     # Indexing status
     indexed_at: Optional[datetime] = None
     chunk_count: int = 0
