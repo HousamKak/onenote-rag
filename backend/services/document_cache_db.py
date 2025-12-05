@@ -8,7 +8,7 @@ import logging
 from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any
 from pathlib import Path
-
+ 
 from models.document_cache import (
     CachedDocument,
     CachedImage,
@@ -17,65 +17,47 @@ from models.document_cache import (
     SyncJob,
     CacheStats
 )
-
+ 
 logger = logging.getLogger(__name__)
-
-
+ 
+ 
 class DocumentCacheDB:
     """Database service for OneNote document cache."""
-
+ 
     def __init__(self, db_path: str = "data/document_cache.db"):
         """
         Initialize document cache database.
-
+ 
         Args:
             db_path: Path to SQLite database file
         """
         self.db_path = db_path
         self._ensure_db_exists()
         logger.info(f"DocumentCacheDB initialized at {db_path}")
-
+ 
     def _ensure_db_exists(self):
-        """Ensure database and schema exist."""
+        """
+        Ensure database file exists.
+       
+        Note: Schema migrations are now handled by the migration system in main.py
+        during application startup. This just ensures the file exists.
+        """
         db_dir = Path(self.db_path).parent
         db_dir.mkdir(parents=True, exist_ok=True)
-
-        # Check if migrations need to be run
+       
+        # Just ensure the file exists (migrations are handled in main.py)
         if not Path(self.db_path).exists():
-            logger.info("Database does not exist, running migrations...")
-            self._run_migrations()
-        else:
-            logger.info("Database exists, checking schema...")
-            # TODO: Add schema version checking
-
-    def _run_migrations(self):
-        """Run database migrations."""
-        migration_file = Path(__file__).parent.parent / "migrations" / "001_create_document_cache_schema.sql"
-
-        if not migration_file.exists():
-            raise FileNotFoundError(f"Migration file not found: {migration_file}")
-
-        logger.info(f"Running migration: {migration_file}")
-
-        with open(migration_file, 'r') as f:
-            migration_sql = f.read()
-
-        conn = self._get_connection()
-        try:
-            conn.executescript(migration_sql)
-            conn.commit()
-            logger.info("Migration completed successfully")
-        except Exception as e:
-            logger.error(f"Migration failed: {e}")
-            raise
-        finally:
+            logger.info("Creating new database file (schema will be created by migrations)")
+            conn = self._get_connection()
             conn.close()
-
+ 
     def _get_connection(self) -> sqlite3.Connection:
         """Get database connection."""
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row  # Enable column access by name
         return conn
+ 
+ 
 
     # =========================================================================
     # DOCUMENT OPERATIONS
@@ -370,6 +352,88 @@ class DocumentCacheDB:
         finally:
             conn.close()
 
+    def mark_documents_need_resync(self, page_ids: List[str]) -> int:
+        """
+        Mark specific documents to be re-synced.
+
+        Args:
+            page_ids: List of page IDs to mark for resync
+
+        Returns:
+            Number of documents marked
+        """
+        if not page_ids:
+            return 0
+
+        conn = self._get_connection()
+        try:
+            placeholders = ','.join('?' * len(page_ids))
+            result = conn.execute(
+                f"UPDATE onenote_documents SET needs_resync = 1 WHERE page_id IN ({placeholders})",
+                page_ids
+            )
+            count = result.rowcount
+            conn.commit()
+            logger.info(f"Marked {count} documents for resync")
+            return count
+        finally:
+            conn.close()
+ 
+    def get_documents_needing_resync(self) -> List[str]:
+        """
+        Get list of page IDs that need to be re-synced.
+ 
+        Returns:
+            List of page IDs
+        """
+        conn = self._get_connection()
+        try:
+            cursor = conn.execute(
+                "SELECT page_id FROM onenote_documents WHERE needs_resync = 1 AND is_deleted = 0"
+            )
+            return [row[0] for row in cursor.fetchall()]
+        finally:
+            conn.close()
+   
+    def needs_resync(self, page_id: str) -> bool:
+        """
+        Check if a specific document needs resync.
+ 
+        Args:
+            page_id: OneNote page ID
+ 
+        Returns:
+            True if document needs resync, False otherwise
+        """
+        conn = self._get_connection()
+        try:
+            cursor = conn.execute(
+                "SELECT needs_resync FROM onenote_documents WHERE page_id = ?",
+                (page_id,)
+            )
+            row = cursor.fetchone()
+            return bool(row[0]) if row else False
+        finally:
+            conn.close()
+ 
+    def clear_resync_flag(self, page_id: str) -> None:
+        """
+        Clear the needs_resync flag for a document after successful sync.
+ 
+        Args:
+            page_id: OneNote page ID
+        """
+        conn = self._get_connection()
+        try:
+            conn.execute(
+                "UPDATE onenote_documents SET needs_resync = 0 WHERE page_id = ?",
+                (page_id,)
+            )
+            conn.commit()
+            logger.debug(f"Cleared resync flag for: {page_id}")
+        finally:
+            conn.close()
+ 
     def get_all_page_ids(self, include_deleted: bool = False) -> set:
         """
         Get set of all page IDs in cache.
@@ -497,6 +561,85 @@ class DocumentCacheDB:
         finally:
             conn.close()
 
+    def get_last_sync_time(self, notebook_id: str) -> Optional[datetime]:
+        """
+        Get the timestamp of the last successful sync for a notebook.
+       
+        Args:
+            notebook_id: Notebook ID
+           
+        Returns:
+            Datetime of last sync, or None if never synced
+        """
+        conn = self._get_connection()
+        try:
+            # Check sync_state first (preferred)
+            cursor = conn.execute(
+                """
+                SELECT last_incremental_sync_at, last_full_sync_at
+                FROM sync_state
+                WHERE entity_type = 'notebook' AND entity_id = ?
+                """,
+                (notebook_id,)
+            )
+            row = cursor.fetchone()
+           
+            if row:
+                # Use most recent of incremental or full sync
+                incremental = self._parse_datetime(row['last_incremental_sync_at'])
+                full = self._parse_datetime(row['last_full_sync_at'])
+               
+                if incremental and full:
+                    return max(incremental, full)
+                return incremental or full
+           
+            # Fallback: get latest modified_date from documents
+            cursor = conn.execute(
+                """
+                SELECT MAX(last_synced_at) as last_sync
+                FROM onenote_documents
+                WHERE notebook_id = ?
+                """,
+                (notebook_id,)
+            )
+            row = cursor.fetchone()
+            if row and row['last_sync']:
+                return self._parse_datetime(row['last_sync'])
+               
+            return None
+        finally:
+            conn.close()
+ 
+    def get_documents_by_notebook(self, notebook_id: str, include_deleted: bool = False) -> List[CachedDocument]:
+        """
+        Get all documents for a specific notebook.
+       
+        Args:
+            notebook_id: Notebook ID
+            include_deleted: Whether to include deleted documents
+           
+        Returns:
+            List of CachedDocument
+        """
+        conn = self._get_connection()
+        try:
+            if include_deleted:
+                cursor = conn.execute(
+                    "SELECT * FROM onenote_documents WHERE notebook_id = ? ORDER BY modified_date DESC",
+                    (notebook_id,)
+                )
+            else:
+                cursor = conn.execute(
+                    "SELECT * FROM onenote_documents WHERE notebook_id = ? AND is_deleted = 0 ORDER BY modified_date DESC",
+                    (notebook_id,)
+                )
+ 
+            rows = cursor.fetchall()
+            return [self._row_to_cached_document(row) for row in rows]
+        finally:
+            conn.close()
+ 
+ 
     def upsert_sync_state(self, sync_state: SyncState) -> None:
         """
         Insert or update sync state.
