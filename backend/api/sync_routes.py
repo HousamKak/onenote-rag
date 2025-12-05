@@ -115,8 +115,9 @@ async def trigger_full_sync(
         # Start sync in background
         async def run_sync():
             try:
-                result = await orchestrator.sync_full(
+                result = await orchestrator.sync_notebooks(
                     notebook_ids=request.notebook_ids,
+                    sync_mode="full",
                     triggered_by="api",
                     user_id=user.user_id
                 )
@@ -164,7 +165,8 @@ async def trigger_incremental_sync(
         # Start sync in background
         async def run_sync():
             try:
-                result = await orchestrator.sync_incremental(
+                result = await orchestrator.sync_notebooks(
+                    sync_mode="incremental",
                     triggered_by="api",
                     user_id=user.user_id
                 )
