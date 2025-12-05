@@ -23,6 +23,7 @@ import { useStore } from '../store/useStore';
 import { useTheme } from '../context/ThemeContext';
 import ConfirmModal from '../components/ConfirmModal';
 import NotificationModal from '../components/NotificationModal';
+import { NotebookSelector } from '../components/NotebookSelector';
 import type { Notebook, SyncHistory } from '../types';
 
 const IndexPage = () => {
@@ -35,6 +36,8 @@ const IndexPage = () => {
   const [selectedNotebooks, setSelectedNotebooks] = useState<Set<string>>(new Set());
   const [syncHistory, setSyncHistory] = useState<SyncHistory[]>([]);
   const [showAnalytics, setShowAnalytics] = useState(false);
+  const [showNotebookSelector, setShowNotebookSelector] = useState(false);
+  const [syncMode, setSyncMode] = useState<'smart' | 'incremental' | 'full'>('smart');
   const [notification, setNotification] = useState<{
     show: boolean;
     title: string;
@@ -66,7 +69,8 @@ const IndexPage = () => {
   });
 
   const syncMutation = useMutation({
-    mutationFn: (selectedIds?: string[]) => indexApi.sync(selectedIds, false),
+    mutationFn: ({selectedIds, mode}: {selectedIds?: string[], mode: 'smart' | 'incremental' | 'full'}) =>
+      indexApi.sync(selectedIds, mode),
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ['indexStats'] });
       refetchStats();
@@ -109,54 +113,6 @@ const IndexPage = () => {
       setNotification({
         show: true,
         title: 'Sync Failed',
-        message: error.response?.data?.detail || error.message,
-        variant: 'error',
-      });
-    },
-  });
-
-  const fullSyncMutation = useMutation({
-    mutationFn: (selectedIds?: string[]) => indexApi.sync(selectedIds, true),
-    onSuccess: (response) => {
-      queryClient.invalidateQueries({ queryKey: ['indexStats'] });
-      refetchStats();
-      const data = response.data;
-      const added = data?.documents_added || 0;
-
-      // Add to sync history
-      const historyEntry: SyncHistory = {
-        timestamp: new Date(),
-        status: 'success',
-        documentsAdded: added,
-        documentsUpdated: 0,
-        documentsSkipped: 0,
-        chunksCreated: data?.chunks_created || 0,
-        message: 'Full resync completed - all documents reindexed',
-      };
-      setSyncHistory((prev) => [historyEntry, ...prev].slice(0, 5));
-
-      setNotification({
-        show: true,
-        title: 'Full Resync Completed',
-        message: `Successfully reindexed ${added} documents (${data?.chunks_created || 0} chunks)`,
-        variant: 'success',
-      });
-    },
-    onError: (error: any) => {
-      const historyEntry: SyncHistory = {
-        timestamp: new Date(),
-        status: 'error',
-        documentsAdded: 0,
-        documentsUpdated: 0,
-        documentsSkipped: 0,
-        chunksCreated: 0,
-        message: error.response?.data?.detail || error.message,
-      };
-      setSyncHistory((prev) => [historyEntry, ...prev].slice(0, 5));
-
-      setNotification({
-        show: true,
-        title: 'Full Resync Failed',
         message: error.response?.data?.detail || error.message,
         variant: 'error',
       });
@@ -289,9 +245,9 @@ const IndexPage = () => {
 
   const handleSyncSelected = () => {
     if (selectedNotebooks.size > 0) {
-      syncMutation.mutate(Array.from(selectedNotebooks));
+      syncMutation.mutate({selectedIds: Array.from(selectedNotebooks), mode: syncMode});
     } else {
-      syncMutation.mutate(undefined);
+      syncMutation.mutate({selectedIds: undefined, mode: syncMode});
     }
   };
 
@@ -328,9 +284,24 @@ const IndexPage = () => {
 
             {/* Quick Actions */}
             <div className="flex items-center gap-3 pt-4 border-t">
+              {/* Sync Mode Selector */}
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600 font-medium">Sync Mode:</span>
+                <select
+                  value={syncMode}
+                  onChange={(e) => setSyncMode(e.target.value as 'smart' | 'incremental' | 'full')}
+                  disabled={syncMutation.isPending}
+                  className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                >
+                  <option value="smart">⚡ Smart (Recommended)</option>
+                  <option value="incremental">📝 Incremental</option>
+                  <option value="full">🔄 Full Sync</option>
+                </select>
+              </div>
+             
               <button
                 onClick={handleSyncSelected}
-                disabled={syncMutation.isPending || fullSyncMutation.isPending}
+                disabled={syncMutation.isPending}
                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 text-sm font-medium transition-colors"
               >
                 {syncMutation.isPending ? (
@@ -346,31 +317,8 @@ const IndexPage = () => {
                 )}
               </button>
               <button
-                onClick={() => {
-                  if (selectedNotebooks.size > 0) {
-                    fullSyncMutation.mutate(Array.from(selectedNotebooks));
-                  } else {
-                    fullSyncMutation.mutate(undefined);
-                  }
-                }}
-                disabled={syncMutation.isPending || fullSyncMutation.isPending}
-                className="flex items-center gap-2 px-4 py-2 border-2 border-orange-400 text-orange-600 rounded-lg hover:bg-orange-50 disabled:bg-gray-100 text-sm font-medium transition-colors"
-              >
-                {fullSyncMutation.isPending ? (
-                  <>
-                    <Loader2 size={16} className="animate-spin" />
-                    Resyncing...
-                  </>
-                ) : (
-                  <>
-                    <Zap size={16} />
-                    Reset & Full Resync
-                  </>
-                )}
-              </button>
-              <button
                 onClick={() => setShowClearModal(true)}
-                disabled={clearMutation.isPending || syncMutation.isPending || fullSyncMutation.isPending}
+                disabled={clearMutation.isPending || syncMutation.isPending}
                 className="flex items-center gap-2 px-4 py-2 border-2 border-red-300 text-red-600 rounded-lg hover:bg-red-50 disabled:bg-gray-100 text-sm font-medium transition-colors"
               >
                 {clearMutation.isPending ? (
@@ -401,7 +349,7 @@ const IndexPage = () => {
                   onClick={() => {
                     forceReindexMutation.mutate(undefined);
                   }}
-                  disabled={forceReindexMutation.isPending || syncMutation.isPending || fullSyncMutation.isPending}
+                  disabled={forceReindexMutation.isPending || syncMutation.isPending}
                   className="flex items-center gap-2 px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-400 text-sm font-medium transition-colors"
                   title="Reset indexed_at for all documents and re-index everything"
                 >
@@ -459,6 +407,27 @@ const IndexPage = () => {
               <AnalyticsDashboard notebooks={notebooks} />
             </div>
           )}
+
+          {/* Notebook Discovery Section */}
+          <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg shadow-sm p-6 border-2 border-purple-200">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <BookOpen className="text-purple-600" size={32} />
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900">Discover Notebooks</h3>
+                  <p className="text-sm text-gray-600">Browse owned, shared, and recently accessed OneNote notebooks</p>
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowNotebookSelector(true)}
+              className="px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all flex items-center gap-2 shadow-md hover:shadow-lg"
+            >
+              <BookOpen size={20} />
+              Open Notebook Browser
+            </button>
+          </div>
+ 
 
           {/* Toggle Analytics Button */}
           {notebooks && notebooks.length > 0 && !showAnalytics && (
@@ -670,6 +639,24 @@ const IndexPage = () => {
         message={notification.message}
         variant={notification.variant}
       />
+
+      {/* Notebook Selector Modal */}
+      {showNotebookSelector && (
+        <NotebookSelector
+          onClose={() => setShowNotebookSelector(false)}
+          onNotebooksSelected={async (notebookIds) => {
+            setShowNotebookSelector(false);
+            // Refresh the notebooks list to show newly selected notebooks
+            queryClient.invalidateQueries({ queryKey: ['notebooks'] });
+            setNotification({
+              show: true,
+              title: 'Notebooks Selected',
+              message: `Successfully selected ${notebookIds.length} notebook(s). You can now sync them using the buttons above.`,
+              variant: 'success',
+            });
+          }}
+        />
+      )}
     </>
   );
 };
