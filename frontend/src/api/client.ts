@@ -90,10 +90,10 @@ export const queryApi = {
  
 // Index endpoints
 export const indexApi = {
-  sync: (notebookIds?: string[], fullSync: boolean = false, multimodal: boolean = true) =>
+  sync: (notebookIds?: string[], syncMode: 'smart' | 'incremental' | 'full' = 'smart', multimodal: boolean = true) =>
     api.post('/index/sync', {
       notebook_ids: notebookIds,
-      full_sync: fullSync,
+      sync_mode: syncMode,
       multimodal: multimodal
     }),
   forceReindex:(notebookIds?: string[]) =>
