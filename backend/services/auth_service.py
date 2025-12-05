@@ -53,7 +53,12 @@ class AuthService:
         Returns:
             Full authorization URL to redirect user to
         """
+        logger.info(f"🔐 [AUTH_SERVICE] get_authorization_url called with scopes: {scopes}")
+        logger.info(f"🔐 [AUTH_SERVICE] Files.Read.All in scopes: {'Files.Read.All' in scopes}")
+       
         scope_string = " ".join(scopes)
+        logger.info(f"🔐 [AUTH_SERVICE] Scope string for authorization URL: '{scope_string}'")
+       
         params = {
             "client_id": self.client_id,
             "response_type": "code",
@@ -65,7 +70,11 @@ class AuthService:
         }
  
         query_string = "&".join([f"{k}={requests.utils.quote(v)}" for k, v in params.items()])
-        return f"{self.authorize_endpoint}?{query_string}"
+        auth_url = f"{self.authorize_endpoint}?{query_string}"
+       
+        logger.info(f"🔐 [AUTH_SERVICE] Generated authorization URL (scope param): ...scope={requests.utils.quote(scope_string)}...")
+       
+        return auth_url
  
     async def acquire_token_by_code(
         self, code: str, redirect_uri: str, scopes: list[str]
@@ -89,7 +98,12 @@ class AuthService:
         Raises:
             Exception: If token exchange fails
         """
+        logger.info(f"🔐 [AUTH_SERVICE] acquire_token_by_code called with scopes: {scopes}")
+        logger.info(f"🔐 [AUTH_SERVICE] Files.Read.All in request scopes: {'Files.Read.All' in scopes}")
+       
         scope_string = " ".join(scopes)
+        logger.info(f"🔐 [AUTH_SERVICE] Scope string for token request: '{scope_string}'")
+       
         data = {
             "client_id": self.client_id,
             "client_secret": self.client_secret,
@@ -100,15 +114,28 @@ class AuthService:
         }
  
         try:
+            logger.info(f"🔐 [AUTH_SERVICE] Sending token request to: {self.token_endpoint}")
             response = requests.post(self.token_endpoint, data=data)
             response.raise_for_status()
             token_response = response.json()
  
-            logger.info(f"Successfully acquired tokens for user")
+            # Log what Microsoft actually granted
+            granted_scope = token_response.get("scope", "")
+            logger.info(f"🔐 [AUTH_SERVICE] Token response received")
+            logger.info(f"🔐 [AUTH_SERVICE] Granted scope string from Microsoft: '{granted_scope}'")
+           
+            if granted_scope:
+                granted_scopes_list = granted_scope.split()
+                logger.info(f"🔐 [AUTH_SERVICE] Granted scopes list: {granted_scopes_list}")
+                logger.info(f"🔐 [AUTH_SERVICE] Files.Read.All granted: {'Files.Read.All' in granted_scopes_list}")
+            else:
+                logger.warning(f"⚠️ [AUTH_SERVICE] No scope field in token response from Microsoft!")
+           
+            logger.info(f"🔐 [AUTH_SERVICE] Successfully acquired tokens for user")
             return token_response
  
         except requests.HTTPError as e:
-            logger.error(f"Failed to acquire token: {e.response.text}")
+            logger.error(f"❌ [AUTH_SERVICE] Failed to acquire token: {e.response.text}")
             raise Exception(f"Token acquisition failed: {e.response.text}")
  
     async def refresh_access_token(self, refresh_token: str, scopes: list[str]) -> Dict:
