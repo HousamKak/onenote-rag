@@ -631,9 +631,9 @@ class RAGEngine:
         if filter_result:
             filter_summary = {
                 "chunks_kept": len(filter_result.relevant_chunks),
-                "chunks_filtered": len(filter_result.filtered_chunks),
+                "chunks_filtered": len(filter_result.filtered_out_chunks),
                 "images_kept": len(filter_result.relevant_images),
-                "images_filtered": len(filter_result.filtered_images),
+                "images_filtered": len(filter_result.filtered_out_images),
                 "overall_assessment": filter_result.overall_assessment
             }
        
