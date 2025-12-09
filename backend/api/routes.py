@@ -66,19 +66,28 @@ sync_status: Dict[str, Any] = {
  
 REQUIRED_OIDC_SCOPES = ["openid","profile","offline_access"]
 
-def build_oauth_scopes(raw_scopes: List[str]) -> List[str]: 
+def build_oauth_scopes(raw_scopes: List[str]) -> List[str]:
     """Ensure OpenID Connect scopes are included for ID tokens."""
+    logger.info(f"🔐 [BUILD_SCOPES] Input raw_scopes: {raw_scopes}")
+   
     scopes = [scope for scope in (raw_scopes or []) if scope]
+    logger.info(f"🔐 [BUILD_SCOPES] After filtering empty: {scopes}")
+   
     added_scopes: List[str]=[]
     for required_scope in REQUIRED_OIDC_SCOPES:
         if required_scope not in scopes:
             scopes.append(required_scope)
             added_scopes.append(required_scope)
+   
     if added_scopes:
-        logger.info(f"Added required OpenID scopes automatically: {added_scopes}")
+        logger.info(f"🔐 [BUILD_SCOPES] Added required OpenID scopes automatically: {added_scopes}")
+   
+    logger.info(f"🔐 [BUILD_SCOPES] Final scopes list: {scopes}")
+    logger.info(f"🔐 [BUILD_SCOPES] Files.Read.All in final list: {'Files.Read.All' in scopes}")
+   
     return scopes
-
-
+ 
+ 
  
 def get_rag_engine() -> RAGEngine:
     """Dependency to get RAG engine."""
@@ -90,7 +99,7 @@ def get_rag_engine() -> RAGEngine:
 def get_onenote_service(user: UserContext = Depends(get_current_user)) -> OneNoteService:
     """
     Dependency to create user-specific OneNote service.
-
+ 
     Each user gets their own OneNote service instance with their access token.
     """
     return OneNoteService(access_token=user.access_token)
@@ -108,83 +117,130 @@ def get_document_processor() -> DocumentProcessor:
     if document_processor is None:
         raise HTTPException(status_code=500, detail="Document processor not initialized")
     return document_processor
-
-
+ 
+ 
 def get_multimodal_processor():
     """
     Dependency to get multimodal procesor (optional).
-    
+   
     Creates a MultimodalDocumentProcessor if vision_service is available
     (i.e., OpenAI key is configured). Includes image_storage to read
     cached images instead of re-downloading from OneNote.
     """
     if vision_service:
-        from services.multimodal_document_processor import MultimodalDocumentProcessor
+        from services.multimodal_processor import MultimodalDocumentProcessor
         return MultimodalDocumentProcessor(
             vision_service=vision_service,
             image_storage=image_storage # pass image_storage for reacding cached images
         )
     return None # Returns None if multimodal services not available
-
-
+ 
+ 
 def get_settings_service() -> SettingsService:
     """Dependency to get settings service."""
     if settings_service is None:
         raise HTTPException(status_code=500, detail="Settings service not initialized")
     return settings_service
-
-
+ 
+ 
 def create_sync_orchestrator_for_user(user: UserContext):
     """
     Create a SyncOrchestrator instance for a specific user.
-
+ 
     Args:
         user: Current user context with access token
-
+ 
     Returns:
-        SyncOrchestrator configured for the user
+        SyncOrchestrator configured for the user with token refresh support
     """
     from services.sync_orchestrator import SyncOrchestrator
-
+ 
     if not document_cache or not cache_db:
         raise HTTPException(status_code=500, detail="Document cache not initialized")
-
+ 
     if not image_storage:
         raise HTTPException(status_code=500, detail="Image storage not initialized")
-
+ 
     # Create OneNoteService with user's token
     user_onenote_service = OneNoteService(access_token=user.access_token)
-
-    # Create SyncOrchestrator with notebook_db for selection management
+ 
+    # Create token refresh callback for long-running operations
+    async def refresh_token_callback(user_id: str) -> Optional[str]:
+        """
+        Refresh the user's access token during long sync operations.
+       
+        This prevents 401 errors during initial full sync (30-60 min).
+        Called proactively every 50 minutes to refresh before expiration.
+        """
+        try:
+            token_data = token_store.get_tokens(user_id)
+            if not token_data or not token_data.refresh_token:
+                logger.warning(f"Cannot refresh token for user {user_id}: No token data found")
+                return None
+           
+            # PROACTIVE REFRESH: Always refresh when called (don't check is_expired)
+            # The sync orchestrator calls this every 50 minutes to stay ahead of the 60-min expiration
+            logger.info(f"Proactively refreshing access token for user {user_id} during sync...")
+           
+            # Get scopes from token data
+            scopes = token_data.scope.split(" ") if token_data.scope else [
+                "User.Read",
+                "Files.Read.All",
+                "Notes.Read.All",
+                "Sites.Read.All"
+            ]
+           
+            # Refresh the token
+            new_token_response = await auth_service.refresh_access_token(
+                token_data.refresh_token, scopes
+            )
+           
+            # Update stored tokens
+            token_store.update_access_token(
+                user_id,
+                new_token_response["access_token"],
+                new_token_response["expires_in"],
+            )
+           
+            logger.info(f"✅ Successfully refreshed token for user {user_id} during sync")
+            return new_token_response["access_token"]
+           
+        except Exception as e:
+            logger.error(f"❌ Failed to refresh token for user {user_id} during sync: {e}")
+            return None
+ 
+    # Create SyncOrchestrator with token refresh support
     orchestrator = SyncOrchestrator(
         onenote_service=user_onenote_service,
         document_cache=document_cache,
         image_storage=image_storage,
         cache_db=cache_db,
-        notebook_db=notebook_db
+        notebook_db=notebook_db,
+        token_refresh_callback=refresh_token_callback,
+        user_id=user.user_id
     )
-
+ 
     return orchestrator
-
-
+ 
+ 
 # Health check
 @router.get("/health")
 async def health_check():
     """Health check endpoint."""
     return {"status": "healthy"}
-
-
+ 
+ 
 @router.get("/sync-status")
 async def get_sync_status():
     """Get the status of the background startup sync."""
     return sync_status
-
-
+ 
+ 
 # ================================
 # Authentication Routes
 # ================================
-
-
+ 
+ 
 @router.get("/auth/debug")
 async def auth_debug():
     """Debug endpoint to check auth configuration."""
@@ -199,90 +255,129 @@ async def auth_debug():
         "oauth_redirect_uri": settings.get("oauth_redirect_uri", ""),
         "oauth_scopes": settings.get("oauth_scopes", ""),
     }
-
-
-
+ 
+ 
+ 
 class AuthCallbackRequest(BaseModel):
     """Request model for OAuth callback."""
     code: str
     state: str
-
-
+ 
+ 
 @router.get("/auth/login")
 async def login():
     """
     Generate Microsoft OAuth login URL.
-
+ 
     Returns authorization URL and state for CSRF protection.
     """
     if not auth_service:
         raise HTTPException(status_code=500, detail="Auth service not initialized")
-
+ 
     settings = get_dynamic_settings()
     redirect_uri = settings.get("oauth_redirect_uri", "http://localhost:5173/auth/callback")
-    scopes = settings.get("oauth_scopes", "User.Read Files.Read Notes.Read").split()
+   
+    # Get scopes from database
+    raw_scopes_string = settings.get("oauth_scopes", "User.Read Files.Read.All Notes.Read.All openid profile email offline_access")
+    logger.info(f"🔐 [AUTH] Raw oauth_scopes from database: '{raw_scopes_string}'")
+   
+    scopes = raw_scopes_string.split()
+    logger.info(f"🔐 [AUTH] Scopes after split: {scopes}")
+   
     scopes = build_oauth_scopes(scopes)
-    
+    logger.info(f"🔐 [AUTH] Scopes after build_oauth_scopes: {scopes}")
+    logger.info(f"🔐 [AUTH] Files.Read.All present: {'Files.Read.All' in scopes}")
+   
     logger.info(f"Login endpoint called. Redirect URI: {redirect_uri}, Scopes: {scopes}")
-
+ 
     state = generate_state()
     auth_url = auth_service.get_authorization_url(
         redirect_uri=redirect_uri,
         state=state,
         scopes=scopes
     )
-
+ 
     logger.info(f"Generated auth URL: {auth_url}")
     return {
         "auth_url": auth_url,
         "state": state,
         "redirect_uri": redirect_uri,
     }
-
-
+ 
+ 
 @router.post("/auth/callback")
 async def auth_callback(request: AuthCallbackRequest):
     """
     Handle OAuth callback and exchange code for tokens.
-
+ 
     Returns access token (session token) for frontend to use in API calls.
     """
     if not auth_service or not token_store:
         raise HTTPException(status_code=500, detail="Auth service not initialized")
-
+ 
     try:
         settings = get_dynamic_settings()
         redirect_uri = settings.get("oauth_redirect_uri", "http://localhost:5173/auth/callback")
-        scopes = settings.get("oauth_scopes", "User.Read Files.Read Notes.Read").split()
+       
+        # Get scopes from database
+        raw_scopes_string = settings.get("oauth_scopes", "User.Read Files.Read.All Notes.Read.All openid profile email offline_access")
+        logger.info(f"🔐 [CALLBACK] Raw oauth_scopes from database: '{raw_scopes_string}'")
+       
+        scopes = raw_scopes_string.split()
+        logger.info(f"🔐 [CALLBACK] Scopes after split: {scopes}")
+       
         scopes = build_oauth_scopes(scopes)
-
+        logger.info(f"🔐 [CALLBACK] Scopes after build_oauth_scopes: {scopes}")
+        logger.info(f"🔐 [CALLBACK] Files.Read.All present: {'Files.Read.All' in scopes}")
+ 
         # Exchange authorization code for tokens
+        logger.info(f"🔐 [CALLBACK] Requesting token with scopes: {scopes}")
         token_response = await auth_service.acquire_token_by_code(
             code=request.code,
             redirect_uri=redirect_uri,
             scopes=scopes
         )
-
+       
+        # Log what scopes were actually granted
+        granted_scopes = token_response.get("scope", "")
+        logger.info(f"🔐 [CALLBACK] Granted scopes from Microsoft: '{granted_scopes}'")
+        if granted_scopes:
+            granted_scope_list = granted_scopes.split()
+            logger.info(f"🔐 [CALLBACK] Granted scope list: {granted_scope_list}")
+            logger.info(f"🔐 [CALLBACK] Files.Read.All granted: {'Files.Read.All' in granted_scope_list}")
+        else:
+            logger.warning(f"⚠️ [CALLBACK] No scope field in token response!")
+       
+        # LOG THE ACTUAL ACCESS TOKEN FOR DEBUGGING
+        access_token = token_response.get("access_token", "")
+        if access_token:
+            logger.info(f"🔐 [CALLBACK] ========== ACCESS TOKEN FOR DEBUGGING ==========")
+            logger.info(f"🔐 [CALLBACK] FULL ACCESS TOKEN:")
+            logger.info(f"{access_token}")
+            logger.info(f"🔐 [CALLBACK] ====================================================")
+        else:
+            logger.error(f"❌ [CALLBACK] No access token in response!")
+ 
         # Validate and extract user info from ID token
         id_token = token_response.get("id_token")
         if not id_token:
             # Fallback to access token if no ID token
             logger.error("ID token missing from token response. Ensure OpenID scopes are configured.")
             raise HTTPException(
-                status_code=400, 
+                status_code=400,
                 detail=(
                     "Authentication failed: Microsoft did not return an ID token. "
                     "Verify that 'openid pofile offline_access' scopes are configured in settings."
                     ),
             )
-
+ 
         claims = auth_service.validate_token(id_token)
         user_info = auth_service.extract_user_info(claims)
         user_id = user_info["user_id"]
-
+ 
         if not user_id:
             raise HTTPException(status_code=400, detail="Could not extract user ID from token")
-
+ 
         # Store tokens for this user
         token_store.set_tokens(
             user_id=user_id,
@@ -293,9 +388,9 @@ async def auth_callback(request: AuthCallbackRequest):
             scope=token_response.get("scope"),
             id_token=id_token
         )
-
+ 
         logger.info(f"User {user_id} authenticated successfully")
-
+ 
         # Return the ID token to frontend (it will use this for auth)
         return {
             "access_token": id_token,  # Frontend will send this as Bearer token
@@ -306,11 +401,11 @@ async def auth_callback(request: AuthCallbackRequest):
                 "name": user_info.get("name")
             }
         }
-
+ 
     except Exception as e:
         logger.error(f"OAuth callback failed: {e}")
         raise HTTPException(status_code=400, detail=f"Authentication failed: {str(e)}")
-
+ 
 
 @router.post("/auth/refresh")
 async def refresh_token(user: UserContext = Depends(get_current_user)):
@@ -662,7 +757,8 @@ async def list_pages(
 # Indexing routes
 class SyncRequest(BaseModel):
     notebook_ids: Optional[List[str]] = None
-    full_sync: bool = False  # Changed default to False for incremental sync
+    sync_mode: str = "smart"  # 'full', 'incremental', or 'smart' (default)
+    full_sync: bool = False  # DEPRECATED: Use sync_mode instead
     force_reindex: bool = False  # Force reindexing even if not modified
     multimodal: bool = True  # Enable multimodal processing (images) if available
  
@@ -698,12 +794,19 @@ async def sync_documents(
     - Faster, more reliable
     - Full audit trail
 
-    Supports three modes:
-    - Incremental sync (default): Only updates changed documents
-    - Full sync (full_sync=True): Syncs all documents
-    - Force reindex (force_reindex=True): Re-indexes all from cache
-
-    Multimodal processing is supported if image services are available.
+    Sync Modes (sync_mode parameter):
+    - 'smart' (default): Incremental if recent sync exists (<7 days), else full
+    - 'incremental': Only fetch pages modified since last sync (99% API call reduction)
+    - 'full': Sync all documents (use for initial sync or major changes)
+   
+    Additional Options:
+    - force_reindex=True: Re-indexes all documents from cache (no API calls)
+    - multimodal=True: Processes images with OCR/Vision API if available
+ 
+    Performance Impact:
+    - Full sync: 30-60 minutes for 1000+ pages
+    - Incremental sync: 30-60 seconds for ~10 changed pages
+    - Smart sync: Automatically chooses best mode
     """
     try:
         logger.info(f"Starting sync with new cache-based system (full_sync={request.full_sync}, force_reindex={request.force_reindex})")
@@ -712,17 +815,19 @@ async def sync_documents(
         logger.info("Step 1: Syncing from OneNote to local cache...")
         orchestrator = create_sync_orchestrator_for_user(user)
 
+         # Determine sync mode (backwards compatibility with full_sync parameter)
+        sync_mode = request.sync_mode
         if request.full_sync:
-            sync_result = await orchestrator.sync_full(
-                notebook_ids=request.notebook_ids,
-                triggered_by="api",
-                user_id=user.user_id
-            )
-        else:
-            sync_result = await orchestrator.sync_incremental(
-                triggered_by="api",
-                user_id=user.user_id
-            )
+            logger.warning("full_sync parameter is deprecated, use sync_mode='full' instead")
+            sync_mode = "full"
+       
+        # Use unified sync method with configurable mode
+        sync_result = await orchestrator.sync_notebooks(
+            notebook_ids=request.notebook_ids,
+            sync_mode=sync_mode,
+            triggered_by="api",
+            user_id=user.user_id
+        )
 
         logger.info(f"Sync to cache complete: {sync_result.pages_added} added, {sync_result.pages_updated} updated, {sync_result.pages_deleted} deleted")
 
@@ -927,18 +1032,53 @@ async def get_detailed_stats(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+ 
 @router.delete("/index/clear")
 async def clear_index(
     user: UserContext = Depends(get_current_user),
     store: VectorStoreService = Depends(get_vector_store)
 ):
-    """Clear all documents from vector database."""
+    """Clear all documents from vector database, document cache, and delete all stored images."""
     try:
+        # Clear vector database
         store.clear_collection()
-        return {"status": "success", "message": "Vector database cleared"}
+       
+        # Clear document cache if available
+        docs_deleted = 0
+        if document_cache:
+            try:
+                docs_deleted = document_cache.clear_all()
+                logger.info(f"Deleted {docs_deleted} documents from cache")
+            except Exception as cache_error:
+                logger.error(f"Error clearing document cache: {str(cache_error)}")
+                # Don't fail the whole operation if cache deletion fails
+       
+        # Clear all stored images if image storage is available
+        images_deleted = 0
+        if image_storage:
+            try:
+                images_deleted = await image_storage.clear_all()
+                logger.info(f"Deleted {images_deleted} images from storage")
+            except Exception as img_error:
+                logger.error(f"Error clearing image storage: {str(img_error)}")
+                # Don't fail the whole operation if image deletion fails
+       
+        message = f"Vector database cleared"
+        if docs_deleted > 0:
+            message += f", {docs_deleted} documents removed from cache"
+        if images_deleted > 0:
+            message += f", and {images_deleted} images deleted from storage"
+       
+        return {
+            "status": "success",
+            "message": message,
+            "documents_deleted": docs_deleted,
+            "images_deleted": images_deleted
+        }
     except Exception as e:
         logger.error(f"Error clearing index: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+ 
  
  
 class IndexedPage(BaseModel):
